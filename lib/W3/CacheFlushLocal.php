@@ -188,6 +188,17 @@ class W3_CacheFlushLocal {
         }
         return false;
     }
+    
+    /**
+     * Flushes the system opcache
+     * @return bool
+     */
+    function opcache_system_flush() {
+    	if (function_exists('opcache_reset') && ini_get('opcache.enable') == '0') {
+    		return opcache_reset ();
+    	}
+    	return false;
+    }
 
     /**
      * Reload/compile a PHP file
@@ -212,6 +223,30 @@ class W3_CacheFlushLocal {
         }
         return false;
     }
+    
+    /**
+     * Reload/compile a PHP file
+     * @param $filename
+     * @return bool
+     */
+    function opcache_reload_file($filename) {
+    	if (function_exists('opcache_compile_file')) {
+    		if (!file_exists($filename)) {
+    			if (file_exists(ABSPATH . $filename))
+    				$filename = ABSPATH . DIRECTORY_SEPARATOR . $filename;
+    			elseif (file_exists(WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $filename))
+    				$filename = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $filename;
+    			elseif (file_exists(WPINC . DIRECTORY_SEPARATOR . $filename))
+    				$filename = WPINC . DIRECTORY_SEPARATOR . $filename;
+    			elseif (file_exists(WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $filename))
+    				$filename = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $filename;
+    			else
+    				return false;
+    		}
+    		return opcache_compile_file($filename);
+    	}
+    	return false;
+    }
 
     /**
      * Reload/compile a PHP file
@@ -223,6 +258,18 @@ class W3_CacheFlushLocal {
                 $this->apc_reload_file($filename);
             }
         }
+    }
+    
+    /**
+     * Reload/compile a PHP file
+     * @param $filenames
+     */
+    function opcache_reload_files($filenames) {
+    	if (function_exists('opcache_compile_file')) {
+    		foreach ($filenames as $filename) {
+    			$this->opcache_reload_file($filename);
+    		}
+    	}
     }
 
     /**
@@ -242,6 +289,27 @@ class W3_CacheFlushLocal {
         //returns empty array on success
         $result = apc_delete_file($delete_files);
         return empty($result);
+    }
+    
+    /**
+     * Deletes files based on regular expression matching.
+     * @param string $mask
+     * @return boolean
+     */
+    function opcache_delete_files_based_on_regex($mask) {
+    	$opcache_status = opcache_get_status();
+    	$cached_files = isset($opcache_status['scripts']) ? $opcache_status['scripts'] : array();
+    	$delete_files = array();
+    	foreach ($cached_files as $cached_file) {
+    		$file = $cached_file['filename'];
+    		if (preg_match('/' . $mask . '/', $file)){
+    			opcache_invalidate($file);
+    		}
+    	}
+    	// empty array on success
+    	$opcache_status = opcache_get_status();
+    	$cached_files = isset($opcache_status['scripts']) ? $opcache_status['scripts'] : array();
+    	return empty($cached_files);
     }
 
     /**
