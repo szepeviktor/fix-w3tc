@@ -214,7 +214,7 @@ function w3_is_multisite() {
     static $multisite = null;
 
     if ($multisite === null) {
-        $multisite = ((defined('MULTISITE') && MULTISITE) || defined('SUNRISE') || w3_is_subdomain_install());
+        $multisite = is_multisite();
     }
 
     return $multisite;

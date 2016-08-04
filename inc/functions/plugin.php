@@ -547,6 +547,40 @@ function w3tc_apc_delete_files_based_on_regex($mask, $http = false) {
 }
 
 /**
+ * Deletes files.
+ *
+ * @param string $mask regular expression matching files to be deleted
+ * @param bool $http if delete request should be made over http to current site. Default false.
+ * @return mixed
+ */
+function w3tc_opcache_delete_files_based_on_regex($mask, $http = false) {
+	if (!$http) {
+		$w3_cacheflush = w3_instance('W3_CacheFlush');
+
+		return $w3_cacheflush->opcache_delete_files_based_on_regex($mask);
+	} else {
+		$url = WP_PLUGIN_URL . '/' . dirname(W3TC_FILE) . '/pub/opcache.php';
+		$path = parse_url($url, PHP_URL_PATH);
+		$post = array(
+				'method' => 'POST',
+				'timeout' => 45,
+				'redirection' => 5,
+				'httpversion' => '1.0',
+				'blocking' => true,
+				'body' => array( 'nonce' => wp_hash($path), 'command' => 'delete_files', 'regex' => $mask),
+		);
+		$result = wp_remote_post($url, $post);
+		if (is_wp_error($result)) {
+			return $result;
+		} elseif ($result['response']['code'] != '200') {
+			return $result['response']['code'];
+		}
+
+		return true;
+	}
+}
+
+/**
  * Reloads files.
  * @param string[] $files list of files supports, fullpath, from root, wp-content
  * @param bool $http if delete request should be made over http to current site. Default false.
@@ -579,6 +613,41 @@ function w3tc_apc_reload_files($files, $http = false) {
 
         return true;
     }
+}
+
+/**
+ * Reloads files.
+ * @param string[] $files list of files supports, fullpath, from root, wp-content
+ * @param bool $http if delete request should be made over http to current site. Default false.
+ * @return mixed
+ */
+function w3tc_opcache_reload_files($files, $http = false) {
+
+	if (!$http) {
+		$w3_cacheflush = w3_instance('W3_CacheFlush');
+
+		return $w3_cacheflush->opcache_reload_files($files);
+	} else {
+		$url = WP_PLUGIN_URL . '/' . dirname(W3TC_FILE) . '/pub/opcache.php';
+		$path = parse_url($url, PHP_URL_PATH);
+
+		$post = array(
+				'method' => 'POST',
+				'timeout' => 45,
+				'redirection' => 5,
+				'httpversion' => '1.0',
+				'blocking' => true,
+				'body' => array( 'nonce' => wp_hash($path), 'command' => 'reload_files', 'files' => $files),
+		);
+		$result = wp_remote_post($url, $post);
+		if (is_wp_error($result)) {
+			return $result;
+		} elseif ($result['response']['code'] != '200') {
+			return $result['response']['code'];
+		}
+
+		return true;
+	}
 }
 
 /**
