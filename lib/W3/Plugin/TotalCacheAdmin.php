@@ -510,6 +510,7 @@ ul.w3tc-incomp-plugins li div{
             'flush_memcached' => __('Memcached cache(s) successfully emptied.', 'w3-total-cache'),
             'flush_opcode' => __('Opcode cache(s) successfully emptied.', 'w3-total-cache'),
             'flush_apc_system' => __('APC system cache successfully emptied', 'w3-total-cache'),
+        	'flush_apcu_system' => __('APCu system cache successfully emptied', 'w3-total-cache'),
             'flush_file' => __('Disk cache(s) successfully emptied.', 'w3-total-cache'),
             'flush_pgcache' => __('Page cache successfully emptied.', 'w3-total-cache'),
             'flush_dbcache' => __('Database cache successfully emptied.', 'w3-total-cache'),

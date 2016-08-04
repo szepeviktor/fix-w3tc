@@ -82,7 +82,7 @@ function __aws_sdk_ua_callback()
 		}
 	}
 
-	foreach (array('simplexml', 'json', 'pcre', 'spl', 'curl', 'openssl', 'apc', 'xcache', 'memcache', 'memcached', 'pdo', 'pdo_sqlite', 'sqlite', 'sqlite3', 'zlib', 'xdebug') as $ua_ext)
+	foreach (array('simplexml', 'json', 'pcre', 'spl', 'curl', 'openssl', 'apc', 'apcu', 'xcache', 'memcache', 'memcached', 'pdo', 'pdo_sqlite', 'sqlite', 'sqlite3', 'zlib', 'xdebug') as $ua_ext)
 	{
 		if (isset($sorted_extensions[$ua_ext]) && $sorted_extensions[$ua_ext])
 		{
@@ -704,6 +704,10 @@ class CFRuntime
 			{
 				case 'apc':
 					$this->cache_class = 'CacheAPC';
+					break;
+				
+				case 'apcu':
+					$this->cache_class = 'CacheAPCu';
 					break;
 
 				case 'xca': // First three letters of `xcache`

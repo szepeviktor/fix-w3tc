@@ -37,6 +37,8 @@ class W3_UI_DashboardAdminView extends W3_UI_PluginView {
         $can_empty_opcode = $module_status->can_empty_opcode();
 
         $can_empty_apc_system = $module_status->can_empty_apc_system();
+        
+        $can_empty_opcache_system = $module_status->can_empty_opcache_system();
 
         $can_empty_file = $module_status->can_empty_file();
 

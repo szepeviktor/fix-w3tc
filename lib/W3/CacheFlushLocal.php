@@ -190,6 +190,14 @@ class W3_CacheFlushLocal {
     }
     
     /**
+     * Flushes the system APCu
+     * @return bool
+     */
+    function apcu_system_flush() {
+    	throw new \Exception('no opcode cache for apcu');
+    }
+    
+    /**
      * Flushes the system opcache
      * @return bool
      */
@@ -222,6 +230,15 @@ class W3_CacheFlushLocal {
             return apc_compile_file($filename);
         }
         return false;
+    }
+    
+    /**
+     * Reload/compile a PHP file
+     * @param $filename
+     * @return bool
+     */
+    function apcu_reload_file($filename) {
+    	throw new \Exception('no opcode cache for apcu');
     }
     
     /**
@@ -264,6 +281,14 @@ class W3_CacheFlushLocal {
      * Reload/compile a PHP file
      * @param $filenames
      */
+    function apcu_reload_files($filenames) {
+    	throw new \Exception('no opcode cache for apcu');
+    }
+    
+    /**
+     * Reload/compile a PHP file
+     * @param $filenames
+     */
     function opcache_reload_files($filenames) {
     	if (function_exists('opcache_compile_file')) {
     		foreach ($filenames as $filename) {
@@ -289,6 +314,15 @@ class W3_CacheFlushLocal {
         //returns empty array on success
         $result = apc_delete_file($delete_files);
         return empty($result);
+    }
+    
+    /**
+     * Deletes files based on regular expression matching.
+     * @param string $mask
+     * @return boolean
+     */
+    function apcu_delete_files_based_on_regex($mask) {
+    	throw new \Exception('no opcode cache for apcu');
     }
     
     /**

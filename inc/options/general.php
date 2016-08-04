@@ -68,6 +68,7 @@
                         </optgroup>
                         <optgroup label="<?php _e('Dedicated / Virtual Server:', 'w3-total-cache'); ?>">
                             <option value="apc"<?php selected($this->_config->get_string('pgcache.engine'), 'apc'); ?><?php if (! $check_apc): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: Alternative PHP Cache (APC)', 'w3-total-cache'); ?></option>
+                            <option value="apcu"<?php selected($this->_config->get_string('pgcache.engine'), 'apcu'); ?><?php if (! $check_apcu): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: Alternative PHP Cache (APCu)', 'w3-total-cache'); ?></option>
                             <option value="eaccelerator"<?php selected($this->_config->get_string('pgcache.engine'), 'eaccelerator'); ?><?php if (! $check_eaccelerator): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: eAccelerator', 'w3-total-cache'); ?></option>
                             <option value="xcache"<?php selected($this->_config->get_string('pgcache.engine'), 'xcache'); ?><?php if (! $check_xcache): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: XCache', 'w3-total-cache'); ?></option>
                         <option value="wincache"<?php selected($this->_config->get_string('pgcache.engine'), 'wincache'); ?><?php if (! $check_wincache): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: WinCache', 'w3-total-cache'); ?></option>
@@ -126,6 +127,7 @@
                         </optgroup>
                         <optgroup label="<?php _e('Dedicated / Virtual Server:', 'w3-total-cache'); ?>">
                             <option value="apc"<?php selected($this->_config->get_string('minify.engine'), 'apc'); ?><?php if (! $check_apc): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: Alternative PHP Cache (APC)', 'w3-total-cache'); ?></option>
+                            <option value="apcu"<?php selected($this->_config->get_string('minify.engine'), 'apcu'); ?><?php if (! $check_apcu): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: Alternative PHP Cache (APCu)', 'w3-total-cache'); ?></option>
                             <option value="eaccelerator"<?php selected($this->_config->get_string('minify.engine'), 'eaccelerator'); ?><?php if (! $check_eaccelerator): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: eAccelerator', 'w3-total-cache'); ?></option>
                             <option value="xcache"<?php selected($this->_config->get_string('minify.engine'), 'xcache'); ?><?php if (! $check_xcache): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: XCache', 'w3-total-cache'); ?></option>
                             <option value="wincache"<?php selected($this->_config->get_string('minify.engine'), 'wincache'); ?><?php if (! $check_wincache): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: WinCache', 'w3-total-cache'); ?></option>
@@ -202,6 +204,7 @@
                         </optgroup>
                         <optgroup label="Dedicated / Virtual Server:">
                             <option value="apc"<?php selected($this->_config->get_string('dbcache.engine'), 'apc'); ?><?php if (! $check_apc): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: Alternative PHP Cache (APC)', 'w3-total-cache'); ?></option>
+                            <option value="apcu"<?php selected($this->_config->get_string('dbcache.engine'), 'apcu'); ?><?php if (! $check_apcu): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: Alternative PHP Cache (APCu)', 'w3-total-cache'); ?></option>
                             <option value="eaccelerator"<?php selected($this->_config->get_string('dbcache.engine'), 'eaccelerator'); ?><?php if (! $check_eaccelerator): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: eAccelerator', 'w3-total-cache'); ?></option>
                             <option value="xcache"<?php selected($this->_config->get_string('dbcache.engine'), 'xcache'); ?><?php if (! $check_xcache): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: XCache', 'w3-total-cache'); ?></option>
                             <option value="wincache"<?php selected($this->_config->get_string('dbcache.engine'), 'wincache'); ?><?php if (! $check_wincache): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: WinCache', 'w3-total-cache'); ?></option>
@@ -253,6 +256,7 @@
                         </optgroup>
                         <optgroup label="<?php _e('Dedicated / Virtual Server:', 'w3-total-cache'); ?>">
                             <option value="apc"<?php selected($this->_config->get_string('objectcache.engine'), 'apc'); ?><?php if (! $check_apc): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: Alternative PHP Cache (APC)', 'w3-total-cache'); ?></option>
+                            <option value="apcu"<?php selected($this->_config->get_string('objectcache.engine'), 'apcu'); ?><?php if (! $check_apcu): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: Alternative PHP Cache (APCu)', 'w3-total-cache'); ?></option>
                             <option value="eaccelerator"<?php selected($this->_config->get_string('objectcache.engine'), 'eaccelerator'); ?><?php if (! $check_eaccelerator): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: eAccelerator', 'w3-total-cache'); ?></option>
                             <option value="xcache"<?php selected($this->_config->get_string('objectcache.engine'), 'xcache'); ?><?php if (! $check_xcache): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: XCache', 'w3-total-cache'); ?></option>
                             <option value="wincache"<?php selected($this->_config->get_string('objectcache.engine'), 'wincache'); ?><?php if (! $check_wincache): ?> disabled="disabled"<?php endif; ?>><?php _e('Opcode: WinCache', 'w3-total-cache'); ?></option>

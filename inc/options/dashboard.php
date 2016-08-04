@@ -19,6 +19,9 @@
         <?php if ($can_empty_apc_system): ?>
         <input class="button" type="submit" name="w3tc_flush_apc_system" value="<?php _e('empty only the APC system cache', 'w3-total-cache') ?>"<?php if (! $can_empty_apc_system): ?> disabled="disabled"<?php endif; ?> /> <?php _e('or', 'w3-total-cache') ?>
         <?php endif ?>
+        <?php if ($can_empty_opcache_system): ?>
+        <input class="button" type="submit" name="w3tc_flush_opcache" value="<?php _e('empty only the opcode cache', 'w3-total-cache') ?>"<?php if (! $can_empty_opcache_system): ?> disabled="disabled"<?php endif; ?> /> <?php _e('or', 'w3-total-cache') ?>
+        <?php endif ?>
         <input class="button" type="submit" name="w3tc_flush_file" value="<?php _e('empty only the disk cache(s)', 'w3-total-cache') ?>"<?php if (! $can_empty_file): ?> disabled="disabled"<?php endif; ?> /> <?php _e('or', 'w3-total-cache') ?>
         <?php if ($cdn_mirror_purge && $cdn_enabled): ?>
         <input class="button" type="submit" name="w3tc_flush_cdn" value="<?php _e('purge CDN completely', 'w3-total-cache') ?>" /> <?php _e('or', 'w3-total-cache') ?>

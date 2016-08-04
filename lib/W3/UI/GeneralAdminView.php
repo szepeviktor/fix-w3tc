@@ -41,6 +41,7 @@ class W3_UI_GeneralAdminView extends W3_UI_PluginView {
 
         $check_rules = w3_can_check_rules();
         $check_apc = function_exists('apc_store');
+        $check_apcu = function_exists('apcu_store');
         $check_eaccelerator = function_exists('eaccelerator_put');
         $check_xcache = function_exists('xcache_set');
         $check_wincache = function_exists('wincache_ucache_set');

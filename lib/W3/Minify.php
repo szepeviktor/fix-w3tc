@@ -662,6 +662,11 @@ class W3_Minify {
                     w3_require_once(W3TC_LIB_MINIFY_DIR . '/Minify/Cache/APC.php');
                     $cache[0] = new Minify_Cache_APC(0, w3_get_blog_id(), w3_get_instance_id());
                     break;
+                
+                case 'apcu':
+                    w3_require_once(W3TC_LIB_MINIFY_DIR . '/Minify/Cache/APCu.php');
+                    $cache[0] = new Minify_Cache_APC(0, w3_get_blog_id(), w3_get_instance_id());
+                    break;
 
                 case 'eaccelerator':
                     w3_require_once(W3TC_LIB_MINIFY_DIR . '/Minify/Cache/Eaccelerator.php');

@@ -178,6 +178,14 @@ class W3_Enterprise_SnsClient extends W3_Enterprise_SnsBase {
     function apc_system_flush() {
         $this->_prepare_message(array('action' => 'apc_system_flush'));
     }
+    
+    /**
+     * Flushes the system APCu
+     * @return bool
+     */
+    function apcu_system_flush() {
+    	$this->_prepare_message(array('action' => 'apcu_system_flush'));
+    }
 
     /**
      * Reloads/compiles a PHP file.
@@ -186,6 +194,15 @@ class W3_Enterprise_SnsClient extends W3_Enterprise_SnsBase {
      */
     function apc_reload_file($filename) {
         return $this->_prepare_message(array('action' => 'apc_reload_file', 'filename' => $filename));
+    }
+    
+    /**
+     * Reloads/compiles a PHP file.
+     * @param string $filename
+     * @return mixed
+     */
+    function apcu_reload_file($filename) {
+    	return $this->_prepare_message(array('action' => 'apcu_reload_file', 'filename' => $filename));
     }
 
     /**
@@ -196,6 +213,15 @@ class W3_Enterprise_SnsClient extends W3_Enterprise_SnsBase {
     function apc_reload_files($filenames) {
         return $this->_prepare_message(array('action' => 'apc_reload_files', 'filenames' => $filenames));
     }
+    
+    /**
+     * Reloads/compiles a PHP file.
+     * @param string[] $filenames
+     * @return mixed
+     */
+    function apcu_reload_files($filenames) {
+    	return $this->_prepare_message(array('action' => 'apcu_reload_files', 'filenames' => $filenames));
+    }
 
 
     /**
@@ -205,6 +231,15 @@ class W3_Enterprise_SnsClient extends W3_Enterprise_SnsBase {
      */
     function apc_delete_files_based_on_regex($mask) {
         return $this->_prepare_message(array('action' => 'apc_delete_files_based_on_regex', 'regex' => $mask));
+    }
+    
+    /**
+     * Deletes files based on regular expression matching.
+     * @param string $mask
+     * @return mixed
+     */
+    function apcu_delete_files_based_on_regex($mask) {
+    	return $this->_prepare_message(array('action' => 'apcu_delete_files_based_on_regex', 'regex' => $mask));
     }
 
     /**

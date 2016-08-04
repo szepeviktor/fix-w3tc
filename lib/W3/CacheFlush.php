@@ -199,6 +199,14 @@ class W3_CacheFlush {
     }
     
     /**
+     * Clears the system APCu
+     * @return mixed
+     */
+    function apcu_system_flush() {
+    	return $this->_executor->apcu_system_flush();
+    }
+    
+    /**
      * Clears the system opcache
      * @return mixed
      */
@@ -213,6 +221,15 @@ class W3_CacheFlush {
      */
     function apc_reload_file($filename) {
         return $this->_executor->apc_reload_file($filename);
+    }
+    
+    /**
+     * Reloads/compiles a PHP file.
+     * @param string $filename
+     * @return mixed
+     */
+    function apcu_reload_file($filename) {
+    	return $this->_executor->apcu_reload_file($filename);
     }
     
     /**
@@ -236,6 +253,14 @@ class W3_CacheFlush {
      * Reloads/compiles a PHP file.
      * @param string $filenames
      */
+    function apcu_reload_files($filenames) {
+    	$this->_executor->apcu_reload_files($filenames);
+    }
+    
+    /**
+     * Reloads/compiles a PHP file.
+     * @param string $filenames
+     */
     function opcache_reload_files($filenames) {
     	$this->_executor->opcache_reload_files($filenames);
     }
@@ -247,6 +272,15 @@ class W3_CacheFlush {
      */
     function apc_delete_files_based_on_regex($mask) {
         return $this->_executor->apc_delete_files_based_on_regex($mask);
+    }
+    
+    /**
+     * Deletes files based on regular expression matching.
+     * @param string $mask
+     * @return bool
+     */
+    function apcu_delete_files_based_on_regex($mask) {
+    	return $this->_executor->apcu_delete_files_based_on_regex($mask);
     }
     
     /**

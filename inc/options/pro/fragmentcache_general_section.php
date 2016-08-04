@@ -18,6 +18,7 @@
                 </optgroup>
                 <optgroup label="Dedicated / Virtual Server:">
                     <option value="apc"<?php selected($this->_config->get_string('fragmentcache.engine'), 'apc'); ?><?php if (! $check_apc): ?> disabled="disabled"<?php endif; ?>>Opcode: Alternative PHP Cache (APC)</option>
+                    <option value="opcache"<?php selected($this->_config->get_string('fragmentcache.engine'), 'opcache'); ?><?php if (! $check_opcache): ?> disabled="disabled"<?php endif; ?>>Opcode: PHP Opcode Cache</option>
                     <option value="eaccelerator"<?php selected($this->_config->get_string('fragmentcache.engine'), 'eaccelerator'); ?><?php if (! $check_eaccelerator): ?> disabled="disabled"<?php endif; ?>>Opcode: eAccelerator</option>
                     <option value="xcache"<?php selected($this->_config->get_string('fragmentcache.engine'), 'xcache'); ?><?php if (! $check_xcache): ?> disabled="disabled"<?php endif; ?>>Opcode: XCache</option>
                     <option value="wincache"<?php selected($this->_config->get_string('fragmentcache.engine'), 'wincache'); ?><?php if (! $check_wincache): ?> disabled="disabled"<?php endif; ?>>Opcode: WinCache</option>
