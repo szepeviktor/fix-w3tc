@@ -197,6 +197,14 @@ class W3_CacheFlush {
     function apc_system_flush() {
         return $this->_executor->apc_system_flush();
     }
+    
+    /**
+     * Clears the system opcache
+     * @return mixed
+     */
+    function opcache_system_flush() {
+    	return $this->_executor->opcache_system_flush();
+    }
 
     /**
      * Reloads/compiles a PHP file.

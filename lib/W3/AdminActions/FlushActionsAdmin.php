@@ -263,6 +263,10 @@ class W3_AdminActions_FlushActionsAdmin {
             $this->_config->save();
             $this->flush_minify();
         }
+        
+        if( 'opcache' == $type){
+        	$this->flush_opcache();
+        }
     }
 
     /**
@@ -281,7 +285,9 @@ class W3_AdminActions_FlushActionsAdmin {
      */
     function flush_opcode() {
         $this->flush('apc');
+        $this->flush('apcu');
         $this->flush('eaccelerator');
+        $this->flush('opcache');
         $this->flush('xcache');
         $this->flush('wincache');
     }
@@ -318,6 +324,16 @@ class W3_AdminActions_FlushActionsAdmin {
         if ($this->_config->get_boolean('varnish.enabled'))
             $this->flush_varnish();
         do_action('w3tc_flush_all');
+    }
+    
+    /**
+     * Flush opcache
+     *
+     * @return void
+     */
+    function flush_opcache() {
+    	$flusher = w3_instance('W3_CacheFlush');
+    	$flusher->opcache_system_flush();
     }
 
     /**
