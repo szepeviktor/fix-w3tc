@@ -4,6 +4,7 @@ class W3_ModuleStatus {
 
     private $_opcode_engines = array(
                                     'apc',
+    		                        'opcache',
                                     'eaccelerator',
                                     'xcache',
                                     'wincache'
@@ -104,6 +105,13 @@ class W3_ModuleStatus {
      */
     public function can_empty_apc_system() {
         return function_exists('apc_clear_cache') && ini_get('apc.stat') == '0';
+    }
+    
+    /**
+     * @return bool
+     */
+    public function can_empty_opcache_system() {
+    	return function_exists('opcache_reset') && ini_get('opcache.enable') == '1';
     }
 
     /**

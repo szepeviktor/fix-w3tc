@@ -957,11 +957,12 @@ class W3_PgCache {
     function _get_page_key($mobile_group = '', $referrer_group = '', 
         $encryption = '', $compression = '', $content_type = '', $request_uri = '') {
 
-        if ($request_uri)
+        if ($request_uri){
             $is_ssl_request = ( strtolower(substr($request_uri, 0, 8)) == 'https://' );
             $key = substr( $request_uri, $is_ssl_request ? 8 : 7 );
-        else
+        } else {
             $key = $this->_request_host . $this->_request_uri;
+		}
 
         // replace fragment
         $key = preg_replace('~#.*$~', '', $key);
