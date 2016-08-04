@@ -194,8 +194,8 @@ class W3_CacheFlushLocal {
      * @return bool
      */
     function opcache_system_flush() {
-    	if (function_exists('opcache_reset') && ini_get('opcache.enable') == '0') {
-    		return opcache_reset ();
+    	if (function_exists('opcache_reset') && ini_get('opcache.validate_timestamps') == '0') {
+    		return opcache_reset();
     	}
     	return false;
     }

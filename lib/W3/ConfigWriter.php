@@ -140,6 +140,7 @@ class W3_ConfigWriter {
             }
 
             $this->flush_apc($cache_filename, true);
+            $this->flush_opcache($cache_filename, true);
         }
         return $compiled_config->data;
     }
@@ -398,5 +399,25 @@ class W3_ConfigWriter {
                 $w3_cacheflush->apc_reload_file($filename);
             }
         }
+    }
+    
+    /**
+     * Flush the opcache
+     * @param string $filename file to reload
+     * @param bool $local_flush default false. Flushes over SNS if false. Local if true
+     */
+    private function flush_opcache($filename, $local_flush = false) {
+    	// If opcache.validate_timestamps is set to 0 (= no automatic detection of changes files), we explicitly flush the opcache cache
+    	if(function_exists('opcache_reset') && ini_get('opcache.validate_timestamps') == '0' && !(defined('DONOTFLUSHOPCACHE') && DONOTFLUSHOPCACHE)) {
+    		if ($local_flush) {
+    			/** @var $w3_cacheflush W3_CacheFlushLocal */
+    			$w3_cacheflush = w3_instance('W3_CacheFlushLocal');
+    			$w3_cacheflush->opcache_reload_file($filename);
+    		} else {
+    			/** @var $w3_cacheflush W3_CacheFlush */
+    			$w3_cacheflush = w3_instance('W3_CacheFlush');
+    			$w3_cacheflush->opcache_reload_file($filename);
+    		}
+    	}
     }
 }

@@ -111,7 +111,7 @@ class W3_ModuleStatus {
      * @return bool
      */
     public function can_empty_opcache_system() {
-    	return function_exists('opcache_reset') && ini_get('opcache.enable') == '1';
+    	return function_exists('opcache_reset') && ini_get('opcache.validate_timestamps') == '0';
     }
 
     /**
