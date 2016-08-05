@@ -212,11 +212,11 @@ function w3_is_subdomain_install() {
  */
 function w3_is_multisite() {
     static $multisite = null;
-
+    
     if ($multisite === null) {
-        $multisite = is_multisite();
+        $multisite = ((defined('MULTISITE') && MULTISITE) || defined('SUNRISE') || w3_is_subdomain_install());
     }
-
+    
     return $multisite;
 }
 
