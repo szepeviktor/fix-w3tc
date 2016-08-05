@@ -23,8 +23,7 @@ class W3_Environment_WpLoader {
         $path = trim(w3_get_wp_sitepath() ,"/");
         if ($path)
             $path .= '/';
-        $file_data = "
-<?php
+        $file_data = "<?php
     if (W3TC_WP_LOADING)
         require_once '" . w3_get_document_root() . '/' . $path . "wp-load.php';
 ";
