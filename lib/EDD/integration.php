@@ -1,7 +1,9 @@
 <?php
 
 // Remove HTML comment
-add_filter( 'w3tc_can_print_comment', '__return_false' );
+if( !(defined('WP_DEBUG') && WP_DEBUG) ){
+	add_filter( 'w3tc_can_print_comment', '__return_false' );
+}
 
 // Remove contextual help
 add_action( 'admin_enqueue_scripts', 'o1_remove_w3tc_contextual_help' );
