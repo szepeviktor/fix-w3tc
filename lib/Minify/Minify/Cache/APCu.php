@@ -1,18 +1,18 @@
 <?php
 /**
- * Class Minify_Cache_APC
+ * Class Minify_Cache_APCu
  * @package Minify
  */
 
 /**
- * APC-based cache class for Minify
+ * APCu-based cache class for Minify
  *
  * <code>
- * Minify::setCache(new Minify_Cache_APC());
+ * Minify::setCache(new Minify_Cache_APCu());
  * </code>
  *
  * @package Minify
- * @author Chris Edwards
+ * @author Chris Edwards, Simone Nigro
  **/
 class Minify_Cache_APCu {
 
@@ -36,7 +36,7 @@ class Minify_Cache_APCu {
     private $_instance_id = 0;
 
     /**
-     * Create a Minify_Cache_APC object, to be passed to
+     * Create a Minify_Cache_APCu object, to be passed to
      * Minify::setCache().
      *
      *
