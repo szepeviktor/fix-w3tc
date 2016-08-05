@@ -282,7 +282,7 @@ class W3_CacheFlushLocal {
      * @param $filenames
      */
     function apcu_reload_files($filenames) {
-    	throw new \Exception('no opcode cache for apcu');
+    	return;
     }
     
     /**
@@ -322,7 +322,7 @@ class W3_CacheFlushLocal {
      * @return boolean
      */
     function apcu_delete_files_based_on_regex($mask) {
-    	throw new \Exception('no opcode cache for apcu');
+    	return false;
     }
     
     /**

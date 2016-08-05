@@ -191,6 +191,44 @@ class W3TotalCache_Command extends WP_CLI_Command {
     }
     
     /**
+     * Tell APCu to reload PHP files
+     * @param array $args
+     */
+    function apcu_reload_files($args = array()) {
+    	try {
+    		$method = array_shift($args);
+    		if (!in_array($method, array('SNS', 'local')))
+    			WP_CLI::error($method . __(' is not supported. Change to SNS or local to reload APC files', 'w3-total-cache'));
+    			if ($method == 'SNS') {
+    				$w3_cache = w3_instance('W3_CacheFlush');
+    				$w3_cache->apcu_reload_files($args);
+    			} else {
+    				$url = WP_PLUGIN_URL . '/' . dirname(W3TC_FILE) . '/pub/apcu.php';
+    				$path = parse_url($url, PHP_URL_PATH);
+    				$post = array(
+    						'method' => 'POST',
+    						'timeout' => 45,
+    						'redirection' => 5,
+    						'httpversion' => '1.0',
+    						'blocking' => true,
+    						'body' => array( 'nonce' => wp_hash($path), 'command' => 'reload_files', 'files' => $args),
+    				);
+    				$result = wp_remote_post($url, $post);
+    				if (is_wp_error($result)) {
+    					WP_CLI::error(__('Files did not successfully reload with error %s', 'w3-total-cache'), $result);
+    				} elseif ($result['response']['code'] != '200') {
+    					WP_CLI::error(__('Files did not successfully reload with message: ', 'w3-total-cache') . $result['body']);
+    				}
+    			}
+    	}
+    	catch (Exception $e) {
+    		WP_CLI::error(__('Files did not successfully reload with error %s', 'w3-total-cache'), $e);
+    	}
+    	WP_CLI::success(__('Files reloaded successfully.', 'w3-total-cache'));
+    
+    }
+    
+    /**
      * Tell opcache to reload PHP files
      * @param array $args
      */
@@ -268,6 +306,45 @@ class W3TotalCache_Command extends WP_CLI_Command {
     }
     
     /**
+     * Tell APCu to reload PHP files
+     * @param array $args
+     */
+    function apcu_delete_based_on_regex($args = array()) {
+    	try {
+    		$method = array_shift($args);
+    		if (!in_array($method, array('SNS', 'local')))
+    			WP_CLI::error($method . __(' is not supported. Change to SNS or local to delete APC files', 'w3-total-cache'));
+    
+    			if ($method == 'SNS') {
+    				$w3_cache = w3_instance('W3_CacheFlush');
+    				$w3_cache->apcu_delete_files_based_on_regex($args[0]);
+    			} else {
+    				$url = WP_PLUGIN_URL . '/' . dirname(W3TC_FILE) . '/pub/apcu.php';
+    				$path = parse_url($url, PHP_URL_PATH);
+    				$post = array(
+    						'method' => 'POST',
+    						'timeout' => 45,
+    						'redirection' => 5,
+    						'httpversion' => '1.0',
+    						'blocking' => true,
+    						'body' => array( 'nonce' => wp_hash($path), 'command' => 'delete_files', 'regex' => $args[0]),
+    				);
+    				$result = wp_remote_post($url, $post);
+    				if (is_wp_error($result)) {
+    					WP_CLI::error(__('Files did not successfully delete with error %s', 'w3-total-cache'), $result);
+    				} elseif ($result['response']['code'] != '200') {
+    					WP_CLI::error(__('Files did not successfully delete with message: ', 'w3-total-cache'). $result['body']);
+    				}
+    			}
+    	}
+    	catch (Exception $e) {
+    		WP_CLI::error(__('Files did not successfully delete with error %s', 'w3-total-cache'), $e);
+    	}
+    	WP_CLI::success(__('Files deleted successfully.', 'w3-total-cache'));
+    
+    }
+    
+    /**
      * Tell opcache to reload PHP files
      * @param array $args
      */
@@ -337,6 +414,8 @@ usage: wp w3-total-cache flush [post|database|minify|object] [--post_id=<post-id
 			 pgcache_cleanup   Generally triggered from a cronjob, allows for manual Garbage collection of page cache to be triggered
              apc_reload_files SNS/local file.php file2.php file3.php Tells apc to compile files
              apc_delete_based_on_regex SNS/local expression Tells apc to delete files that match a RegEx mask
+			 apcu_reload_files SNS/local file.php file2.php file3.php Tells apc to compile files
+             apcu_delete_based_on_regex SNS/local expression Tells apc to delete files that match a RegEx mask
 			 opcache_reload_files SNS/local file.php file2.php file3.php Tells opcache to compile files
              opcache_delete_based_on_regex SNS/local expression Tells opcache to delete files that match a RegEx mask
 Available flush sub-commands:
