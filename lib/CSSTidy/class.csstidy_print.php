@@ -65,7 +65,7 @@ class csstidy_print
      * @access private
      * @version 1.0
      */
-    function csstidy_print(&$css)
+    function __construct(&$css)
     {
         $this->parser    =& $css;
         $this->css       =& $css->css;
