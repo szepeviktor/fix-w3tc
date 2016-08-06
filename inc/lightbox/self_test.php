@@ -151,15 +151,6 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
         </li>
 
         <li>
-            <?php _e('Safe mode:', 'w3-total-cache'); ?>
-            <?php if (w3_to_boolean(ini_get('safe_mode'))): ?>
-            <code><?php _e('On', 'w3-total-cache'); ?></code>
-            <?php else: ?>
-            <code><?php _e('Off', 'w3-total-cache'); ?></code>
-            <?php endif; ?>
-        </li>
-
-        <li>
             <?php _e('Open basedir:', 'w3-total-cache'); ?>
             <?php $open_basedir = ini_get('open_basedir'); if ($open_basedir): ?>
             <code><?php _e('On:', 'w3-total-cache'); ?> <?php echo htmlspecialchars($open_basedir); ?></code>
