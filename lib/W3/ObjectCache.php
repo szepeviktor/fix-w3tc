@@ -178,7 +178,7 @@ class W3_ObjectCache {
         }
 
         if (is_object($value)) {
-            $value = clone( $value );
+            $value = clone $value;
         }
 
         $this->cache[$key] = $value;
@@ -229,7 +229,7 @@ class W3_ObjectCache {
         $key = $this->_get_cache_key($id, $group);
 
         if (is_object($data)) {
-            $data = clone( $data );
+            $data = clone $data;
         }
 
         $this->cache[$key] = $data;
