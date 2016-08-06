@@ -252,7 +252,7 @@ var $line = 1;
  * @access private
  * @version 1.3
  */
-function csstidy()
+function __construct()
 {
 	$this->settings['remove_bslash'] = true;
 	$this->settings['compress_colors'] = true;
