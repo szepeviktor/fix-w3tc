@@ -171,7 +171,7 @@ class W3_Pro_FragmentCache {
         }
 
         if (is_object($value)) {
-			$value = clone( $value );
+			$value = clone $value;
         }
 
         $this->cache[$fragment_group . $group][$key] = $value;
@@ -222,7 +222,7 @@ class W3_Pro_FragmentCache {
         $key = $this->_get_cache_key($id, $group);
 
         if (is_object($data)) {
-            $data = clone( $data );
+            $data = clone $data;
         }
 
         list($fragment_group, $fragment_group_expiration) = 
