@@ -764,7 +764,7 @@ $keys = array(
     ),
     'cdn.theme.files' => array(
         'type' => 'string',
-        'default' => '*.css;*.js;*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf,*.woff'
+        'default' => '*.css;*.js;*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf;*.woff'
     ),
     'cdn.minify.enable' => array(
         'type' => 'boolean',
