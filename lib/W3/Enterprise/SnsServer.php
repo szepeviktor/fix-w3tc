@@ -139,14 +139,6 @@ class W3_Enterprise_SnsServer extends W3_Enterprise_SnsBase {
             $executor->apc_reload_files($m['filenames']);
         else if ($action == 'apc_delete_files_based_on_regex')
             $executor->apc_delete_files_based_on_regex($m['regex']);
-        else if ($action == 'apcu_system_flush')
-            $executor->apcu_system_flush();
-        else if ($action == 'apcu_reload_file')
-            $executor->apcu_reload_file($m['filename']);
-        else if ($action == 'apcu_reload_files')
-            $executor->apcu_reload_files($m['filenames']);
-        else if ($action == 'apcu_delete_files_based_on_regex')
-            $executor->apcu_delete_files_based_on_regex($m['regex']);
         else if ($action == 'flush')
             $executor->flush();
         else if ($action == 'flush_all')

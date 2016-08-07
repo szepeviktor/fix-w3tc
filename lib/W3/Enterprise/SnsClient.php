@@ -180,11 +180,11 @@ class W3_Enterprise_SnsClient extends W3_Enterprise_SnsBase {
     }
     
     /**
-     * Flushes the system APCu
+     * Flushes the system OPcache
      * @return bool
      */
-    function apcu_system_flush() {
-    	$this->_prepare_message(array('action' => 'apcu_system_flush'));
+    function opcache_system_flush() {
+    	$this->_prepare_message(array('action' => 'opcache_system_flush'));
     }
 
     /**
@@ -201,8 +201,8 @@ class W3_Enterprise_SnsClient extends W3_Enterprise_SnsBase {
      * @param string $filename
      * @return mixed
      */
-    function apcu_reload_file($filename) {
-    	return $this->_prepare_message(array('action' => 'apcu_reload_file', 'filename' => $filename));
+    function opcache_reload_file($filename) {
+    	return $this->_prepare_message(array('action' => 'opcache_reload_file', 'filename' => $filename));
     }
 
     /**
@@ -219,10 +219,9 @@ class W3_Enterprise_SnsClient extends W3_Enterprise_SnsBase {
      * @param string[] $filenames
      * @return mixed
      */
-    function apcu_reload_files($filenames) {
-    	return $this->_prepare_message(array('action' => 'apcu_reload_files', 'filenames' => $filenames));
+    function opcache_reload_files($filenames) {
+    	return $this->_prepare_message(array('action' => 'opcache_reload_files', 'filenames' => $filenames));
     }
-
 
     /**
      * Deletes files based on regular expression matching.
@@ -238,8 +237,8 @@ class W3_Enterprise_SnsClient extends W3_Enterprise_SnsBase {
      * @param string $mask
      * @return mixed
      */
-    function apcu_delete_files_based_on_regex($mask) {
-    	return $this->_prepare_message(array('action' => 'apcu_delete_files_based_on_regex', 'regex' => $mask));
+    function opcache_delete_files_based_on_regex($mask) {
+    	return $this->_prepare_message(array('action' => 'opcache_delete_files_based_on_regex', 'regex' => $mask));
     }
 
     /**

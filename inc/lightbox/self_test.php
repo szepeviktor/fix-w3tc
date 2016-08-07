@@ -94,8 +94,8 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
             Opcode cache:
             <?php if (function_exists('apc_store')): ?>
             <code><?php _e('Installed (APC)', 'w3-total-cache'); ?></code>
-            <?php elseif (function_exists('apcu_store')): ?>
-            <code><?php _e('Installed (APCu)', 'w3-total-cache'); ?></code>
+            <?php elseif (function_exists('opcache_reset')): ?>
+            <code><?php _e('Installed (OPcache)', 'w3-total-cache'); ?></code>
             <?php elseif (function_exists('eaccelerator_put')): ?>
             <code><?php _e('Installed (eAccelerator)', 'w3-total-cache'); ?></code>
             <?php elseif (function_exists('xcache_set')): ?>

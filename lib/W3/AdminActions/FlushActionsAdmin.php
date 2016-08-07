@@ -66,15 +66,6 @@ class W3_AdminActions_FlushActionsAdmin {
             'w3tc_note' => 'flush_apc_system'
         ), true);
     }
-    
-    /**
-     * Flush opcode caches action
-     *
-     * @return void
-     */
-    function action_flush_apcu_system() {
-    	$this->flush_apcu_system();
-    }
 
     /**
      * Flush file caches action
@@ -294,7 +285,6 @@ class W3_AdminActions_FlushActionsAdmin {
      */
     function flush_opcode() {
         $this->flush('apc');
-        $this->flush('apcu');
         $this->flush('eaccelerator');
         $this->flush('opcache');
         $this->flush('xcache');
@@ -307,13 +297,6 @@ class W3_AdminActions_FlushActionsAdmin {
     function flush_apc_system() {
         $cacheflush = w3_instance('W3_CacheFlush');
         $cacheflush->apc_system_flush();
-    }
-    
-    /**
-     * Flush APC system cache
-     */
-    function flush_apcu_system() {
-    	throw new \Exception('no opcode cache for apcu'); 
     }
 
     /**
