@@ -13,7 +13,7 @@ function w3_parse_faq() {
 
     $xml = @file_get_contents($file);
     $file2 = W3TC_LANGUAGES_DIR . '/faq-pro-' . get_locale() . '.xml';
-    if (!file_exists($file)) {
+    if (!file_exists($file2)) {
         $file2 = W3TC_LANGUAGES_DIR . '/faq-pro-en_US.xml';
     }
     $xml2 = @file_get_contents($file2);
