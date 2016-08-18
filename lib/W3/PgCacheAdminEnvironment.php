@@ -1141,7 +1141,12 @@ class W3_PgCacheAdminEnvironment {
 
             // allow to read files by apache if they are blocked at some level above
             $rules .= "<Files ~ \"\.(html|html_gzip|xml|xml_gzip)$\">\n";
-            $rules .= "  Allow from all\n";
+            $rules .= "  <IfModule mod_authz_host.c>\n";
+            $rules .= "    Require all granted\n";
+            $rules .= "  </IfModule>\n";
+            $rules .= "  <IfModule !mod_authz_host.c>\n";
+            $rules .= "    Allow from all\n";
+            $rules .= "  </IfModule>\n";
             $rules .= "</Files>\n";
 
             if (!$etag) {
