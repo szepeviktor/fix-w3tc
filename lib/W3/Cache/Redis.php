@@ -248,7 +248,7 @@ class W3_Cache_Redis extends W3_Cache_Base
         try {
             if (!isset($this->_key_version[$group]) || $this->_key_version[$group]
                 <= 0) {
-                $v = @unserialize(@$this->_redis->get($this->_get_key_version_key($group)));
+                $v = @$this->_redis->get($this->_get_key_version_key($group));
                 $v = intval($v);
 
                 $this->_key_version[$group] = ($v > 0 ? $v : 1);
