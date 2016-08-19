@@ -20,7 +20,7 @@ Fix and customize W3 Total Cache by @ftownes
 - [x] Fix https caching
 - [ ] Halfdone CloudFlare support in trunk
 - [x] Support AMP
-- [ ] Support Redis
+- [x] Support Redis
 
 ### And customize
 
