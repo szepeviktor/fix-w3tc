@@ -67,6 +67,18 @@ $keys = array(
             '127.0.0.1:11211'
         )
     ),
+     'dbcache.redis.persistant' => array(
+        'type' => 'boolean',
+        'default' => true
+    ),
+    'dbcache.redis.server' => array(
+        'type' => 'string',
+        'default' =>'127.0.0.1:6379' 
+    ),
+    'dbcache.redis.db' => array(
+        'type' => 'integer',
+        'default' => 6
+    ),
     'dbcache.reject.cookie' => array(
         'type' => 'array',
         'default' => array()
@@ -135,6 +147,18 @@ $keys = array(
         'type' => 'boolean',
         'default' => true
     ),
+     'objectcache.redis.server' => array(
+        'type' => 'string',
+        'default' =>'127.0.0.1:6379'
+    ),
+    'objectcache.redis.db' => array (
+        'type' => 'integer',
+        'default' => 6
+    ),
+    'objectcache.redis.persistant' => array(
+        'type' => 'boolean',
+        'default' => true
+    ),
     'objectcache.groups.global' => array(
         'type' => 'array',
             'default' => array(
@@ -198,6 +222,19 @@ $keys = array(
         'type' => 'boolean',
         'default' => true
     ),
+    'fragmentcache.redis.server' => array(
+        'type' => 'string',
+        'default' =>  '127.0.0.1:6379'
+        
+    ),
+    'fragmentcache.redis.db' => array (
+        'type' => 'integer',
+        'default' => 6
+    ),
+    'fragmentcache.redis.persistant' => array(
+        'type' => 'boolean',
+        'default' => true
+    ),
     'fragmentcache.lifetime' => array(
         'type' => 'integer',
         'default' => 180
@@ -246,6 +283,19 @@ $keys = array(
         )
     ),
     'pgcache.memcached.persistant' => array(
+        'type' => 'boolean',
+        'default' => true
+    ),
+     'pgcache.redis.server' => array(
+        'type' => 'string',
+        'default' =>  '127.0.0.1:6379'
+        
+    ),
+     'pgcache.redis.db' => array (
+        'type' => 'integer',
+        'default' => 6
+    ),
+    'pgcache.redis.persistant' => array(
         'type' => 'boolean',
         'default' => true
     ),
@@ -479,6 +529,19 @@ $keys = array(
         )
     ),
     'minify.memcached.persistant' => array(
+        'type' => 'boolean',
+        'default' => true
+    ),
+    'minify.redis.server' => array(
+        'type' => 'string',
+        'default' =>  '127.0.0.1:6379'
+        
+    ),
+     'minify.redis.db' => array (
+        'type' => 'integer',
+        'default' => 6
+    ),
+    'minify.redis.persistant' => array(
         'type' => 'boolean',
         'default' => true
     ),

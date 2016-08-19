@@ -35,6 +35,8 @@ class W3_UI_Settings_Minify extends W3_UI_Settings_SettingsBase{
                 'minify.auto.disable_filename_length_test' => __('Disable minify automatic file name length test', 'w3-total-cache'),
                 'minify.auto.filename_length' => __('Filename length:', 'w3-total-cache'),
                 'minify.memcached.servers' => __('Memcached hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
+                'minify.redis.server' => __('Redis hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
+                'minify.redis.db' => __('Redis database','w3-total-cache'),
                 'minify.lifetime' => __('Update external files every:', 'w3-total-cache'),
                 'minify.file.gc' => __('Garbage collection interval:', 'w3-total-cache'),
                 'minify.reject.uri' => __('Never minify the following pages:', 'w3-total-cache'),

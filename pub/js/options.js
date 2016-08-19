@@ -1317,6 +1317,22 @@ jQuery(function() {
         }, 'json');
     });
 
+    jQuery('#redis_test').click(function() {
+        var status = jQuery('#redis_test_status');
+        status.removeClass('w3tc-error');
+        status.removeClass('w3tc-success');
+        status.addClass('w3tc-process');
+        status.html('Testing Redis...');
+        jQuery.post('admin.php?page=w3tc_dashboard', {
+            w3tc_test_redis: 1,
+            server: jQuery('#redis_server').val(),
+            db: jQuery('#redis_db').val(),
+            _wpnonce: jQuery(this).metadata().nonce
+        }, function(data) {
+            status.addClass(data.result ? 'w3tc-success' : 'w3tc-error');
+            status.html(data.error);
+        }, 'json');
+    });
     jQuery('.minifier_test').click(function() {
         var me = jQuery(this);
         var metadata = me.metadata();

@@ -71,6 +71,29 @@
                 </td>
             </tr>
             <?php endif; ?>
+            <?php if ($this->_config->get_string('fragmentcache.engine') == 'redis'): ?>
+            <tr>
+                <th><label for="redis_server"><?php w3_e_config_label('fragmentcache.redis.server') ?></label></th>
+                <td>
+                    <input id="redis_server" type="text"
+                        <?php $this->sealing_disabled('fragmentcache') ?> name="fragmentcache.redis.server" value="<?php echo esc_attr($this->_config->get_string('fragmentcache.redis.server')); ?>" size="100" />
+                    <br /><span class="description"><?php _e('Use only one server: e.g. 192.168.1.100:6379,6 or the path to a unix socket', 'w3-total-cache'); ?></span>
+                </td>
+            </tr>
+             <tr>
+                <th><label for="redis_db"><?php w3_e_config_label('fragmentcache.redis.db') ?></label></th>
+                <td>
+                    <input id="redis_db" type="text"
+                        name="fragmentcache.redis.db"
+                        <?php $this->sealing_disabled('fragmentcache') ?>
+                        value="<?php echo esc_attr($this->_config->get_integer('fragmentcache.redis.db')); ?>" size="100" />
+                            <input id="redis_test" class="button {nonce: '<?php echo wp_create_nonce('w3tc'); ?>'}"
+                        <?php $this->sealing_disabled('fragmentcache') ?>
+                        type="button" value="<?php esc_attr_e('Test', 'w3-total-cache'); ?>" />
+                    <span id="redis_test_status" class="w3tc-status w3tc-process"></span>
+                </td>
+            </tr>
+            <?php endif; ?>
             <tr>
                 <th style="width: 250px;"><label for="fragmentcache_lifetime"><?php w3_e_config_label('fragmentcache.lifetime') ?></label></th>
                 <td>

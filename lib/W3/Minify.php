@@ -658,6 +658,19 @@ class W3_Minify {
                     $cache[0] = new Minify_Cache_Memcache($w3_cache_memcached, 0 , w3_get_blog_id(), w3_get_instance_id());
                     break;
 
+                case "redis":
+                    w3_require_once(W3TC_LIB_W3_DIR . '/Cache/Redis.php');
+                    w3_require_once(W3TC_LIB_MINIFY_DIR . '/Minify/Cache/Redis.php');
+                    $w3_cache_redis = new W3_Cache_Redis(array('blog_id' => w3_get_blog_id(),
+                                                                        'instance_id' => w3_get_instance_id(),
+                                                                        'host' =>  w3_get_host(),
+                                                                        'module' => 'minify',
+                                                                         'server' => $this->_config->get_string('minify.redis.server'),
+                                                                         'db' => $this->_config->get_integer('minify.redis.db'),
+                                                                         'persistant' => $this->_config->get_boolean('minify.redis.persistant')
+                                                                    ));
+                    $cache[0] = new Minify_Cache_Redis($w3_cache_redis, 0 , w3_get_blog_id(), w3_get_instance_id());
+                    break;
                 case 'apc':
                     w3_require_once(W3TC_LIB_MINIFY_DIR . '/Minify/Cache/APC.php');
                     $cache[0] = new Minify_Cache_APC(0, w3_get_blog_id(), w3_get_instance_id());

@@ -594,6 +594,13 @@ class W3_PgCache {
                     );
                     break;
 
+                 case 'redis':
+                    $engineConfig = array(
+                        'server' => $this->_config->get_string('pgcache.redis.server'),
+                        'db' => $this->_config->get_integer('pgcache.redis.db'),
+                        'persistant' => $this->_config->get_boolean('pgcache.redis.persistant')
+                    );
+                    break;
                 case 'file':
                     $engineConfig = array(
                         'section' => 'page',

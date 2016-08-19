@@ -255,6 +255,31 @@
                 </td>
             </tr>
             <?php endif; ?>
+            <?php if ($this->_config->get_string('pgcache.engine') == 'redis'): ?>
+            <tr>
+                <th><label for="redis_server"><?php w3_e_config_label('pgcache.memcached.servers') ?></label></th>
+                <td>
+                    <input id="redis_server" type="text"
+                        name="pgcache.redis.server"
+                        <?php $this->sealing_disabled('pgcache') ?>
+                        value="<?php echo esc_attr( $this->_config->get_string('pgcache.redis.server')); ?>" size="100" />
+                    <br /><span class="description"><?php _e('Use only one server: e.g. 192.168.1.100:6379,6 or the path to a unix socket ', 'w3-total-cache'); ?></span>
+                </td>
+            </tr>
+             <tr>
+                <th><label for="redis_db"><?php w3_e_config_label('pgcache.redis.db') ?></label></th>
+                <td>
+                    <input id="redis_db" type="text"
+                        name="pgcache.redis.db"
+                        <?php $this->sealing_disabled('pgcache') ?>
+                        value="<?php echo esc_attr($this->_config->get_integer('pgcache.redis.db')); ?>" size="100" />
+                            <input id="redis_test" class="button {nonce: '<?php echo wp_create_nonce('w3tc'); ?>'}"
+                        <?php $this->sealing_disabled('pgcache') ?>
+                        type="button" value="<?php esc_attr_e('Test', 'w3-total-cache'); ?>" />
+                    <span id="redis_test_status" class="w3tc-status w3tc-process"></span>
+                </td>
+            </tr>
+            <?php endif; ?>
             <?php if ($this->_config->get_string('pgcache.engine') == 'file_generic'): ?>
             <tr>
                 <th><label><?php _e('Compatibility mode', 'w3-total-cache'); ?></label></th>

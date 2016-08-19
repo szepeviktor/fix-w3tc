@@ -23,8 +23,11 @@
                     <option value="xcache"<?php selected($this->_config->get_string('fragmentcache.engine'), 'xcache'); ?><?php if (! $check_xcache): ?> disabled="disabled"<?php endif; ?>>Opcode: XCache</option>
                     <option value="wincache"<?php selected($this->_config->get_string('fragmentcache.engine'), 'wincache'); ?><?php if (! $check_wincache): ?> disabled="disabled"<?php endif; ?>>Opcode: WinCache</option>
                 </optgroup>
-                <optgroup label="Multiple Servers:">
+                 <optgroup label="Memcached Multiple Servers:">
                     <option value="memcached"<?php selected($this->_config->get_string('fragmentcache.engine'), 'memcached'); ?><?php if (! $check_memcached): ?> disabled="disabled"<?php endif; ?>>Memcached</option>
+                </optgroup>
+                 <optgroup label="Redis Server:">
+                    <option value="redis"<?php selected($this->_config->get_string('fragmentcache.engine'), 'redis'); ?><?php if (! $check_redis): ?> disabled="disabled"<?php endif; ?>>Redis</option>
                 </optgroup>
             </select>
         </td>

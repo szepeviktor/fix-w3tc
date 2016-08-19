@@ -1280,6 +1280,10 @@ function w3_get_engine_name($engine, $module = '') {
             $engine_name = 'apcu';
             break;
 
+        case 'redis':
+            $engine_name = 'redis';
+            break;
+
         case 'eaccelerator':
             $engine_name = 'eaccelerator';
             break;

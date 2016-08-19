@@ -117,6 +117,14 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
         </li>
 
         <li>
+            <?php _e('Redis Extension','w3-total-cache'); ?>
+            <?php if(class_exists('Redis')):?>
+            <code><?php _e('Installed','w3-total-cache'); ?></code>
+            <?php else: ?>
+            <code><?php _e('Not Installed','w3-total-cache'); ?></code>
+            <?php endif; ?>
+        </li>
+        <li>
             <?php _e('HTML Tidy extension:', 'w3-total-cache'); ?>
             <?php if (class_exists('tidy')): ?>
             <code><?php _e('Installed', 'w3-total-cache'); ?></code>

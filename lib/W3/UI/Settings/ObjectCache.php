@@ -11,6 +11,8 @@ class W3_UI_Settings_ObjectCache extends W3_UI_Settings_SettingsBase{
             ),
             'settings' => array(
                 'objectcache.memcached.servers' => __('Memcached hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
+                'objectcache.redis.server' => __('Redis hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
+                'objectcache.redis.db' => __('Redis database','w3-total-cache'),
                 'objectcache.lifetime' => __('Default lifetime of cache objects:', 'w3-total-cache'),
                 'objectcache.file.gc' => __('Garbage collection interval:', 'w3-total-cache'),
                 'objectcache.groups.global' => __('Global groups:', 'w3-total-cache'),

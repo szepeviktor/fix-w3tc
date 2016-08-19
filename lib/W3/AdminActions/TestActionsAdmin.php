@@ -60,6 +60,32 @@ class W3_AdminActions_TestActionsAdmin {
     }
 
     /**
+     * Test redis
+     *
+     * @return void
+     */
+    function action_test_redis() {
+        w3_require_once(W3TC_LIB_W3_DIR . '/Request.php');
+
+        $server = W3_Request::get_string('server');
+        $db = W3_Request::get_integer('db');
+        if ($this->is_redis_available($server,$db)) {
+            $result = true;
+            $error = __('Test passed.', 'w3-total-cache');
+        } else {
+            $result = false;
+            $error = __('Test failed.', 'w3-total-cache');
+        }
+
+        $response = array(
+            'result' => $result,
+            'error' => $error
+        );
+
+        echo json_encode($response);
+    }
+
+    /**
      * Test minifier action
      *
      * @return void
@@ -145,6 +171,34 @@ class W3_AdminActions_TestActionsAdmin {
             $test_value = array('content' => $test_string);
             $memcached->set($test_string, $test_value, 60);
             $test_value = $memcached->get($test_string);
+            $results[$key] = ( $test_value['content'] == $test_string);
+        }
+
+        return $results[$key];
+    }
+
+    /**
+     * Check if redis is available
+     *
+     * @param array $servers
+     * @return boolean
+     */
+    function is_redis_available($server, $db) {
+        static $results = array();
+        $key = md5($server);
+        if (!isset($results[$key])) {
+            w3_require_once(W3TC_LIB_W3_DIR . '/Cache/Redis.php');
+
+            @$redis = new W3_Cache_Redis(array(
+                'server' => $server,
+                'db' => $db,
+                'persistant' => false
+            ));
+
+            $test_string = sprintf('test_' . md5(time()));
+            $test_value = array('content' => $test_string);
+           $ins = $redis->set($test_string, $test_value, 60);
+            $test_value = $redis->get($test_string);
             $results[$key] = ( $test_value['content'] == $test_string);
         }
 

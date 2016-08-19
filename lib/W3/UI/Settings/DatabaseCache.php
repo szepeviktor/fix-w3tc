@@ -12,6 +12,8 @@ class W3_UI_Settings_DatabaseCache extends W3_UI_Settings_SettingsBase{
             'settings' => array(
                 'dbcache.reject.logged' => __('Don\'t cache queries for logged in users', 'w3-total-cache'),
                 'dbcache.memcached.servers' => __('Memcached hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
+                'dbcache.redis.server' => __('Redis hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
+                'dbcache.redis.db' => __('Redis database:','w3-total-cache'),
                 'dbcache.lifetime' => __('Maximum lifetime of cache objects:', 'w3-total-cache'),
                 'dbcache.file.gc' => __('Garbage collection interval:', 'w3-total-cache'),
                 'dbcache.reject.uri' => __('Never cache the following pages:', 'w3-total-cache'),

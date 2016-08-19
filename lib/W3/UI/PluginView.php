@@ -180,6 +180,60 @@ abstract class W3_UI_PluginView {
         }
 
         /**
+         * Check redis
+         */
+        $redis_errors = array();
+
+        if ($this->_config->get_boolean('pgcache.enabled') && $this->_config->get_string('pgcache.engine') == 'redis') {
+            $pgcache_redis_servers = $this->_config->get_string('pgcache.redis.server');
+            $pgcache_redis_db = $this->_config->get_integer('pgcache.redis.db');
+
+            if (!$this->is_redis_available($pgcache_redis_servers, $pgcache_redis_db)) {
+                $memcacheds_errors[] = sprintf(__('Page Cache: %s.', 'w3-total-cache'),  $pgcache_redis_servers);
+            }
+        }
+
+        if ($this->_config->get_boolean('minify.enabled') && $this->_config->get_string('minify.engine') == 'redis') {
+            $minify_redis_servers = $this->_config->get_string('minify.redis.server');
+            $minify_redis_db = $this->_config->get_integer('minify.redis.db');
+
+
+            if (!$this->is_redis_available($minify_redis_servers, $minify_redis_db)) {
+                $redis_errors[] = sprintf(__('Minify: %s.', 'w3-total-cache'), $minify_redis_servers);
+            }
+        }
+
+        if ($this->_config->get_boolean('dbcache.enabled') && $this->_config->get_string('dbcache.engine') == 'redis') {
+            $dbcache_redis_servers = $this->_config->get_string('dbcache.redis.server');
+            $dbcache_redis_db = $this->_config->get_integer('dbcache.redis.db');
+            
+            if (!$this->is_redis_available($dbcache_redis_servers, $dbcache_redis_db)) {
+                $redis_errors[] = sprintf(__('Database Cache: %s.', 'w3-total-cache'),  $dbcache_redis_servers);
+            }
+        }
+
+        if ($this->_config->get_boolean('objectcache.enabled') && $this->_config->get_string('objectcache.engine') == 'redis') {
+            $objectcache_redis_servers = $this->_config->get_string('objectcache.redis.server');
+            $objectcache_redis_db = $this->_config->get_integer('objectcache.redis.db');
+
+            if (!$this->is_redis_available($objectcache_redis_servers,$objectcache_redis_db)) {
+                $redis_errors[] = sprintf(__('Object Cache: %s.', 'w3-total-cache'), $objectcache_redis_servers);
+            }
+        }
+
+        if (count($redis_errors)) {
+            $redis_error = __('The following redis server are not responding or not running:</p><ul>', 'w3-total-cache');
+
+            foreach ($redis_errors as $rediss_error) {
+                $redis_error .= '<li>' . $rediss_error . '</li>';
+            }
+
+            $redis_error .= __('</ul><p>This message will automatically disappear once the issue is resolved.', 'w3-total-cache');
+
+            $this->_errors[] = $redis_error;
+        }
+
+        /**
          * Check CURL extension
          */
         if ($this->_config->get_boolean('notes.no_curl') && $this->_config->get_boolean('cdn.enabled') && !function_exists('curl_init')) {
@@ -696,6 +750,34 @@ abstract class W3_UI_PluginView {
             $results[$key] = ( $test_value['content'] == $test_string);
         }
 
+        return $results[$key];
+    }
+    /**
+     * Check if redis is available
+     *
+     * @param array $servers
+     * @return boolean
+     */
+    function is_redis_available($server,$db) {
+        static $results = array();
+
+        $key = md5($server);
+        if (!isset($results[$key])) {
+            w3_require_once(W3TC_LIB_W3_DIR . '/Cache/Redis.php');
+
+            @$redis = new W3_Cache_Redis(array(
+                'server' => $server,
+                'db' => $db,
+                'persistant' => false
+            ));
+
+            $test_string = sprintf('test_' . md5(time()));
+            $test_value = array('content' => $test_string);
+            $redis->set($test_string, $test_value,60);
+            $test_value = $redis->get($test_string);
+            $results[$key] = ( $test_value['content'] == $test_string);
+        }
+        
         return $results[$key];
     }
 }

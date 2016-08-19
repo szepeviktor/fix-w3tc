@@ -41,6 +41,8 @@ class W3_UI_Settings_PageCache extends W3_UI_Settings_SettingsBase{
                 'pgcache.purge.postpages_limit' =>  __('Purge Limit:', 'w3-total-cache'),
                 'pgcache.purge.pages' =>  __('Additional pages:', 'w3-total-cache'),
                 'pgcache.purge.sitemap_regex' =>  __('Purge sitemaps:', 'w3-total-cache'),
+                'pgcache.redis.server' => __('Redis hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
+                'pgcache.redis.db' => __('Redis database','w3-total-cache'),
                 'pgcache.memcached.servers' => __('Memcached hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
                 'pgcache.compatibility' => __('Enable compatibility mode', 'w3-total-cache'),
                 'pgcache.remove_charset' =>  __('Disable UTF-8 blog charset support' ,'w3-total-cache'),

@@ -11,6 +11,8 @@ class W3_UI_Settings_FragmentCache extends W3_UI_Settings_SettingsBase{
             ),
             'settings' => array(
                 'fragmentcache.memcached.servers' => __('Memcached hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
+                'fragmentcache.redis.server' => __('Redis hostname:port / <acronym title="Internet Protocol">IP</acronym>:port:', 'w3-total-cache'),
+                'fragmentcache.redis.db' => __('Redis database','w3-total-cache'),
                 'fragmentcache.lifetime' => __('Default lifetime of cached fragments:', 'w3-total-cache'),
                 'fragmentcache.file.gc' => __('Garbage collection interval:', 'w3-total-cache'),
                 'fragmentcache.groups' => __('Manual fragment groups:', 'w3-total-cache')
