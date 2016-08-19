@@ -50,7 +50,7 @@ class CFRuntime_Exception extends Exception {}
 	so that forward-looking plans for the code can be made with more certainty (e.g. What
 	version of PHP are most people running? Do they tend to have the latest PCRE?).
 */
-function __aws_sdk_ua_callback()
+function aws_sdk_ua_callback()
 {
 	$ua_append = '';
 	$extensions = get_loaded_extensions();
@@ -128,7 +128,7 @@ define('CFRUNTIME_NAME', 'aws-sdk-php');
 define('CFRUNTIME_VERSION', '1.4.3');
 // define('CFRUNTIME_BUILD', gmdate('YmdHis', filemtime(__FILE__))); // @todo: Hardcode for release.
 define('CFRUNTIME_BUILD', '20110930191027');
-define('CFRUNTIME_USERAGENT', CFRUNTIME_NAME . '/' . CFRUNTIME_VERSION . ' PHP/' . PHP_VERSION . ' ' . str_replace(' ', '_', php_uname('s')) . '/' . str_replace(' ', '_', php_uname('r')) . ' Arch/' . php_uname('m') . ' SAPI/' . php_sapi_name() . ' Integer/' . PHP_INT_MAX . ' Build/' . CFRUNTIME_BUILD . __aws_sdk_ua_callback());
+define('CFRUNTIME_USERAGENT', CFRUNTIME_NAME . '/' . CFRUNTIME_VERSION . ' PHP/' . PHP_VERSION . ' ' . str_replace(' ', '_', php_uname('s')) . '/' . str_replace(' ', '_', php_uname('r')) . ' Arch/' . php_uname('m') . ' SAPI/' . php_sapi_name() . ' Integer/' . PHP_INT_MAX . ' Build/' . CFRUNTIME_BUILD . aws_sdk_ua_callback());
 
 
 /*%******************************************************************************************%*/
