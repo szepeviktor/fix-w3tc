@@ -248,6 +248,7 @@ function w3_is_https() {
     switch (true) {
         case (isset($_SERVER['HTTPS']) && w3_to_boolean($_SERVER['HTTPS'])):
         case (isset($_SERVER['SERVER_PORT']) && (int) $_SERVER['SERVER_PORT'] == 443):
+        case (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'):
             return true;
     }
 
