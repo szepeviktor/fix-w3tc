@@ -81,6 +81,17 @@ class W3_ModuleStatus {
     /**
      * @return bool
      */
+    public function can_empty_redis() {
+        return $this->_enabled_module_uses_engine('pgcache', 'redis')
+                || $this->_enabled_module_uses_engine('dbcache', 'redis')
+                || $this->_enabled_module_uses_engine('objectcache', 'redis')
+                || $this->_enabled_module_uses_engine('minify', 'redis')
+                || $this->_enabled_module_uses_engine('fragmentcache', 'redis');
+    }
+
+    /**
+     * @return bool
+     */
     public function can_empty_opcode() {
         return $this->_enabled_module_uses_engine('pgcache', $this->_opcode_engines)
                 || $this->_enabled_module_uses_engine('dbcache', $this->_opcode_engines)

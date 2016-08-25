@@ -217,6 +217,8 @@ class W3_Plugin_TotalCache extends W3_Plugin {
 
             $can_empty_memcache = $modules->can_empty_memcache();
 
+            $can_empty_redis = $modules->can_empty_redis();
+            
             $can_empty_opcode = $modules->can_empty_opcode();
 
             $can_empty_file = $modules->can_empty_file();
@@ -245,7 +247,7 @@ class W3_Plugin_TotalCache extends W3_Plugin {
                 );
             }
 
-            if ($can_empty_file && ($can_empty_opcode || $can_empty_memcache)) {
+            if ($can_empty_file && ($can_empty_opcode || $can_empty_memcache || $can_empty_redis)) {
                 $menu_items[] = array(
                     'id' => 'w3tc-flush-file',
                     'parent' => 'w3tc-empty-caches',
@@ -254,7 +256,7 @@ class W3_Plugin_TotalCache extends W3_Plugin {
                 );
             }
 
-            if ($can_empty_opcode && ($can_empty_file || $can_empty_memcache)) {
+            if ($can_empty_opcode && ($can_empty_file || $can_empty_memcache || $can_empty_redis)) {
                 $menu_items[] = array(
                     'id' => 'w3tc-flush-opcode',
                     'parent' => 'w3tc-empty-caches',
@@ -263,12 +265,21 @@ class W3_Plugin_TotalCache extends W3_Plugin {
                 );
             }
 
-            if ($can_empty_memcache && ($can_empty_file || $can_empty_opcode)) {
+            if ($can_empty_memcache && ($can_empty_file || $can_empty_opcode || $can_empty_redis)) {
                 $menu_items[] = array(
                     'id' => 'w3tc-flush-memcached',
                     'parent' => 'w3tc-empty-caches',
                     'title' => __('Empty Memcached Cache(s)', 'w3-total-cache'),
                     'href' => wp_nonce_url(admin_url('admin.php?page=w3tc_dashboard&amp;w3tc_flush_memcached'), 'w3tc')
+                );
+            }
+
+            if ($can_empty_redis && ($can_empty_file || $can_empty_opcode || $can_empty_memcache)) {
+                $menu_items[] = array(
+                    'id' => 'w3tc-flush-redis',
+                    'parent' => 'w3tc-empty-caches',
+                    'title' => __('Empty Redis Cache(s)', 'w3-total-cache'),
+                    'href' => wp_nonce_url(admin_url('admin.php?page=w3tc_dashboard&amp;w3tc_flush_redis'), 'w3tc')
                 );
             }
 

@@ -42,6 +42,18 @@ class W3_AdminActions_FlushActionsAdmin {
     }
 
     /**
+     * Flush redis cache action
+     *
+     * @return void
+     */
+    function action_flush_redis() {
+        $this->flush_redis();
+
+        w3_admin_redirect(array(
+            'w3tc_note' => 'flush_redis'
+        ), true);
+    }
+    /**
      * Flush opcode caches action
      *
      * @return void
