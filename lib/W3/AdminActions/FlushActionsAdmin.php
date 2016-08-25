@@ -291,6 +291,15 @@ class W3_AdminActions_FlushActionsAdmin {
     }
 
     /**
+     * Flush Redis cache
+     *
+     * @return void
+     */
+    function flush_redis() {
+        $this->flush('redis');
+    }
+    
+    /**
      * Flush APC cache
      *
      * @return void
@@ -329,6 +338,7 @@ class W3_AdminActions_FlushActionsAdmin {
      */
     function flush_all($flush_cf = true) {
         $this->flush_memcached();
+        $this->flush_redis();
         $this->flush_opcode();
         $this->flush_file();
         $this->flush_browser_cache();
