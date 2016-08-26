@@ -234,7 +234,8 @@ class W3_Minifier {
                     'css_level' => $this->_config->get_string('minify.csstidy.options.css_level'),
                     'preserve_css' => $this->_config->get_boolean('minify.csstidy.options.preserve_css'),
                     'timestamp' => $this->_config->get_boolean('minify.csstidy.options.timestamp'),
-                    'template' => $this->_config->get_string('minify.csstidy.options.template')
+                    'template' => $this->_config->get_string('minify.csstidy.options.template'),
+                    'symlinks' => $this->_config->get_array('minify.symlinks')
                 );
                 break;
 
@@ -278,3 +279,4 @@ class W3_Minifier {
         return $options;
     }
 }
+
