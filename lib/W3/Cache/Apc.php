@@ -30,7 +30,7 @@ class W3_Cache_Apc extends W3_Cache_Base {
      * @param string $group Used to differentiate between groups of cache values
      * @return boolean
      */
-    function add($key, &$var, $expire = 0, $group = '0') {
+    function add($key, &$var, $expire = 0, $group = '') {
         if ($this->get($key, $group) === false) {
             return $this->set($key, $var, $expire, $group);
         }
@@ -47,7 +47,7 @@ class W3_Cache_Apc extends W3_Cache_Base {
      * @param string $group Used to differentiate between groups of cache values
      * @return boolean
      */
-    function set($key, $var, $expire = 0, $group = '0') {
+    function set($key, $var, $expire = 0, $group = '') {
         $key = $this->get_item_key($key);
 
         $var['key_version'] = $this->_get_key_version($group);
@@ -62,7 +62,7 @@ class W3_Cache_Apc extends W3_Cache_Base {
      * @param string $group Used to differentiate between groups of cache values
      * @return mixed
      */
-    function get_with_old($key, $group = '0') {
+    function get_with_old($key, $group = '') {
         $has_old_data = false;
         $key = $this->get_item_key($key);
 
@@ -154,7 +154,7 @@ class W3_Cache_Apc extends W3_Cache_Base {
      * @param string $group Used to differentiate between groups of cache values
      * @return boolean
      */
-    function flush($group = '0') {
+    function flush($group = '') {
         $this->_get_key_version($group);  // initialize $this->_key_version
         $this->_key_version[$group]++;
         $this->_set_key_version($this->_key_version[$group], $group);
@@ -175,7 +175,7 @@ class W3_Cache_Apc extends W3_Cache_Base {
      * @param string $group Used to differentiate between groups of cache values
      * @return integer
      */
-    private function _get_key_version($group = '0') {
+    private function _get_key_version($group = '') {
         if (!isset($this->_key_version[$group]) || $this->_key_version[$group] <= 0) {
             $v = apc_fetch($this->_get_key_version_key($group));
             $v = intval($v);
@@ -192,7 +192,7 @@ class W3_Cache_Apc extends W3_Cache_Base {
      * @param string $group Used to differentiate between groups of cache values
      * @return boolean
      */
-    private function _set_key_version($v, $group = '0') {
+    private function _set_key_version($v, $group = '') {
         apc_store($this->_get_key_version_key($group), $v, 0);
     }
 }

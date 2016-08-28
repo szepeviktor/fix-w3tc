@@ -177,7 +177,7 @@ class W3_Cache_Base {
      * @param $group
      * @return string
      */
-    protected function _get_key_version_key($group = '0') {
+    protected function _get_key_version_key($group = '') {
         return sprintf('w3tc_%d_%s_%s_%d_key_version', $this->_blog_id, $this->_module, $group, $this->_instance_id);
     }
 

@@ -232,7 +232,7 @@ class W3_PgCache {
         $this->_page_key = $this->_get_page_key($mobile_group, $referrer_group,
             $encryption, $compression);
 
-        $group = '0';
+        $group = '';
         $sitemap_regex = $this->_config->get_string('pgcache.purge.sitemap_regex');
         if ($sitemap_regex && preg_match('/' . $sitemap_regex . '/', basename($this->_request_uri))) {
             $group = 'sitemaps';
@@ -1503,7 +1503,7 @@ class W3_PgCache {
          */
         $buffers = array();
 
-        $group = '0';
+        $group = '';
         if (!isset($this->_sitemap_matched)) {
             $sitemap_regex = $this->_config->get_string('pgcache.purge.sitemap_regex');
             if ($sitemap_regex && preg_match('/' . $sitemap_regex . '/', basename($this->_request_uri))) {
