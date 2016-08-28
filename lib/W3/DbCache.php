@@ -228,9 +228,8 @@ class W3_DbCache extends W3_DbProcessor {
      * @return boolean
      */
     function flush_cache() {
-        $cache = $this->_get_cache();
-
-        return $cache->flush();
+        $this->_flush_cache_group('all');
+        return true;
     }
 
     private function _flush_cache_group($group) {
