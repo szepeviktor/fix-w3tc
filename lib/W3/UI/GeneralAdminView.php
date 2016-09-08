@@ -21,7 +21,7 @@ class W3_UI_GeneralAdminView extends W3_UI_PluginView {
      */
     function view() {
         w3_require_once(W3TC_INC_FUNCTIONS_DIR . '/ui.php');
-        global $current_user;
+        $current_user = wp_get_current_user();
         $config_master = $this->_config_master;
         /**
          * @var $modules W3_ModuleStatus

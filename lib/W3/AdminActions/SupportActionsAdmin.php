@@ -110,7 +110,7 @@ class W3_AdminActions_SupportActionsAdmin extends W3_UI_PluginView {
      * @return void
      */
     function action_support_form() {
-        global $current_user;
+        $current_user = wp_get_current_user();
 
         w3_require_once(W3TC_LIB_W3_DIR . '/Request.php');
 

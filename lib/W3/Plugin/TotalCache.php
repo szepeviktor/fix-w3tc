@@ -737,7 +737,7 @@ class W3_Plugin_TotalCache extends W3_Plugin {
      * If so, set a role cookie so the requests wont be cached
      */
     function check_login_action($logged_in_cookie = false, $expire = ' ', $expiration = 0, $user_id = 0, $action = 'logged_out') {
-        global $current_user;
+        $current_user = wp_get_current_user();
         if (isset($current_user->ID) && !$current_user->ID)
             $user_id = new WP_User($user_id);
         else

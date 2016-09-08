@@ -81,7 +81,7 @@ class CloudFlareAdmin {
      * @return mixed
      */
     function extension($extensions, $config) {
-        global $current_user;
+        $current_user = wp_get_current_user();
         $message = array();
         $message[] = 'CloudFlare';
         $cloudflare_signup_email = '';
@@ -253,7 +253,7 @@ class CloudFlareAdmin {
         return $anchors;
     }
     public function general_settings_box() {
-        global $current_user;
+        $current_user = wp_get_current_user();
         $cloudflare_enabled = true;
 
         $cf_options = $this->cloudflareAPI->get_options();

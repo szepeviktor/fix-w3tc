@@ -25,7 +25,7 @@ class W3_UI_DashboardAdminView extends W3_UI_PluginView {
          */
         $module_status = w3_instance('W3_ModuleStatus');
         w3tc_dashboard_setup();
-        global $current_user;
+        $current_user = wp_get_current_user();
         $config_master = $this->_config_master;
 
         $browsercache_enabled = $module_status->is_enabled('browsercache');
