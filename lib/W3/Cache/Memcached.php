@@ -35,17 +35,24 @@ class W3_Cache_Memcached extends W3_Cache_Base {
     function __construct($config) {
         parent::__construct($config);
 
-        $this->_memcache = new Memcache();
+	   $isMemcached = class_exists('Memcached')?true:false;
+	   $persistant = isset($config['persistant']) ? (boolean) $config['persistant'] : false;
+
+	   if ($isMemcached)
+	   {
+	   	$this->_memcache = new Memcached($persistant?"persist":"");
+	   	$this->_memcache->setOption(Memcached::OPT_COMPRESSION, false);
+	   }
+	   else
+        	$this->_memcache = new Memcache();
 
         if (!empty($config['servers'])) {
-            $persistant = isset($config['persistant']) ? (boolean) $config['persistant'] : false;
-
             foreach ((array) $config['servers'] as $server) {
                 if (substr($server, 0, 5) == 'unix:')
-                    $this->_memcache->addServer(trim($server), 0, $persistant);
+                    $this->_memcache->addServer(trim($server), 0, $isMemcached?0:$persistant);
                 else {
                     list($ip, $port) = explode(':', $server);
-                    $this->_memcache->addServer(trim($ip), (integer) trim($port), $persistant);
+                    $this->_memcache->addServer(trim($ip), (integer) trim($port), $isMemcached?0:$persistant);
                 }
             }
         } else {
@@ -53,7 +60,10 @@ class W3_Cache_Memcached extends W3_Cache_Base {
         }
 
         if (!empty($config['compress_threshold'])) {
-            $this->_memcache->setCompressThreshold((integer) $config['compress_threshold']);
+            if ($isMemcached)
+            	ini_set("memcached.compression_threshold", $config['compress_threshold']);
+            else
+            	$this->_memcache->setCompressThreshold((integer) $config['compress_threshold']);
         }
 
         return true;
@@ -85,9 +95,13 @@ class W3_Cache_Memcached extends W3_Cache_Base {
         $key = $this->get_item_key($key);
 
         $var['key_version'] = $this->_get_key_version($group);
+	
+	   if (class_exists('Memcached'))
+	   	$res = @$this->_memcache->set($key . '_' . $this->_blog_id, $var, $expire);
+	   else
+	   	$res = @$this->_memcache->set($key . '_' . $this->_blog_id, $var, false, $expire);
 
-        return @$this->_memcache->set($key . '_' . $this->_blog_id, $var,
-            false, $expire);
+        return $res;
     }
 
     /**
@@ -124,7 +138,12 @@ class W3_Cache_Memcached extends W3_Cache_Base {
         $expires_at = isset($v['expires_at']) ? $v['expires_at'] : null;
         if ($expires_at == null || time() > $expires_at) {
             $v['expires_at'] = time() + 30;
-            @$this->_memcache->set($key . '_' . $this->_blog_id, $v, false, 0);
+            
+            if (class_exists('Memcached'))
+            	@$this->_memcache->set($key . '_' . $this->_blog_id, $v, 0);
+            else
+            	@$this->_memcache->set($key . '_' . $this->_blog_id, $v, false, 0);
+            	
             $has_old_data = true;
 
             return array(null, $has_old_data);
@@ -161,7 +180,12 @@ class W3_Cache_Memcached extends W3_Cache_Base {
             $v = @$this->_memcache->get($key . '_' . $this->_blog_id);
             if (is_array($v)) {
                 $v['key_version'] = 0;
-                @$this->_memcache->set($key . '_' . $this->_blog_id, $v, false, 0);
+                
+                if (class_exists('Memcached'))
+                	@$this->_memcache->set($key . '_' . $this->_blog_id, $v, 0);
+                else
+                	@$this->_memcache->set($key . '_' . $this->_blog_id, $v, false, 0);
+                	
                 return true;
             }
         }
@@ -196,7 +220,7 @@ class W3_Cache_Memcached extends W3_Cache_Base {
      * @return bool
      */
     public function available() {
-        return class_exists('Memcache');
+        return class_exists('Memcache') || class_exists('Memcached');
     }
 
     /**
@@ -223,6 +247,9 @@ class W3_Cache_Memcached extends W3_Cache_Base {
      * @return boolean
      */
     private function _set_key_version($v, $group = '') {
-        @$this->_memcache->set($this->_get_key_version_key($group), $v, false, 0);
+    	   if (class_exists('Memcached'))
+    	   	@$this->_memcache->set($this->_get_key_version_key($group), $v, 0);
+    	   else
+        	@$this->_memcache->set($this->_get_key_version_key($group), $v, false, 0);
     }
 }

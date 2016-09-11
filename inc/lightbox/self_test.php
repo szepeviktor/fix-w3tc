@@ -117,6 +117,15 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
         </li>
 
         <li>
+            <?php _e('Memcached extension:', 'w3-total-cache'); ?>
+            <?php if (class_exists('Memcached')): ?>
+            <code><?php _e('Installed', 'w3-total-cache'); ?></code>
+            <?php else: ?>
+            <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+            <?php endif; ?>
+        </li>
+        
+        <li>
             <?php _e('Redis Extension','w3-total-cache'); ?>
             <?php if(class_exists('Redis')):?>
             <code><?php _e('Installed','w3-total-cache'); ?></code>

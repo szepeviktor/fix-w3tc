@@ -46,7 +46,7 @@ class W3_UI_GeneralAdminView extends W3_UI_PluginView {
         $check_xcache = function_exists('xcache_set');
         $check_wincache = function_exists('wincache_ucache_set');
         $check_curl = function_exists('curl_init');
-        $check_memcached = class_exists('Memcache');
+        $check_memcached = class_exists('Memcache') || class_exists('Memcached');
         $check_redis = class_exists('Redis');
         $check_ftp = function_exists('ftp_connect');
         $check_tidy = class_exists('tidy');
