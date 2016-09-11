@@ -651,7 +651,7 @@ class W3_Plugin_Minify extends W3_Plugin {
         } elseif ($import && !$use_style) {
             return "@import url(\"" . $url . "\");\r\n";
         }else {
-            return "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . str_replace('&', '&amp;', $url) . "\" media=\"all\" />\r\n";
+            return "<link rel=\"stylesheet\" property=\"stylesheet\" type=\"text/css\" href=\"" . str_replace('&', '&amp;', $url) . "\" media=\"all\" />\r\n";
         }
     }
 
