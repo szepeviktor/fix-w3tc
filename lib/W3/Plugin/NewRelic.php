@@ -111,7 +111,7 @@ class W3_Plugin_NewRelic extends W3_Plugin{
         if (empty($roles))
             return false;
 
-        $role = array_shift( $current_user->roles );
+        $role = $current_user->roles[0];
 
         if (in_array($role, $roles)) {
             return false;

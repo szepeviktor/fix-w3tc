@@ -933,7 +933,7 @@ class W3_Plugin_Cdn extends W3_Plugin {
         if (empty($roles))
             return true;
 
-        $role = array_shift( $current_user->roles );
+        $role = $current_user->roles[0];
 
         if (in_array($role, $roles)) {
             return false;

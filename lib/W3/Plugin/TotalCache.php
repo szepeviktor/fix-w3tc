@@ -739,15 +739,19 @@ class W3_Plugin_TotalCache extends W3_Plugin {
     function check_login_action($logged_in_cookie = false, $expire = ' ', $expiration = 0, $user_id = 0, $action = 'logged_out') {
         $current_user = wp_get_current_user();
         if (isset($current_user->ID) && !$current_user->ID)
+        {
+            if ($user_id == 0) return;
             $user_id = new WP_User($user_id);
+        }
         else
             $user_id = $current_user;
+
         if (is_string($user_id->roles)) {
             $role = $user_id->roles;
         } elseif (!is_array($user_id->roles)) {
             return;
         } else {
-            $role = array_shift( $user_id->roles );
+            $role = $user_id->roles[0];
         }
 
         $role_hash = md5(NONCE_KEY . $role);
