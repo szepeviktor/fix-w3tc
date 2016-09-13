@@ -965,8 +965,10 @@ class W3_PgCache {
         $encryption = '', $compression = '', $content_type = '', $request_uri = '') {
 
         if ($request_uri){
-            $is_ssl_request = ( strtolower(substr($request_uri, 0, 8)) == 'https://' );
-            $key = substr( $request_uri, $is_ssl_request ? 8 : 7 );
+            $uri = parse_url($request_uri);
+		  $key =  $uri["host"].
+		          (isset($uri["path"])?$uri["path"]:"").
+		          (isset($uri["query"])?"?".$uri["query"]:"");
         } else {
             $key = $this->_request_host . $this->_request_uri;
 		}
