@@ -572,6 +572,15 @@ class W3_PgCache {
             return false;
         }
 
+        /**
+         * Don't cache SSL
+         */
+        if (!$this->_config->get_boolean('pgcache.cache.ssl') && w3_is_https()) {
+            $this->cache_reject_reason = 'Page is SSL';
+
+            return false;
+        }
+        
         return true;
     }
 
