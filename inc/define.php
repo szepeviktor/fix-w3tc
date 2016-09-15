@@ -20,6 +20,7 @@ define('W3TC_SUPPORT_US_TIMEOUT', 2592000);
 define('W3TC_SUPPORT_REQUEST_URL', 'https://www.w3-edge.com/w3tc/support/');
 define('W3TC_TRACK_URL', 'https://www.w3-edge.com/w3tc/track/');
 define('W3TC_MAILLINGLIST_SIGNUP_URL', 'https://www.w3-edge.com/w3tc/emailsignup/');
+define('W3TC_MINIFY_VER_ID', '#MVER#');
 define('NEWRELIC_SIGNUP_URL', 'http://bit.ly/w3tc-partner-newrelic-signup');
 define('MAXCDN_SIGNUP_URL', 'http://bit.ly/w3tc-cdn-maxcdn-create-account');
 define('MAXCDN_AUTHORIZE_URL', 'http://bit.ly/w3tc-cdn-maxcdn-authorize');

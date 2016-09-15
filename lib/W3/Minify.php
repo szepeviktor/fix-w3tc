@@ -33,6 +33,13 @@ class W3_Minify {
     var $_error_occurred = false;
 
     /**
+     * The incoming request's minify version
+     *
+     * @var int
+     */
+    var $_minify_ver = -1;
+
+    /**
      * Returns instance. for backward compatibility with 0.9.2.3 version of /wp-content files
      *
      * @return W3_Minify
@@ -251,7 +258,8 @@ class W3_Minify {
          * Minify!
          */
         try {
-            Minify::serve('MinApp', $serve_options);
+            if (isset($_GET['f']) || isset($serve_options['minApp']['groups'][$_GET['g']]))        
+                Minify::serve('MinApp', $serve_options);
         } catch (Exception $exception) {
             $this->error($exception->getMessage());
         }
@@ -547,7 +555,9 @@ class W3_Minify {
                     if (file_exists($path)) {
                         $result[] = $file;
                     } else {
-                        $this->error(sprintf('File "%s" doesn\'t exist', $path));
+                        $cur_min_ver = $this->_config_admin->get_integer('minify.version');
+                        if ($this->_minify_ver == $cur_min_ver)
+                          $this->error(sprintf('File "%s" doesn\'t exist', $path));
                     }
                 }
             }
@@ -1008,11 +1018,14 @@ class W3_Minify {
             $dir = w3_cache_blog_dir('minify');
             $fn_length = 246-strlen($dir);
         }
+        $cur_min_ver = $this->_config_admin->get_integer('minify.version');
+        $imploded .= ",".W3TC_MINIFY_VER_ID."=$cur_min_ver";
         $compressed = $this->_compress($imploded);
         if (strlen($compressed) >= $fn_length) {
             $arr_chunks = $this->_combine_and_check_filenames($input, $fn_length);
             foreach ($arr_chunks as $part) {
                 $part_imploded = implode(',', $part);
+                $part_imploded .= ",".W3TC_MINIFY_VER_ID."=$cur_min_ver";
                 $base = rtrim(strtr(base64_encode($this->_compress($part_imploded)), '+/', '-_'), '=');
                 $minify_filename[] = $base . '.' . $type;
             }
@@ -1032,6 +1045,7 @@ class W3_Minify {
     private function _combine_and_check_filenames($filename_list, $length) {
         $parts = array();
         $place = 0;
+        $cur_min_ver = $this->_config_admin->get_integer('minify.version');
         foreach($filename_list as $file) {
             if (strlen($this->_compress($file)) > $length) {
                 $this->error('Url/Filename is too long: ' . $file . '. Max length is ' . $length);
@@ -1039,7 +1053,7 @@ class W3_Minify {
             }
             if (!isset($parts[$place]))
                 $parts[$place] = array();
-            $temp = implode(',',$parts[$place]) .',' . $file;
+            $temp = implode(',',$parts[$place]) .',' . $file . "," . W3TC_MINIFY_VER_ID . "=$cur_min_ver";
             if (strlen($this->_compress(trim($temp,',')))>$length) {
                 $place++;
                 $parts[$place][] = $file;
@@ -1063,6 +1077,12 @@ class W3_Minify {
         $uncompressed =$this->_uncompress(base64_decode(strtr($compressed, '-_', '+/')));
 
         $exploded = explode(',', $uncompressed);
+        $check_mini_ver = end($exploded);
+        if (0 === strpos($check_mini_ver, W3TC_MINIFY_VER_ID)) {
+            array_pop($exploded);
+            $ver = explode("=",$check_mini_ver);
+            $this->_minify_ver = intval($ver[1]);
+        }
         $replacements = $this->_minify_path_replacements();
         foreach($exploded as $file) {
             if (!w3_is_url($file)) {

@@ -593,7 +593,8 @@ $keys = array(
         'type' => 'array',
         'default' => array(
             'google_ad_',
-            'RSPEAK_'
+            'RSPEAK_',
+            'mfunc'
         )
     ),
     'minify.css.enable' => array(
@@ -1979,6 +1980,10 @@ $keys_admin = array(
         'type' => 'int',
         'default' => 0,
         'master_only' => 'true'
+    ),
+    'minify.version' => array(
+        'type' => 'integer',
+        'default' => 0
     )
 );
 
