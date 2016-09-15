@@ -47,7 +47,7 @@
             <?php endif; ?>
             <?php if ($this->_config->get_string('dbcache.engine') == 'redis'): ?>
             <tr>
-                <th><label for="redis_server"><?php w3_e_config_label('dbcache.memcached.servers') ?></label></th>
+                <th><label for="redis_server"><?php w3_e_config_label('dbcache.redis.server') ?></label></th>
                 <td>
                     <input id="redis_server" type="text"
                         name="dbcache.redis.server"

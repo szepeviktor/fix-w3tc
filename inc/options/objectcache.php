@@ -36,7 +36,7 @@
             <?php endif; ?>
             <?php if ($this->_config->get_string('objectcache.engine') == 'redis'): ?>
             <tr>
-                <th><label for="redis_server"><?php w3_e_config_label('objectcache.memcached.servers') ?></label></th>
+                <th><label for="redis_server"><?php w3_e_config_label('objectcache.redis.server') ?></label></th>
                 <td>
                     <input id="redis_server" type="text"
                         name="objectcache.redis.server"

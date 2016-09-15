@@ -257,7 +257,7 @@
             <?php endif; ?>
             <?php if ($this->_config->get_string('pgcache.engine') == 'redis'): ?>
             <tr>
-                <th><label for="redis_server"><?php w3_e_config_label('pgcache.memcached.servers') ?></label></th>
+                <th><label for="redis_server"><?php w3_e_config_label('pgcache.redis.server') ?></label></th>
                 <td>
                     <input id="redis_server" type="text"
                         name="pgcache.redis.server"
