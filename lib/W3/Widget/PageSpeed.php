@@ -68,6 +68,7 @@ class W3_Widget_PageSpeed extends W3_Plugin{
             w3_require_once(W3TC_LIB_W3_DIR . '/Request.php');
 
             $this->_config->set('widget.pagespeed.key', W3_Request::get_string('w3tc_widget_pagespeed_key'));
+            $this->_config->set('widget.pagespeed.key.restrict.referrer', W3_Request::get_string('widget_pagespeed_key_restrict_referrer'));
             $this->_config->save();
         }
         include W3TC_INC_DIR . '/widget/pagespeed_control.php';

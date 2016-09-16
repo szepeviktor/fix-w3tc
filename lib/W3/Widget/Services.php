@@ -86,12 +86,6 @@ class W3_Widget_Services extends W3_Plugin {
      * @return void
      */
     function wp_dashboard_setup() {
-        w3tc_add_dashboard_widget('w3tc_services', __('Premium Services', 'w3-total-cache'), array(
-            &$this,
-            'widget_form'
-        ),null, 'normal',
-        'div'
-        );
     }
 
     function widget_form() {

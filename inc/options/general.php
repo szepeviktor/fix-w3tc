@@ -573,28 +573,6 @@
         foreach($custom_areas as $area)
             do_action("{$this->_page}_boxarea_{$area['id']}");
         ?>
-        <?php if ($licensing_visible): ?>
-            <?php echo $this->postbox_header(__('Licensing', 'w3-total-cache'), '', 'licensing'); ?>
-            <table class="form-table">
-                    <tr>
-                        <th>
-                            <label for="plugin_license_key"><?php w3_e_config_label('plugin.license_key', 'general') ?></label>
-                        </th>
-                        <td>
-                            <input id ="plugin_license_key" name="plugin.license_key" type="text" value="<?php echo esc_attr($this->_config->get_string('plugin.license_key'))?>" size="45"/>
-                            <input id="plugin_license_key_verify" type="button" value="<?php _e('Verify license key', 'w3-total-cache') ?>"/><br />
-                            <span class="description"><?php printf(__('Please enter the license key provided you received after %s.', 'w3-total-cache'), '<a class="button-buy-plugin" href="' . EDD_W3EDGE_STORE_URL_PLUGIN .'">' . __('upgrading', 'w3-total-cache') . '</a>')?></span>
-                        </td>
-                    </tr>
-                
-            </table>
-            <p class="submit">
-                <?php echo $this->nonce_field('w3tc'); ?>
-                <input type="submit" id="w3tc_save_options_licensing" name="w3tc_save_options" class="w3tc-button-save button-primary" value="Save all settings" />
-            </p>
-            <?php echo $this->postbox_footer(); ?>
-        <?php endif ?>
-        
         <?php echo $this->postbox_header(__('Miscellaneous', 'w3-total-cache'), '', 'miscellaneous'); ?>
         <table class="form-table">
             <tr>
@@ -610,6 +588,13 @@
                     <input id="widget_pagespeed_key" type="text" name="widget.pagespeed.key" value="<?php echo esc_attr($this->_config->get_string('widget.pagespeed.key')); ?>" size="60" /><br />
                     <span class="description"><?php _e('To acquire an <acronym title="Application Programming Interface">API</acronym> key, visit the <a href="https://code.google.com/apis/console" target="_blank"><acronym title="Application Programming Interface">API</acronym>s Console</a>. Go to the Project Home tab, activate the Page Speed Online <acronym title="Application Programming Interface">API</acronym>, and accept the Terms of Service.
                     Then go to the <acronym title="Application Programming Interface">API</acronym> Access tab. The <acronym title="Application Programming Interface">API</acronym> key is in the Simple <acronym title="Application Programming Interface">API</acronym> Access section.', 'w3-total-cache'); ?></span>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="widget_pagespeed_key"><?php w3_e_config_label('widget.pagespeed.key.restrict.referrer', 'general') ?></label></th>
+                <td>
+                    <input type="text" id="widget_pagespeed_key_restrict_referrer" name="widget.pagespeed.key.restrict.referrer" value="<?php echo esc_attr($this->_config->get_string('widget.pagespeed.key.restrict.referrer')); ?>" size="60" /><br>
+                    <span class="description">Although not required, to prevent unauthorized use and quota theft, you have the option to restrict your key using a designated HTTP referrer. If you decide to use it, you will need to set this referrer within the API Console's "Http Referrers (web sites)" key restriction area (under Credentials).</span>
                 </td>
             </tr>
             <?php if (is_network_admin()): ?>

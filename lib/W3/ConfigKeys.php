@@ -1600,7 +1600,10 @@ $keys = array(
         'type' => 'string',
         'default' => ''
     ),
-
+    'widget.pagespeed.key.restrict.referrer' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
     'notes.wp_content_changed_perms' => array(
         'type' => 'boolean',
         'default' => true

@@ -17,12 +17,20 @@ class W3_PageSpeed {
     var $key = '';
 
     /**
+     * Referrer for key restricting
+     *
+     * @var string
+     */
+    var $key_restrict_referrer = '';
+    
+    /**
      * PHP5-style constructor
      */
     function __construct() {
         $config = w3_instance('W3_Config');
 
         $this->key = $config->get_string('widget.pagespeed.key');
+        $this->key_restrict_referrer = $config->get_string('widget.pagespeed.key.restrict.referrer');
     }
 
     /**
@@ -71,7 +79,8 @@ class W3_PageSpeed {
             'key' => $this->key,
         ));
 
-        $response = w3_http_get($request_url);
+        $headers= array('headers'  => array("Referer" => $this->key_restrict_referrer));
+        $response = w3_http_get($request_url,$headers);
 
         if (!is_wp_error($response) && $response['response']['code'] == 200) {
             return $response['body'];
@@ -102,7 +111,7 @@ class W3_PageSpeed {
             foreach ((array) $data->formattedResults->ruleResults as $i => $rule_result) {
                 $results['rules'][$i] = array(
                     'name' => $rule_result->localizedRuleName,
-                    'score' => $rule_result->ruleScore,
+                    'score' => isset($rule_result->ruleScore)?$rule_result->ruleScore:"",
                     'impact' => $rule_result->ruleImpact,
                     'priority' => $this->_get_priority($rule_result->ruleImpact),
                     'resolution' => $this->_get_resolution($rule_result->localizedRuleName),
