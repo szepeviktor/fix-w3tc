@@ -87,7 +87,6 @@ class W3_CacheFlushLocal {
      */
     function pgcache_flush() {
         do_action('w3tc_pgcache_flush');
-        $this->pgcache_flush_minify_version_change();
         $pgcacheflush = w3_instance('W3_PgCacheFlush');
         return $pgcacheflush->flush();
     }
@@ -390,12 +389,5 @@ class W3_CacheFlushLocal {
         /** @var $pgcache W3_Plugin_PgCacheAdmin */
         $pgcache = w3_instance('W3_Plugin_PgCacheAdmin');
         return $pgcache->prime_post($post_id);
-    }
-    
-    function pgcache_flush_minify_version_change() {
-        $config_admin = w3_instance('W3_ConfigAdmin');
-        $cur_min_ver = $config_admin->get_integer('minify.version');
-        $config_admin->set('minify.version', ++$cur_min_ver);
-        $config_admin->save();
     }
 }

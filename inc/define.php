@@ -1634,3 +1634,14 @@ function w3_is_enterprise($config = null) {
 function w3tc_edge_mode() {
     return defined('W3TC_EDGE_MODE') && W3TC_EDGE_MODE;
 }
+
+/**
+ * Increments the minify version caused by a full page/minify cache flush
+ */
+function w3_minify_version_change() {
+    $config_admin = w3_instance('W3_ConfigAdmin');
+    $cur_min_ver = $config_admin->get_integer('minify.version');
+    $config_admin->set('minify.version', ++$cur_min_ver);
+    $config_admin->save();
+}
+
