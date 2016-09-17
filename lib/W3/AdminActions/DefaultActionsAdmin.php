@@ -613,12 +613,7 @@ class W3_AdminActions_DefaultActionsAdmin {
             }
 
         }
-        //CloudFront does not support expires header. So disable it when its used
-        if ($config->get_string('cdn.engine') == 'cf2') {
-            $config->set('browsercache.cssjs.expires', false);
-            $config->set('browsercache.html.expires', false);
-            $config->set('browsercache.other.expires', false);
-        }
+
         $config = apply_filters('w3tc_save_options', $config, $this->_config, $config_admin);
         $config = apply_filters("w3tc_save_options-{$this->_page}", $config, $this->_config, $config_admin);
 

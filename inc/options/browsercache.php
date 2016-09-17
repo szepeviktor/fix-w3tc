@@ -36,7 +36,7 @@
                     <label>
                         <input id="browsercache_expires" type="checkbox" name="expires"
                             <?php $this->sealing_disabled('browsercache') ?>
-                            value="1"<?php checked($browsercache_expires && $this->_config->get_string('cdn.engine') != 'cf2', true); ?> <?php disabled($this->_config->get_string('cdn.engine') == 'cf2' ) ?> /> <?php _e('Set expires header', 'w3-total-cache'); ?></label>
+                            value="1"<?php checked($browsercache_expires); ?> /> <?php _e('Set expires header', 'w3-total-cache'); ?></label>
                     <br /><span class="description"><?php _e('Set the expires header to encourage browser caching of files.', 'w3-total-cache'); ?></span>
                 </th>
             </tr>
@@ -133,7 +133,7 @@
             <?php endif; ?>
             <tr>
                 <th colspan="2">
-                    <?php $this->checkbox('browsercache.cssjs.expires', $this->_config->get_string('cdn.engine') == 'cf2') ?> <?php w3_e_config_label('browsercache.cssjs.expires') ?></label>
+                    <?php $this->checkbox('browsercache.cssjs.expires') ?> <?php w3_e_config_label('browsercache.cssjs.expires') ?></label>
                     <br /><span class="description"><?php _e('Set the expires header to encourage browser caching of files.', 'w3-total-cache'); ?></span>
                 </th>
             </tr>
@@ -223,7 +223,7 @@
             <?php endif; ?>
             <tr>
                 <th colspan="2">
-                    <?php $this->checkbox('browsercache.html.expires', $this->_config->get_string('cdn.engine') == 'cf2') ?> <?php w3_e_config_label('browsercache.html.expires') ?></label>
+                    <?php $this->checkbox('browsercache.html.expires') ?> <?php w3_e_config_label('browsercache.html.expires') ?></label>
                     <br /><span class="description"><?php _e('Set the expires header to encourage browser caching of files.', 'w3-total-cache'); ?></span>
                 </th>
             </tr>
@@ -299,7 +299,7 @@
             <?php endif; ?>
             <tr>
                 <th colspan="2">
-                    <?php $this->checkbox('browsercache.other.expires', $this->_config->get_string('cdn.engine') == 'cf2') ?> <?php w3_e_config_label('browsercache.other.expires') ?></label>
+                    <?php $this->checkbox('browsercache.other.expires') ?> <?php w3_e_config_label('browsercache.other.expires') ?></label>
                     <br /><span class="description"><?php _e('Set the expires header to encourage browser caching of files.', 'w3-total-cache'); ?></span>
                 </th>
             </tr>
