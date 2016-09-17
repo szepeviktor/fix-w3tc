@@ -258,7 +258,7 @@ class W3_Minify {
          * Minify!
          */
         try {
-            if (isset($_GET['f']) || isset($serve_options['minApp']['groups'][$_GET['g']]))
+            if (!empty($_GET['f']) || (isset($_GET['g']) && !empty($serve_options['minApp']['groups'][$_GET['g']])))
                 Minify::serve('MinApp', $serve_options);
         } catch (Exception $exception) {
             $this->error($exception->getMessage());
