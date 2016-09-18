@@ -1,11 +1,13 @@
 #w3tc h2.logo {
-    width: 224px;
-    height: 44px;
-    background: url("../img/W3TC_dashboard_logo_title.png") top right no-repeat;
-    text-indent: -9999px;
-    margin:5px 0 10px 0;
     padding:0;
+    margin:0;
     float: right;
+    font-size: medium;
+    line-height: normal;
+}
+#w3tc h2.logo small {
+	clear: both;
+	font-size: x-small;
 }
 
 #icon-w3tc_general {

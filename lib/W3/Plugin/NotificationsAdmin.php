@@ -30,9 +30,6 @@ class W3_Plugin_NotificationsAdmin {
         if (is_w3tc_admin_page()) {
             add_action('admin_head', array($this, 'admin_head'));
             add_action('w3tc_hide_button_custom-edge_mode', array($this, 'hide_edge_mode_notification'));
-            $support_reminder = ($this->_config->get_boolean('notes.support_us') && $this->_config_admin->get_integer('common.install') < (time() - W3TC_SUPPORT_US_TIMEOUT) && $this->_config->get_string('common.support') == '' && !$this->_config->get_boolean('common.tweeted'));
-            if($support_reminder || w3tc_show_notification('support_us_popup'))
-                add_action('w3tc-dashboard-head', array($this, 'support_us_nag'));
             add_action('w3tc-dashboard-head', array($this, 'edge_nag'));
         }
     }

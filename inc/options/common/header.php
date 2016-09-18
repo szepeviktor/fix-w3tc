@@ -1,20 +1,9 @@
 <?php if (!defined('W3TC')) die(); ?>
 
-<?php
-/**
- * @var array $custom_areas Filter that sets it is located in GeneralAdminVIew
- */
-$licensing_visible = ((!w3_is_multisite() || is_network_admin()) && 
-            !ini_get('w3tc.license_key') && 
-            get_transient('w3tc_license_status') != 'host_valid');
-?>
-
 <?php do_action('w3tc-dashboard-head') ?>
 <div class="wrap" id="w3tc">
-    <h2 class="logo"><?php _e('W3 Total Cache <span>by W3 EDGE <sup>&reg;</sup></span>', 'w3-total-cache'); ?></h2>
-<?php if (!(w3_is_pro($this->_config) || w3_is_enterprise($this->_config))): ?>
-    <?php include W3TC_INC_OPTIONS_DIR . '/edd/buy.php' ?>
-<?php endif ?>
+    <h2 class="logo"><strong>FIX-W3TC</strong><br /><small>forked from <a href="https://it.wordpress.org/plugins/w3-total-cache/" target="_blank">W3 Total Cache</a></small></h2>
+
     <?php foreach ($this->_errors as $error): ?>
     <div class="error">
         <p><?php echo $error; ?></p>
@@ -93,8 +82,7 @@ $licensing_visible = ((!w3_is_multisite() || is_network_admin()) &&
                 if (w3_is_enterprise())
                     $anchors[] = array('id' => 'amazon_sns', 'text' => __('Amazon <abbr title="Simple Notification Service">SNS</abbr>', 'w3-total-cache'));
                 $anchors[] = array('id' => 'monitoring', 'text' => __('Monitoring', 'w3-total-cache'));
-                if ($licensing_visible)
-                    array('id' => 'licensing', 'text' => __('Licensing', 'w3-total-cache'));
+                
                 $link_attrs = array_merge($anchors, $custom_areas, array(
                     array('id' => 'miscellaneous', 'text' => __('Miscellaneous', 'w3-total-cache')),
                     array('id' => 'debug', 'text' => __('Debug', 'w3-total-cache')),
