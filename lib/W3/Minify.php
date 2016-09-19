@@ -1106,11 +1106,11 @@ class W3_Minify {
             $verified = false;
             if (w3_is_url($file)) {
                 $external = $this->_config->get_array('minify.cache.files');
-                foreach($external as $ext) {
-                    if(preg_match('#'.w3_get_url_regexp($ext).'#',$file) && !$verified){
-                        $verified = true;
-                    }
-                }
+
+                foreach ($external as &$val) $val = trim(str_replace("~","\~",$val));
+                $external = array_filter($external,function($val){return $val != "";});
+                if (!empty($external) && @preg_match('~'.implode("|",$external).'~i',$file) && !$verified) $verified = true;
+                
                 if (!$verified) {
                     $this->error(sprintf('Remote file not in external files/libraries list: "%s"', $file));
                 }

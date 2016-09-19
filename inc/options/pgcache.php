@@ -342,7 +342,7 @@
                     <textarea id="pgcache_accept_qs" name="pgcache.accept.qs"
                         <?php $this->sealing_disabled('pgcache') ?>
                               cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('pgcache.accept.qs'))); ?></textarea><br />
-                    <span class="description"><?php _e('Always cache URLs with these query strings.', 'w3-total-cache'); ?></span>
+                    <span class="description"><?php _e('Always cache URLs with these query strings. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <tr>
@@ -360,7 +360,7 @@
                     <textarea id="pgcache_reject_cookie" name="pgcache.reject.cookie" 
                         <?php $this->sealing_disabled('pgcache') ?>
                         cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('pgcache.reject.cookie'))); ?></textarea><br />
-                    <span class="description"><?php _e('Never cache pages that use the specified cookies.', 'w3-total-cache'); ?></span>
+                    <span class="description"><?php _e('Never cache pages that use the specified cookies. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <tr>
@@ -369,12 +369,7 @@
                     <textarea id="pgcache_reject_uri" name="pgcache.reject.uri" 
                         <?php $this->sealing_disabled('pgcache') ?>
                         cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('pgcache.reject.uri'))); ?></textarea><br />
-                    <span class="description">
-						<?php 
-							echo sprintf( 
-								__( 'Always ignore the specified pages / directories. Supports regular expressions (See <a href="%s">FAQ</a>)', 'w3-total-cache'),   								network_admin_url('admin.php?page=w3tc_faq#q82')
-							); ?>
-					</span>
+                    <span class="description"><?php _e('Always ignore the specified pages / directories. Use relative paths. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <tr>
@@ -383,7 +378,7 @@
                     <textarea id="pgcache_accept_files" name="pgcache.accept.files" 
                         <?php $this->sealing_disabled('pgcache') ?>
                         cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('pgcache.accept.files'))); ?></textarea><br />
-                    <span class="description"><?php echo sprintf( __('Cache the specified pages / directories even if listed in the "never cache the following pages" field. Supports regular expression (See <a href="%s">FAQ</a>)', 'w3-total-cache'), network_admin_url('admin.php?page=w3tc_faq#q82') ); ?></span>
+                    <span class="description"><?php _e('Cache the specified pages / directories even if listed in the "never cache the following pages" field. Use relative paths. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <?php if (substr($permalink_structure, -1) == '/'): ?>

@@ -497,7 +497,7 @@
                 <td>
                     <textarea id="minify_reject_uri" name="minify.reject.uri" 
                         <?php $this->sealing_disabled('minify') ?> cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('minify.reject.uri'))); ?></textarea><br />
-                    <span class="description"><?php _e('Always ignore the specified pages / directories.', 'w3-total-cache'); ?></span>
+                    <span class="description"><?php _e('Always ignore the specified pages / directories. Use relative paths. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <tr>
@@ -505,7 +505,7 @@
                 <td>
                     <textarea id="minify_reject_files_js" name="minify.reject.files.js"
                         <?php $this->sealing_disabled('minify') ?> cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('minify.reject.files.js'))); ?></textarea><br />
-                    <span class="description"><?php _e('Always ignore the specified JS files.', 'w3-total-cache'); ?></span>
+                    <span class="description"><?php _e('Always ignore the specified JS files. Use relative paths. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <tr>
@@ -513,7 +513,7 @@
                 <td>
                     <textarea id="minify_reject_files_css" name="minify.reject.files.css"
                         <?php $this->sealing_disabled('minify') ?> cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('minify.reject.files.css'))); ?></textarea><br />
-                    <span class="description"><?php _e('Always ignore the specified CSS files.', 'w3-total-cache'); ?></span>
+                    <span class="description"><?php _e('Always ignore the specified CSS files. Use relative paths. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <tr>
@@ -522,7 +522,7 @@
                     <textarea id="minify_reject_ua" name="minify.reject.ua"
                         <?php $this->sealing_disabled('minify') ?>
                         cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('minify.reject.ua'))); ?></textarea><br />
-                    <span class="description"><?php _e('Specify user agents that will never receive minified content.', 'w3-total-cache'); ?></span>
+                    <span class="description"><?php _e('Specify user agents that will never receive minified content. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <?php if ($auto): ?>
@@ -532,7 +532,7 @@
                     <textarea id="minify_cache_files" name="minify.cache.files"
                         <?php $this->sealing_disabled('minify') ?>
                               cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('minify.cache.files'))); ?></textarea><br />
-                    <span class="description"><?php _e('Specify external files/libraries that should be combined.', 'w3-total-cache'); ?></span>
+                    <span class="description"><?php _e('Specify external files/libraries that should be combined. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <?php endif; ?>

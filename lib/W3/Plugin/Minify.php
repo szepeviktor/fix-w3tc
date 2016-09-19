@@ -171,7 +171,7 @@ class W3_Plugin_Minify extends W3_Plugin {
                                 $embed_pos = strlen($match[0][0]) + $match[0][1];
                             }
 
-                            $ignore_css_files = array_map('w3_normalize_file', $ignore_css_files);
+                            //$ignore_css_files = array_map('w3_normalize_file', $ignore_css_files);
                             $handled_styles = array();
                             $style_tags = w3_extract_css2($buffer);
                             $previous_file_was_ignored = false;
@@ -189,7 +189,11 @@ class W3_Plugin_Minify extends W3_Plugin {
                                 }
                                 $handled_styles[] = $file;
                                 $this->replaced_styles[] = $file;
-                                if (in_array($file, $ignore_css_files)) {
+                                
+                                foreach ($ignore_css_files as &$val) $val = trim(str_replace("~","\~",$val));
+                                $ignore_css_files = array_filter($ignore_css_files,function($val){return $val != "";});
+
+                                if (!empty($ignore_css_files) && @preg_match('~'.implode("|",$ignore_css_files).'~i',$file)) {
                                     if ($tag_pos > $embed_pos) {
                                         if ($files_to_minify) {
                                             $style = $this->get_style_custom($files_to_minify);
@@ -983,13 +987,11 @@ class W3_Plugin_Minify extends W3_Plugin {
             W3TC_POWERED_BY
         ));
 
-        foreach ($uas as $ua) {
-            if (!empty($ua)) {
-                if (isset($_SERVER['HTTP_USER_AGENT']) && stristr($_SERVER['HTTP_USER_AGENT'], $ua) !== false) {
-                    return false;
-                }
-            }
-        }
+        foreach ($uas as &$val) $val = trim(str_replace("~","\~",$val));
+        $uas = array_filter($uas,function($val){return $val != "";});
+
+        if (!empty($uas) && isset($_SERVER['HTTP_USER_AGENT']) && @preg_match('~'.implode("|",$uas).'~i',$_SERVER['HTTP_USER_AGENT']))
+            return false;
 
         return true;
     }
@@ -1028,12 +1030,9 @@ class W3_Plugin_Minify extends W3_Plugin {
         $reject_uri = $this->_config->get_array('minify.reject.uri');
         $reject_uri = array_map('w3_parse_path', $reject_uri);
 
-        foreach ($reject_uri as $expr) {
-            $expr = trim($expr);
-            if ($expr != '' && preg_match('~' . $expr . '~i', $_SERVER['REQUEST_URI'])) {
-                return false;
-            }
-        }
+        foreach ($reject_uri as &$val) $val = trim(str_replace("~","\~",$val));
+        $reject_uri = array_filter($reject_uri,function($val){return $val != "";});
+        if (!empty($reject_uri) && @preg_match('~'.implode("|",$reject_uri).'~i',$_SERVER["REQUEST_URI"])) return false;
 
         w3_require_once(W3TC_LIB_W3_DIR . '/Request.php');
         if (W3_Request::get_string('wp_customize'))
@@ -1150,11 +1149,13 @@ class _W3_MinifyHelpers {
         }
 
         if (!isset($external))
+        {
             $external = $this->config->get_array('minify.cache.files');
-        foreach($external as $ext) {
-            if(preg_match('#'.w3_get_url_regexp($ext).'#',$file))
-                return true;
+            foreach ($external as &$val) $val = trim(str_replace("~","\~",$val));
+            $external = array_filter($external,function($val){return $val != "";});
         }
+        
+        if (!empty($external) && @preg_match('~'.implode("|",$external).'~i',$file)) return true;
 
         if (w3_is_url($file)) {
             return false;
@@ -1258,7 +1259,10 @@ class _W3_MinifyJsAuto {
 
         // ignored files
         $this->ignore_js_files = $this->config->get_array('minify.reject.files.js');
-        $this->ignore_js_files = array_map('w3_normalize_file', $this->ignore_js_files);
+        //$this->ignore_js_files = array_map('w3_normalize_file', $this->ignore_js_files);
+        
+        foreach ($this->ignore_js_files as &$val) $val = trim(str_replace("~","\~",$val));
+        $this->ignore_js_files = array_filter($this->ignore_js_files,function($val){return $val != "";});
 
         // define embed type
         $this->embed_type = $this->config->get_string(
@@ -1339,7 +1343,7 @@ class _W3_MinifyJsAuto {
         $file = w3_normalize_file_minify2($file);
 
         if (!$this->minify_helpers->is_file_for_minification($file) ||
-                in_array($file, $this->ignore_js_files)) {
+                (!empty($this->ignore_js_files) && @preg_match('~'.implode("|",$this->ignore_js_files).'~i',$file))) {
             $this->flush_collected();
             return;
         }

@@ -72,6 +72,8 @@ class Minify_Controller_MinApp extends Minify_Controller_Base {
         } elseif (! $cOptions['groupsOnly'] && isset($_GET['f'])) {
             $config = w3_instance('W3_Config');
             $external = $config->get_array('minify.cache.files');
+            foreach ($external as &$val) $val = trim(str_replace("~","\~",$val));
+            $external = array_filter($external,function($val){return $val != "";});
 
             $files = $_GET['f'];
             $temp_files = array();
@@ -80,11 +82,7 @@ class Minify_Controller_MinApp extends Minify_Controller_Base {
                 if (!is_string($file)) {
                     $url = $file->minifyOptions['prependRelativePath'];
                     $verified  = false;
-                    foreach($external as $ext) {
-                        if(preg_match('#'.w3_get_url_regexp($ext).'#',$url) && !$verified){
-                            $verified = true;
-                        }
-                    }
+                    if (!empty($external) && @preg_match('~'.implode("|",$external).'~i',$url) && !$verified) $verified = true;
                     if (!$verified) {
                         $this->log("GET['f'] param part invalid, not in accepted external files list: \"{$url}\"");
                         return $options;

@@ -629,7 +629,19 @@ class W3_UI_MinifyAdminView extends W3_UI_PluginView {
         $files = array_map('w3_normalize_file_minify', $files);
         $files = array_unique($files);
         $ignore_files = $this->_config->get_array('minify.reject.files.js');
-        $files = array_diff($files, $ignore_files);
+        
+        foreach ($ignore_files as &$val) $val = trim(str_replace("~","\~",$val));
+        $ignore_files = array_filter($ignore_files,function($val){return $val != "";});
+
+        if (!empty($ignore_files))
+        {
+        	  $diff = array();
+            foreach($files as $file)
+                if (!@preg_match('~'.implode("|",$ignore_files).'~i',$file))
+                    $diff[] = $file;
+            $files = $diff;                   
+        }
+                
         return $files;
     }
 
@@ -647,7 +659,18 @@ class W3_UI_MinifyAdminView extends W3_UI_PluginView {
         $files = array_map('w3_normalize_file_minify', $files);
         $files = array_unique($files);
         $ignore_files = $this->_config->get_array('minify.reject.files.css');
-        $files = array_diff($files, $ignore_files);
+
+        foreach ($ignore_files as &$val) $val = trim(str_replace("~","\~",$val));
+        $ignore_files = array_filter($ignore_files,function($val){return $val != "";});
+
+        if (!empty($ignore_files))
+        {
+        	  $diff = array();
+            foreach($files as $file)
+                if (!@preg_match('~'.implode("|",$ignore_files).'~i',$file))
+                    $diff[] = $file;
+            $files = $diff;                   
+        }
 
         return $files;
     }

@@ -453,7 +453,7 @@ class W3_PgCache {
         /**
          * Check request URI
          */
-        if (!in_array($_SERVER['PHP_SELF'], $this->_config->get_array('pgcache.accept.files')) && !$this->_check_request_uri()) {
+        if (!$this->_check_cache_exception() && !$this->_check_request_uri()) {
             $this->cache_reject_reason = 'Requested URI is rejected';
 
             return false;
@@ -664,6 +664,23 @@ class W3_PgCache {
     }
 
     /**
+     * Check if in the cache exception list
+     *
+     * @return boolean
+     */
+    function _check_cache_exception() {
+        $accept_uri = $this->_config->get_array('pgcache.accept.files');
+        $accept_uri = array_map('w3_parse_path', $accept_uri);
+        $accept_uri[] = $_SERVER['PHP_SELF'];
+
+        foreach ($accept_uri as &$val) $val = trim(str_replace("~","\~",$val));
+        $accept_uri = array_filter($accept_uri,function($val){return $val != "";});
+        if (!empty($accept_uri) && @preg_match('~'.implode("|",$accept_uri).'~i',$this->_request_uri)) return true;
+
+        return false;
+    }
+
+    /**
      * Checks request URI
      *
      * @return boolean
@@ -683,12 +700,9 @@ class W3_PgCache {
         $reject_uri = $this->_config->get_array('pgcache.reject.uri');
         $reject_uri = array_map('w3_parse_path', $reject_uri);
 
-        foreach ($reject_uri as $expr) {
-            $expr = trim($expr);
-            if ($expr != '' && preg_match('~' . $expr . '~i', $this->_request_uri)) {
-                return false;
-            }
-        }
+        foreach ($reject_uri as &$val) $val = trim(str_replace("~","\~",$val));
+        $reject_uri = array_filter($reject_uri,function($val){return $val != "";});
+        if (!empty($reject_uri) && @preg_match('~'.implode("|",$reject_uri).'~i',$this->_request_uri)) return false;
 
         return true;
     }
@@ -730,15 +744,14 @@ class W3_PgCache {
             }
         }
 
-        foreach ($this->_config->get_array('pgcache.reject.cookie') as $reject_cookie) {
-            if (!empty($reject_cookie)) {
-                foreach (array_keys($_COOKIE) as $cookie_name) {
-                    if (strstr($cookie_name, $reject_cookie) !== false) {
-                        return false;
-                    }
-                }
-            }
-        }
+        $reject_cookies = $this->_config->get_array('pgcache.reject.cookie');
+        foreach ($reject_cookies as &$val) $val = trim(str_replace("~","\~",$val));
+        $reject_cookies = array_filter($reject_cookies,function($val){return $val != "";});
+        
+        if (!empty($reject_cookies))
+        foreach ($_COOKIE as $key => $value)
+            if (@preg_match('~'.implode("|",$reject_cookies).'~i',$key.(isset($value)?"=$value":"")))
+                return false;
 
         return true;
     }
@@ -1467,9 +1480,12 @@ class W3_PgCache {
 
     private function _check_query_string() {
         $accept_qs = $this->_config->get_array('pgcache.accept.qs');
-        foreach ($_GET as $key => $value) {
-            if (!in_array(strtolower($key), $accept_qs))
-                return false;
+        foreach ($accept_qs as &$val) $val = trim(str_replace("~","\~",$val));
+        $accept_qs = array_filter($accept_qs,function($val){return $val != "";});
+        if (!empty($accept_qs)) {
+            foreach ($_GET as $key => $value) {
+                if (!@preg_match('~'.implode("|",$accept_qs).'~i',$key.(isset($value)?"=$value":"")))  return false;
+            }
         }
         return true;
     }

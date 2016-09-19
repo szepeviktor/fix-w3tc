@@ -742,7 +742,7 @@ class W3_PgCacheAdminEnvironment {
         /**
          * Check for rejected cookies
          */
-        $use_cache_rules .= "    RewriteCond %{HTTP_COOKIE} !(" . implode('|', array_map('w3_preg_quote', $reject_cookies)) . ") [NC]\n";
+        $use_cache_rules .= "    RewriteCond %{HTTP_COOKIE} !(" . implode('|', $reject_cookies) . ") [NC]\n";
 
         /**
          * Check for rejected user agents
@@ -918,7 +918,7 @@ class W3_PgCacheAdminEnvironment {
         /**
          * Check for rejected cookies
          */
-        $rules .= "if (\$http_cookie ~* \"(" . implode('|', array_map('w3_preg_quote', $reject_cookies)) . ")\") {\n";
+        $rules .= "if (\$http_cookie ~* \"(" . implode('|', $reject_cookies) . ")\") {\n";
         $rules .= "    set \$w3tc_rewrite 0;\n";
         $rules .= "}\n";
 
