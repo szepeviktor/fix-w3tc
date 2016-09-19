@@ -115,7 +115,7 @@ class W3_PgCache {
 
     var $_old_exists = false;
     /**
-     * Returns instance.
+     * Returns instance. 
      * For backward compatibility with 0.9.2.3 version of /wp-content files
      *
      * @return W3_PgCache
@@ -138,19 +138,9 @@ class W3_PgCache {
         if ($pos !== false)
             $request_host = substr($request_host, 0, $pos);
         $this->_request_host = $request_host;
+
         $this->_request_uri = $_SERVER['REQUEST_URI'];
         $this->_lifetime = $this->_config->get_integer('pgcache.lifetime');
-        
-        /**
-	 * Filters the current theme page cache lifetime.
-	 *
-	 * @since 0.9.4.5
-	 *
-	 * @param string  $_request_uri The URI of the page.
-	 * @param integer $_lifetime    The page cache lifetime.
-	 */
-        $this->_lifetime = apply_filters('w3tc_pgcache_lifetime', $this->_lifetime, $this->_request_uri);
-        
         $this->_late_init = $this->_config->get_boolean('pgcache.late_init');
         $this->_enhanced_mode = ($this->_config->get_string('pgcache.engine') == 'file_generic');
 
@@ -590,7 +580,7 @@ class W3_PgCache {
 
             return false;
         }
-
+        
         return true;
     }
 
@@ -779,10 +769,10 @@ class W3_PgCache {
         if (!$this->_config->get_boolean('pgcache.reject.logged_roles'))
              return true;
         $roles = $this->_config->get_array('pgcache.reject.roles');
-
+        
         if (empty($roles))
             return true;
-
+        
         foreach (array_keys($_COOKIE) as $cookie_name) {
             if (strpos($cookie_name, 'w3tc_logged_') === 0) {
                 foreach($roles as $role) {
@@ -993,7 +983,7 @@ class W3_PgCache {
      * @param string $request_uri
      * @return string
      */
-    function _get_page_key($mobile_group = '', $referrer_group = '',
+    function _get_page_key($mobile_group = '', $referrer_group = '', 
         $encryption = '', $compression = '', $content_type = '', $request_uri = '') {
 
         if ($request_uri){
