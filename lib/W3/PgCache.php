@@ -140,6 +140,7 @@ class W3_PgCache {
         $this->_request_host = $request_host;
         $this->_request_uri = $_SERVER['REQUEST_URI'];
         $this->_lifetime = $this->_config->get_integer('pgcache.lifetime');
+
         $this->_late_init = $this->_config->get_boolean('pgcache.late_init');
         $this->_enhanced_mode = ($this->_config->get_string('pgcache.engine') == 'file_generic');
 
@@ -1487,6 +1488,18 @@ class W3_PgCache {
             $this->process_cached_page($this->_cached_data);
             exit;
         }
+    }
+
+    function alterPageLifetime(){
+      /**
+      * Filters the current theme page cache lifetime. Only work with Redis / Memcached
+      *
+      * @since 0.9.4.5
+      *
+      * @param string  $_request_uri The URI of the page.
+      * @param integer $_lifetime    The page cache lifetime.
+      */
+      $this->_lifetime = apply_filters('w3tc_pgcache_lifetime', $this->_lifetime, $this->_request_uri);
     }
 
     /**

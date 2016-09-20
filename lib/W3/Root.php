@@ -85,6 +85,7 @@ class W3_Root {
             $plugin->run();
         }
         add_action('init', array($this, 'load_extensions'));
+        add_action('wp_loaded', array(w3_instance('W3_PgCache'), 'alterPageLifetime'));
     }
 
     /**
