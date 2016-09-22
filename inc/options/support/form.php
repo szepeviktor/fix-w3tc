@@ -18,9 +18,9 @@
         <?php echo $this->postbox_footer(); ?>
 
         <p>
-            <input type="hidden" name="request_type" value="<?php echo $request_type; ?>" />
-            <input type="hidden" name="request_id" value="<?php echo $request_id; ?>" />
-            <input type="hidden" name="payment" value="<?php echo $payment; ?>" />
+            <input type="hidden" name="request_type" value="<?php echo htmlspecialchars($request_type, ENT_QUOTES, 'UTF-8'); ?>" />
+            <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request_id, ENT_QUOTES, 'UTF-8'); ?>" />
+            <input type="hidden" name="payment" value="<?php echo htmlspecialchars($payment, ENT_QUOTES, 'UTF-8'); ?>" />
             <?php echo $this->nonce_field('w3tc'); ?>
             <input type="submit" name="w3tc_support_request" class="button-primary" value="<?php _e('Submit request', 'w3-total-cache'); ?>" />
             <input id="support_cancel" class="button-secondary {nonce: '<?php echo wp_create_nonce('w3tc'); ?>'}" type="button" value="<?php _e('Cancel', 'w3-total-cache'); ?>" />

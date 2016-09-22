@@ -44,6 +44,8 @@ class W3_PgCacheFlush extends W3_PgCache {
     function flush() {
         $cache = $this->_get_cache();
         w3_minify_version_change();
+        // First, flush the 'sitemaps' group.
+        $cache->flush('sitemaps');
         return $cache->flush();
     }
 
