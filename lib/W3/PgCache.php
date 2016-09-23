@@ -1574,7 +1574,7 @@ class W3_PgCache {
         }
 
         $cache_headers = apply_filters('w3tc_is_cacheable_content_type',
-            array('application/json', 'text/html', 'text/xml', 'application/xhtml+xml'));
+            array('application/json', 'text/html', 'text/xml', 'application/xhtml+xml', 'application/rss+xml', 'application/atom+xml', 'application/rdf+xml'));
         return in_array($content_type, $cache_headers);
     }
 

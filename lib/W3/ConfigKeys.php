@@ -489,7 +489,7 @@ $keys = array(
     ),
     'pgcache.purge.sitemap_regex' => array(
         'type' => 'string',
-        'default' => '([a-z0-9_\-]*?)sitemap([a-z0-9_\-]*)?\.xml'
+        'default' => '[a-z0-9_\-]*sitemap[a-z0-9_\-]*\.(xml|xsl|html?)(\.gz)?'
     ),
     'pgcache.prime.enabled' => array(
         'type' => 'boolean',
