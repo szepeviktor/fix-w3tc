@@ -132,7 +132,6 @@ class SampleTest extends WP_UnitTestCase {
 	 */
 	public function test_wp_cache_get($data)
 	{
-		// TODO: test force parameter
 		$group = 'group';
 		$key = 0;
 	
@@ -192,59 +191,8 @@ class SampleTest extends WP_UnitTestCase {
 	 * @param mixed $data
 	 * @dataProvider getTestData
 	 */
-	public function test_wp_cache_switch_to_blog($data)
-	{
-		if( !is_multisite() ){
-			return;	
-		}
-		
-		$group = 'group';
-		$key   = 'foo';
-		
-		$this->assertNull(wp_cache_switch_to_blog(2));
-		$this->assertTrue(wp_cache_add($key, $data, $group));
-		$this->assertEquals($data, wp_cache_get($key, $group));
-		
-		$this->assertNull(wp_cache_switch_to_blog(3));
-		$this->assertFalse(wp_cache_get($key, $group));
-		$this->assertNull(wp_cache_switch_to_blog(2));
-		
-		$this->assertEquals($data, wp_cache_get($key, $group));
-	}
-	
-	/**
-	 * @param mixed $data
-	 * @dataProvider getTestData
-	 */
-	public function test_wp_cache_add_global_groups($data)
-	{
-		global $multisite;
-		$multisite = true;
-		wp_cache_init();
-		$group = 'group';
-		$key = 'foo';
-	
-		$this->assertNull(wp_cache_add_global_groups($group));
-		$this->assertNull(wp_cache_switch_to_blog(2));
-		$this->assertTrue(wp_cache_add($key, $data, $group));
-		$this->assertEquals($data, wp_cache_get($key, $group));
-		$this->assertNull(wp_cache_switch_to_blog(3));
-		$this->assertEquals($data, wp_cache_get($key, $group));
-		$this->assertNull(wp_cache_switch_to_blog(2));
-		$this->assertEquals($data, wp_cache_get($key, $group));
-	}
-	
-	/**
-	 * @param mixed $data
-	 * @dataProvider getTestData
-	 */
 	public function test_wp_cache_add_non_persistent_groups($data)
 	{
-		if ($GLOBALS['wp_object_cache'] instanceof WP_Object_Cache) {
-			$this->markTestSkipped('Test Skipped for In Memory Cache implementation');
-			return;
-		}
-	
 		$key = 'foo';
 	
 		$this->assertNull(wp_cache_add_non_persistent_groups('temp'));
