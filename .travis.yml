@@ -12,7 +12,8 @@ env:
     - WP_VERSION=3.7 WP_MULTISITE=1
 
 before_script:
-  - sh -c "if [[ $TRAVIS_PHP_VERSION != 'hhvm' && `php-config --vernum` -ge 50500 ]] ; then pecl config-set preferred_state beta; printf "yes\n" | pecl install apcu ; else echo 'extension="apc.so"' >> ./tests/travis/php.ini ;fi"
+  - if [[ $TRAVIS_PHP_VERSION =~ 5.[56] ]] ; then echo yes | pecl install apcu-4.0.10; fi;
+  - if [[ $TRAVIS_PHP_VERSION = 7.* ]] ; then pecl config-set preferred_state beta; echo yes | pecl install apcu; fi;
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION 
 
 script: phpunit
