@@ -17,7 +17,7 @@ A community driven build of W3 Total Cache, originally developed by [@ftownes](h
 _**Note:** This list does not reflect all of the myriad of fixes/changes -- just the key ones of interest_
 
 ![check] Removed Deprecated WordPress Code<br>
-![check] Full PHP7 Compliant (Passes [PHPCompatibility](https://github.com/wimg/PHPCompatibility): 100%)<br>
+![check] Full PHP7 Compliancy (Passes [PHPCompatibility](https://github.com/wimg/PHPCompatibility): 100%)<br>
 ![check] Memcache & Memcached Extension Support<br>
 ![check] APCu Support<br>
 ![check] OPcache Support<br>
