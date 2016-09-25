@@ -30,4 +30,11 @@ class W3_Object_Cache_File_Test extends W3_Object_Cache_Test {
         
        $this->config->save();
     }
+    
+    /**
+     * @see parent::tearDown()
+     */
+    function tearDown() {
+    	parent::tearDown();
+    }
 }
