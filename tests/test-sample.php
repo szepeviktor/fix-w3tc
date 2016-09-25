@@ -23,11 +23,10 @@ class SampleTest extends WP_UnitTestCase {
 	}
 	
 	/**
-	 * A single example test.
+	 * Test for test environment.
 	 */
-	function test_sample() {
-		// Replace this with some actual testing code.
+	function test_env() {
 		$this->assertTrue( $this->root instanceof W3_Root );
+		$this->assertTrue( function_exists('apcu_store') );
 	}
 }
-
