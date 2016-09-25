@@ -11,8 +11,7 @@ env:
     - WP_VERSION=3.7 WP_MULTISITE=1
 
 before_script:
-  - pear config-set preferred_state beta
-  - pecl install apcu
+  - echo "no" | pecl install apcu-beta
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION 
 
 script: phpunit
