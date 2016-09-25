@@ -5,6 +5,10 @@ php:
     - 5.4
     - 7.0
 
+services:
+    - memcached
+    - redis-server
+
 env:
     - WP_VERSION=latest WP_MULTISITE=0
     - WP_VERSION=latest WP_MULTISITE=1
