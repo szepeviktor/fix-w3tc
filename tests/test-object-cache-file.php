@@ -4,6 +4,7 @@
  *
  * @package W3_Total_Cache
  */
+require_once dirname(__FILE__) . '/w3-object-cache-test.php';
 
 /**
  * W3_Object_Cache_File_Test Tests
