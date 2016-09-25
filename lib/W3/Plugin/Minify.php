@@ -142,7 +142,7 @@ class W3_Plugin_Minify extends W3_Plugin {
                 /**
                  * Replace script and style tags
                  */
-                if (function_exists('is_feed') && !is_feed()) {
+                if (function_exists('is_feed') && !is_feed() && $add_script_and_style) {
                     w3_require_once(W3TC_INC_DIR . '/functions/extract.php');
                     $head_prepend = '';
                     $body_prepend = '';
@@ -167,8 +167,8 @@ class W3_Plugin_Minify extends W3_Plugin {
 
                             $buffer = str_replace('<!-- W3TC-include-css -->', '', $buffer);
                             if ($embed_pos === false) {
-                                preg_match('~<head(\s+[^<>]+)*>~Ui', $buffer, $match, PREG_OFFSET_CAPTURE);
-                                $embed_pos = strlen($match[0][0]) + $match[0][1];
+                                if (preg_match('~<head(\s+[^<>]+)*>~Ui', $buffer, $match, PREG_OFFSET_CAPTURE))
+                                    $embed_pos = strlen($match[0][0]) + $match[0][1];
                             }
 
                             //$ignore_css_files = array_map('w3_normalize_file', $ignore_css_files);

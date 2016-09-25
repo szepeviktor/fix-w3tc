@@ -319,6 +319,10 @@ $keys = array(
         'type' => 'boolean',
         'default' => false
     ),
+    'pgcache.cache.apache_handle_xml' => array(
+        'type' => 'boolean',
+        'default' => true
+    ),
     'pgcache.cache.ssl' => array(
         'type' => 'boolean',
         'default' => false
@@ -350,11 +354,7 @@ $keys = array(
     ),
     'pgcache.accept.uri' => array(
         'type' => 'array',
-        'default' => array(
-            'sitemap(_index)?\.xml(\.gz)?',
-            '([a-z0-9_\-]+)?sitemap\.xsl',
-            '[a-z0-9_\-]+-sitemap([0-9]+)?\.xml(\.gz)?'
-        )
+        'default' => array()
     ),
     'pgcache.accept.files' => array(
         'type' => 'array',
@@ -388,7 +388,8 @@ $keys = array(
         'type' => 'array',
         'default' => array(
             'wp-.*\.php',
-            'index\.php'
+            'index\.php',
+            '[a-z0-9_\-]*sitemap[a-z0-9_\-]*\.(xml|xsl|html?)(\.gz)?'
         )
     ),
     'pgcache.reject.categories' => array(
@@ -489,7 +490,7 @@ $keys = array(
     ),
     'pgcache.purge.sitemap_regex' => array(
         'type' => 'string',
-        'default' => '([a-z0-9_\-]*?)sitemap([a-z0-9_\-]*)?\.xml'
+        'default' => '[a-z0-9_\-]*sitemap[a-z0-9_\-]*\.(xml|xsl|html?)(\.gz)?'
     ),
     'pgcache.prime.enabled' => array(
         'type' => 'boolean',

@@ -1167,11 +1167,20 @@ class W3_PgCache {
              * Append HTML extension.
              * For nginx - we create .xml cache entries and redirect to them
              */
-            if (w3_is_nginx() && substr($content_type, 0, 8) == 'text/xml' &&
-                  $this->_config->get_boolean('pgcache.cache.nginx_handle_xml'))
-                $key .= '.xml';
-            else
-                $key .= '.html';
+
+             $ext = "html";
+             if (@preg_match("~(text/xml|application/rdf\+xml|application/rss\+xml|application/atom\+xml)~i",$content_type) || strpos($request_uri,"/feed/") !==false) $ext = "xml";
+
+		   if (w3_is_nginx())
+		   {
+		   	if (!$this->_config->get_boolean('pgcache.cache.nginx_handle_xml')) $ext = "html";
+		   }
+		   else
+		   {
+		   	if (!$this->_config->get_boolean('pgcache.cache.apache_handle_xml')) $ext = "html";
+		   }
+            
+             $key .= ".$ext";
         }
 
         /**
@@ -1574,7 +1583,7 @@ class W3_PgCache {
         }
 
         $cache_headers = apply_filters('w3tc_is_cacheable_content_type',
-            array('application/json', 'text/html', 'text/xml', 'application/xhtml+xml'));
+            array('application/json', 'text/html', 'text/xml', 'application/xhtml+xml', 'application/rss+xml', 'application/atom+xml', 'application/rdf+xml'));
         return in_array($content_type, $cache_headers);
     }
 
@@ -1628,8 +1637,9 @@ class W3_PgCache {
 
         if ($this->_enhanced_mode && !$this->_late_init) {
             $this->_check_rules_present();
-            if (isset($headers['Content-Type']))
-                $content_type = $headers['Content-Type'];
+            foreach( $headers as $key => $value )
+		      if(strtolower( $key ) == 'content-type')
+		      	$content_type = $value;
         }
 
         $time = time();
