@@ -17,17 +17,40 @@ class SampleTest extends WP_UnitTestCase {
 	 */
 	private $root;
 	
+	/**
+	 * @var W3_Config
+	 */
+	private $config;
+	
 	function setUp() {
-		$this->root = w3_instance('W3_Root');
-		$this->root->run();
+		
+		chmod( WP_CONTENT_DIR, 0755 );
+		
+		$this->root   = w3_instance('W3_Root');
+		$this->config = w3_instance('W3_Config');
+		
+		$this->config->set('dbcache.enabled', true);
+		$this->config->set('objectcache.engine', 'file');
+		
+		$this->config->set('objectcache.enabled', true);
+		$this->config->set('objectcache.engine', 'file');
+		
+		
+		$this->config->set('pgcache.enabled', true);
+		$this->config->set('pgcache.engine','file_generic');
+				
+		$this->config->set('minify.enabled', true);
+		$this->config->set('minify.css.enable', true);
+		$this->config->set('minify.js.enable', true);
+		$this->config->set('minify.html.enable', true);
+		
+		$this->config->save();
 	}
 	
 	/**
-	 * A single example test.
+	 * Test for test environment.
 	 */
-	function test_sample() {
-		// Replace this with some actual testing code.
-		$this->assertTrue( $this->root instanceof W3_Root );
+	function test_index() {
+		$this->go_to('/');
 	}
 }
-
