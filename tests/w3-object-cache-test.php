@@ -198,12 +198,9 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
         $this->assertNull(wp_cache_switch_to_blog(2));
         $this->assertTrue(wp_cache_add($key, $data, $group));
         $this->assertEquals($data, wp_cache_get($key, $group));
-        
         $this->assertNull(wp_cache_switch_to_blog(3));
         $this->assertFalse(wp_cache_get($key, $group));
-        
         $this->assertNull(wp_cache_switch_to_blog(2));
-        
         $this->assertEquals($data, wp_cache_get($key, $group));
     }
     
@@ -225,13 +222,12 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
         $group = 'group';
         $key = 'foo';
         
+        $this->assertNull(wp_cache_add_global_groups($group));
         $this->assertNull(wp_cache_switch_to_blog(2));
         $this->assertTrue(wp_cache_add($key, $data, $group));
         $this->assertEquals($data, wp_cache_get($key, $group));
-        
         $this->assertNull(wp_cache_switch_to_blog(3));
-        $this->assertFalse(wp_cache_get($key, $group));
-        
+        $this->assertEquals($data, wp_cache_get($key, $group));
         $this->assertNull(wp_cache_switch_to_blog(2));
         $this->assertEquals($data, wp_cache_get($key, $group));
     }
@@ -249,6 +245,9 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
             // Test Skipped for In Memory Cache implementation
             return;
         }
+        
+        // Re-init the cache. This deletes the local cache but keeps the persistent one
+        wp_cache_init();
         
         $key = 'foo';
     
