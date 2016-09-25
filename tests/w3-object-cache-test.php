@@ -211,16 +211,24 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
      */
     public function test_wp_cache_add_global_groups($data)
     {
+    	// skip test if not multisite
+    	if( !is_multisite() ){
+    		return;
+    	}
+    	
         $group = 'group';
         $key = 'foo';
     
         $this->assertNull(wp_cache_add_global_groups($group));
         $this->assertNull(wp_cache_switch_to_blog(2));
+        
         $this->assertTrue(wp_cache_add($key, $data, $group));
         $this->assertEquals($data, wp_cache_get($key, $group));
         $this->assertNull(wp_cache_switch_to_blog(3));
+        
         $this->assertEquals($data, wp_cache_get($key, $group));
         $this->assertNull(wp_cache_switch_to_blog(2));
+        
         $this->assertEquals($data, wp_cache_get($key, $group));
     }
     
