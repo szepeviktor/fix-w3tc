@@ -437,12 +437,12 @@
                     <span class="description"><?php _e('Specify additional page headers to cache.', 'w3-total-cache')?></span>
                 </td>
             </tr>
-            <?php if (w3_is_nginx() && $this->_config->get_string('pgcache.engine') == 'file_generic'): ?>
+            <?php if ($this->_config->get_string('pgcache.engine') == 'file_generic'): ?>
             <tr>
-                <th><label><?php w3_e_config_label('pgcache.cache.nginx_handle_xml') ?></label></th>
+                <th><label><?php w3_e_config_label(w3_is_nginx()?'pgcache.cache.nginx_handle_xml':'pgcache.cache.apache_handle_xml') ?></label></th>
                 <td>
-                    <?php $this->checkbox('pgcache.cache.nginx_handle_xml', true) ?> <?php w3_e_config_label('pgcache.cache.nginx_handle_xml') ?></label><br />
-                    <span class="description"><?php _e('Return correct Content-Type header for XML files. Slows down cache engine.', 'w3-total-cache'); ?></span>
+                    <?php $this->checkbox(w3_is_nginx()?'pgcache.cache.nginx_handle_xml':'pgcache.cache.apache_handle_xml', w3_is_nginx()?true:false) ?> <?php w3_e_config_label(w3_is_nginx()?'pgcache.cache.nginx_handle_xml':'pgcache.cache.apache_handle_xml') ?></label><br />
+                    <span class="description"><?php _e('Return correct Content-Type header for XML files (e.g., feeds and sitemaps). Slows down cache engine.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>
             <?php endif; ?>

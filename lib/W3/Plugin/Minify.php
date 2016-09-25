@@ -167,8 +167,8 @@ class W3_Plugin_Minify extends W3_Plugin {
 
                             $buffer = str_replace('<!-- W3TC-include-css -->', '', $buffer);
                             if ($embed_pos === false) {
-                                preg_match('~<head(\s+[^<>]+)*>~Ui', $buffer, $match, PREG_OFFSET_CAPTURE);
-                                $embed_pos = strlen($match[0][0]) + $match[0][1];
+                                if (preg_match('~<head(\s+[^<>]+)*>~Ui', $buffer, $match, PREG_OFFSET_CAPTURE))
+                                    $embed_pos = strlen($match[0][0]) + $match[0][1];
                             }
 
                             //$ignore_css_files = array_map('w3_normalize_file', $ignore_css_files);
