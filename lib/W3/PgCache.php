@@ -699,7 +699,6 @@ class W3_PgCache {
     function _check_cache_exception() {
         $accept_uri = $this->_config->get_array('pgcache.accept.files');
         $accept_uri = array_map('w3_parse_path', $accept_uri);
-        $accept_uri[] = $_SERVER['PHP_SELF'];
 
         foreach ($accept_uri as &$val) $val = trim(str_replace("~","\~",$val));
         $accept_uri = array_filter($accept_uri,function($val){return $val != "";});
