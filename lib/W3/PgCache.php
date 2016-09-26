@@ -1592,10 +1592,10 @@ class W3_PgCache {
         $accept_qs = array_filter($accept_qs,function($val){return $val != "";});
         if (!empty($accept_qs)) {
             foreach ($_GET as $key => $value) {
-                if (!@preg_match('~'.implode("|",$accept_qs).'~i',$key.(isset($value)?"=$value":"")))  return false;
+                if (@preg_match('~'.implode("|",$accept_qs).'~i',$key.(isset($value)?"=$value":"")))  return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**
