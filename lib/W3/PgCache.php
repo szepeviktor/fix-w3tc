@@ -699,7 +699,6 @@ class W3_PgCache {
     function _check_cache_exception() {
         $accept_uri = $this->_config->get_array('pgcache.accept.files');
         $accept_uri = array_map('w3_parse_path', $accept_uri);
-        $accept_uri[] = $_SERVER['PHP_SELF'];
 
         foreach ($accept_uri as &$val) $val = trim(str_replace("~","\~",$val));
         $accept_uri = array_filter($accept_uri,function($val){return $val != "";});
@@ -1593,10 +1592,10 @@ class W3_PgCache {
         $accept_qs = array_filter($accept_qs,function($val){return $val != "";});
         if (!empty($accept_qs)) {
             foreach ($_GET as $key => $value) {
-                if (!@preg_match('~'.implode("|",$accept_qs).'~i',$key.(isset($value)?"=$value":"")))  return false;
+                if (@preg_match('~'.implode("|",$accept_qs).'~i',$key.(isset($value)?"=$value":"")))  return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**
