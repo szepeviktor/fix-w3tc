@@ -26,7 +26,7 @@ w3_require_once(W3TC_LIB_W3_DIR . '/Request.php');
 $command = W3_Request::get_string('command');
 $nonce = W3_Request::get_string('nonce');
 $uri = $_SERVER['REQUEST_URI'];
-if (wp_hash($uri) == $nonce) {
+if (wp_hash($uri) === $nonce) {
     /**
      * @var $w3_cache W3_CacheFlush
      */

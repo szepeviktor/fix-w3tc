@@ -235,11 +235,6 @@ class W3_Menus {
                 $options_faq->options();
                 break;
 
-            case 'w3tc_support':
-                $options_support = w3_instance('W3_UI_SupportAdminView');
-                $options_support->options();
-                break;
-
             case 'w3tc_install':
                 $options_install = w3_instance('W3_UI_InstallAdminView');
                 $options_install->options();

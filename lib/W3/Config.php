@@ -124,12 +124,8 @@ class W3_Config extends W3_ConfigBase {
      * @return string
      */
     function export() {
-        $this->refresh_cache(true);
-        w3_require_once(W3TC_INC_DIR . '/functions/file.php');
-        $content = file_get_contents($this->_get_config_filename());
-        $content = substr($content,13);
-        $data = unserialize($content);
-        $settings = w3tc_format_data_as_settings_file($data);
+        $this->refresh_cache(true);        
+        $settings = json_encode($this->_data);
         return $settings;
     }
 
@@ -142,10 +138,8 @@ class W3_Config extends W3_ConfigBase {
     function import($filename) {
         if (file_exists($filename) && is_readable($filename)) {
             $data = file_get_contents($filename);
-            if (substr($data, 0, 5) == '<?php')
-                $data = substr($data, 5);
-
-            $config = eval($data);
+            
+            $config = json_decode($data,true);
 
             if (is_array($config)) {
                 foreach ($config as $key => $value)
