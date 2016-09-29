@@ -1603,6 +1603,10 @@ $keys = array(
         'type' => 'string',
         'default' => ''
     ),
+    'config.w3tc.update' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
     'widget.latest.items' => array(
         'type' => 'integer',
         'default' => 3

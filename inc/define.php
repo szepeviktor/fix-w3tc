@@ -1645,3 +1645,10 @@ function w3_minify_version_change() {
     $config_admin->save();
 }
 
+/**
+ * Prevents w3tc from popping up notification messages about needing to be updated
+ */
+function w3tc_remove_update_notification( $value ) {
+     unset($value->response[ 'w3-total-cache/w3-total-cache.php' ]);
+     return $value;
+}
