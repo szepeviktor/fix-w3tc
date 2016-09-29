@@ -577,6 +577,10 @@
         <table class="form-table">
             <tr>
                 <th colspan="2">
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
                     <input type="hidden" name="widget.pagespeed.enabled" value="0" />
                     <label><input type="checkbox" name="widget.pagespeed.enabled" value="1"<?php checked($this->_config->get_boolean('widget.pagespeed.enabled'), true); ?> />  <?php w3_e_config_label('widget.pagespeed.enabled', 'general') ?></label>
                     <br /><span class="description"><?php _e('Display Google Page Speed results on the WordPress dashboard.', 'w3-total-cache'); ?></span>
