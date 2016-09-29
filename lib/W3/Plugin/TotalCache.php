@@ -395,16 +395,11 @@ class W3_Plugin_TotalCache extends W3_Plugin {
 
             $menu_items = array_merge($menu_items, array(
                 array(
-                    'id' => 'w3tc-faq',
-                    'parent' => 'w3tc',
-                    'title' => __('FAQ', 'w3-total-cache'),
-                    'href' => admin_url('admin.php?page=w3tc_faq')
-                ),
-                array(
                     'id' => 'w3tc-support',
                     'parent' => 'w3tc',
                     'title' => __('<span style="color: red; background: none;">Support</span>', 'w3-total-cache'),
-                    'href' => admin_url('admin.php?page=w3tc_support')
+                    'href' => "https://github.com/szepeviktor/fix-w3tc/issues",
+                    'meta' => array("target" => "_blank")
                 )
             ));
 

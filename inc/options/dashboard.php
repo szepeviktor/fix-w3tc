@@ -41,7 +41,7 @@
             <div class="content">
             <div id="dashboard-text" style="display:inline-block;">
                 <h1><?php _e('Dashboard', 'w3-total-cache')?></h1>
-                <p>Thanks for choosing <a href="https://github.com/szepeviktor/fix-w3tc/" target="_blank">FIX-W3TC</a> (forked from <a href="https://it.wordpress.org/plugins/w3-total-cache/" target="_blank">W3 Total Cache</a> by <a href="https://profiles.wordpress.org/fredericktownes/" target="_blank">Frederick Townes</a>) as your Web Performance Optimization (<acronym title="Web Performance Optimization">WPO</acronym>) framework. Eventually, the dashboard will provide at-a-glance insight into key performance indicators for this WordPress installation. Please share <a href="https://github.com/szepeviktor/fix-w3tc/issues/new" target="_blank">your suggestions</a> about the statistics and reporting you would like to see here!</p>
+                <p>Thanks for choosing <a href="https://github.com/szepeviktor/fix-w3tc/" target="_blank">FIX-W3TC</a> (forked from <a href="https://wordpress.org/plugins/w3-total-cache/" target="_blank">W3 Total Cache</a> by <a href="https://profiles.wordpress.org/fredericktownes/" target="_blank">Frederick Townes</a>) as your Web Performance Optimization (<acronym title="Web Performance Optimization">WPO</acronym>) framework. Eventually, the dashboard will provide at-a-glance insight into key performance indicators for this WordPress installation. Please share <a href="https://github.com/szepeviktor/fix-w3tc/issues/new" target="_blank">your suggestions</a> about the statistics and reporting you would like to see here!</p>
             </div>
             <div id="widgets-container">
             <?php do_meta_boxes( $screen->id, 'normal', '' ); ?>
