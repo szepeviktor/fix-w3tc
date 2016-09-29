@@ -12,7 +12,7 @@ class W3_UI_Settings_General extends W3_UI_Settings_SettingsBase{
                 'common.visible_by_master_only' => __('Hide performance settings', 'w3-total-cache'),
                 'config.path' => __('Nginx server configuration file path', 'w3-total-cache'),
                 'config.check' => __('Verify rewrite rules', 'w3-total-cache'),
-                'plugin.license_key' => __('License', 'w3-total-cache')
+                'plugin.license_key' => __('License', 'w3-total-cache'),
             )
         );
     }

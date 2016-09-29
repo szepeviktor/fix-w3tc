@@ -75,6 +75,10 @@ class W3_Root {
             &$this,
             'deactivate'
         ));
+
+        if ($this->_config->get_boolean('config.w3tc.update') ) {
+	       add_filter( 'site_transient_update_plugins', 'w3tc_remove_update_notification' );
+	   }
     }
 
     /**
