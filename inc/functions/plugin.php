@@ -348,8 +348,7 @@ function w3tc_fragmentcache_filter_start($id, $group = '', $hook = '', $data) {
     $fragment = w3tc_fragmentcache_get($id, $group);
     if (false !== $fragment) {
         if ($hook) {
-            global $wp_filter;
-            $wp_filter[$hook] = array();
+            remove_all_filters($hook);
         }
         return $fragment;
     }
