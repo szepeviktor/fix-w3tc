@@ -330,7 +330,7 @@ class Util_File {
 					Util_File::mkdir_from( dirname( $filename ), W3TC_CACHE_DIR );
 					if ( !@rename( $temp, $filename ) ) {
 						throw new \Exception( 'Can\'t write to file <strong>' .
-							$filename . '</strong>' );
+							$filename . '</strong>. Error: ' . error_get_last() );
 					}
 				}
 			}
