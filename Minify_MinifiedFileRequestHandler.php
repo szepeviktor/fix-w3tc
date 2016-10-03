@@ -549,6 +549,8 @@ class Minify_MinifiedFileRequestHandler {
 
 		$message = '<h1>W3TC Minify Error</h1>';
 
+		$debug = false;
+		
 		if ( $debug ) {
 			$message .= sprintf( '<p>%s.</p>', $error );
 		} else {
