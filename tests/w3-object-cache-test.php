@@ -23,6 +23,11 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
 			mkdir(WP_CONTENT_DIR . "/cache/", 0777);
 			chmod(WP_CONTENT_DIR . "/cache/", 0777);
 		}
+		
+		if( !is_dir(WP_CONTENT_DIR . "/w3tc-config/") ){
+			mkdir(WP_CONTENT_DIR . "/w3tc-config/", 0777);
+			chmod(WP_CONTENT_DIR . "/w3tc-config/", 0777);
+		}
 	
 		$this->config = w3tc_config();
 	}
