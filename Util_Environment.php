@@ -1039,12 +1039,24 @@ class Util_Environment {
 	 * @return bool
 	 */
 	static public function is_w3tc_pro( $config = null ) {
-		$result = $config->get_string( 'plugin.type' ) == 'pro' ||
-			$config->get_string( 'plugin.type' ) == 'pro_dev' ||
-			Util_Environment::is_w3tc_enterprise( $config ) ||
-			( defined( 'W3TC_PRO' ) && W3TC_PRO );
+		
+		if( ( defined('W3TC_PRO') && W3TC_PRO ) ){
+		    return true;
+		}
+		
+		if( is_object($config) ){
+		    $plugin_type = $config->get_string( 'plugin.type' );
 
-		return $result;
+		    if( $plugin_type == 'pro' || $plugin_type == 'pro_dev'){
+		        return true;
+		    }
+		}
+		
+		if( Util_Environment::is_w3tc_enterprise( $config ) ){
+		    return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -1063,12 +1075,18 @@ class Util_Environment {
 	 * @return bool
 	 */
 	static public function is_w3tc_enterprise( $config = null ) {
-		$result = false;
-		if ( $config )
-			$result = $config->get_string( 'plugin.type' ) == 'enterprise' ||
-				( defined( 'W3TC_ENTERPRISE' ) && W3TC_ENTERPRISE );
+		
+		if( defined( 'W3TC_ENTERPRISE' ) && W3TC_ENTERPRISE ){
+		    return true;
+		}
+		
+		if ( is_object($config) ){
+		    if( $config->get_string( 'plugin.type' ) == 'enterprise' ){
+		        return true;
+		    }	
+		}
 
-		return $result;
+		return false;
 	}
 
 	/**
