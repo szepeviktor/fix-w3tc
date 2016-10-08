@@ -1,3 +1,15 @@
+= 0.9.4.5 =
+* Removed Deprecated WordPress Code
+* Full PHP7 Compliancy (Passes PHPCompatibility: 100%)
+* Memcache & Memcached Extension Support
+* APCu Support
+* OPcache Support
+* WOFF2 Font Support
+* Proper HTTPS Caching
+* AMP Support
+* Redis Support
+* Removed Nag Screens, Obsolete Widgets, & Licensing
+
 = 0.9.3 =
 * Added support for extensions
 * Added support for WordPress SEO image filter and CDN
