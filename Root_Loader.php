@@ -39,6 +39,7 @@ class Root_Loader {
 			$plugins[] = new UsageStatistics_Plugin();
 
 		if ( is_admin() ) {
+			$plugins[] = new Generic_Plugin_PageCachePurge();
 			$plugins[] = new Generic_Plugin_Admin();
 			$plugins[] = new BrowserCache_Plugin_Admin();
 			$plugins[] = new DbCache_Plugin_Admin();
