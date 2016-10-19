@@ -124,7 +124,7 @@ class W3_ObjectCacheAdminEnvironment {
      * @throws FilesystemOperationException
      */
     private function delete_addin() {
-        if ($this->is_objectcache_add_in())
+        if (file_exists(W3TC_ADDIN_FILE_OBJECT_CACHE) && $this->is_objectcache_add_in())
             w3_wp_delete_file(W3TC_ADDIN_FILE_OBJECT_CACHE);
     }
 
