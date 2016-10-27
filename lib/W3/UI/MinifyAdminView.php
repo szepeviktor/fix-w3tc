@@ -248,7 +248,7 @@ class W3_UI_MinifyAdminView extends W3_UI_PluginView {
                      * Handle category.php
                      */
                     case ($template == 'category'):
-                        $category_ids = get_all_category_ids();
+                        $category_ids = get_terms( 'category', array('fields' => 'ids', 'get' => 'all') );
                         if (is_array($category_ids) && count($category_ids)) {
                             $link = get_category_link($category_ids[0]);
                         }
