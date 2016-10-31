@@ -53,6 +53,7 @@ class W3_UI_Settings_Minify extends W3_UI_Settings_SettingsBase{
 // options->minify->css
                 'minify.css.strip.comments' => __('Preserved comment removal (not applied when combine only is active)', 'w3-total-cache'),
                 'minify.css.strip.crlf' => __('Line break removal (not applied when combine only is active)', 'w3-total-cache'),
+                'minify.css.embed_content' => __('Embed content instead of using external file(s)', 'w3-total-cache'),
 // options->minify->csstidy
                 'minify.csstidy.options.remove_bslash' => __('Remove unnecessary backslashes', 'w3-total-cache'),
                 'minify.csstidy.options.compress_colors' => __('Compress colors', 'w3-total-cache'),

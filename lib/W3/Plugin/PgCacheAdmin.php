@@ -85,7 +85,7 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
      * @param integer $start
      * @return void
      */
-    function prime($start = 0,$user_interval=-1,$user_limit=-1,$user_sitemap="") {
+    function prime($start = 0) {
         $start = (int) $start;
 
         /**
@@ -98,24 +98,23 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
                 foreach ($hooks as $hook => $keys) {
                     foreach ($keys as $key => $data) {
                         if ($hook == 'w3_pgcache_prime' && count($data['args'])) {
-                            return false;
+                            return;
                         }
                     }
                 }
             }
         }
-	
-        $interval = $user_interval==-1?$this->_config->get_integer('pgcache.prime.interval'):$user_interval;
-        $limit = $user_limit==-1?$this->_config->get_integer('pgcache.prime.limit'):$user_limit;
-        $sitemap = empty($user_sitemap)?$this->_config->get_string('pgcache.prime.sitemap'):$user_sitemap;
+
+        if (!$config->get_boolean('pgcache.prime.enabled')) return;
         
+        $interval = $this->_config->get_integer('pgcache.prime.interval');
+        $limit = $this->_config->get_integer('pgcache.prime.limit');
+        $sitemap = $this->_config->get_string('pgcache.prime.sitemap');
+
         /**
          * Parse XML sitemap
          */
         $urls = $this->parse_sitemap($sitemap);
-        if (count($urls) == 0) {
-        	return "";
-        }
 
         /**
          * Queue URLs
@@ -124,10 +123,7 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
 
         if (count($urls) > ($start + $limit)) {
             wp_schedule_single_event(time() + $interval, 'w3_pgcache_prime', array(
-                $start + $limit,
-                $user_interval,
-                $user_limit,
-                $user_sitemap
+                $start + $limit
             ));
         }
 
@@ -139,13 +135,180 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
 
         // use empty user-agent since by default we use W3TC-powered by
         // which blocks caching
-        foreach ($queue as $url) {
+        foreach ($queue as $url)
             w3_http_get($url, array('user-agent' => ''));
-        }
-            
-        return "($limit pages every $interval secs - sitemap: $sitemap)";
     }
 
+    /**
+     * Prime cache (WP-CLI)
+     *
+     */
+    function prime_cli($start=0,$user_interval=-1,$user_limit=-1,$user_sitemap="",$boot=false) {
+
+        $interval = $user_interval==-1?$this->_config->get_integer('pgcache.prime.interval'):$user_interval;
+        $limit = $user_limit==-1?$this->_config->get_integer('pgcache.prime.limit'):$user_limit;
+        $sitemap = empty($user_sitemap)?$this->_config->get_string('pgcache.prime.sitemap'):$user_sitemap;
+
+        if ($boot)
+        {
+            /**
+             * Don't start cache prime if queues are still scheduled
+             */
+
+            if ((extension_loaded('sysvmsg') && msg_stat_queue(msg_get_queue(99909))['msg_qnum'] > 0) || 
+               $this->get_cli_file()!==false) {
+                return false;
+            }
+            
+            /**
+             * Parse XML sitemap
+             */
+            if (count($this->parse_sitemap($sitemap)) == 0) {
+                return "";
+            }            
+
+            $crons = _get_cron_array();
+
+            foreach ($crons as $timestamp => $hooks) {
+                foreach ($hooks as $hook => $keys) {
+                    foreach ($keys as $key => $data) {
+                        if ($hook == 'w3_pgcache_prime_cli' && count($data['args'])) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            wp_schedule_single_event(time(), 'w3_pgcache_prime_cli', array(
+                            $start,
+                            $interval,
+                            $limit,
+                            $sitemap
+            ));
+
+            return "($limit pages every $interval secs - sitemap: $sitemap)";
+        }
+        else
+        {
+            $urls = $this->parse_sitemap($sitemap);
+            
+            /**
+             * Queue URLs
+             */
+            $queue = array_slice($urls, $start, $limit);
+
+            if (count($queue) > 0)
+            {
+                $usefile=true;
+                $msgidmain = null;
+                $msgidproc = null;
+
+                if (extension_loaded('sysvmsg'))
+                {
+                    $usefile = false;
+                    $msgidmain = msg_get_queue(99909);
+                    $msgidproc = msg_get_queue(99910);
+
+                    msg_send($msgidproc,99,"prime_proc");
+                }
+            
+                /**
+                 * Make HTTP requests and prime cache
+                 */
+                w3_require_once(W3TC_INC_DIR . '/functions/http.php');
+                w3_require_once(W3TC_INC_DIR . '/functions/url.php');
+
+                if ($usefile)
+                {
+                    $pid = getmypid();
+
+                    if (($pids=$this->get_cli_file()) === false)
+                        $pids = array();
+
+                    $pids[] = $pid;
+                    $this->set_cli_file($pids);
+                }
+                
+                if (count($urls) > ($start + $limit)) {
+                    wp_schedule_single_event(time() + $interval, 'w3_pgcache_prime_cli', array(
+                        $start + $limit,
+                        $interval,
+                        $limit,
+                        $sitemap
+                    ));
+                }
+                else
+                    $done = true;
+
+                // use empty user-agent since by default we use W3TC-powered by
+                // which blocks caching
+                foreach ($queue as $url)
+                {
+                    w3_http_get($url, array('user-agent' => ''));
+                    if ($msgidmain != null && msg_stat_queue($msgidmain)['msg_qnum'] == 0) break;
+                }
+
+                if ($usefile)
+                {
+                    if (($pids=$this->get_cli_file()) !== false)
+                    {
+                        unset($pids[array_search($pid,$pids)]);
+                        $this->set_cli_file($pids);
+                    }
+
+                    if (isset($done) && ($pids===false || count($pids) == 0))
+                    {
+                        $this->delete_cli_file();
+                        exit("Page cache priming via WP-CLI has successfully completed.\n");
+                    }
+                }
+                else
+                {
+                    msg_receive($msgidproc,99,$t,1024,$data,true,MSG_IPC_NOWAIT);
+
+                    if (msg_stat_queue($msgidproc)['msg_qnum'] == 0) {
+                        msg_remove_queue($msgidproc);
+
+                        if (msg_stat_queue($msgidmain)['msg_qnum'] == 0) {
+                            msg_remove_queue($msgidmain);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Gets the active process ids handling WP-CLI prime caching
+     *     
+     * @return array
+     */    
+    function get_cli_file()
+    {
+        return w3_lock_read(W3TC_CLI_FILE);
+    }
+
+    /**
+     * Adds (or Removes) a process id handling WP-CLI prime caching
+     *
+     * @param array 
+     * @return void
+     */    
+    function set_cli_file($data)
+    {
+        w3_lock_write(W3TC_CLI_FILE,$data);
+    }
+
+    /**
+     * Deletes the WP-CLI prime caching support file
+     *     
+     * @return void
+     */    
+    function delete_cli_file()
+    {
+        @unlink(W3TC_CLI_FILE);
+    }
+    
     /**
      * Parses sitemap
      *

@@ -877,6 +877,7 @@ class W3_Minify {
                                                     'minify.css.combine',
                                                     'minify.css.strip.comments',
                                                     'minify.css.strip.crlf',
+                                                    'minify.css.embed_content',
                                                     'minify.css.imports',
                                                ));
                     break;

@@ -47,6 +47,7 @@ return array(
     'wri' => 'application/vnd.ms-write',
     'woff' => 'application/font-woff',
     'woff2' => 'application/font-woff2',
+    'webp' => 'image/wepb',
     'xla|xls|xlsx|xlt|xlw' => 'application/vnd.ms-excel', 
     'zip' => 'application/zip'
 );

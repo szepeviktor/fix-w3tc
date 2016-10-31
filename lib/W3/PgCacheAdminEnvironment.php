@@ -292,26 +292,8 @@ class W3_PgCacheAdminEnvironment {
     }
 
     private function unschedule_prime() {
-
-        // Because prime can potentially contains arguments due to "pages per interval"
-        // the standard wp_next_scheduled() check will fail when you don't provide the exact
-        // args that was used to schedule the event originally. So the following manually
-        // hunts down the prime hook and remove it
-        
-        $crons = _get_cron_array();
-        if ( empty( $crons ) ) {
-            return;
-        }
-        foreach( $crons as $timestamp => $cron ) {
-            if ( ! empty( $cron['w3_pgcache_prime'] ) )  {
-                unset( $crons[$timestamp]['w3_pgcache_prime'] );
-            }
-
-            if ( empty( $crons[$timestamp] ) ) {
-                unset( $crons[$timestamp] );
-            }
-        }
-        _set_cron_array( $crons );
+        if (wp_next_scheduled('w3_pgcache_prime'))
+            wp_clear_scheduled_hook('w3_pgcache_prime');
     }
 
 

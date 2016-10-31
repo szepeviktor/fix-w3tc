@@ -21,6 +21,7 @@ define('W3TC_SUPPORT_REQUEST_URL', 'https://www.w3-edge.com/w3tc/support/');
 define('W3TC_TRACK_URL', 'https://www.w3-edge.com/w3tc/track/');
 define('W3TC_MAILLINGLIST_SIGNUP_URL', 'https://www.w3-edge.com/w3tc/emailsignup/');
 define('W3TC_MINIFY_VER_ID', '#MVER#');
+define("W3TC_CLI_FILE",".w3tc_cli");
 define('NEWRELIC_SIGNUP_URL', 'http://bit.ly/w3tc-partner-newrelic-signup');
 define('MAXCDN_SIGNUP_URL', 'http://bit.ly/w3tc-cdn-maxcdn-create-account');
 define('MAXCDN_AUTHORIZE_URL', 'http://bit.ly/w3tc-cdn-maxcdn-authorize');
@@ -1649,8 +1650,80 @@ function w3_minify_version_change() {
  * Prevents w3tc from popping up notification messages about needing to be updated
  */
 function w3tc_remove_update_notification( $value ) {
-     if( $value ) {
-         unset($value->response[ 'w3-total-cache/w3-total-cache.php' ]);
+    if( $value ) {
+        unset($value->response[ 'w3-total-cache/w3-total-cache.php' ]);
      }
      return $value;
+}
+
+function w3_lock_read($file)
+{
+    $res = false;
+    $h = @fopen($file,'r');
+
+    if ($h !== false)
+    {
+        flock($h,LOCK_SH);
+
+        clearstatcache(true,$file);
+        $sz = filesize($file);
+
+        if ($sz > 0)
+            $res = fread($h,$sz);
+        else
+            $res = "";
+
+        flock($h,LOCK_UN);
+        fclose($h);
+
+        $res = unserialize($res);
+    }
+
+    return $res;
+}
+
+function w3_lock_write($file,$data)
+{
+    $res = false;
+    $h = @fopen($file,'c');
+
+    if ($h !== false)
+    {
+        flock($h,LOCK_EX);
+
+        ftruncate($h,0);
+        $res = fwrite($h,serialize($data));
+        fflush($h);
+        flock($h,LOCK_UN);
+        fclose($h);
+    }
+
+    return $res;
+}
+
+function w3_clear_hook_crons($hook) 
+{
+    $res = false;    
+    $crons = _get_cron_array();
+    if ( empty( $crons ) ) {
+        return false;
+    }
+    foreach( $crons as $timestamp => $cron ) {
+        if ( ! empty( $cron[$hook] ) )  {
+            unset( $crons[$timestamp][$hook] );
+            $res = true;
+        }
+
+        if ( empty( $crons[$timestamp] ) ) {
+            unset( $crons[$timestamp] );
+        }
+    }
+    _set_cron_array( $crons );
+    return $res;
+}
+
+function w3_cmd_enabled($cmd)
+{
+  $disabled = explode(',', ini_get('disable_functions'));
+  return !in_array($cmd, $disabled);
 }

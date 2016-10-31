@@ -33,6 +33,11 @@ class W3_Plugin_PgCache extends W3_Plugin {
         add_action('w3_pgcache_prime', array(
             &$this,
             'prime'
+        ));
+
+        add_action('w3_pgcache_prime_cli', array(
+            &$this,
+            'prime_cli'
         ),10,4);
 
         add_action('publish_phone', array(
@@ -174,8 +179,18 @@ class W3_Plugin_PgCache extends W3_Plugin {
      * @param integer $start
      * @return void
      */
-    function prime($start = 0,$user_interval=-1,$user_limit=-1,$user_sitemap="") {
-        $this->_get_admin()->prime($start,$user_interval,$user_limit,$user_sitemap);
+    function prime($start = 0) {
+        $this->_get_admin()->prime($start);
+    }
+
+    /**
+     * Prime cache (WP_CLI)
+     *
+     * @param integer $start
+     * @return void
+     */
+    function prime_cli($start = 0,$user_interval=-1,$user_limit=-1,$user_sitemap="",$boot=false) {
+        $this->_get_admin()->prime_cli($start,$user_interval,$user_limit,$user_sitemap,$boot);
     }
 
     /**

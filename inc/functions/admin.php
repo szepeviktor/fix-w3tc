@@ -298,6 +298,7 @@ function w3_config_save($current_config, $new_config, $new_config_admin) {
                 'minify.css.combine',
                 'minify.css.strip.comments',
                 'minify.css.strip.crlf',
+                'minify.css.embed_content',
                 'minify.css.imports',
                 'minify.css.groups',
                 'minify.yuicss.path.java',

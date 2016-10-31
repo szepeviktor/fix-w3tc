@@ -88,7 +88,7 @@ class W3_SharedRules
                     return $r;
                 else
                     return 
-                        "<FilesMatch \"\.(ttf|ttc|otf|eot|woff2?|font.css)$\">\n" .
+                        "<FilesMatch \"\.(ttf|ttc|otf|eot|woff2?|webp|font.css)$\">\n" .
                         $r .
                         "</FilesMatch>\n";
 
@@ -99,7 +99,7 @@ class W3_SharedRules
                     return $r;
                 else
                     return
-                        "location ~ \\.(ttf|ttc|otf|eot|woff2?|font.css)$ {\n" .
+                        "location ~ \\.(ttf|ttc|otf|eot|woff2?|webp|font.css)$ {\n" .
                         $r .
                         "}\n";
             }

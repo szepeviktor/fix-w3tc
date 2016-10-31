@@ -121,38 +121,88 @@ class W3TotalCache_Command extends WP_CLI_Command {
 		} while (!empty($args));
 	} 
 
-        /**
-	 * Prime the page cache (cache preloader)
-	 *
-	 * ## OPTIONS
-	 *
-	 * [<stop>]
-	 * : Stop the active page cache priming session.
-         *
-	 * [--interval=<seconds>]
-	 * : Number of seconds to wait before creating another batch. If not set, the 
-	 * value given in W3TC's Page Cache > Update Interval field is used.
-	 *
-	 * [--batch=<size>]
-	 * : Max number of pages to create per batch. If not set, the value given in
-	 * W3TC's Page Cache > Pages per Interval field is used.
-	 *
-	 * [--sitemap=<url>]
-	 * : The sitemap url specifying the pages to prime cache. If not set, the value
-	 * given in W3TC's Page Cache > Sitemap URL field is used.
-	 */
+    /**
+     * Prime the page cache (cache preloader)
+     *
+     * ## OPTIONS
+     *
+     * [<stop>]
+     * : Stop the active page cache priming session.
+     *
+     * [--batch=<size>]
+     * : Max number of pages to create per batch. If not set, the value given in
+     * W3TC's Page Cache > Pages per Interval field is used.
+     *
+     * [--interval=<seconds>]
+     * : Number of seconds to wait before creating another batch. If not set, the 
+     * value given in W3TC's Page Cache > Update Interval field is used.
+     *
+     * [--sitemap=<url>]
+     * : The sitemap url specifying the pages to prime cache. If not set, the value
+     * given in W3TC's Page Cache > Sitemap URL field is used.
+     *
+     * ## EXAMPLES
+     *
+     * wp w3-total-cache prime
+     *     Begin priming the page cache using the already defined interval, batch size,
+     *     and sitemap url values as shown under W3TC's Cache Preload section.
+     *
+     * wp w3-total-cache prime stop
+     *     If the page cache is currently being primed this will end that process.
+     *
+     * wp w3-total-cache prime --batch=2 --interval=30
+     *     Begin priming the page cache at the rate of 2 pages every 30 seconds using the
+     *     sitemap url held within W3TC's Cache Preload > Sitemap URL box.
+     *
+     * wp w3-total-cache prime --interval=30 --sitemap=http://domain.com/sitemap.xml
+     *     Using the provided sitemap url, its pages are primed in batch sizes (as defined
+     *     by W3TC's Performance > Page Cache > Cache Preload > Pages per Interval box)
+     *     every 30 seconds until all pages within said sitemap is complete.
+     */
 	function prime($args = array(), $vars = array())
 	{
 		try
 		{
 			$action = array_shift($args);
 
+            $w3_prime = w3_instance('W3_Plugin_PgCacheAdmin');
+
 			if ($action == 'stop') {
-				if (clear_hook_crons('w3_pgcache_prime') === false) {
-  					WP_CLI::error('No page cache priming session to stop.');
+                if (extension_loaded('sysvmsg'))
+                {
+                    $pids = true;
+                    
+                    if (msg_stat_queue(msg_get_queue(99909))['msg_qnum'] > 0) {
+                        msg_remove_queue(msg_get_queue(99909));
+                    }
+                    else
+                        $pids=false;
+
+                }
+                else if (false !==($pids=$w3_prime->get_cli_file()))
+                {
+                    foreach($pids as $pid)
+                    {                    
+                        if (extension_loaded('posix') && w3_cmd_enabled("posix_kill")) {
+                            @posix_kill($pid,SIGTERM);
+                        }
+                        else if (w3_cmd_enabled("exec")) {
+                            @exec("kill -9 $pid >/dev/null 2>&1");
+                        }
+                        else {
+                            WP_CLI::warning("Can't issue command to stop running procs. Need either: exec, posix, or sysvmsg.");
+                            break;
+                        }
+                    }
+
+                    $w3_prime->delete_cli_file();
+                }
+
+                if (w3_clear_hook_crons('w3_pgcache_prime_cli') === false && $pids === false) {
+  					WP_CLI::warning('No page cache priming to stop.');
   				}
   				else {
-					WP_CLI::success('Page cache priming has been stopped.');
+					WP_CLI::success('Page cache priming stopped.');
 				}
 			}
 			else
@@ -160,7 +210,7 @@ class W3TotalCache_Command extends WP_CLI_Command {
 				$user_interval = -1;
 				$user_limit = -1;
 				$user_sitemap = "";
-				
+
 				if (isset($vars['interval']) && is_numeric($vars['interval'])) {
 					$user_interval = intval($vars['interval']);
 				}
@@ -170,16 +220,17 @@ class W3TotalCache_Command extends WP_CLI_Command {
 				if (isset($vars['sitemap']) && !empty($vars['sitemap'])) {
 					$user_sitemap = trim($vars['sitemap']);
 				}
-			
-  				$w3_prime = w3_instance('W3_Plugin_PgCacheAdmin');
-  				if (($res=$w3_prime->prime(0,$user_interval,$user_limit,$user_sitemap))===false) {
-  					WP_CLI::error('Page cache currently being primed.');
+
+  				if (($res=$w3_prime->prime_cli(0,$user_interval,$user_limit,$user_sitemap,true))===false) {
+  					WP_CLI::warning('Page cache priming is already active.');
   				}
   				else if (empty($res)) {
-  					WP_CLI::error('No sitemap found in W3TC prefs nor provided. A sitemap is needed to prime the page cache.');
+  					WP_CLI::error('Unable to load sitemap'.(empty($user_sitemap)?' (W3TC prefs)':'').'. A sitemap is needed to prime the page cache.');
   				}
-  				
-  				WP_CLI::success("Page cache priming has successfully started $res.");
+  				else {
+                    if (extension_loaded('sysvmsg')) msg_send(msg_get_queue(99909),99,"prime_started");
+  				    WP_CLI::success("Page cache priming started $res.");
+                }
   			}
   		}
 		catch (Exception $e)
@@ -410,7 +461,7 @@ usage: wp w3-total-cache flush [post|database|minify|object] [--postid=<id>] [--
        wp w3-total-cache querystring
        wp w3-total-cache cdn_purge <file> [<file>...]
        wp w3-total-cache pgcache_cleanup
-       wp w3-total-cache prime [stop] [--interval=<seconds>] [--batch=<size>] [--sitemap=<url>]
+       wp w3-total-cache prime [stop] [--batch=<size>] [--interval=<seconds>] [--sitemap=<url>]
        wp w3-total-cache apc_reload_files (SNS|local) <file.php> [<file.php>...]
        wp w3-total-cache apc_delete_based_on_regex (SNS|local) <expression>
        wp w3-total-cache opcache_reload_files
@@ -435,9 +486,9 @@ Sub-Commands:
   prime                         Prime the page cache
 
                                 stop                   Stop an active priming session
-                                --interval=<seconds>   Number of seconds to wait before creating another batch
-                                                       (this defaults to w3tc prefs when missing)
                                 --batch=<size>         Max number of pages to create per batch
+                                                       (this defaults to w3tc prefs when missing)
+                                --interval=<seconds>   Number of seconds to wait before creating another batch
                                                        (this defaults to w3tc prefs when missing)
                                 --sitemap=<url>        The sitemap url specifying the pages to prime cache
                                                        (this defaults to w3tc prefs when missing)                                
@@ -452,27 +503,6 @@ EOB
 	}
 }
 
-function clear_hook_crons($hook) 
-{
-    $res = false;    
-    $crons = _get_cron_array();
-    if ( empty( $crons ) ) {
-        return false;
-    }
-    foreach( $crons as $timestamp => $cron ) {
-        if ( ! empty( $cron[$hook] ) )  {
-            unset( $crons[$timestamp][$hook] );
-            $res = true;
-        }
-
-        if ( empty( $crons[$timestamp] ) ) {
-            unset( $crons[$timestamp] );
-        }
-    }
-    _set_cron_array( $crons );
-    return $res;
-}
-
 if (method_exists('WP_CLI','add_command')) {
   WP_CLI::add_command('w3-total-cache', 'W3TotalCache_Command');
   WP_CLI::add_command('total-cache', 'W3TotalCache_Command');
@@ -481,5 +511,3 @@ if (method_exists('WP_CLI','add_command')) {
   WP_CLI::addCommand('w3-total-cache', 'W3TotalCache_Command');
   WP_CLI::addCommand('total-cache', 'W3TotalCache_Command');
 }
-
-

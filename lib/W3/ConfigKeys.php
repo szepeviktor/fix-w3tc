@@ -636,6 +636,10 @@ $keys = array(
         'type' => 'boolean',
         'default' => false
     ),
+    'minify.css.embed_content' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
     'minify.css.imports' => array(
         'type' => 'string',
         'default' => ''
@@ -867,7 +871,7 @@ $keys = array(
     ),
     'cdn.theme.files' => array(
         'type' => 'string',
-        'default' => '*.css;*.js;*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf;*.woff;*.woff2;*.less'
+        'default' => '*.css;*.js;*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf;*.webp;*.woff;*.woff2;*.less'
     ),
     'cdn.minify.enable' => array(
         'type' => 'boolean',
@@ -1605,7 +1609,7 @@ $keys = array(
     ),
     'config.w3tc.update' => array(
         'type' => 'boolean',
-        'default' => false
+        'default' => true
     ),
     'widget.latest.items' => array(
         'type' => 'integer',
