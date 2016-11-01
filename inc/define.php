@@ -21,6 +21,7 @@ define('W3TC_SUPPORT_REQUEST_URL', 'https://www.w3-edge.com/w3tc/support/');
 define('W3TC_TRACK_URL', 'https://www.w3-edge.com/w3tc/track/');
 define('W3TC_MAILLINGLIST_SIGNUP_URL', 'https://www.w3-edge.com/w3tc/emailsignup/');
 define('W3TC_MINIFY_VER_ID', '#MVER#');
+define("W3TC_CLI_FILE", ".w3tc_cli");
 define('NEWRELIC_SIGNUP_URL', 'http://bit.ly/w3tc-partner-newrelic-signup');
 define('MAXCDN_SIGNUP_URL', 'http://bit.ly/w3tc-cdn-maxcdn-create-account');
 define('MAXCDN_AUTHORIZE_URL', 'http://bit.ly/w3tc-cdn-maxcdn-authorize');
@@ -63,7 +64,6 @@ define('W3TC_CACHE_CONFIG_DIR', W3TC_CACHE_DIR  . '/config');
 define('W3TC_CACHE_MINIFY_DIR', W3TC_CACHE_DIR  . '/minify');
 define('W3TC_CACHE_PAGE_ENHANCED_DIR', W3TC_CACHE_DIR  . '/page_enhanced');
 define('W3TC_CACHE_TMP_DIR', W3TC_CACHE_DIR . '/tmp');
-define("W3TC_CLI_FILE", W3TC_CACHE_TMP_DIR."/.w3tc_cli");
 define('W3TC_CACHE_BLOGMAP_FILENAME', W3TC_CACHE_DIR . '/blogs.php');
 
 defined('WP_CONTENT_DIR') || define('WP_CONTENT_DIR', realpath(W3TC_DIR . '/../..'));
