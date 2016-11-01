@@ -285,7 +285,7 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
      */    
     function get_cli_file()
     {
-        return w3_lock_read(W3TC_CLI_FILE);
+        return w3_lock_read($this->get_cli_name());
     }
 
     /**
@@ -296,7 +296,7 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
      */    
     function set_cli_file($data)
     {
-        w3_lock_write(W3TC_CLI_FILE,$data);
+        w3_lock_write($this->get_cli_name(),$data);
     }
 
     /**
@@ -306,7 +306,27 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
      */    
     function delete_cli_file()
     {
-        @unlink(W3TC_CLI_FILE);
+        @unlink($this->get_cli_name());
+    }
+    
+    /**
+     * Gets the temporary CLI file name to use
+     *     
+     * @return string - full file path
+     */
+    function get_cli_name($dir=W3TC_CACHE_TMP_DIR,$file=W3TC_CLI_FILE)
+    {
+        if (!is_dir($dir) || !is_writable($dir)) {
+            w3_mkdir_from($dir,W3TC_CACHE_DIR);
+            
+            if (!is_dir(W3TC_CACHE_TMP_DIR) || !is_writable(W3TC_CACHE_TMP_DIR)) {
+                $dir="";
+            }
+            
+            $dir = rtrim($dir,"/");
+        }
+        
+        return $dir . (empty($dir)?"":"/") . $file;
     }
     
     /**
