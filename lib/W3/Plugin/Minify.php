@@ -1170,7 +1170,7 @@ class _W3_MinifyHelpers {
             $external = array_filter($external,function($val){return $val != "";});
         }
         
-        if (!empty($external) && @preg_match('~'.implode("|",$external).'~i',$file)) return true;
+        if (!empty($external) && @preg_match('~^('.implode("|",$external).')$~i',$file)) return true;
 
         if (w3_is_url($file)) {
             return false;
