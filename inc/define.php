@@ -1729,7 +1729,7 @@ function w3_cmd_enabled($cmd)
   return !in_array($cmd, $disabled);
 }
 
-function w3_stop_cli(&$result="") 
+function w3_stop_cli_prime(&$result="") 
 {
     $w3_prime = w3_instance('W3_Plugin_PgCacheAdmin');
     
