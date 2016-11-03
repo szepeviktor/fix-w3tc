@@ -1110,7 +1110,7 @@ class W3_Minify {
 
                 foreach ($external as &$val) $val = trim(str_replace("~","\~",$val));
                 $external = array_filter($external,function($val){return $val != "";});
-                if (!empty($external) && @preg_match('~^('.implode("|",$external).')$~i',$file) && !$verified) $verified = true;
+                if (!empty($external) && @preg_match('~^('.implode("|",$external).')~i',$file) && !$verified) $verified = true;
                 
                 if (!$verified) {
                     $this->error(sprintf('Remote file not in external files/libraries list: "%s"', $file));

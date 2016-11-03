@@ -82,7 +82,7 @@ class Minify_Controller_MinApp extends Minify_Controller_Base {
                 if (!is_string($file)) {
                     $url = $file->minifyOptions['prependRelativePath'];
                     $verified  = false;
-                    if (!empty($external) && @preg_match('~^('.implode("|",$external).')$~i',$url) && !$verified) $verified = true;
+                    if (!empty($external) && @preg_match('~^('.implode("|",$external).')~i',$url) && !$verified) $verified = true;
                     if (!$verified) {
                         $this->log("GET['f'] param part invalid, not in accepted external files list: \"{$url}\"");
                         return $options;

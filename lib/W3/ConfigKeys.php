@@ -838,7 +838,7 @@ $keys = array(
     ),
     'minify.cache.files' => array(
         'type' => 'array',
-        'default' => array()
+        'default' => array('https://ajax.googleapis.com')
     ),
 
     'cdn.enabled' => array(
