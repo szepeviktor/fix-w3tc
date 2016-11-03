@@ -105,7 +105,7 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
             }
         }
 
-        if (!$config->get_boolean('pgcache.prime.enabled')) return;
+        if (!$this->_config->get_boolean('pgcache.prime.enabled')) return;
         
         $interval = $this->_config->get_integer('pgcache.prime.interval');
         $limit = $this->_config->get_integer('pgcache.prime.limit');
