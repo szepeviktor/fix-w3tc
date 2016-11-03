@@ -189,8 +189,8 @@ class W3_Plugin_PgCache extends W3_Plugin {
      * @param integer $start
      * @return void
      */
-    function prime_cli($start = 0,$user_interval=-1,$user_limit=-1,$user_sitemap="",$boot=false) {
-        $this->_get_admin()->prime_cli($start,$user_interval,$user_limit,$user_sitemap,$boot);
+    function prime_cli($user_limit,$user_interval,$user_sitemap,$start,$boot=false) {
+        $this->_get_admin()->prime_cli($user_limit,$user_interval,$user_sitemap,$start,$boot);
     }
 
     /**

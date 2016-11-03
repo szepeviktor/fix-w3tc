@@ -21,7 +21,8 @@ define('W3TC_SUPPORT_REQUEST_URL', 'https://www.w3-edge.com/w3tc/support/');
 define('W3TC_TRACK_URL', 'https://www.w3-edge.com/w3tc/track/');
 define('W3TC_MAILLINGLIST_SIGNUP_URL', 'https://www.w3-edge.com/w3tc/emailsignup/');
 define('W3TC_MINIFY_VER_ID', '#MVER#');
-define("W3TC_CLI_FILE", ".w3tc_cli");
+define("W3TC_CLI_PIDS", ".w3tc_cli_pids");
+define("W3TC_CLI_URLS", ".w3tc_cli_urls");
 define('NEWRELIC_SIGNUP_URL', 'http://bit.ly/w3tc-partner-newrelic-signup');
 define('MAXCDN_SIGNUP_URL', 'http://bit.ly/w3tc-cdn-maxcdn-create-account');
 define('MAXCDN_AUTHORIZE_URL', 'http://bit.ly/w3tc-cdn-maxcdn-authorize');
@@ -1726,4 +1727,47 @@ function w3_cmd_enabled($cmd)
 {
   $disabled = explode(',', ini_get('disable_functions'));
   return !in_array($cmd, $disabled);
+}
+
+function w3_stop_cli(&$result="") 
+{
+    $w3_prime = w3_instance('W3_Plugin_PgCacheAdmin');
+    
+    if (extension_loaded('sysvmsg'))
+    {
+        $pids = true;
+
+        if (msg_stat_queue(msg_get_queue(99909))['msg_qnum'] > 0) {
+            msg_remove_queue(msg_get_queue(99909));
+        }
+        else
+            $pids=false;
+    }
+    else if (false !==($pids=$w3_prime->get_cli_pids()))
+    {
+        foreach($pids as $pid)
+        {                    
+            if (extension_loaded('posix') && w3_cmd_enabled("posix_kill")) {
+                @posix_kill($pid,SIGTERM);
+            }
+            else if (w3_cmd_enabled("exec")) {
+                @exec("kill -9 $pid >/dev/null 2>&1");
+            }
+            else {
+                $result = "Can't issue the command to stop running process(es). Need either: exec, posix, or sysvmsg.";
+                return false;
+            }
+        }
+
+        $w3_prime->delete_cli_pids();
+    }
+
+    $w3_prime->delete_cli_urls();
+    
+    if (w3_clear_hook_crons('w3_pgcache_prime_cli') === false && $pids === false) {
+        $result = "No page cache priming to stop. Either the priming has completed or was already stopped.";
+        return false;
+    }
+
+    return true;
 }

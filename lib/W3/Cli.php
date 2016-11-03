@@ -131,7 +131,9 @@ class W3TotalCache_Command extends WP_CLI_Command {
      *
      * [--batch=<size>]
      * : Max number of pages to create per batch. If not set, the value given in
-     * W3TC's Page Cache > Pages per Interval field is used.
+     * W3TC's Page Cache > Pages per Interval field is used. If size is 0 then
+     * all pages within the sitemap will be created/cached without the use of a
+     * batch and without waiting.
      *
      * [--interval=<seconds>]
      * : Number of seconds to wait before creating another batch. If not set, the 
@@ -168,64 +170,42 @@ class W3TotalCache_Command extends WP_CLI_Command {
             $w3_prime = w3_instance('W3_Plugin_PgCacheAdmin');
 
 			if ($action == 'stop') {
-                if (extension_loaded('sysvmsg'))
-                {
-                    $pids = true;
-                    
-                    if (msg_stat_queue(msg_get_queue(99909))['msg_qnum'] > 0) {
-                        msg_remove_queue(msg_get_queue(99909));
-                    }
-                    else
-                        $pids=false;
-
-                }
-                else if (false !==($pids=$w3_prime->get_cli_file()))
-                {
-                    foreach($pids as $pid)
-                    {                    
-                        if (extension_loaded('posix') && w3_cmd_enabled("posix_kill")) {
-                            @posix_kill($pid,SIGTERM);
-                        }
-                        else if (w3_cmd_enabled("exec")) {
-                            @exec("kill -9 $pid >/dev/null 2>&1");
-                        }
-                        else {
-                            WP_CLI::warning("Can't issue command to stop running procs. Need either: exec, posix, or sysvmsg.");
-                            break;
-                        }
-                    }
-
-                    $w3_prime->delete_cli_file();
-                }
-
-                if (w3_clear_hook_crons('w3_pgcache_prime_cli') === false && $pids === false) {
-  					WP_CLI::warning('No page cache priming to stop.');
+                if (w3_stop_cli($result) == false) {
+  					WP_CLI::warning($result);
   				}
   				else {
 					WP_CLI::success('Page cache priming stopped.');
 				}
 			}
-			else
-			{
+            else if (strlen($action) > 0) {
+                $val = WP_CLI::colorize("%Y$action%n");
+                WP_CLI::error("Unrecognized argument - $val.");
+            }
+			else {
+                $config = w3_instance('W3_Config');
+
+                $user_limit = -1;
 				$user_interval = -1;
-				$user_limit = -1;
 				$user_sitemap = "";
 
 				if (isset($vars['interval']) && is_numeric($vars['interval'])) {
 					$user_interval = intval($vars['interval']);
 				}
+                
 				if (isset($vars['batch']) && is_numeric($vars['batch'])) {
 					$user_limit = intval($vars['batch']);
 				}
+                
 				if (isset($vars['sitemap']) && !empty($vars['sitemap'])) {
 					$user_sitemap = trim($vars['sitemap']);
 				}
 
-  				if (($res=$w3_prime->prime_cli(0,$user_interval,$user_limit,$user_sitemap,true))===false) {
+                $limit = $user_limit==-1?$config->get_integer('pgcache.prime.limit'):$user_limit;
+                $interval = $user_interval==-1?$config->get_integer('pgcache.prime.interval'):$user_interval;
+                $sitemap = empty($user_sitemap)?$config->get_string('pgcache.prime.sitemap'):$user_sitemap;
+
+                if (($res=$w3_prime->prime_cli($limit,$interval,$sitemap,0,true))===false) {
   					WP_CLI::warning('Page cache priming is already active.');
-  				}
-  				else if (empty($res)) {
-  					WP_CLI::error('Unable to load sitemap'.(empty($user_sitemap)?' (W3TC prefs)':'').'. A sitemap is needed to prime the page cache.');
   				}
   				else {
                     if (extension_loaded('sysvmsg')) msg_send(msg_get_queue(99909),99,"prime_started");
