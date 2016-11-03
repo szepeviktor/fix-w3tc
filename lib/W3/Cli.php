@@ -170,7 +170,7 @@ class W3TotalCache_Command extends WP_CLI_Command {
             $w3_prime = w3_instance('W3_Plugin_PgCacheAdmin');
 
 			if ($action == 'stop') {
-                if (w3_stop_cli($result) == false) {
+                if (w3_stop_cli_prime($result) == false) {
   					WP_CLI::warning($result);
   				}
   				else {
