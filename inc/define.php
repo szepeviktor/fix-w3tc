@@ -1736,8 +1736,9 @@ function w3_stop_cli(&$result="")
     if (extension_loaded('sysvmsg'))
     {
         $pids = true;
-
-        if (msg_stat_queue(msg_get_queue(99909))['msg_qnum'] > 0) {
+	$que = msg_stat_queue(msg_get_queue(99909));
+	    
+        if ($que['msg_qnum'] > 0) {
             msg_remove_queue(msg_get_queue(99909));
         }
         else
