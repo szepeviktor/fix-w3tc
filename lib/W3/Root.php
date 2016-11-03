@@ -103,7 +103,7 @@ class W3_Root {
      * Deactivation action hook
      */
     public function deactivate() {
-        w3_stop_cli();
+        w3_stop_cli_prime();
         $activation = w3_instance('W3_RootAdminActivation');
         $activation->deactivate();
     }
