@@ -14,6 +14,7 @@ define('W3TC_PAYPAL_BUSINESS', 'w3tc-team@w3-edge.com');
 define('W3TC_LINK_URL', 'http://www.w3-edge.com/wordpress-plugins/');
 define('W3TC_LINK_NAME', 'W3 EDGE, Optimization Products for WordPress');
 define('W3TC_FEED_URL', 'http://feeds.feedburner.com/W3TOTALCACHE');
+define('W3TC_FEED_RELEASES_URL', 'https://github.com/szepeviktor/fix-w3tc/releases.atom');
 define('W3TC_NEWS_FEED_URL', 'http://feeds.feedburner.com/W3EDGE');
 define('W3TC_README_URL', 'http://plugins.svn.wordpress.org/w3-total-cache/trunk/readme.txt');
 define('W3TC_SUPPORT_US_TIMEOUT', 2592000);
