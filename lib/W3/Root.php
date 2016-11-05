@@ -104,7 +104,9 @@ class W3_Root {
      * Deactivation action hook
      */
     public function deactivate() {
-        w3_stop_cli_prime();
+        w3_require_once(W3TC_LIB_W3_DIR . '/Cli.php');
+        wpcli_stop_prime();
+        
         $activation = w3_instance('W3_RootAdminActivation');
         $activation->deactivate();
     }
