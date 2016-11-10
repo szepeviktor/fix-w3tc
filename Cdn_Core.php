@@ -506,7 +506,10 @@ class Cdn_Core {
 					)
 
 				);
+				$obj = new CdnEngine_Mirror_RackSpaceCdn($engine_config);
+				$obj->_on_new_access_requested_api();
 				break;
+
 			case 'rscf':
 				$state = Dispatcher::config_state();
 
@@ -526,6 +529,8 @@ class Cdn_Core {
 					)
 
 				);
+				$obj = new CdnEngine_RackSpaceCloudFiles($engine_config);
+				$obj->_on_new_access_requested_api_files();
 				break;
 
 			case 's3':
