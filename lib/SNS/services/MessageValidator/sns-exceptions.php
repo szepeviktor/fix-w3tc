@@ -35,3 +35,9 @@ class CannotGetPublicKeyFromCertificateException extends SnsMessageValidatorExce
  * Indicates that the signature for SNS message was invalid.
  */
 class InvalidMessageSignatureException extends SnsMessageValidatorException {}
+
+
+/**
+ * Indicates that the cert url is invalid.
+ */
+class InvalidSnsMessageException extends SnsMessageValidatorException {}

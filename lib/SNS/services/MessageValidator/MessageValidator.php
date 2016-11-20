@@ -20,6 +20,9 @@ w3_require_once(W3TC_LIB_DIR . '/SNS/services/MessageValidator/sns-exceptions.ph
  */
 class MessageValidator {
 
+    private $hostPattern
+        = '/^sns\.[a-zA-Z0-9\-]{3,}\.amazonaws\.com(\.cn)?$/';
+
     /**
      * Constructs the Message Validator object and ensures that openssl is installed
      *
@@ -45,11 +48,7 @@ class MessageValidator {
     public function validate($message) {
         // Get the cert's URL and ensure it is from AWS
         $certUrl = $message->get('SigningCertURL');
-        $host = parse_url($certUrl, PHP_URL_HOST);
-        if ('.amazonaws.com' != substr($host, -14)) {
-            throw new CertificateFromUnrecognizedSourceException($host . ' did not match .amazonaws.com');
-        }
-
+        $this->validateUrl($certUrl);
 
         // Get the cert itself and extract the public key
         $response = wp_remote_get($certUrl);
@@ -70,6 +69,28 @@ class MessageValidator {
         }
     }
 
+    /**
+     * Ensures that the URL of the certificate is one belonging to AWS, and not
+     * just something from the amazonaws domain, which could include S3 buckets.
+     *
+     * @param string $url Certificate URL
+     *
+     * @throws InvalidSnsMessageException if the cert url is invalid.
+     */
+    private function validateUrl($url)
+    {
+        $parsed = parse_url($url);
+        if (empty($parsed['scheme'])
+            || empty($parsed['host'])
+            || $parsed['scheme'] !== 'https'
+            || substr($url, -4) !== '.pem'
+            || !preg_match($this->hostPattern, $parsed['host'])
+        ) {
+            throw new InvalidSnsMessageException(
+                'The certificate is located on an invalid domain.'
+            );
+        }
+    }
     /**
      * Determines if a message is valid and that is was delivered by AWS. This method does not throw exceptions and
      * returns a simple boolean value.
