@@ -656,12 +656,7 @@ class Minify_MinifiedFileRequestHandler {
 					'dbid' => $this->_config->get_integer( 'minify.redis.dbid' ),
 					'password' => $this->_config->get_string( 'minify.redis.password' )
 				);
-				if ( class_exists( 'Memcached' ) ) {
-					$w3_cache = new Cache_Memcached( $config );
-				} else if ( class_exists( 'Memcache' ) ) {
-						$w3_cache = new Cache_Memcache( $config );
-					}
-
+				$w3_cache = new Cache_Redis( $config );
 				$cache[0] = new \Minify_Cache_W3TCDerived( $w3_cache );
 				break;
 
