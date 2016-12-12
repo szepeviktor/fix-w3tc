@@ -38,7 +38,7 @@ Network: True
 */
 
 if ( !defined( 'ABSPATH' ) ) {
-	die();
+    die();
 }
 
 /**
