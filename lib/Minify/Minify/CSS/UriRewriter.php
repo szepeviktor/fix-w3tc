@@ -209,7 +209,7 @@ class Minify_CSS_UriRewriter {
      */
     private static function rewriteRelative($uri, $realCurrentDir, $realDocRoot, $symlinks = array())
     {
-        if ('/' === $uri[0]) { // root-relative
+        if ( isset($uri[0]) && '/' === $uri[0]) { // root-relative
             return $uri;
         }
 
