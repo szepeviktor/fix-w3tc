@@ -2,7 +2,7 @@
 
 <?php do_action('w3tc-dashboard-head') ?>
 <div class="wrap" id="w3tc">
-    <h2 class="logo"><strong>FIX-W3TC</strong><br /><small>forked from <a href="https://wordpress.org/plugins/w3-total-cache/" target="_blank">W3 Total Cache</a></small></h2>
+    <h2 class="logo"><strong style="padding:5px;background-color:black;color:white">W3 Total Cache (Fixed)</strong><div style="text-align:center"><small><small>forked from <a href="https://wordpress.org/plugins/w3-total-cache/" target="_blank">W3 Total Cache</a></small></div></h2>
 
     <?php foreach ($this->_errors as $error): ?>
     <div class="error">

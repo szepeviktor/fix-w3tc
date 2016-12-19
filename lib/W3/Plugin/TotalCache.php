@@ -398,7 +398,7 @@ class W3_Plugin_TotalCache extends W3_Plugin {
                     'id' => 'w3tc-support',
                     'parent' => 'w3tc',
                     'title' => __('<span style="color: red; background: none;">Support</span>', 'w3-total-cache'),
-                    'href' => "https://github.com/szepeviktor/fix-w3tc/issues",
+                    'href' => "https://github.com/szepeviktor/w3-total-cache-fixed/issues",
                     'meta' => array("target" => "_blank")
                 )
             ));

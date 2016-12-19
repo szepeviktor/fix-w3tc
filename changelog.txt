@@ -1,12 +1,22 @@
+= 0.9.4.6 =
+* Amazon Web Services (AWS) v4 signature support (fixes the AWS4-HMAC-SHA256 error issue)
+  Note: for existing S3 users, you will need to set the bucket region under the CDN section
+* Added new AWS regions and endpoints
+* Can change cache directory location without php warnings
+* Rebranded internally to the w3-total-cache-fixed folder
+* Update notifications and future installs of this plugin are now done directly from within the WP plugin page
+* Prevents activation (with admin notice) when another W3TC install is active
+* Corrected export setting to have a .json extension
+
 = 0.9.4.5.6 =
-* Fix an SNS vulnerability
+* Fixed an SNS vulnerability
 * Fixed an SSRF security flaw
-* Removed Deprecated WordPress Code
+* Removed deprecated WordPress code
 * WP-CLI new feature: Prime cache pages
 * Support for WEBP image format
 * New feature to allow embedding of minified JS and CSS content directly into the HTML page (good for AMP, Service Workers, and prefetching)
 * Fixed bug where it was attempting to delete an addin object cache file before knowing if it existed
-* Added in the FIX-W3TC dashboard a widget with the latest release
+* Added in a dashboard widget showing the latest release
 
 = 0.9.4.5.5 =
 * Adds a new "Hide Plugin Update Notification" checkbox under General Settings' Miscellaneous area

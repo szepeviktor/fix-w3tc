@@ -1013,7 +1013,8 @@ jQuery(function() {
                     engine: 's3',
                     'config[key]': jQuery('#cdn_s3_key').val(),
                     'config[secret]': jQuery('#cdn_s3_secret').val(),
-                    'config[bucket]': jQuery('#cdn_s3_bucket').val()
+                    'config[bucket]': jQuery('#cdn_s3_bucket').val(),
+                    'config[bucket_location]': jQuery('#cdn_s3_bucket_location').val()
                 });
 
                 if (cnames.length) {

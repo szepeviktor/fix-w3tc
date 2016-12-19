@@ -968,10 +968,6 @@ $keys = array(
         'type' => 'string',
         'default' => ''
     ),
-    'cdn.s3.bucket.location' => array(
-        'type' => 'string',
-        'default' => 'us-east-1'
-    ),
     'cdn.s3.cname' => array(
         'type' => 'array',
         'default' => array()
@@ -1610,6 +1606,10 @@ $keys = array(
     'config.path' => array(
         'type' => 'string',
         'default' => ''
+    ),
+    'config.w3tc.update' => array(
+        'type' => 'boolean',
+        'default' => true
     ),
     'widget.latest.items' => array(
         'type' => 'integer',

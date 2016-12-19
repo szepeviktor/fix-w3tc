@@ -63,8 +63,9 @@ class W3_AdminActions_ConfigActionsAdmin {
      * @return void
      */
     function action_config_export() {
-        $filename = substr(w3_get_home_url(), strpos(w3_get_home_url(), '//')+2);
-        @header(sprintf(__('Content-Disposition: attachment; filename=%s.php', 'w3-total-cache'), $filename));
+        $filename = "w3tc-config";
+        @header(sprintf(__('Content-Disposition: attachment; filename=%s.json', 'w3-total-cache'), $filename));
+        @header("Content-Type: application/json");
         echo $this->_config->export();
         die();
     }

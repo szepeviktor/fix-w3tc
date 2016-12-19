@@ -5,7 +5,8 @@ if (!defined('ABSPATH')) {
 }
 
 define('W3TC', true);
-define('W3TC_VERSION', '0.9.4.5');
+define('W3TC_VERSION', '0.9.4.6');
+define("W3TC_TESTED_ON_WP_VERSION", '4.7');
 define('W3TC_POWERED_BY', 'W3 Total Cache/' . W3TC_VERSION);
 define('W3TC_EMAIL', 'w3tc@w3-edge.com');
 define('W3TC_TEXT_DOMAIN', 'w3-total-cache');
@@ -14,7 +15,7 @@ define('W3TC_PAYPAL_BUSINESS', 'w3tc-team@w3-edge.com');
 define('W3TC_LINK_URL', 'http://www.w3-edge.com/wordpress-plugins/');
 define('W3TC_LINK_NAME', 'W3 EDGE, Optimization Products for WordPress');
 define('W3TC_FEED_URL', 'http://feeds.feedburner.com/W3TOTALCACHE');
-define('W3TC_FEED_RELEASES_URL', 'https://github.com/szepeviktor/fix-w3tc/releases.atom');
+define('W3TC_FEED_RELEASES_URL', 'https://github.com/szepeviktor/w3-total-cache-fixed/releases.atom');
 define('W3TC_NEWS_FEED_URL', 'http://feeds.feedburner.com/W3EDGE');
 define('W3TC_README_URL', 'http://plugins.svn.wordpress.org/w3-total-cache/trunk/readme.txt');
 define('W3TC_SUPPORT_US_TIMEOUT', 2592000);
@@ -22,8 +23,20 @@ define('W3TC_SUPPORT_REQUEST_URL', 'https://www.w3-edge.com/w3tc/support/');
 define('W3TC_TRACK_URL', 'https://www.w3-edge.com/w3tc/track/');
 define('W3TC_MAILLINGLIST_SIGNUP_URL', 'https://www.w3-edge.com/w3tc/emailsignup/');
 define('W3TC_MINIFY_VER_ID', '#MVER#');
-define("W3TC_CLI_PIDS", ".w3tc_cli_pids");
-define("W3TC_CLI_URLS", ".w3tc_cli_urls");
+define("W3TC_CLI_PIDS", '.w3tc_cli_pids');
+define("W3TC_CLI_URLS", '.w3tc_cli_urls');
+
+define("W3TC_UPDATER_FOLDER_NAME", 'w3-total-cache-fixed');
+define("W3TC_UPDATER_API_URL", 'https://api.github.com/repos/szepeviktor/w3-total-cache-fixed');
+define("W3TC_UPDATER_RAW_URL", 'https://raw.github.com/szepeviktor/w3-total-cache-fixed/master');
+define("W3TC_UPDATER_GITHUB_URL", 'https://github.com/szepeviktor/w3-total-cache-fixed');
+define("W3TC_UPDATER_ZIP_URL", 'https://github.com/szepeviktor/w3-total-cache-fixed/archive/master.zip');
+define("W3TC_UPDATER_SSLVERIFY", true);
+define("W3TC_UPDATER_REQUIRES", '3.2');
+define("W3TC_UPDATER_README", 'README.md');
+define("W3TC_UPDATER_BANNER_URL", '//ps.w.org/w3-total-cache/assets/banner-772x250.jpg?rev=1041806');
+define("W3TC_UPDATER_CHANGELOG", 'changelog.txt');
+
 define('NEWRELIC_SIGNUP_URL', 'http://bit.ly/w3tc-partner-newrelic-signup');
 define('MAXCDN_SIGNUP_URL', 'http://bit.ly/w3tc-cdn-maxcdn-create-account');
 define('MAXCDN_AUTHORIZE_URL', 'http://bit.ly/w3tc-cdn-maxcdn-authorize');
@@ -38,7 +51,7 @@ define('EDD_W3EDGE_W3TC_NAME', 'W3 Total Cache Pro: Annual Subscription');
 define('W3TC_WIN', (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'));
 
 defined('W3TC_DIR') || define('W3TC_DIR', realpath(dirname(__FILE__) . '/..'));
-define('W3TC_FILE', 'w3-total-cache/w3-total-cache.php');
+define('W3TC_FILE', 'w3-total-cache-fixed/w3-total-cache-fixed.php');
 define('W3TC_INC_DIR', W3TC_DIR . '/inc');
 define('W3TC_INC_WIDGET_DIR', W3TC_INC_DIR. '/widget');
 define('W3TC_INC_FUNCTIONS_DIR', W3TC_INC_DIR . '/functions');
@@ -60,7 +73,8 @@ define('W3TC_INSTALL_DIR', W3TC_DIR . '/wp-content');
 define('W3TC_INSTALL_MINIFY_DIR', W3TC_INSTALL_DIR . '/w3tc/min');
 define('W3TC_LANGUAGES_DIR', W3TC_DIR . '/languages');
 
-define('W3TC_CACHE_DIR', WP_CONTENT_DIR . '/cache');
+if (!defined('W3TC_CACHE_DIR')) define('W3TC_CACHE_DIR', WP_CONTENT_DIR . '/cache');
+
 define('W3TC_CONFIG_DIR', WP_CONTENT_DIR . '/w3tc-config');
 define('W3TC_CACHE_CONFIG_DIR', W3TC_CACHE_DIR  . '/config');
 define('W3TC_CACHE_MINIFY_DIR', W3TC_CACHE_DIR  . '/minify');
@@ -1646,16 +1660,6 @@ function w3_minify_version_change() {
     $cur_min_ver = $config_admin->get_integer('minify.version');
     $config_admin->set('minify.version', ++$cur_min_ver);
     $config_admin->save();
-}
-
-/**
- * Prevents w3tc from popping up notification messages about needing to be updated
- */
-function w3tc_remove_update_notification( $value ) {
-    if( $value ) {
-        unset($value->response[ 'w3-total-cache/w3-total-cache.php' ]);
-     }
-     return $value;
 }
 
 function w3_lock_read($file)

@@ -86,8 +86,17 @@ class W3_Cdn_S3 extends W3_Cdn_Base {
 
             return false;
         }
+        
+		if (empty($this->_config['bucket_location'])) {
+            $error = 'Empty bucket region';
 
-        $this->_s3 = new S3($this->_config['key'], $this->_config['secret'], false);
+            return false;
+        }
+
+		$region = $this->_config['bucket_location'];
+		$endpoint = 's3.dualstack.'.$region.'.amazonaws.com';
+
+        $this->_s3 = new S3($this->_config['key'], $this->_config['secret'], false, $endpoint, $region);
 
         return true;
     }

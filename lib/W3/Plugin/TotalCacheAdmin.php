@@ -103,11 +103,6 @@ class W3_Plugin_TotalCacheAdmin extends W3_Plugin {
             'favorite_actions'
         ));
 
-        add_action('in_plugin_update_message-' . W3TC_FILE, array(
-            &$this,
-            'in_plugin_update_message'
-        ));
-
         if ($this->_config->get_boolean('pgcache.enabled') || $this->_config->get_boolean('minify.enabled')) {
             add_filter('pre_update_option_active_plugins', array(
                 &$this,

@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 if (!defined('W3TC_DIR')) {
-    define('W3TC_DIR', (defined('WP_PLUGIN_DIR') ? WP_PLUGIN_DIR : WP_CONTENT_DIR . '/plugins') . '/w3-total-cache');
+    define('W3TC_DIR', (defined('WP_PLUGIN_DIR') ? WP_PLUGIN_DIR : WP_CONTENT_DIR . '/plugins') . '/w3-total-cache-fixed');
 }
 
 /**

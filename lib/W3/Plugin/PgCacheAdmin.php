@@ -152,8 +152,14 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
              * Don't start cache prime if queues are still scheduled
              */
 
-            if ((extension_loaded('sysvmsg') && msg_stat_queue(msg_get_queue(99909))['msg_qnum'] > 0) || 
-               $this->get_cli_pids()!==false) {
+            if (extension_loaded('sysvmsg')) {
+                $que = msg_stat_queue(msg_get_queue(99909));
+                if ($que['msg_qnum'] > 0) {
+                	return false;
+                }
+            }
+            
+            if ($this->get_cli_pids()!==false) {
                 return false;
             }
 
@@ -260,7 +266,12 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
                 foreach ($queue as $url)
                 {
                     w3_http_get($url, array('user-agent' => ''));
-                    if ($msgidmain != null && msg_stat_queue($msgidmain)['msg_qnum'] == 0) break;
+                    if ($msgidmain != null) {
+                    	$que = msg_stat_queue($msgidmain);
+                    	if ($que['msg_qnum'] == 0) {
+                    		break;
+                    	}
+                    }
                 }
 
                 if ($usefile)
@@ -282,11 +293,13 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
                 else
                 {
                     msg_receive($msgidproc,99,$t,1024,$data,true,MSG_IPC_NOWAIT);
-
-                    if (msg_stat_queue($msgidproc)['msg_qnum'] == 0) {
+					$que = msg_stat_queue($msgidproc);
+					
+                    if ($que['msg_qnum'] == 0) {
                         msg_remove_queue($msgidproc);
-
-                        if (msg_stat_queue($msgidmain)['msg_qnum'] == 0) {
+						$que = msg_stat_queue($msgidmain);
+						
+                        if ($que['msg_qnum'] == 0) {
                             msg_remove_queue($msgidmain);
                             
                             if (isset($done)) {

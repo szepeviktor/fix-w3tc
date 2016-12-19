@@ -15,7 +15,7 @@ if (defined('WP_INSTALLING') && WP_INSTALLING)
 
 if (!defined('W3TC_IN_MINIFY')) {
     if (!defined('W3TC_DIR')) {
-        define('W3TC_DIR', (defined('WP_PLUGIN_DIR') ? WP_PLUGIN_DIR : WP_CONTENT_DIR . '/plugins') . '/w3-total-cache');
+        define('W3TC_DIR', (defined('WP_PLUGIN_DIR') ? WP_PLUGIN_DIR : WP_CONTENT_DIR . '/plugins') . '/w3-total-cache-fixed');
     }
 
     if (!@is_dir(W3TC_DIR) || !file_exists(W3TC_DIR . '/inc/define.php')) {

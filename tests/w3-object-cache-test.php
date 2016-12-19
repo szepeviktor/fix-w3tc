@@ -4,7 +4,7 @@
  *
  * @package W3_Total_Cache
  */
-require_once dirname(dirname(__FILE__)) . '/w3-total-cache.php';
+require_once dirname(dirname(__FILE__)) . '/w3-total-cache-fixed.php';
 
 /**
  * W3_Object_Cache_Test Tests
