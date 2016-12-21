@@ -29,12 +29,13 @@ Make sure you select the correct generation that fits your environment.
 ### Installation
 _**Note:** After the following steps, all future updates and installations will be handled from within WordPress._
 
-1. Deactivate (but don't delete) your existing W3 Total Cache plugin from within WordPress' Plugin page.
+1. Deactivate (but don't delete) your existing W3 Total Cache plugin (if installed) from within WordPress' Plugin page.
 1. Use FTP or some other file manager to navigate to _`wp-content/plugins/`_.
 1. Download the **_latest release_** (see above) and extract its contents into _`wp-content/plugins/`_.
 1. Activate the _W3 Total Cache (Fixed)_ plugin from within WordPress' Plugin page.
 1. Verify everything is working correctly and that your original configuration settings are still present.  However, if any problems do occur then just deactivate this plugin and reactivate your original one.  **_Do not attempt to have both activated._**
 1. Delete the previously deactivated plugin (step 1) from within WordPress' Plugin page.
+1. Empty all caches.
 
 ### Fixes, Improvements, & Enhancement Highlights
 _**Note:** This list does not reflect all of the myriad of fixes/changes -- just the key ones of interest._
