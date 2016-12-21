@@ -76,26 +76,22 @@ if (!defined('W3TC_IN_MINIFY')) {
 function plugin_update_init()
 {
 	w3_require_once(W3TC_DIR . '/updater.php');
+	
+	$config = array(
+		'slug' 				 => plugin_basename(__FILE__), 	// this is the slug of your plugin
+		'proper_folder_name' => W3TC_UPDATER_FOLDER_NAME, 	// this is the name of the folder your plugin lives in
+		'api_url' 			 => W3TC_UPDATER_API_URL, 		// the github API url of your github repo
+		'raw_url' 			 => W3TC_UPDATER_RAW_URL, 		// the github raw url of your github repo
+		'github_url' 		 => W3TC_UPDATER_GITHUB_URL, 	// the github url of your github repo
+		'zip_url' 			 => W3TC_UPDATER_ZIP_URL, 		// the zip url of the github repo
+		'sslverify' 		 => W3TC_UPDATER_SSLVERIFY, 	// wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
+		'requires' 			 => W3TC_UPDATER_REQUIRES, 		// which version of WordPress does your plugin require?
+		'tested' 			 => W3TC_TESTED_ON_WP_VERSION, 	// which version of WordPress is your plugin tested up to?
+		'banner' 			 => W3TC_UPDATER_BANNER_URL,	// banner image to show on the View Details popup
+		'changelog' 		 => W3TC_UPDATER_CHANGELOG,		// the changelog file to show on the View Details's Changelog tab
+	);
 
-	if (is_admin()) {
-		$config = array(
-			'slug' 				 => plugin_basename(__FILE__), 	// this is the slug of your plugin
-			'proper_folder_name' => W3TC_UPDATER_FOLDER_NAME, 	// this is the name of the folder your plugin lives in
-			'api_url' 			 => W3TC_UPDATER_API_URL, 		// the github API url of your github repo
-			'raw_url' 			 => W3TC_UPDATER_RAW_URL, 		// the github raw url of your github repo
-			'github_url' 		 => W3TC_UPDATER_GITHUB_URL, 	// the github url of your github repo
-			'zip_url' 			 => W3TC_UPDATER_ZIP_URL, 		// the zip url of the github repo
-			'sslverify' 		 => W3TC_UPDATER_SSLVERIFY, 	// wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
-			'requires' 			 => W3TC_UPDATER_REQUIRES, 		// which version of WordPress does your plugin require?
-			'tested' 			 => W3TC_TESTED_ON_WP_VERSION, 	// which version of WordPress is your plugin tested up to?
-			'readme' 			 => W3TC_UPDATER_README, 		// which file to use as the readme for the version number
-			'access_token' 		 => '',							// Access private repositories by authorizing under Appearance > Github Updates when this example plugin is installed
-			'banner' 			 => W3TC_UPDATER_BANNER_URL,	// banner image to show on the View Details popup
-			'changelog' 		 => W3TC_UPDATER_CHANGELOG,		// the changelog file to show on the View Details's Changelog tab
-		);
-
-		new WP_GitHub_Updater($config);
-	}
+	new WP_GitHub_Updater($config);
 }
 add_action( 'init', 'plugin_update_init' );
 

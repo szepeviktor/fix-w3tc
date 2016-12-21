@@ -28,12 +28,11 @@ define("W3TC_CLI_URLS", '.w3tc_cli_urls');
 
 define("W3TC_UPDATER_FOLDER_NAME", 'w3-total-cache-fixed');
 define("W3TC_UPDATER_API_URL", 'https://api.github.com/repos/szepeviktor/w3-total-cache-fixed');
-define("W3TC_UPDATER_RAW_URL", 'https://raw.github.com/szepeviktor/w3-total-cache-fixed/master');
+define("W3TC_UPDATER_RAW_URL", 'https://raw.github.com/szepeviktor/w3-total-cache-fixed/v0.9.4.x');
 define("W3TC_UPDATER_GITHUB_URL", 'https://github.com/szepeviktor/w3-total-cache-fixed');
-define("W3TC_UPDATER_ZIP_URL", 'https://github.com/szepeviktor/w3-total-cache-fixed/archive/master.zip');
+define("W3TC_UPDATER_ZIP_URL", 'https://github.com/szepeviktor/w3-total-cache-fixed/archive/v0.9.4.x.zip');
 define("W3TC_UPDATER_SSLVERIFY", true);
 define("W3TC_UPDATER_REQUIRES", '3.2');
-define("W3TC_UPDATER_README", 'README.md');
 define("W3TC_UPDATER_BANNER_URL", '//ps.w.org/w3-total-cache/assets/banner-772x250.jpg?rev=1041806');
 define("W3TC_UPDATER_CHANGELOG", 'changelog.txt');
 
