@@ -394,30 +394,30 @@ class WP_GitHub_Updater {
 	 * @return object $transient updated plugin data transient
 	 */
 	public function api_check( $transient ) {
-
-		// Check if the transient contains the 'checked' information
-		// If not, just return its value without hacking it
-		if ( empty( $transient->checked ) )
-			return $transient;
-
 		$this->init();
 
 		// check the version and decide if it's new
 		$update = version_compare( $this->config['new_version'], $this->config['version'] );
 
 		if ( 1 === $update ) {
-			$response = new stdClass;
-			$response->new_version = $this->config['new_version'];
-			$response->slug = $this->config['proper_folder_name'];
-			$response->url = $this->config['github_url'];
-			$response->package = $this->config['zip_url'];
-			$response->tested = $this->config['tested'];
+			if ( empty( $transient->response ) ) {
+				$transient->response = array();
+			}
+			
+			if (empty($transient->response[ $this->config['slug'] ])) {
+				$response = new stdClass;
+				$response->new_version = $this->config['new_version'];
+				$response->slug = $this->config['proper_folder_name'];
+				$response->url = $this->config['github_url'];
+				$response->package = $this->config['zip_url'];
+				$response->tested = $this->config['tested'];
 
-			// If response is false, don't alter the transient
-			if ( false !== $response )
-			{
-				$transient->response[ $this->config['slug'] ] = $response;
-				delete_site_transient(md5($this->config['slug']).'_new_changelog');
+				// If response is false, don't alter the transient
+				if ( false !== $response )
+				{
+					$transient->response[ $this->config['slug'] ] = $response;
+					delete_site_transient(md5($this->config['slug']).'_new_changelog');
+				}
 			}
 		}
 
