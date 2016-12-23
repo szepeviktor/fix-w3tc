@@ -244,6 +244,17 @@ function w3tc_pgcache_flush_post( $post_id ) {
 
 /**
  * deprecated
+ * Shortcut for page post cache flush by url
+ *
+ * @param integer $url
+ * @return boolean
+ */
+function w3tc_pgcache_flush_url( $url ) {
+	return w3tc_flush_url( $url );
+}
+
+/**
+ * deprecated
  * Shortcut for refreshing the media query string.
  */
 function w3tc_browsercache_flush() {
