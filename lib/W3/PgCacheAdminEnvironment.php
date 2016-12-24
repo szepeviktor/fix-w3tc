@@ -616,10 +616,24 @@ class W3_PgCacheAdminEnvironment {
         $rules .= "<IfModule mod_rewrite.c>\n";
         $rules .= "    RewriteEngine On\n";
         $rules .= "    RewriteBase " . $rewrite_base . "\n";
+        $rules .= "    RewriteRule ^ - [E=CustomQueryString:%{QUERY_STRING}]\n";
 
 
         if ($config->get_boolean('pgcache.debug')) {
             $rules .= "    RewriteRule ^(.*\\/)?w3tc_rewrite_test/?$ $1?w3tc_rewrite_test=1 [L]\n";
+        }
+        
+        
+        /**
+         * Set accept query strings
+         */
+        if ($config->get_boolean('pgcache.accept.qs')) {
+        	$query_strings = $config->get_array('pgcache.accept.qs');
+        
+        	foreach ($query_strings as $query_string) {
+        		$rules .= "    RewriteCond %{ENV:CustomQueryString} ^(.*)&?".$query_string."=[^&]+&?(.*)$ [NC]\n";
+        		$rules .= "    RewriteRule ^ - [E=CustomQueryString:%1%2]\n";
+        	}
         }
 
         /**
@@ -730,7 +744,7 @@ class W3_PgCacheAdminEnvironment {
         /**
          * Query string should be empty
          */
-        $use_cache_rules .= "    RewriteCond %{QUERY_STRING} =\"\"\n";
+        $use_cache_rules .= "    RewriteCond %{ENV:CustomQueryString} =\"\"\n";
 
         /**
          * Check permalink structure trailing slash
