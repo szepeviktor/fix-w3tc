@@ -1113,7 +1113,7 @@ class _W3_MinifyHelpers {
     		$alias = 'style';
     	}
 
-    	return '<link rel="preload" href="'.str_replace('&', '&amp;', $url).'" as="'.$alias.'" />';
+    	return '<link rel="preload" href="'.str_replace('&', '&amp;', $url).'" as="'.$alias.'" />'."\r\n";
     }
 
     /**
@@ -1434,7 +1434,7 @@ class _W3_MinifyJsAuto {
         $this->buffer = substr_replace($this->buffer, $script, $embed_pos, 0);
         
         if( !empty($preload) ){
-        	if( $head_pos = strpos($this->buffer, '<!-- W3TC-include-js-head -->') ){
+        	if( $head_pos = strpos($this->buffer, '</head>') ){
         		$this->buffer = substr_replace($this->buffer, $preload, $head_pos, 0);
         	}
         }
