@@ -1508,7 +1508,16 @@ class W3_PgCache {
             $code = trim($code, ';') . ';';
 
             ob_start();
-            $result = eval($code);
+            try {
+                $result = eval($code);
+            
+                if (defined('PHP_MAJOR_VERSION') && PHP_MAJOR_VERSION >= 7) {            
+            	    $result = true;
+                }
+            } catch (ParseError $e) {
+                $result = false;
+            }
+            
             $output = ob_get_contents();
             ob_end_clean();
 
