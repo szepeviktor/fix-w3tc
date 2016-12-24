@@ -1095,6 +1095,26 @@ class _W3_MinifyHelpers {
         }
         return $urls;
     }
+    
+    /**
+     * Return link preload tag
+     *
+     * @param string $url
+     * @return string
+     */
+    function generate_preload_tag($url) {
+    	
+    	$alias = '';
+    	
+    	if(false !== strpos($url, '.js') ){
+    		$alias = 'script';
+    	}
+    	if(false !== strpos($url, '.css') ){
+    		$alias = 'style';
+    	}
+
+    	return '<link rel="preload" href="'.str_replace('&', '&amp;', $url).'" as="'.$alias.'" />';
+    }
 
     /**
      * Prints script tag
@@ -1401,16 +1421,24 @@ class _W3_MinifyJsAuto {
         $urls = $this->minify_helpers->get_minify_urls_for_files(
             $this->files_to_minify, 'js');
 
-        $script = '';
+        $script  = '';
+        $preload = '';
         if (is_array($urls)) {
             foreach ($urls as $url) {
-                $script .= $this->minify_helpers->generate_script_tag($url, 
-                    $this->embed_type);
+                $script  .= $this->minify_helpers->generate_script_tag($url, $this->embed_type);
+                $preload .= $this->minify_helpers->generate_preload_tag($url);
             }
         }
 
         // replace
         $this->buffer = substr_replace($this->buffer, $script, $embed_pos, 0);
+        
+        if( !empty($preload) ){
+        	if( $head_pos = strpos($this->buffer, '<!-- W3TC-include-js-head -->') ){
+        		$this->buffer = substr_replace($this->buffer, $preload, $head_pos, 0);
+        	}
+        }
+        
         $this->files_to_minify = array();
         $this->minify_group_number++;
     }
