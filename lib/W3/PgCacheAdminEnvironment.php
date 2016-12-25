@@ -621,20 +621,20 @@ class W3_PgCacheAdminEnvironment {
             $rules .= "    RewriteRule ^(.*\\/)?w3tc_rewrite_test/?$ $1?w3tc_rewrite_test=1 [L]\n";
         }
 
-  		/**
+  	/**
          * Set accept query strings
          */
-		$w3tc_query_strings = $config->get_array('pgcache.accept.qs');
+	$w3tc_query_strings = $config->get_array('pgcache.accept.qs');
 
-		if (!empty($w3tc_query_strings))
-		{
-			$rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%{QUERY_STRING}]\n";
+	if (!empty($w3tc_query_strings))
+	{
+		$rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%{QUERY_STRING}]\n";
 
-			foreach ($w3tc_query_strings as $query) {
-				$rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^(.*)&?".$query."[^&]*&?(.*)$ [NC]\n";
-				$rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%1%2]\n";
-			}
+		foreach ($w3tc_query_strings as $query) {
+			$rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^(.*)&?".$query."[^&]*&?(.*)$ [NC]\n";
+			$rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%1%2]\n";
 		}
+	}
 
         /**
          * Check for mobile redirect
@@ -875,22 +875,22 @@ class W3_PgCacheAdminEnvironment {
             $rules .= "rewrite ^(.*\\/)?w3tc_rewrite_test/?$ $1?w3tc_rewrite_test=1 last;\n";
         }
 
-  		/**
+  	/**
          * Set accept query strings
          */
-		$w3tc_query_strings = $config->get_array('pgcache.accept.qs');
+	$w3tc_query_strings = $config->get_array('pgcache.accept.qs');
 		
-		if (!empty($w3tc_query_strings))
-		{
-			$rules .= "set \$w3tc_query_string \$query_string;\n";
+	if (!empty($w3tc_query_strings))
+	{
+		$rules .= "set \$w3tc_query_string \$query_string;\n";
 
-			foreach ($w3tc_query_strings as $query)
-			{
-				$rules .= "if (\$w3tc_query_string ~* \"^(.*)&?".$query."[^&]*&?(.*)$\") {\n";
-				$rules .= "    set \$w3tc_query_string $1$2;\n";
-				$rules .= "}\n";
-			}
+		foreach ($w3tc_query_strings as $query)
+		{
+			$rules .= "if (\$w3tc_query_string ~* \"^(.*)&?".$query."[^&]*&?(.*)$\") {\n";
+			$rules .= "    set \$w3tc_query_string $1$2;\n";
+			$rules .= "}\n";
 		}
+	}
 		
         /**
          * Check for mobile redirect
