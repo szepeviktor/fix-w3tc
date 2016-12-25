@@ -624,7 +624,7 @@ class W3_PgCacheAdminEnvironment {
   	/**
          * Set accept query strings
          */
-	$w3tc_query_strings = $config->get_array('pgcache.accept.qs');
+	$w3tc_query_strings = array_filter($config->get_array('pgcache.accept.qs'));
 
 	if (!empty($w3tc_query_strings))
 	{
@@ -878,7 +878,7 @@ class W3_PgCacheAdminEnvironment {
   	/**
          * Set accept query strings
          */
-	$w3tc_query_strings = $config->get_array('pgcache.accept.qs');
+	$w3tc_query_strings = array_filter($config->get_array('pgcache.accept.qs'));
 		
 	if (!empty($w3tc_query_strings))
 	{
