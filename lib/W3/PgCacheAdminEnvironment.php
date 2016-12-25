@@ -616,25 +616,25 @@ class W3_PgCacheAdminEnvironment {
         $rules .= "<IfModule mod_rewrite.c>\n";
         $rules .= "    RewriteEngine On\n";
         $rules .= "    RewriteBase " . $rewrite_base . "\n";
-        $rules .= "    RewriteRule ^ - [E=CustomQueryString:%{QUERY_STRING}]\n";
-
 
         if ($config->get_boolean('pgcache.debug')) {
             $rules .= "    RewriteRule ^(.*\\/)?w3tc_rewrite_test/?$ $1?w3tc_rewrite_test=1 [L]\n";
         }
-        
-        
-        /**
+
+  		/**
          * Set accept query strings
          */
-        if ($config->get_boolean('pgcache.accept.qs')) {
-        	$query_strings = $config->get_array('pgcache.accept.qs');
-        
-        	foreach ($query_strings as $query_string) {
-        		$rules .= "    RewriteCond %{ENV:CustomQueryString} ^(.*)&?".$query_string."=[^&]+&?(.*)$ [NC]\n";
-        		$rules .= "    RewriteRule ^ - [E=CustomQueryString:%1%2]\n";
-        	}
-        }
+		$w3tc_query_strings = $config->get_array('pgcache.accept.qs');
+
+		if (!empty($w3tc_query_strings))
+		{
+			$rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%{QUERY_STRING}]\n";
+
+			foreach ($w3tc_query_strings as $query) {
+				$rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^(.*)&?".$query."[^&]*&?(.*)$ [NC]\n";
+				$rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%1%2]\n";
+			}
+		}
 
         /**
          * Check for mobile redirect
@@ -744,7 +744,7 @@ class W3_PgCacheAdminEnvironment {
         /**
          * Query string should be empty
          */
-        $use_cache_rules .= "    RewriteCond %{ENV:CustomQueryString} =\"\"\n";
+        $use_cache_rules .= "    RewriteCond ".(empty($w3tc_query_strings)?"%{QUERY_STRING}":"%{ENV:W3TC_QUERY_STRING}")." =\"\"\n";
 
         /**
          * Check permalink structure trailing slash
@@ -875,6 +875,23 @@ class W3_PgCacheAdminEnvironment {
             $rules .= "rewrite ^(.*\\/)?w3tc_rewrite_test/?$ $1?w3tc_rewrite_test=1 last;\n";
         }
 
+  		/**
+         * Set accept query strings
+         */
+		$w3tc_query_strings = $config->get_array('pgcache.accept.qs');
+		
+		if (!empty($w3tc_query_strings))
+		{
+			$rules .= "set \$w3tc_query_string \$query_string;\n";
+
+			foreach ($w3tc_query_strings as $query)
+			{
+				$rules .= "if (\$w3tc_query_string ~* \"^(.*)&?".$query."[^&]*&?(.*)$\") {\n";
+				$rules .= "    set \$w3tc_query_string $1$2;\n";
+				$rules .= "}\n";
+			}
+		}
+		
         /**
          * Check for mobile redirect
          */
@@ -924,7 +941,7 @@ class W3_PgCacheAdminEnvironment {
         /**
          * Query string should be empty
          */
-        $rules .= "if (\$query_string != \"\") {\n";
+        $rules .= "if (".(empty($w3tc_query_strings)?"\$query_string":"\$w3tc_query_string")." != \"\") {\n";
         $rules .= "    set \$w3tc_rewrite 0;\n";
         $rules .= "}\n";
 
