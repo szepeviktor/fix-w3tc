@@ -631,7 +631,7 @@ class W3_PgCacheAdminEnvironment {
 		$rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%{QUERY_STRING}]\n";
 
 		foreach ($w3tc_query_strings as $query) {
-			$rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^(.*)&?".$query."[^&]*&?(.*)$ [NC]\n";
+			$rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^(.+?&|)".$query."(&.*|)$ [NC]\n";
 			$rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%1%2]\n";
 		}
 	}
@@ -886,7 +886,7 @@ class W3_PgCacheAdminEnvironment {
 
 		foreach ($w3tc_query_strings as $query)
 		{
-			$rules .= "if (\$w3tc_query_string ~* \"^(.*)&?".$query."[^&]*&?(.*)$\") {\n";
+			$rules .= "if (\$w3tc_query_string ~* \"^(.+?&|)".$query."(&.*|)$\") {\n";
 			$rules .= "    set \$w3tc_query_string $1$2;\n";
 			$rules .= "}\n";
 		}
