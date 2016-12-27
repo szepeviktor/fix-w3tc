@@ -341,7 +341,7 @@
                 <td>
                     <textarea id="pgcache_accept_qs" name="pgcache.accept.qs"
                         <?php $this->sealing_disabled('pgcache') ?>
-                              cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('pgcache.accept.qs'))); ?></textarea><br />
+                              cols="40" rows="5"><?php echo esc_textarea(implode("\r\n", $this->_config->get_array('pgcache.accept.qs'))); ?></textarea><span class="regex"></span><br />
                     <span class="description"><?php _e('Always cache URLs with these query strings. Supports regular expressions.', 'w3-total-cache'); ?></span>
                 </td>
             </tr>

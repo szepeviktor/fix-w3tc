@@ -88,7 +88,7 @@ class W3_FeedBurnerAdmin  {
             'version' => '0.1',
             'enabled' => true,
             'requirements' => implode(', ', $message),
-            'path' => 'w3-total-cache/extensions/FeedBurner.php'
+            'path' => 'w3-total-cache-fixed/extensions/FeedBurner.php'
         );
 
         return $extensions;

@@ -1599,11 +1599,19 @@ class W3_PgCache {
         $accept_qs = $this->_config->get_array('pgcache.accept.qs');
         foreach ($accept_qs as &$val) $val = trim(str_replace("~","\~",$val));
         $accept_qs = array_filter($accept_qs,function($val){return $val != "";});
-        if (!empty($accept_qs)) {
-            foreach ($_GET as $key => $value) {
-                if (@preg_match('~'.implode("|",$accept_qs).'~i',$key.(isset($value)?"=$value":"")))  return true;
+        $pass=false;
+        foreach ($_GET as $key => $value) {
+            $match = false;
+            foreach ($accept_qs as $qs) {
+                $qs = (strpos($qs, '=')===false?$qs.'.*?':'^'.$qs.'$');
+                if (@preg_match('~'.$qs.'~i',$key.(isset($value)?"=$value":""))) {
+                    $match=true;$pass=true;
+                    break;
+                }
             }
+            if (!$match) return false;
         }
+        if ($pass) return true;
         return false;
     }
 

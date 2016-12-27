@@ -108,7 +108,7 @@ class CloudFlareAdmin {
             'version' => '1.0',
             'enabled' => true,
             'requirements' => implode(', ', $message),
-            'path' => 'w3-total-cache/extensions/CloudFlare.php'
+            'path' => 'w3-total-cache-fixed/extensions/CloudFlare.php'
         );
 
         return $extensions;

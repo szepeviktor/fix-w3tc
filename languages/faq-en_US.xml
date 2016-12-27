@@ -859,7 +859,7 @@ add_filter('w3tc_referrer_groups', 'my_w3tc_referrer_groups');</pre>
             <question><![CDATA[ How do I add new extensions? ]]></question>
             <answer><![CDATA[
              <p>
-             Refer to w3-total-cache/extensions/GenesisAdmin.php to see how to create an extension by example.
+             Refer to w3-total-cache-fixed/extensions/GenesisAdmin.php to see how to create an extension by example.
              </p>
 <pre>
 // Adding a basic function. See GenesisAdmin.php for how to setup settings screen.

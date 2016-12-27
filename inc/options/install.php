@@ -142,7 +142,7 @@
         </li>
         <li>
         	<?php _e('You can also use the memcache.ini file we prepared for you:', 'w3-total-cache'); ?>
-        	<pre class="console"># cp /var/www/vhosts/domain.com/httpdocs/wp-content/plugins/w3-total-cache/ini/memcache.ini /etc/php.d/</pre>
+        	<pre class="console"># cp /var/www/vhosts/domain.com/httpdocs/wp-content/plugins/w3-total-cache-fixed/ini/memcache.ini /etc/php.d/</pre>
         </li>
         <li>
         	<?php _e('Finally restart apache:', 'w3-total-cache'); ?>
@@ -180,7 +180,7 @@
 		</li>
         <li>
         	<?php _e('You can also use the apc.ini file we prepared for you:', 'w3-total-cache'); ?>
-			<pre class="console"># cp /var/www/vhosts/domain.com/httpdocs/wp-content/plugins/w3-total-cache/ini/apc.ini /etc/php.d/</pre>
+			<pre class="console"># cp /var/www/vhosts/domain.com/httpdocs/wp-content/plugins/w3-total-cache-fixed/ini/apc.ini /etc/php.d/</pre>
 		</li>
 		<li>
 			<?php _e('Restart apache when ready:', 'w3-total-cache'); ?>
@@ -213,7 +213,7 @@
 		</li>
         <li>
         	<?php _e('You can also use the eaccelerator.ini file we prepared for you:', 'w3-total-cache'); ?>
-			<pre class="console"># cp /var/www/vhosts/domain.com/httpdocs/wp-content/plugins/w3-total-cache/ini/xcache.ini /etc/php.d/</pre>
+			<pre class="console"># cp /var/www/vhosts/domain.com/httpdocs/wp-content/plugins/w3-total-cache-fixed/ini/xcache.ini /etc/php.d/</pre>
 		</li>
 		<li>
 			<?php _e('Restart apache when ready:', 'w3-total-cache'); ?>
@@ -246,7 +246,7 @@
 		</li>
         <li>
         	<?php _e('You can also use the eaccelerator.ini file we prepared for you:', 'w3-total-cache'); ?>
-			<pre class="console"># cp /var/www/vhosts/domain.com/httpdocs/wp-content/plugins/w3-total-cache/ini/eaccelerator.ini /etc/php.d/</pre>
+			<pre class="console"># cp /var/www/vhosts/domain.com/httpdocs/wp-content/plugins/w3-total-cache-fixed/ini/eaccelerator.ini /etc/php.d/</pre>
 		</li>
 		<li>
 			<?php _e('Restart apache when ready:', 'w3-total-cache'); ?>
