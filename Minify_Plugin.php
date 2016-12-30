@@ -1117,8 +1117,8 @@ class _W3_MinifyHelpers {
 		$minify = Dispatcher::component( 'Minify_MinifiedFileRequestHandler' );
 
 		$m = $minify->process( $minify_filename, true );
-		if ( isset( $m['content']['content'] ) )
-			$style = $m['content']['content'];
+		if ( isset( $m['content'] ) )
+			$style = $m['content'];
 		else
 			$style = '';
 

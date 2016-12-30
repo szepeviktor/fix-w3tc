@@ -558,7 +558,7 @@ class Minify_MinifiedFileRequestHandler {
 
 		if ( $quiet ) {
 			return array(
-				'content' => array( 'content' => $message )
+				'content' => $message 
 			);
 		}
 
