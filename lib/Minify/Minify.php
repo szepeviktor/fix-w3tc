@@ -374,12 +374,12 @@ class Minify0_Minify {
                 echo $content['content'];
             }
         } else {
+            if ($cacheIsReady)
+                $content = self::$_cache->fetch($fullCacheId);
             return array(
                 'success' => true
                 ,'statusCode' => 200
-                ,'content' => $cacheIsReady
-                    ? self::$_cache->fetch($fullCacheId)
-                    : $content['content']
+                ,'content' => $content['content']
                 ,'headers' => $headers
             );
         }
