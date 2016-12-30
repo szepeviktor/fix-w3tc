@@ -620,98 +620,19 @@ class Minify_MinifiedFileRequestHandler {
 	 * @return object
 	 */
 	function _get_cache() {
-		static $cache = array();
+		static $cache = null;
 
-		if ( !isset( $cache[0] ) ) {
-			switch ( $this->_config->get_string( 'minify.engine' ) ) {
-			case 'memcached':
-				$config = array(
-					'blog_id' => Util_Environment::blog_id(),
-					'instance_id' => Util_Environment::instance_id(),
-					'host' =>  Util_Environment::host(),
-					'module' => 'minify',
-					'servers' => $this->_config->get_array( 'minify.memcached.servers' ),
-					'persistent' => $this->_config->get_boolean( 'minify.memcached.persistent' ),
-					'aws_autodiscovery' => $this->_config->get_boolean( 'minify.memcached.aws_autodiscovery' ),
-					'username' => $this->_config->get_string( 'minify.memcached.username' ),
-					'password' => $this->_config->get_string( 'minify.memcached.password' )
-				);
-				if ( class_exists( 'Memcached' ) ) {
-					$w3_cache = new Cache_Memcached( $config );
-				} else if ( class_exists( 'Memcache' ) ) {
-						$w3_cache = new Cache_Memcache( $config );
-					}
-
-				$cache[0] = new \Minify_Cache_W3TCDerived( $w3_cache );
-				break;
-
-			case 'redis':
-				$config = array(
-					'blog_id' => Util_Environment::blog_id(),
-					'instance_id' => Util_Environment::instance_id(),
-					'host' =>  Util_Environment::host(),
-					'module' => 'minify',
-					'servers' => $this->_config->get_array( 'minify.redis.servers' ),
-					'persistent' => $this->_config->get_boolean( 'minify.redis.persistent' ),
-					'dbid' => $this->_config->get_integer( 'minify.redis.dbid' ),
-					'password' => $this->_config->get_string( 'minify.redis.password' )
-				);
-				$w3_cache = new Cache_Redis( $config );
-				$cache[0] = new \Minify_Cache_W3TCDerived( $w3_cache );
-				break;
-
-			case 'apc':
-				$config = array(
-					'blog_id' => Util_Environment::blog_id(),
-					'instance_id' => Util_Environment::instance_id(),
-					'host' =>  Util_Environment::host(),
-					'module' => 'minify'
-				);
-
-				if ( function_exists( 'apcu_store' ) )
-					$w3_cache = new Cache_Apcu( $config );
-				else if ( function_exists( 'apc_store' ) )
-						$w3_cache = new Cache_Apc( $config );
-
-					$cache[0] = new \Minify_Cache_W3TCDerived( $w3_cache );
-				break;
-
-			case 'eaccelerator':
-				$config = array(
-					'blog_id' => Util_Environment::blog_id(),
-					'instance_id' => Util_Environment::instance_id(),
-					'host' =>  Util_Environment::host(),
-					'module' => 'minify'
-				);
-				$w3_cache = new Cache_Eaccelerator( $config );
-				$cache[0] = new \Minify_Cache_W3TCDerived( $w3_cache );
-				break;
-
-			case 'xcache':
-				$config = array(
-					'blog_id' => Util_Environment::blog_id(),
-					'instance_id' => Util_Environment::instance_id(),
-					'host' =>  Util_Environment::host(),
-					'module' => 'minify'
-				);
-				$w3_cache = new Cache_Xcache( $config );
-				$cache[0] = new \Minify_Cache_W3TCDerived( $w3_cache );
-				break;
-
-			case 'wincache':
-				$config = array(
-					'blog_id' => Util_Environment::blog_id(),
-					'instance_id' => Util_Environment::instance_id(),
-					'host' =>  Util_Environment::host(),
-					'module' => 'minify'
-				);
-				$w3_cache = new Cache_Wincache( $config );
-				$cache[0] = new \Minify_Cache_W3TCDerived( $w3_cache );
-				break;
-
-			case 'file':
-			default:
-				$cache[0] = new \Minify_Cache_File(
+		if ( !isset( $cache ) ) {
+			$engine = $this->_config->get_string( 'minify.engine' );
+			
+			if ($engine == 'memcached') {
+				if ( !class_exists( 'Memcached' ) ) $engine = 'memcache';
+			} elseif ($engine == 'apc') {
+				if ( !function_exists( 'apc_store' ) ) $engine = 'apcu';
+			}
+			
+			if ($engine == 'file' || !class_exists($class = __NAMESPACE__.'\\Cache_'.ucfirst($engine))) {
+				$cache = new \Minify_Cache_File(
 					Util_Environment::cache_blog_minify_dir(),
 					array(
 						'.htaccess',
@@ -722,11 +643,33 @@ class Minify_MinifiedFileRequestHandler {
 					$this->_config->get_integer( 'timelimit.cache_flush' ),
 					( Util_Environment::blog_id() == 0 ? W3TC_CACHE_MINIFY_DIR : null )
 				);
-				break;
+			} else {
+				$config = array(
+					'blog_id'     => Util_Environment::blog_id(),
+					'instance_id' => Util_Environment::instance_id(),
+					'host'        => Util_Environment::host(),
+					'module'      => 'minify'
+				);
+				
+				if ($engine == 'memcached' || $engine == 'memcache') {
+					$config['servers']           = $this->_config->get_array(   'minify.memcached.servers' );
+					$config['persistent']        = $this->_config->get_boolean( 'minify.memcached.persistent' );
+					$config['aws_autodiscovery'] = $this->_config->get_boolean( 'minify.memcached.aws_autodiscovery' );
+					$config['username']          = $this->_config->get_string(  'minify.memcached.username' );
+					$config['password']          = $this->_config->get_string(  'minify.memcached.password' );
+				} elseif ($engine == 'redis') {
+					$config['servers']     = $this->_config->get_array(   'minify.redis.servers' );
+					$config['persistent']  = $this->_config->get_boolean( 'minify.redis.persistent' );
+					$config['dbid']        = $this->_config->get_integer( 'minify.redis.dbid' );
+					$config['password']    = $this->_config->get_string(  'minify.redis.password' );
+				}
+				
+				$cache = new \Minify_Cache_W3TCDerived( new $class( $config ) );
 			}
+			
 		}
 
-		return $cache[0];
+		return $cache;
 	}
 
 	/**
