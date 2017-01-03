@@ -1386,7 +1386,7 @@ class S3
 		self::$useSSL = true; // CloudFront requires SSL
 		$rest = new S3Request('POST', '', '2010-11-01/distribution', 'cloudfront.amazonaws.com');
 		$rest->data = self::getCloudFrontDistributionConfigXML(
-			$bucket.'.s3.amazonaws.com',
+			$bucket.(stripos(strrev($bucket), "moc.swanozama.3s.") === 0?'':'.s3.amazonaws.com'),
 			$enabled,
 			(string)$comment,
 			(string)microtime(true),

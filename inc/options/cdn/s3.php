@@ -40,7 +40,7 @@
                         <option value="sa-east-1"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'sa-east-1'); ?>>South America (S&atilde;o Paulo)</option>
                     </select>
 		<b>or</b>
-		<input id="cdn_create_container" class="button {type: 's3', nonce: '<?php echo wp_create_nonce('w3tc'); ?>'}" type="button" value="<?php _e('Create this as new bucket', 'w3-total-cache'); ?>" />
+		<input id="cdn_create_container" class="button {type: 's3', nonce: '<?php echo wp_create_nonce('w3tc'); ?>'}" type="button" value="<?php _e('Create as new bucket', 'w3-total-cache'); ?>" />
 		<span id="cdn_create_container_status" class="w3tc-status w3tc-process"></span>
 
 	</td>

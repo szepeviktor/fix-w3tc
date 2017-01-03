@@ -377,6 +377,7 @@ class W3_Plugin_CdnCommon extends W3_Plugin {
                         'key' => $this->_config->get_string('cdn.cf.key'),
                         'secret' => $this->_config->get_string('cdn.cf.secret'),
                         'bucket' => $this->_config->get_string('cdn.cf.bucket'),
+                        'bucket_location' => $this->_config->get_string('cdn.cf.bucket.location'),
                         'id' => $this->_config->get_string('cdn.cf.id'),
                         'cname' => $this->_config->get_array('cdn.cf.cname'),
                         'ssl' => $this->_config->get_string('cdn.cf.ssl'),

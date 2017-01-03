@@ -34,6 +34,7 @@ class W3_Cdn_S3 extends W3_Cdn_Base {
             'key' => '',
             'secret' => '',
             'bucket' => '',
+            'bucket_location' => '',
             'cname' => array(),
         ), $config);
 

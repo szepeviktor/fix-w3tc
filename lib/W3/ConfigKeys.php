@@ -992,6 +992,10 @@ $keys = array(
         'type' => 'string',
         'default' => ''
     ),
+    'cdn.cf.bucket.location' => array(
+        'type' => 'string',
+        'default' => 'us-east-1'
+    ),    
     'cdn.cf.id' => array(
         'type' => 'string',
         'default' => ''
