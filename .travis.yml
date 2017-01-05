@@ -18,7 +18,7 @@ env:
     - WP_VERSION=3.7 WP_MULTISITE=0
     - WP_VERSION=3.7 WP_MULTISITE=1
 
-# Old WordPress is incompatible with PHP 7.0+ 
+# Old WordPress is incompatible with PHP 7.0+
 matrix:
   exclude:
   - php: 7.0
