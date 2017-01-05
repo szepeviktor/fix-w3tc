@@ -91,8 +91,7 @@ class W3_ConfigBase {
      */
     function get($key, $default = null) {
         if (isset($this->_data[$key])) {
-            $v = $this->_data[$key];
-            return $v;
+            return $this->_data[$key];
         }
         
         return $default;
