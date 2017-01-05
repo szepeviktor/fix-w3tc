@@ -108,7 +108,8 @@ class W3_ModuleStatus {
                 || $this->_enabled_module_uses_engine('dbcache', $this->_opcode_engines)
                 || $this->_enabled_module_uses_engine('objectcache', $this->_opcode_engines)
                 || $this->_enabled_module_uses_engine('minify', $this->_opcode_engines)
-                || $this->_enabled_module_uses_engine('fragmentcache', $this->_opcode_engines);
+                || $this->_enabled_module_uses_engine('fragmentcache', $this->_opcode_engines)
+                || ini_get('opcache.enable') == '1' && ini_get('opcache.validate_timestamps') == '0';
     }
 
     /**
