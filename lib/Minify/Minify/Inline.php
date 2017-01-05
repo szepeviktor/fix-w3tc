@@ -20,7 +20,7 @@ abstract class Minify_Inline {
     }
 
     public function doMinify($content) {
-        $search = '/(<' . $this->_tag . '\\b[^>|]*?>)([\\s\\S]*?)(<\\/' . $this->_tag . '>)/i';
+        $search = '/((?:[^\'"\\/]|^)<' . $this->_tag . '\\b[^>|]*?>)([\\s\\S]*?)(<\\/' . $this->_tag . '>(?:[^\'"\\/]|$))/i';
 
         $content = preg_replace_callback($search, array($this, '_callback'), $content);
 
