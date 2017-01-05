@@ -53,6 +53,20 @@ class W3_AdminActions_FlushActionsAdmin {
             'w3tc_note' => 'flush_redis'
         ), true);
     }
+    
+    /**
+     * Flush APCu cache action
+     *
+     * @return void
+     */
+    function action_flush_apcu() {
+    	$this->flush_apcu();
+    
+    	w3_admin_redirect(array(
+    		'w3tc_note' => 'flush_apcu'
+    	), true);
+    }
+    
     /**
      * Flush opcode caches action
      *
@@ -297,6 +311,15 @@ class W3_AdminActions_FlushActionsAdmin {
      */
     function flush_redis() {
         $this->flush('redis');
+    }
+    
+    /**
+     * Flush APCu cache
+     *
+     * @return void
+     */
+    function flush_apcu() {
+    	$this->flush('apcu');
     }
     
     /**
