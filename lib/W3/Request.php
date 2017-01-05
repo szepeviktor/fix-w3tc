@@ -8,6 +8,15 @@
  * Class W3_Request
  */
 class W3_Request {
+	
+	/**
+	 * Current request (merge of $_GET and $_POST)
+	 * use W3_Request::get_request() for read this var
+	 * 
+	 * @var array
+	 */
+	private static $request = null;
+	
     /**
      * Returns request value
      *
@@ -121,14 +130,19 @@ class W3_Request {
      * @return array
      */
     static function get_request() {
-        if (!isset($_GET)) {
-            $_GET = array();
-        }
 
-        if (!isset($_POST)) {
-            $_POST = array();
-        }
-
-        return array_merge($_GET, $_POST);
+    	if( !self::$request ){
+	        if (!isset($_GET)) {
+	            $_GET = array();
+	        }
+	
+	        if (!isset($_POST)) {
+	            $_POST = array();
+	        }
+	
+	        self::$request = array_merge($_GET, $_POST);
+    	}
+        
+        return self::$request;
     }
 }
