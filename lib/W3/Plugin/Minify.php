@@ -129,15 +129,20 @@ class W3_Plugin_Minify extends W3_Plugin {
      * @return string
      */
     function ob_callback($buffer) {
+
         if ($buffer != '' && w3_is_xml($buffer)) {
             if ($this->can_minify2($buffer)) {
                 $this->minify_helpers = new _W3_MinifyHelpers($this->_config);
 
-                if( function_exists('is_amp_endpoint') && is_amp_endpoint() ) {
-                    $add_script_and_style = false;
-                } else {
-                    $add_script_and_style = true;
-                }
+                /**
+                 * This must be true, otherwise the AMP plugin not working, if the minify is enabled
+                 * Github issue: https://github.com/szepeviktor/w3-total-cache-fixed/issues/237
+                 * fix: @progcode - https://github.com/progcode
+                 *
+                 * @var $add_script_and_style
+                 *
+                 */
+                $add_script_and_style = true;
 
                 /**
                  * Replace script and style tags
@@ -151,10 +156,10 @@ class W3_Plugin_Minify extends W3_Plugin {
 
                     if ($this->_config->get_boolean('minify.auto')) {
                         if ($this->_config->get_boolean('minify.js.enable')) {
-                            $minifier = new _W3_MinifyJsAuto($this->_config, 
+                            $minifier = new _W3_MinifyJsAuto($this->_config,
                                 $buffer, $this->minify_helpers);
                             $buffer = $minifier->execute();
-                            $this->replaced_scripts = 
+                            $this->replaced_scripts =
                                 $minifier->get_debug_minified_urls();
                         }
 
@@ -183,13 +188,13 @@ class W3_Plugin_Minify extends W3_Plugin {
                                 $file = w3_normalize_file_minify2($file);
                                 $style_len = strlen($style_tag);
 
-                                if (!$this->minify_helpers->is_file_for_minification($file) || 
+                                if (!$this->minify_helpers->is_file_for_minification($file) ||
                                         in_array($file, $handled_styles)) {
                                     continue;
                                 }
                                 $handled_styles[] = $file;
                                 $this->replaced_styles[] = $file;
-                                
+
                                 foreach ($ignore_css_files as &$val) $val = trim(str_replace("~","\~",$val));
                                 $ignore_css_files = array_filter($ignore_css_files,function($val){return $val != "";});
 
