@@ -90,7 +90,7 @@ class W3_ConfigBase {
      * @return mixed
      */
     function get($key, $default = null) {
-        if (array_key_exists($key, $this->_data)) {
+        if (isset($this->_data[$key])) {
             $v = $this->_data[$key];
             return $v;
         }
