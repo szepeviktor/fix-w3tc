@@ -247,7 +247,7 @@ class W3_Plugin_TotalCache extends W3_Plugin {
                 );
             }
 
-            if ($can_empty_file && ($can_empty_opcode || $can_empty_memcache || $can_empty_redis)) {
+            if ( $can_empty_file ) {
                 $menu_items[] = array(
                     'id' => 'w3tc-flush-file',
                     'parent' => 'w3tc-empty-caches',
@@ -256,7 +256,7 @@ class W3_Plugin_TotalCache extends W3_Plugin {
                 );
             }
 
-            if ($can_empty_opcode && ($can_empty_file || $can_empty_memcache || $can_empty_redis)) {
+            if ( $can_empty_opcode ) {
                 $menu_items[] = array(
                     'id' => 'w3tc-flush-opcode',
                     'parent' => 'w3tc-empty-caches',
@@ -265,7 +265,7 @@ class W3_Plugin_TotalCache extends W3_Plugin {
                 );
             }
 
-            if ($can_empty_memcache && ($can_empty_file || $can_empty_opcode || $can_empty_redis)) {
+            if ( $can_empty_memcache ) {
                 $menu_items[] = array(
                     'id' => 'w3tc-flush-memcached',
                     'parent' => 'w3tc-empty-caches',
@@ -274,13 +274,22 @@ class W3_Plugin_TotalCache extends W3_Plugin {
                 );
             }
 
-            if ($can_empty_redis && ($can_empty_file || $can_empty_opcode || $can_empty_memcache)) {
+            if ( $can_empty_redis ) {
                 $menu_items[] = array(
                     'id' => 'w3tc-flush-redis',
                     'parent' => 'w3tc-empty-caches',
                     'title' => __('Empty Redis Cache(s)', 'w3-total-cache'),
                     'href' => wp_nonce_url(admin_url('admin.php?page=w3tc_dashboard&amp;w3tc_flush_redis'), 'w3tc')
                 );
+            }
+            
+            if ( $can_empty_apcu ) {
+            	$menu_items[] = array(
+            		'id' => 'w3tc-flush-redis',
+            		'parent' => 'w3tc-empty-caches',
+            		'title' => __('Empty APCu Cache(s)', 'w3-total-cache'),
+            		'href' => wp_nonce_url(admin_url('admin.php?page=w3tc_dashboard&amp;w3tc_flush_apcu'), 'w3tc')
+            	);
             }
 
             if ($modules->is_enabled('browsercache') && $browsercache_update_media_qs) {

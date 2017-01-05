@@ -88,6 +88,17 @@ class W3_ModuleStatus {
                 || $this->_enabled_module_uses_engine('minify', 'redis')
                 || $this->_enabled_module_uses_engine('fragmentcache', 'redis');
     }
+    
+    /**
+     * @return bool
+     */
+    public function can_empty_apcu() {
+    	return $this->_enabled_module_uses_engine('pgcache', 'apcu')
+		    	|| $this->_enabled_module_uses_engine('dbcache', 'apcu')
+		    	|| $this->_enabled_module_uses_engine('objectcache', 'apcu')
+		    	|| $this->_enabled_module_uses_engine('minify', 'apcu')
+		    	|| $this->_enabled_module_uses_engine('fragmentcache', 'apcu');
+    }
 
     /**
      * @return bool
@@ -115,7 +126,7 @@ class W3_ModuleStatus {
      * @return bool
      */
     public function can_empty_apc_system() {
-        return function_exists('apc_clear_cache') && ini_get('apc.stat') == '0';
+        return !extension_loaded('apcu') && function_exists('apc_clear_cache') && ini_get('apc.stat') == '0';
     }
     
     /**
