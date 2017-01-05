@@ -129,25 +129,14 @@ class W3_Plugin_Minify extends W3_Plugin {
      * @return string
      */
     function ob_callback($buffer) {
-
         if ($buffer != '' && w3_is_xml($buffer)) {
             if ($this->can_minify2($buffer)) {
                 $this->minify_helpers = new _W3_MinifyHelpers($this->_config);
 
                 /**
-                 * This must be true, otherwise the AMP plugin not working, if the minify is enabled
-                 * Github issue: https://github.com/szepeviktor/w3-total-cache-fixed/issues/237
-                 * fix: @progcode - https://github.com/progcode
-                 *
-                 * @var $add_script_and_style
-                 *
-                 */
-                $add_script_and_style = true;
-
-                /**
                  * Replace script and style tags
                  */
-                if (function_exists('is_feed') && !is_feed() && ($add_script_and_style || ($this->config->get_string('minify.js.header.embed_type') == 'inline' && $this->_config->get_boolean('minify.css.embed_content')))) {
+                if (function_exists('is_feed') && !is_feed()) {
                     w3_require_once(W3TC_INC_DIR . '/functions/extract.php');
                     $head_prepend = '';
                     $body_prepend = '';
@@ -662,11 +651,11 @@ class W3_Plugin_Minify extends W3_Plugin {
         }
         
         if ($import && $use_style) {
-            return "<style type=\"text/css\" media=\"all\">".(empty($content)?"@import url(\"" . $url . "\");":$content)."</style>\r\n";
+            return "<style type=\"text/css\" media=\"all\">".(empty($content)?"@import url(\"" . $url . "\");":"\r\n$content\r\n")."</style>\r\n";
         } elseif ($import && !$use_style) {
             return (empty($content)?"@import url(\"" . $url . "\");":$content)."\r\n";
         }else {
-            return (empty($content)?"<link rel=\"stylesheet\" type=\"text/css\" href=\"" . str_replace('&', '&amp;', $url) . "\" media=\"all\" />":"<style type=\"text/css\" media=\"all\">$content</style>")."\r\n";
+            return (empty($content)?"<link rel=\"stylesheet\" type=\"text/css\" href=\"" . str_replace('&', '&amp;', $url) . "\" media=\"all\" />":"<style type=\"text/css\" media=\"all\">\r\n$content\r\n</style>")."\r\n";
         }
     }
 
@@ -1117,7 +1106,7 @@ class _W3_MinifyHelpers {
         }
 
         if (!empty($content))
-            $script = "<script type=\"text/javascript\">$content</script>";
+            $script = "<script type=\"text/javascript\">\r\n$content\r\n</script>";
         else
         {
             if ($embed_type == 'blocking') {
