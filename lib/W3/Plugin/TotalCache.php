@@ -224,6 +224,8 @@ class W3_Plugin_TotalCache extends W3_Plugin {
             $can_empty_file = $modules->can_empty_file();
 
             $can_empty_varnish = $modules->can_empty_varnish();
+            
+            $can_empty_apcu = $modules->can_empty_apcu();
 
             $browsercache_update_media_qs = ($this->_config->get_boolean('browsercache.cssjs.replace') || $this->_config->get_boolean('browsercache.other.replace'));
 
