@@ -1326,6 +1326,7 @@ class _W3_MinifyJsAuto {
      * @return void
      */
     private function process_script_tag($script_tag) {
+    	$script_tag = trim($script_tag);
         $tag_pos = strpos($this->buffer, $script_tag);
 
         $match = null;
