@@ -169,7 +169,7 @@
                     <select name="minify.css.engine"<?php $this->sealing_disabled('minify'); ?>>
                         <option value="css"<?php selected($this->_config->get_string('minify.css.engine'), 'css'); ?>><?php _e('Default', 'w3-total-cache'); ?></option>
                         <option value="yuicss"<?php selected($this->_config->get_string('minify.css.engine'), 'yuicss'); ?>><?php _e('YUI Compressor', 'w3-total-cache'); ?></option>
-                        <option value="csstidy"<?php selected($this->_config->get_string('minify.css.engine'), 'csstidy'); ?>><?php _e('CSS Tidy', 'w3-total-cache'); ?></option>
+                        <option value="csstidy"<?php selected($this->_config->get_string('minify.css.engine'), 'csstidy'); ?><?php if (version_compare( PHP_VERSION, '5.4.0', '<')): ?> disabled="disabled"<?php endif; ?>><?php _e('CSS Tidy', 'w3-total-cache'); ?></option>
                     </select>
                 </td>
             </tr>
