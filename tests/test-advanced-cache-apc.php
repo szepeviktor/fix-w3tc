@@ -4,7 +4,7 @@
  *
  * @package W3_Total_Cache
  */
-require_once dirname(__FILE__) . '/w3-object-cache-test.php';
+require_once dirname(__FILE__) . '/w3-advanced-cache-test.php';
 
 /**
  * W3_Advanced_Cache_APC_Test Tests
