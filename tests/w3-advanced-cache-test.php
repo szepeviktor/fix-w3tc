@@ -62,7 +62,7 @@ class W3_Advanced_Cache_Test extends WP_UnitTestCase {
 		$this->factory = $this->__get('factory');
 		
 		// create a post and set the url
-		$this->test_post = get_post($this->factory->post->create(array('post_title' => 'Test Title', 'post_content' => 'Test Content'))));
+		$this->test_post = get_post($this->factory->post->create(array('post_title' => 'Test Title', 'post_content' => 'Test Content')));
 	}
 	
 	/**
