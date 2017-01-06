@@ -270,14 +270,17 @@ class W3_Plugin_Minify extends W3_Plugin {
                     }
 
                     if ($head_prepend != '') {
+                        $head_prepend = $this->pre_preg_replace($head_prepend);
                         $buffer = preg_replace('~<head(\s+[^<>]+)*>~Ui', '\\0' . $head_prepend, $buffer, 1);
                     }
 
                     if ($body_prepend != '') {
+                        $body_prepend = $this->pre_preg_replace($body_prepend);
                         $buffer = preg_replace('~<body(\s+[^<>]+)*>~Ui', '\\0' . $body_prepend, $buffer, 1);
                     }
 
                     if ($body_append != '') {
+                        $body_append = $this->pre_preg_replace($body_append);
                         $buffer = preg_replace('~<\\/body>~', $body_append . '\\0', $buffer, 1);
                     }
 
@@ -310,6 +313,18 @@ class W3_Plugin_Minify extends W3_Plugin {
             }
         }
 
+        return $buffer;
+    }
+ 
+    /**
+     * Scripts being embedded might use double-slash or $ so they are escaped prior to preg_replace
+     * @param $buffer
+     * @return string
+     */
+    function pre_preg_replace($buffer)
+    {
+        $buffer = str_replace("\\","\\\\",$buffer);
+	    $buffer = preg_replace('~(\\$[0-9]+)~', '\\\\$1', $buffer);
         return $buffer;
     }
 
@@ -1101,7 +1116,7 @@ class _W3_MinifyHelpers {
         static $non_blocking_function = false;
 
         $content = "";
-        if ($this->config->get_string('minify.js.header.embed_type') == 'inline') {
+        if ($embed_type == 'inline') {
             $content = @file_get_contents($url);
         }
 

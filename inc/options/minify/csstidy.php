@@ -5,6 +5,7 @@ if (!defined('W3TC')) {
 }
 
 $css_levels = array(
+	'CSS3.0',
     'CSS2.1',
     'CSS2.0',
     'CSS1.0'
@@ -17,8 +18,10 @@ $css_level = $this->_config->get_string('minify.csstidy.options.css_level');
 <?php $this->checkbox('minify.csstidy.options.compress_font-weight', false, 'css_') ?> <?php w3_e_config_label('minify.csstidy.options.compress_font-weight') ?></label><br />
 <?php $this->checkbox('minify.csstidy.options.lowercase_s', false, 'css_') ?> <?php w3_e_config_label('minify.csstidy.options.lowercase_s') ?></label><br />
 <?php $this->checkbox('minify.csstidy.options.remove_last_;', false, 'css_') ?> <?php w3_e_config_label('minify.csstidy.options.remove_last_;') ?></label><br />
+<?php $this->checkbox('minify.csstidy.options.remove_space_before_important', false, 'css_') ?> <?php w3_e_config_label('minify.csstidy.options.remove_space_before_important') ?></label><br />
 <?php $this->checkbox('minify.csstidy.options.sort_properties', false, 'css_') ?> <?php w3_e_config_label('minify.csstidy.options.sort_properties') ?></label><br />
 <?php $this->checkbox('minify.csstidy.options.sort_selectors', false, 'css_') ?> <?php w3_e_config_label('minify.csstidy.options.sort_selectors') ?></label><br />
+<?php $this->checkbox('minify.csstidy.options.discard_invalid_selectors', false, 'css_') ?> <?php w3_e_config_label('minify.csstidy.options.discard_invalid_selectors') ?></label><br />
 <?php $this->checkbox('minify.csstidy.options.discard_invalid_properties', false, 'css_') ?> <?php w3_e_config_label('minify.csstidy.options.discard_invalid_properties') ?></label>
 <select class="css_enabled" name="minify.csstidy.options.css_level" 
     <?php $this->sealing_disabled('minify') ?>>

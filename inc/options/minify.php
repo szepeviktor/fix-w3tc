@@ -174,7 +174,7 @@
                                         <option value="nb-defer" <?php selected('nb-defer' ,$this->_config->get_string('minify.js.body.embed_type')) ?>><?php _e('Non-blocking using "defer"', 'w3-total-cache'); ?></option>
                                         <option value="extsrc" <?php selected('extsrc' ,$this->_config->get_string('minify.js.body.embed_type')) ?>><?php _e('Non-blocking using "extsrc"', 'w3-total-cache'); ?></option>
                                         <option value="asyncsrc" <?php selected('asyncsrc' ,$this->_config->get_string('minify.js.body.embed_type')) ?>><?php _e('Non-blocking using "asyncsrc"', 'w3-total-cache'); ?></option>
-                                        <option value="inline" <?php selected('inline' ,$this->_config->get_string('minify.js.body.embed_type')) ?>><?php _e('Inline Content', 'w3-total-cache'); ?></option>
+                                        <option value="inline" <?php selected('inline' ,$this->_config->get_string('minify.js.body.embed_type')) ?>><?php _e('Embed Content', 'w3-total-cache'); ?></option>
                                     </select>
                                 </td>
                             </tr>
@@ -191,7 +191,7 @@
                                         <option value="nb-defer" <?php selected('nb-defer' ,$this->_config->get_string('minify.js.footer.embed_type')) ?>><?php _e('Non-blocking using "defer"', 'w3-total-cache'); ?></option>
                                         <option value="extsrc" <?php selected('extsrc' ,$this->_config->get_string('minify.js.footer.embed_type')) ?>><?php _e('Non-blocking using "extsrc"', 'w3-total-cache'); ?></option>
                                         <option value="asyncsrc" <?php selected('asyncsrc' ,$this->_config->get_string('minify.js.footer.embed_type')) ?>><?php _e('Non-blocking using "asyncsrc"', 'w3-total-cache'); ?></option>
-                                        <option value="inline" <?php selected('inline' ,$this->_config->get_string('minify.js.footer.embed_type')) ?>><?php _e('Inline Content', 'w3-total-cache'); ?></option>
+                                        <option value="inline" <?php selected('inline' ,$this->_config->get_string('minify.js.footer.embed_type')) ?>><?php _e('Embed Content', 'w3-total-cache'); ?></option>
                                     </select>
                                 </td>
                             </tr>
