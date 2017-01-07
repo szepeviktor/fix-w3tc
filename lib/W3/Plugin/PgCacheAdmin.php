@@ -135,10 +135,10 @@ class W3_Plugin_PgCacheAdmin extends W3_Plugin {
         w3_require_once(W3TC_INC_DIR . '/functions/http.php');
         w3_require_once(W3TC_INC_DIR . '/functions/url.php');
 
-        // use empty user-agent since by default we use W3TC-powered by
+        // use user-agent "Wordpress" since by default we use W3TC-powered by
         // which blocks caching
         foreach ($queue as $url)
-            w3_http_get($url, array('user-agent' => ''));
+            w3_http_get($url, array('user-agent' => 'Wordpress'));
     }
 
     /**
