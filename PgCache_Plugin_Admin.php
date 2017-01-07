@@ -144,10 +144,10 @@ class PgCache_Plugin_Admin {
 
 
 
-		// use empty user-agent since by default we use W3TC-powered by
+		// use user-agent "Wordpress" since by default we use W3TC-powered by
 		// which blocks caching
 		foreach ( $queue as $url )
-			Util_Http::get( $url, array( 'user-agent' => '' ) );
+			Util_Http::get( $url, array( 'user-agent' => 'Wordpress' ) );
 	}
 
 	/**
