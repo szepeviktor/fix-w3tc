@@ -665,7 +665,6 @@ class W3_Plugin_Minify extends W3_Plugin {
            if($filename = w3_url_to_filename($url)){
                $content = @file_get_contents($filename);
            } else {
-           	   // A URL can be used as a filename with this function if the fopen wrappers have been enabled. 
            	   $content = @file_get_contents($url);
            }
         }
