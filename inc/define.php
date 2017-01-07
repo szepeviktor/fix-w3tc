@@ -188,6 +188,22 @@ function w3_filename_to_url($filename, $use_site_url = false) {
     return $url;
 }
 
+/*
+ * Returns filename/dirname from URI
+ *
+ * @return string|false
+ */
+function w3_url_to_filename($url) {
+
+	$filename = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, ltrim(parse_url($url, PHP_URL_PATH), '/'));
+	
+	if( !file_exists($filename) ){
+		$filename = false;
+	}
+	 
+	return $filename;
+}
+
 /**
  * Returns true if database cluster is used
  *

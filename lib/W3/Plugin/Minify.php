@@ -662,7 +662,12 @@ class W3_Plugin_Minify extends W3_Plugin {
 
         $content = "";
         if ($this->_config->get_boolean('minify.css.embed_content')) {
-           $content = @file_get_contents($url);
+           if($filename = w3_url_to_filename($url)){
+               $content = @file_get_contents($filename);
+           } else {
+           	   // A URL can be used as a filename with this function if the fopen wrappers have been enabled. 
+           	   $content = @file_get_contents($url);
+           }
         }
         
         if ($import && $use_style) {
