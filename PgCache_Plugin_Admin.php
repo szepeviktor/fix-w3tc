@@ -221,7 +221,7 @@ class PgCache_Plugin_Admin {
 
 		// Make HTTP requests and prime cache
 		foreach ( $post_urls as $url ) {
-			$result = Util_Http::get( $url, array( 'user-agent' => '' ) );
+			$result = Util_Http::get( $url, array( 'user-agent' => 'Wordpress' ) );
 			if ( is_wp_error( $result ) )
 				return false;
 		}
