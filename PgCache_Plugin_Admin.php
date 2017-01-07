@@ -341,3 +341,4 @@ class PgCache_Plugin_Admin {
 		return $summary;
 	}
 }
+
