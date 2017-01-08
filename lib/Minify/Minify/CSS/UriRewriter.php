@@ -209,7 +209,7 @@ class Minify_CSS_UriRewriter {
      */
     private static function rewriteRelative($uri, $realCurrentDir, $realDocRoot, $symlinks = array())
     {
-        if ( isset($uri[0]) && '/' === $uri[0]) { // root-relative
+        if ('/' === substr($uri, 0, 1)) { // root-relative
             return $uri;
         }
 
@@ -376,7 +376,8 @@ class Minify_CSS_UriRewriter {
                 : substr($m[1], 1, strlen($m[1]) - 2);
         }
         // analyze URI
-        if ('/' !== $uri[0]                  // root-relative
+        if (   !empty($uri)                  // bad css, eg: @import url();
+        	&& '/' !== substr($uri, 0, 1)    // root-relative
             && false === strpos($uri, '//')  // protocol (non-data)
             && 0 !== strpos($uri, 'data:')   // data protocol
         ) {
@@ -399,7 +400,7 @@ class Minify_CSS_UriRewriter {
                 if (!\W3TC\Util_Environment::is_url(self::$_prependPath)) {
 					$uri = self::$_prependPath . $uri;
 
-                    if ($uri[0] === '/') {
+                    if (substr($uri, 0, 1) === '/') {
                         $root = '';
                         $rootRelative = $uri;
                         $uri = $root . self::removeDots($rootRelative);
