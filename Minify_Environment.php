@@ -261,6 +261,7 @@ class Minify_Environment {
 	 * @return boolean
 	 */
 	private function test_rewrite( $url ) {
+		$url = str_replace('\\', '/', $url);
 		$key = sprintf( 'w3tc_rewrite_test_%s', substr( md5( $url ), 0, 16 ) );
 		$result = get_site_transient( $key );
 
