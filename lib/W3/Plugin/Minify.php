@@ -1291,8 +1291,6 @@ class _W3_MinifyJsAuto {
         // define embed type
         $this->embed_type = $this->config->get_string(
             'minify.js.header.embed_type');
-        if ($this->embed_type != 'extsrc' && $this->embed_type != 'asyncsrc' && $this->embed_type != 'inline')
-            $this->embed_type = 'blocking';
     }
 
     /**
