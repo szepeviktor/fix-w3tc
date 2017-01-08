@@ -602,7 +602,7 @@ class Util_Ui {
 		if ( !isset( $a['value'] ) || is_null( $a['value'] ) ) {
 			$a['value'] = $c->get( $a['key'] );
 			if ( is_array( $a['value'] ) )
-				$a['value'] = implode( '\n', $a['value'] );
+				$a['value'] = implode( "\n", $a['value'] );
 		}
 
 		if ( isset( $a['disabled'] ) && !is_null( $a['disabled'] ) )
