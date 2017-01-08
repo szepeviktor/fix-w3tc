@@ -246,7 +246,7 @@ class PgCache_ContentGrabber {
 		 * Try to get uncompressed version of cache
 		 */
 		if ( $compression && !$data ) {
-			if ( $this->_set_extract_page_key( $mobile_group,
+			if ( !$this->_set_extract_page_key( $mobile_group,
 					$referrer_group, $encryption, false, '', $with_filter ) ) {
 				$data = null;
 			} else {
