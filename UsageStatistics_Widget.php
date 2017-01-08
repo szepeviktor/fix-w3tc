@@ -15,7 +15,10 @@ class UsageStatistics_Widget {
 				$this,
 				'w3tc_widget_setup'
 			) );
-		add_action( 'w3tc_ajax_ustats_get', array( $this, 'w3tc_ajax_ustats_get' ) );
+        $c = Dispatcher::config();
+        if ( $c->get_boolean( 'stats.enabled' )) {
+            add_action( 'w3tc_ajax_ustats_get', array( $this, 'w3tc_ajax_ustats_get' ) );
+        }
 	}
 
 
