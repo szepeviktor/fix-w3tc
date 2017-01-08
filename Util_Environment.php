@@ -119,8 +119,9 @@ class Util_Environment {
 			return '';
 		$uri_from_wp_content = substr( $filename, strlen( WP_CONTENT_DIR ) );
 		$url = content_url( $uri_from_wp_content );
+		$url = str_replace('\\', '/', $url);
 		$url = apply_filters( 'w3tc_filename_to_url', $url );
-
+		
 		return $url;
 	}
 
