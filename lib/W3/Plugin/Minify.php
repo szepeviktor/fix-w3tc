@@ -662,11 +662,7 @@ class W3_Plugin_Minify extends W3_Plugin {
 
         $content = "";
         if ($this->_config->get_boolean('minify.css.embed_content')) {
-           if($filename = w3_url_to_filename($url)){
-               $content = @file_get_contents($filename);
-           } else {
-           	   $content = @file_get_contents($url);
-           }
+            $content = w3_file_get_contents($url);
         }
         
         if ($import && $use_style) {
@@ -1121,7 +1117,7 @@ class _W3_MinifyHelpers {
 
         $content = "";
         if ($embed_type == 'inline') {
-            $content = @file_get_contents($url);
+            $content = w3_file_get_contents($url);
         }
 
         if (!empty($content))
@@ -1295,7 +1291,7 @@ class _W3_MinifyJsAuto {
         // define embed type
         $this->embed_type = $this->config->get_string(
             'minify.js.header.embed_type');
-        if ($this->embed_type != 'extsrc' && $this->embed_type != 'asyncsrc')
+        if ($this->embed_type != 'extsrc' && $this->embed_type != 'asyncsrc' && $this->embed_type != 'inline')
             $this->embed_type = 'blocking';
     }
 

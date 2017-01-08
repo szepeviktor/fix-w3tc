@@ -189,12 +189,27 @@ function w3_filename_to_url($filename, $use_site_url = false) {
 }
 
 /*
+ * Returns file content of an existing URI
+ *
+ * @return string
+ */
+function w3_file_get_contents($url)
+{
+    if($filename = w3_url_to_filename($url)){
+        $content = @file_get_contents($filename);
+    } else {
+        $content = @file_get_contents($url);
+    }
+
+    return $content;
+}
+
+/*
  * Returns filename/dirname from URI
  *
  * @return string|false
  */
 function w3_url_to_filename($url) {
-
 	$filename = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, ltrim(parse_url($url, PHP_URL_PATH), '/'));
 	
 	if( !file_exists($filename) ){
