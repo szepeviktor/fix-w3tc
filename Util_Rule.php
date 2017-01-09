@@ -14,8 +14,9 @@ class Util_Rule {
 		$url = Util_Environment::filename_to_url( $filename );
 		$parsed = parse_url( $url );
 		$uri = isset( $parsed['path'] ) ? ltrim( $parsed['path'], DIRECTORY_SEPARATOR ) : '';
-		$uri = '/' . $uri;
-
+		if( strpos($uri, '/') !== 0 ){
+		    $uri = '/' . $uri;
+		}
 		return $uri;
 	}
 
