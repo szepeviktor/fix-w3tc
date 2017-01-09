@@ -12,3 +12,10 @@ This project is a community driven build of W3 Total Cache (W3TC) originally dev
 1. Download and unpack the **_[latest files](https://github.com/szepeviktor/w3-total-cache-fixed/archive/v0.9.5.x.zip)_** into `/wp-content/plugins/`
 1. Rename the extracted directory from `w3-total-cache-fixed-0.9.5.x` to `w3-total-cache`
 1. Activate the W3 Total Cache plugin
+
+### Fixes, Improvements, & Enhancement Highlights
+_**Note:** This list does not reflect all of the myriad of fixes/changes -- just the key ones of interest._
+
+![DONE] Removed Deprecated WordPress Code<br>
+![DONE] Full PHP7 Compliancy (Passes [PHPCompatibility](https://github.com/wimg/PHPCompatibility): 100%)<br>
+![DONE] Many bug fixes (always ongoing)<br>
