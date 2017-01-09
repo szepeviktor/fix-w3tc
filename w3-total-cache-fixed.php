@@ -108,7 +108,7 @@ function is_w3tc_activated()
 	foreach ($plugin_list as $plugin_file=>$plugin_data) {	
 		if (is_plugin_active($plugin_file) && $plugin_file != $me) {
 			if (stripos(strrev($plugin_file), 'php.ehcac-latot-3w') === 0 && stripos($plugin_data['Name'],'W3 Total Cache') !== false) {
-				add_action('admin_notices',	create_function('','echo \'<div id="message" class="error"><p>Sorry, <i><strong>W3 Total Cache (Fixed)</strong></i> was not activated because an existing install of W3 Total Cache (version ' . $plugin_data['Version'] . ') was detected. Please deactivate that install and try again.</p></div>\';'));
+				add_action('admin_notices',	create_function('','echo \'<div id="message" class="error"><p>Sorry, <i><strong>W3 Total Cache (Fixed)</strong></i> has been blocked from being activated because an existing install of W3 Total Cache (version ' . $plugin_data['Version'] . ') was detected. Please deactivate that install and try again.</p></div>\';'));
 				deactivate_plugins($me); //Deactivate this plugin
 				return true;
 			}
