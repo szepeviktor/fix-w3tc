@@ -7,7 +7,7 @@ namespace W3TC;
  */
 class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 	/**
-	 * Whether to check with fsockopen prior to mysql_connect.
+	 * Whether to check with fsockopen prior to mysqli_connect.
 	 *
 	 * @var bool
 	 */
@@ -21,7 +21,7 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 	var $min_tries = 3;
 
 	/**
-	 * Whether to use mysql_pconnect instead of mysql_connect
+	 * Whether to use mysqli_connect with persistence
 	 *
 	 * @var bool
 	 */
@@ -256,7 +256,8 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 	 * @return resource mysql database connection
 	 */
 	function db_connect( $query = '', $use_master = null ) {
-		$connect_function = $this->persistent ? 'mysql_pconnect' : 'mysql_connect';
+		$connect_function = 'mysqli_connect';
+        $persist = $this->persistent?"p:":"";
 		if ( empty( $this->_cluster_servers ) )
 			return $this->_db_connect_fallback();
 
@@ -366,12 +367,12 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 
 			$dbh = null;
 			if ( is_null( $tcp_responded ) || $tcp_responded )
-				$dbh = @ $connect_function( "$host:$port", $user, $password, true );
+				$dbh = @ $connect_function("$persist$host:$port", $user, $password, true);
 
 			$elapsed = $this->wpdb_mixin->timer_stop();
 
 			if ( is_resource( $dbh ) ) {
-				if ( mysql_select_db( $name, $dbh ) ) {
+				if (mysqli_select_db($name, $dbh)) {
 					$this->_connections[$dbhname] = array(
 						'dbh' => $dbh,
 						'database_name' => $name );
@@ -441,7 +442,7 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 		if ( !is_resource( $dbh ) )
 			return null;
 
-		if ( !mysql_ping( $dbh ) ) {
+		if ( !mysqli_ping( $dbh ) ) {
 			// disconnect (ping failed)
 			$this->_disconnect( $dbhname );
 			return null;
@@ -453,7 +454,7 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 	/**
 	 * Sets the connection's character set.
 	 *
-	 * @param resource $dbh     The resource given by mysql_connect
+	 * @param resource $dbh     The resource given by mysqli_connect
 	 * @param string  $charset The character set (optional)
 	 * @param string  $collate The collation (optional)
 	 */
@@ -463,14 +464,14 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 		if ( !isset( $collate ) )
 			$collate = $this->wpdb_mixin->collate;
 		if ( $this->has_cap( 'collation', $dbh ) && !empty( $charset ) ) {
-			if ( function_exists( 'mysql_set_charset' ) && $this->has_cap( 'set_charset', $dbh ) ) {
-				mysql_set_charset( $charset, $dbh );
+			if ( function_exists( 'mysqli_set_charset' ) && $this->has_cap( 'set_charset', $dbh ) ) {
+				mysqli_set_charset( $charset, $dbh );
 				$this->wpdb_mixin->real_escape = true;
 			} else {
 				$query = $this->wpdb_mixin->prepare( 'SET NAMES %s', $charset );
 				if ( !empty( $collate ) )
 					$query .= $this->wpdb_mixin->prepare( ' COLLATE %s', $collate );
-				mysql_query( $query, $dbh );
+				mysqli_query( $query, $dbh );
 			}
 		}
 	}
@@ -513,14 +514,14 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 				return false;
 
 			$this->wpdb_mixin->timer_start();
-			$this->wpdb_mixin->result = mysql_query( $query, $this->wpdb_mixin->dbh );
+			$this->wpdb_mixin->result = mysqli_query( $query, $this->wpdb_mixin->dbh );
 			$elapsed = $this->wpdb_mixin->timer_stop();
 			++$this->wpdb_mixin->num_queries;
 
 			if ( preg_match( '/^\s*SELECT\s+SQL_CALC_FOUND_ROWS\s/i', $query ) ) {
 				if ( false === strpos( $query, "NO_SELECT_FOUND_ROWS" ) ) {
 					$this->wpdb_mixin->timer_start();
-					$this->wpdb_mixin->_last_found_rows_result = mysql_query( "SELECT FOUND_ROWS()", $this->wpdb_mixin->dbh );
+					$this->wpdb_mixin->_last_found_rows_result = mysqli_query( "SELECT FOUND_ROWS()", $this->wpdb_mixin->dbh );
 					$elapsed += $this->wpdb_mixin->timer_stop();
 					++$this->wpdb_mixin->num_queries;
 					$query .= "; SELECT FOUND_ROWS()";
@@ -534,17 +535,17 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 			apply_filters( 'after_query', $query );
 
 		// If there is an error then take note of it
-		if ( $this->wpdb_mixin->last_error = mysql_error( $this->wpdb_mixin->dbh ) ) {
+		if ( $this->wpdb_mixin->last_error = mysqli_error( $this->wpdb_mixin->dbh ) ) {
 			$this->wpdb_mixin->print_error( $this->wpdb_mixin->last_error );
 			return false;
 		}
 
 		if ( preg_match( "/^\\s*(insert|delete|update|replace|alter) /i", $query ) ) {
-			$this->wpdb_mixin->rows_affected = mysql_affected_rows( $this->wpdb_mixin->dbh );
+			$this->wpdb_mixin->rows_affected = mysqli_affected_rows( $this->wpdb_mixin->dbh );
 
 			// Take note of the insert_id
 			if ( preg_match( "/^\\s*(insert|replace) /i", $query ) ) {
-				$this->wpdb_mixin->insert_id = mysql_insert_id( $this->wpdb_mixin->dbh );
+				$this->wpdb_mixin->insert_id = mysqli_insert_id( $this->wpdb_mixin->dbh );
 			}
 			// Return number of rows affected
 			return $this->wpdb_mixin->rows_affected;
@@ -552,19 +553,19 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 			$i = 0;
 			$this->wpdb_mixin->col_info = array();
 			$col_info = array();
-			while ( $i < @mysql_num_fields( $this->wpdb_mixin->result ) ) {
-				$col_info[$i] = @mysql_fetch_field( $this->wpdb_mixin->result );
+			while ( $i < @mysqli_num_fields( $this->wpdb_mixin->result ) ) {
+				$col_info[$i] = @mysqli_fetch_field( $this->wpdb_mixin->result );
 				$i++;
 			}
 			$this->wpdb_mixin->col_info = $col_info;
 			$num_rows = 0;
 			$this->wpdb_mixin->last_result = array();
-			while ( $row = @mysql_fetch_object( $this->wpdb_mixin->result ) ) {
+			while ( $row = @mysqli_fetch_object( $this->wpdb_mixin->result ) ) {
 				$this->wpdb_mixin->last_result[$num_rows] = $row;
 				$num_rows++;
 			}
 
-			@mysql_free_result( $this->wpdb_mixin->result );
+			@mysqli_free_result( $this->wpdb_mixin->result );
 
 			// Log number of rows the query returned
 			$this->num_rows = $num_rows;
@@ -584,8 +585,8 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 	function check_database_version( $dbh_or_table = false ) {
 		global $wp_version;
 		// Make sure the server has MySQL 4.1.2
-		$mysql_version = preg_replace( '|[^0-9\.]|', '', $this->wpdb_mixin->db_version( $dbh_or_table ) );
-		if ( version_compare( $mysql_version, '4.1.2', '<' ) )
+		$mysqli_version = preg_replace( '|[^0-9\.]|', '', $this->wpdb_mixin->db_version( $dbh_or_table ) );
+		if ( version_compare( $mysqli_version, '4.1.2', '<' ) )
 			return new \WP_Error( 'database_version', sprintf( __( '<strong>ERROR</strong>: WordPress %s requires MySQL 4.1.2 or higher' ), $wp_version ) );
 	}
 
@@ -639,7 +640,7 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 			$dbh = $this->db_connect( "SELECT FROM $dbh_or_table $this->wpdb_mixin->users" );
 
 		if ( $dbh )
-			return preg_replace( '/[^0-9.].*/', '', mysql_get_server_info( $dbh ) );
+			return preg_replace( '/[^0-9.].*/', '', mysqli_get_server_info( $dbh ) );
 		return false;
 	}
 
@@ -652,7 +653,7 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 		if ( isset( $this->_connections[$dbhname] ) ) {
 			$dbh = $this->_connections[$dbhname]['dbh'];
 			if ( is_resource( $dbh ) )
-				mysql_close( $dbh );
+				mysqli_close( $dbh );
 
 			unset( $this->_connections[$dbhname] );
 		}
@@ -779,18 +780,19 @@ class Enterprise_Dbcache_WpdbInjection_Cluster extends DbCache_WpdbInjection {
 			|| !defined( 'DB_NAME' ) )
 			return $this->wpdb_mixin->bail( "We were unable to query because there was no database defined." );
 
-		$connect_function = $this->persistent ? 'mysql_pconnect' : 'mysql_connect';
-		$this->wpdb_mixin->dbh = @ $connect_function( DB_HOST, DB_USER, DB_PASSWORD, true );
+		$connect_function = 'mysqli_connect';
+        $persist = $this->persistent?"p:":"";
+		$this->wpdb_mixin->dbh = @ $connect_function( $persist.DB_HOST, DB_USER, DB_PASSWORD, true );
 
 		if ( !is_resource( $this->wpdb_mixin->dbh ) )
 			return $this->wpdb_mixin->bail( "We were unable to connect to the database. (DB_HOST)" );
-		if ( !mysql_select_db( DB_NAME, $this->wpdb_mixin->dbh ) )
+		if ( !mysqli_select_db( DB_NAME, $this->wpdb_mixin->dbh ) )
 			return $this->wpdb_mixin->bail( "We were unable to select the database." );
 		if ( !empty( $this->wpdb_mixin->charset ) ) {
 			$collation_query = "SET NAMES '$this->wpdb_mixin->charset'";
 			if ( !empty( $this->wpdb_mixin->collate ) )
 				$collation_query .= " COLLATE '$this->wpdb_mixin->collate'";
-			mysql_query( $collation_query, $this->wpdb_mixin->dbh );
+			mysqli_query( $collation_query, $this->wpdb_mixin->dbh );
 		}
 
 		return $this->wpdb_mixin->dbh;

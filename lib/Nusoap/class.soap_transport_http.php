@@ -281,10 +281,8 @@ class soap_transport_http extends nusoap_base {
 		$hostURL .= $this->path;
 		$this->setCurlOption(CURLOPT_URL, $hostURL);
 		// follow location headers (re-directs)
-		if (ini_get('safe_mode') || ini_get('open_basedir')) {
-			$this->debug('safe_mode or open_basedir set, so do not set CURLOPT_FOLLOWLOCATION');
-			$this->debug('safe_mode = ');
-			$this->appendDebug($this->varDump(ini_get('safe_mode')));
+		if (ini_get('open_basedir')) {
+			$this->debug('open_basedir set, so do not set CURLOPT_FOLLOWLOCATION');
 			$this->debug('open_basedir = ');
 			$this->appendDebug($this->varDump(ini_get('open_basedir')));
 		} else {

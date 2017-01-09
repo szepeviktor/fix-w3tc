@@ -519,17 +519,11 @@ class DbCache_WpdbBase extends \SQL_Translations {
                 // The TDS library and the ntwdblib.dll can't be speaking two different protocols.
                 putenv("TDSVER=70");
 
-                // Set text limit sizes to max BEFORE connection is made
-                ini_set('mssql.textlimit', 2147483647);
-                ini_set('mssql.textsize', 2147483647);
-
                 if (get_magic_quotes_gpc()) {
                         $dbhost = trim(str_replace("\\\\", "\\", $dbhost));
                 }
 
-                $this->dbh = mssql_connect($dbhost, $dbuser, $dbpassword);
-                mssql_min_error_severity(0);
-                mssql_min_message_severity(17);
+                $this->dbh = sqlsrv_connect($dbhost,array("Database"=>$dbname,"UID"=>$dbuser,"PWD"=>$dbpassword));
 
                 if ( !$this->dbh ) {
                         $this->bail( sprintf( /*WP_I18N_DB_CONN_ERROR*/"
@@ -550,7 +544,7 @@ class DbCache_WpdbBase extends \SQL_Translations {
 
                 $this->ready = true;
 
-                @mssql_query('SET TEXTSIZE 2147483647');
+                @sqlsrv_query($this->dbh,'SET TEXTSIZE 2147483647');
                 /*
                 if ( $this->has_cap( 'collation' ) && !empty( $this->charset ) ) {
                         if ( function_exists( 'mysql_set_charset' ) ) {
@@ -564,8 +558,6 @@ class DbCache_WpdbBase extends \SQL_Translations {
                         }
                 }
                 */
-
-                $this->select( $dbname, $this->dbh );
         }
 
         /**
@@ -744,33 +736,6 @@ class DbCache_WpdbBase extends \SQL_Translations {
         }
 
         /**
-         * Selects a database using the current database connection.
-         *
-         * The database name will be changed based on the current database
-         * connection. On failure, the execution will bail and display an DB error.
-         *
-         * @since 0.71
-         *
-         * @param string $db MySQL database name
-         * @return null Always null.
-         */
-        function select( $db, &$dbh ) {
-                if ( !@mssql_select_db($db, $dbh) ) {
-                        $this->ready = false;
-                        $this->bail( sprintf( /*WP_I18N_DB_SELECT_DB*/'
-<h1>Can&#8217;t select database</h1>
-<p>We were able to connect to the database server (which means your username and password is okay) but not able to select the <code>%1$s</code> database.</p>
-<ul>
-<li>Are you sure it exists?</li>
-<li>Does the user <code>%2$s</code> have permission to use the <code>%1$s</code> database?</li>
-<li>On some systems the name of your database is prefixed with your username, so it would be like <code>username_%1$s</code>. Could that be the problem?</li>
-</ul>
-<p>If you don\'t know how to set up a database you should <strong>contact your host</strong>. If all else fails you may find help at the <a href="http://wordpress.org/support/">WordPress Support Forums</a>.</p>'/*/WP_I18N_DB_SELECT_DB*/, $db, $this->dbuser ), 'db_select_fail' );
-                        return;
-                }
-        }
-
-        /**
          * Weak escape, using addslashes()
          *
          * @see addslashes()
@@ -932,8 +897,10 @@ class DbCache_WpdbBase extends \SQL_Translations {
         function print_error( $str = '' ) {
                 global $EZSQL_ERROR;
 
-                if ( !$str )
-                        $str = mssql_get_last_message();
+                if ( !$str ) {
+                        $errs = sqlsrv_errors();
+			$str = is_null($errs)?"":$errs[0]['message'];
+		}
                 $EZSQL_ERROR[] = array( 'query' => $this->last_query, 'error_str' => $str );
 
                 if ( $this->suppress_errors )
@@ -1057,7 +1024,7 @@ class DbCache_WpdbBase extends \SQL_Translations {
                 }
 
                 $dbhname = "dbh" . $action;
-                $this->$dbhname = @mssql_connect( $details[ 'db_host' ], $details[ 'db_user' ], $details[ 'db_password' ] );
+                $this->$dbhname = @sqlsrv_connect($details['db_host'],array("Database"=>$details['db_name'],"UID"=>$details[ 'db_user' ],"PWD"=>$details[ 'db_password' ]));
                 $this->is_mysql = false;
 
                 if (!$this->$dbhname ) {
@@ -1073,11 +1040,7 @@ class DbCache_WpdbBase extends \SQL_Translations {
 "/*/WP_I18N_DB_CONN_ERROR*/, $details['db_host'] ), 'db_connect_fail' );
                 }
 
-                mssql_min_error_severity(0);
-                mssql_min_message_severity(17);
-                @mssql_query('SET TEXTSIZE 2147483647');
-
-                $this->select( $details[ 'db_name' ], $this->$dbhname );
+                @sqlsrv_query($this->$dbhname,'SET TEXTSIZE 2147483647');
         }
 
         /**
@@ -1141,10 +1104,10 @@ class DbCache_WpdbBase extends \SQL_Translations {
                 if ($this->preceeding_query !== false) {
                         if (is_array($this->preceeding_query)) {
                                 foreach ($this->preceeding_query as $p_query) {
-                                        @mssql_query($sub_query, $dbh);
+                                        @sqlsrv_query($dbh,$sub_query);
                                 }
                         } else {
-                                @mssql_query($this->preceeding_query, $dbh);
+                                @sqlsrv_query($dbh,$this->preceeding_query);
                         }
                         $this->preceeding_query = false;
                 }
@@ -1153,22 +1116,22 @@ class DbCache_WpdbBase extends \SQL_Translations {
                 if (is_array($query)) {
                         foreach ($query as $sub_query) {
                                 $this->_pre_query();
-                                $this->result = @mssql_query($sub_query, $dbh);
+                                $this->result = @sqlsrv_query($dbh,$sub_query);
                                 $return_val = $this->_post_query($sub_query, $dbh);
                         }
                 } else {
                         $this->_pre_query();
-                        $this->result = @mssql_query($query, $dbh);
+                        $this->result = @sqlsrv_query($dbh,$query);
                         $return_val = $this->_post_query($query, $dbh);
                 }
 
                 if ($this->following_query !== false) {
                         if (is_array($this->following_query)) {
                                 foreach ($this->following_query as $f_query) {
-                                        @mssql_query($f_query, $dbh);
+                                        @sqlsrv_query($dbh,$f_query);
                                 }
                         } else {
-                                @mssql_query($this->following_query, $dbh);
+                                @sqlsrv_query($dbh,$this->following_query);
                         }
                         $this->following_query = false;
                 }
@@ -1188,7 +1151,11 @@ class DbCache_WpdbBase extends \SQL_Translations {
         function _post_query($query, $dbh) {
                 ++$this->num_queries;
                 // If there is an error then take note of it..
-                if ( $this->result == FALSE && $this->last_error = mssql_get_last_message() ) {
+                
+                $errs = sqlsrv_errors();
+                $err = is_null($errs)?"":$errs[0]['message'];
+                
+                if ( $this->result == FALSE && $this->last_error = $err ) {
                         $this->log_query($this->last_error);
                         //var_dump($query);
                         //var_dump($this->translation_changes);
@@ -1202,10 +1169,10 @@ class DbCache_WpdbBase extends \SQL_Translations {
 
                 if ( preg_match("/^\\s*(insert|delete|update|replace) /i",$query) ) {
 
-                        $this->rows_affected = mssql_rows_affected($dbh);
+                        $this->rows_affected = sqlsrv_rows_affected($dbh);
                         // Take note of the insert_id
                         if ( preg_match("/^\\s*(insert|replace) /i",$query) ) {
-                                $result = @mssql_fetch_object(@mssql_query("SELECT SCOPE_IDENTITY() AS ID"));
+                                $result = @sqlsrv_fetch_object(@sqlsrv_query($dbh,"SELECT SCOPE_IDENTITY() AS ID"));
                                 $this->insert_id = $result->ID;
                         }
 
@@ -1213,31 +1180,28 @@ class DbCache_WpdbBase extends \SQL_Translations {
                 } else {
 
                         $i = 0;
-                        while ($i < @mssql_num_fields($this->result)) {
-                                $field = @mssql_fetch_field($this->result, $i);
+                        
+                        foreach( @sqlsrv_field_metadata($this->result) as $fieldMetadata )
+                        {			
                                 $new_field = new stdClass();
-                                $new_field->name = $field->name;
-                                $new_field->table = $field->column_source;
+                                $new_field->name = $fieldMetadata["Name"];
+                                $new_field->table = null;
                                 $new_field->def = null;
-                                $new_field->max_length = $field->max_length;
+                                $new_field->max_length = $fieldMetadata["Size"];
                                 $new_field->not_null = true;
                                 $new_field->primary_key = null;
                                 $new_field->unique_key = null;
                                 $new_field->multiple_key = null;
-                                $new_field->numeric = $field->numeric;
+				$new_field->numeric = null;
                                 $new_field->blob = null;
-                                $new_field->type = $field->type;
-                                if(isset($field->unsigned)) {
-                                        $new_field->unsigned = $field->unsigned;
-                                } else {
-                                        $new_field->unsigned = null;
-                                }
+                                $new_field->type = $fieldMetadata["Type"];
+                                $new_field->unsigned = null;                         
                                 $new_field->zerofill = null;
                                 $this->col_info[$i] = $new_field;
                                 $i++;
                         }
                         $num_rows = 0;
-                        while ( $row = @mssql_fetch_object($this->result) ) {
+                        while ( $row = @sqlsrv_fetch_object($this->result) ) {
                                 $this->last_result[$num_rows] = $row;
                                 $num_rows++;
                         }
@@ -1248,7 +1212,7 @@ class DbCache_WpdbBase extends \SQL_Translations {
                                 $num_rows = count($this->last_result);
                         }
 
-                        @mssql_free_result($this->result);
+                        @sqlsrv_free_stmt($this->result);
 
                         // Log number of rows the query returned
                         $this->num_rows = $num_rows;
