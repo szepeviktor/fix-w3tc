@@ -1940,6 +1940,7 @@ class S3
 	*/
 	public static function getTime()
 	{
+		self::setTimeCorrectionOffset();	// Set correct offset
 		return time() + self::$__timeOffset;
 	}
 
