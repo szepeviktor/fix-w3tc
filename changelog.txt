@@ -1,3 +1,16 @@
+= 0.9.4.6.1 =
+* CSSTidy (minifier) updated.  Now supports CSS3.0 + new options and a few bug fixes
+* AWS v4 signature updates
+* Enhancement to query string handling for disk enhanced mode
+* AMP plugin compatibility fix
+* Config reader performance boost
+* Cloudfront CDN patch
+* Embedded minified content (js and css) has been tweaked
+* House-cleaning to fix some file mismatches
+* Removed rtf/rtx and svg/svgz from the HTML mime types
+* Fixed APCu implementation in the dashboard
+* User agent is now used during cache priming
+
 = 0.9.4.6 =
 * Amazon Web Services (AWS) v4 signature support (fixes the AWS4-HMAC-SHA256 error issue)
   Note: for existing S3 users, you will need to set the bucket region under the CDN section
