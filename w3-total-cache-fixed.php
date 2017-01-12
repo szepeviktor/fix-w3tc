@@ -2,7 +2,7 @@
 /*
 Plugin Name: W3 Total Cache (Fixed)
 Description: A community driven build of W3 Total Cache originally developed by @ftownes. The aim is to continuously incorporate fixes, improvements, and enhancements over the official Wordpress release of W3 Total Cache.
-Version: 0.9.4.6
+Version: 0.9.4.6.1
 Plugin URI: https://github.com/szepeviktor/w3-total-cache-fixed/
 Author: W3TC (Fixed) Community
 Author URI: https://github.com/szepeviktor/w3-total-cache-fixed/
