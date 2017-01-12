@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 define('W3TC', true);
 define('W3TC_VERSION', '0.9.4.6');
-define("W3TC_TESTED_ON_WP_VERSION", '4.7');
+define("W3TC_TESTED_ON_WP_VERSION", '4.7.1');
 define('W3TC_POWERED_BY', 'W3 Total Cache/' . W3TC_VERSION);
 define('W3TC_EMAIL', 'w3tc@w3-edge.com');
 define('W3TC_TEXT_DOMAIN', 'w3-total-cache');
