@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('W3TC', true);
-define('W3TC_VERSION', '0.9.4.6');
+define('W3TC_VERSION', '0.9.4.6.1');
 define("W3TC_TESTED_ON_WP_VERSION", '4.7.1');
 define('W3TC_POWERED_BY', 'W3 Total Cache/' . W3TC_VERSION);
 define('W3TC_EMAIL', 'w3tc@w3-edge.com');
@@ -119,6 +119,29 @@ function w3_microtime() {
     list ($usec, $sec) = explode(' ', microtime());
 
     return ((double) $usec + (double) $sec);
+}
+
+/**
+ * Returns the W3TC current version (4 digit limit for config reading)
+ *
+ * @return string
+ */
+function w3_current_version()
+ {
+ 	static $ver = null;
+ 	
+ 	if ($ver === null)
+ 	{
+        if (preg_match('/(\d+)\.(\d+)\.(\d+)\.(\d+)\.?(\d+)?/',W3TC_VERSION,$match)) {
+            array_shift($match);
+            if (count($match) == 5) array_pop($match);
+            $ver = implode(".",$match);
+        }
+        else {
+            $ver = W3TC_VERSION;
+        }
+    }
+    return $ver;
 }
 
 /**

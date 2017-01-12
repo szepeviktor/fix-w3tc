@@ -101,7 +101,7 @@ class W3_ConfigWriter {
         // append data from blog config
         $config_admin = w3_instance('W3_ConfigAdmin');
         $data = W3_ConfigData::get_array_from_file($this->_get_config_filename());
-        if (isset($data['version']) && version_compare($data['version'], W3TC_VERSION, '<')) {
+        if (isset($data['version']) && version_compare($data['version'], w3_current_version(), '<')) {
             /**
              * @var W3_ConfigCompatibility $config_comp
              */

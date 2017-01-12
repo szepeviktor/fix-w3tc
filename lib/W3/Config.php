@@ -262,14 +262,13 @@ class W3_Config extends W3_ConfigBase {
             $config = @unserialize($content);
             if (is_array($config)) {
                 if (isset($config['version'])
-                        && $config['version'] == W3TC_VERSION) {
+                        && $config['version'] == w3_current_version()) {
                     return $config;
                 }
             }
         }
         return null;
     }
-    
     private function _flush_cache($forced_preview = null) {
         $this->_md5 = null;
         if ($this->_blog_id > 0)

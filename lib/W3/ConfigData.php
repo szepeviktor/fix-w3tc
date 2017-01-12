@@ -31,7 +31,7 @@ class W3_ConfigData {
      * Constructor
      */
     function __construct($keys) {
-        $this->data = array('version' => W3TC_VERSION);
+        $this->data = array('version' => w3_current_version());
         $this->_keys = $keys;
         
         $this->_http_keys_map = array();
@@ -61,7 +61,7 @@ class W3_ConfigData {
      * Removes data
      */
     function clear() {
-      $this->data = array('version' => W3TC_VERSION);
+      $this->data = array('version' => w3_current_version());
     }
 
     /**
