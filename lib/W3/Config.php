@@ -269,6 +269,7 @@ class W3_Config extends W3_ConfigBase {
         }
         return null;
     }
+
     private function _flush_cache($forced_preview = null) {
         $this->_md5 = null;
         if ($this->_blog_id > 0)
