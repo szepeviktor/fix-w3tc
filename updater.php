@@ -405,12 +405,14 @@ class WP_GitHub_Updater {
 			}
 			
 			if (empty($transient->response[ $this->config['slug'] ])) {
+				global $wp_version;
+				
 				$response = new stdClass;
 				$response->new_version = $this->config['new_version'];
 				$response->slug = $this->config['proper_folder_name'];
 				$response->url = $this->config['github_url'];
 				$response->package = $this->config['zip_url'];
-				$response->tested = $this->config['tested'];
+				$response->tested = isset($wp_version)?$wp_version:$this->config['tested'];
 
 				// If response is false, don't alter the transient
 				if ( false !== $response )
@@ -448,7 +450,7 @@ class WP_GitHub_Updater {
 		$response->author = $this->config['author'];
 		$response->homepage = $this->config['homepage'];
 		$response->requires = $this->config['requires'];
-		$response->tested = $this->config['tested'];
+		$response->tested = isset($wp_version)?$wp_version:$this->config['tested'];
 		$response->downloaded   = 0;
 		$response->last_updated = $this->config['last_updated'];
 		$response->sections['description'] = $this->config['description'];
