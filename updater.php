@@ -437,6 +437,7 @@ class WP_GitHub_Updater {
 	 * @return object $response the plugin info
 	 */
 	public function get_plugin_info( $false, $action, $response ) {
+		global $wp_version;
 		// Check if this call API is for the right plugin
 		
 		if ( $action != "plugin_information" || !isset( $response->slug ) || strpos($this->config['slug'],$response->slug) === false )
