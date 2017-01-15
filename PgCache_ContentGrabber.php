@@ -1037,14 +1037,16 @@ class PgCache_ContentGrabber {
 	 */
 	function _get_page_key( $mobile_group = '', $referrer_group = '',
 		$encryption = '', $compression = '', $content_type = '', $request_url = '' ) {
-
-		if ( $request_url ) {
-			$parts = parse_url( $request_url );
-			$key = $parts['host'] .
-				( isset( $parts['path'] ) ? $parts['path'] : '' ) .
-				( isset( $parts['query'] ) ? '?' . $parts['query'] : '' );
-		} else
-			$key = $this->_request_host . $this->_request_uri;
+		
+		$key = '';
+			
+		if( empty($request_url) ){
+			$request_url = 'http://'.$this->_request_host . $this->_request_uri;
+		}
+		
+		if( $parts = @parse_url( $request_url ) ){
+			$key = $parts['host'] . (isset($parts['path']) ? substr($parts['path'], 0, strrpos($parts['path'], '/') + 1) : '');
+		}
 
 		// replace fragment
 		$key = preg_replace( '~#.*$~', '', $key );
