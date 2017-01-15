@@ -30,7 +30,6 @@ class W3_AdminActions_TestActionsAdmin {
         w3_require_once(W3TC_INC_FUNCTIONS_DIR . '/admin_ui.php');
         w3_require_once(W3TC_INC_FUNCTIONS_DIR . '/ui.php');
         $page = $this->_page;
-        include W3TC_INC_LIGHTBOX_DIR . '/edge.php';
     }
 
     /**

@@ -638,20 +638,6 @@
                     <br /><span class="description"><?php _e('Try this option if your hosting environment uses a network based file system for a possible performance improvement.', 'w3-total-cache'); ?></span>
                 </th>
             </tr>
-            <?php if (is_network_admin() || !w3_is_multisite()): ?>
-            <tr id="edge_mode">
-                <th colspan="2">
-                    <?php
-                    if (!w3tc_edge_mode()):
-                        echo '<a href="' . w3_admin_url('admin.php?page='. $this->_page .'&w3tc_edge_mode_enable').'"><strong>' . __('Enable Edge mode', 'w3-total-cache') . '</strong></a>';
-                    else:
-                        echo '<a href="' . w3_admin_url('admin.php?page='. $this->_page .'&w3tc_edge_mode_disable').'"><strong>' . __('Disable Edge mode', 'w3-total-cache') . '</strong></a>';
-                    endif;
-                    ?>
-                    <br /><span class="description"><?php _e('Enable this to try out new functionality under development. Might cause issues on some sites. If you have issues and can\'t access wp-admin, remove "define(\'W3TC_EDGE_MODE\', true);" from your wp-config.php file and edge mode features will be disabled.', 'w3-total-cache'); ?></span>
-                </th>
-            </tr>
-            <?php endif; ?>
         </table>
 
         <p class="submit">
