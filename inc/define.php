@@ -21,7 +21,7 @@ define('W3TC_README_URL', 'http://plugins.svn.wordpress.org/w3-total-cache/trunk
 define('W3TC_SUPPORT_US_TIMEOUT', 2592000);
 define('W3TC_SUPPORT_REQUEST_URL', 'https://www.w3-edge.com/w3tc/support/');
 define('W3TC_TRACK_URL', 'https://www.w3-edge.com/w3tc/track/');
-define('W3TC_MAILLINGLIST_SIGNUP_URL', 'https://www.w3-edge.com/w3tc/emailsignup/');
+define('W3TC_MAILLINGLIST_SIGNUP_URL', '');
 define('W3TC_MINIFY_VER_ID', '#MVER#');
 define("W3TC_CLI_PIDS", '.w3tc_cli_pids');
 define("W3TC_CLI_URLS", '.w3tc_cli_urls');
@@ -36,13 +36,13 @@ define("W3TC_UPDATER_REQUIRES", '3.2');
 define("W3TC_UPDATER_BANNER_URL", '//ps.w.org/w3-total-cache/assets/banner-772x250.jpg?rev=1041806');
 define("W3TC_UPDATER_CHANGELOG", 'changelog.txt');
 
-define('NEWRELIC_SIGNUP_URL', 'http://bit.ly/w3tc-partner-newrelic-signup');
-define('MAXCDN_SIGNUP_URL', 'http://bit.ly/w3tc-cdn-maxcdn-create-account');
-define('MAXCDN_AUTHORIZE_URL', 'http://bit.ly/w3tc-cdn-maxcdn-authorize');
-define('NETDNA_AUTHORIZE_URL', 'https://cp.netdna.com/i/w3tc');
+define('NEWRELIC_SIGNUP_URL', 'https://newrelic.com/signup');
+define('MAXCDN_SIGNUP_URL', 'https://secure.maxcdn.com/');
+define('MAXCDN_AUTHORIZE_URL', 'https://cp.maxcdn.com/');
+define('NETDNA_AUTHORIZE_URL', 'https://cp.netdna.com/');
 // this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
-if (!defined('EDD_W3EDGE_STORE_URL')) define('EDD_W3EDGE_STORE_URL', 'https://www.w3-edge.com/' );
-if (!defined('EDD_W3EDGE_STORE_URL_PLUGIN')) define('EDD_W3EDGE_STORE_URL_PLUGIN', 'https://www.w3-edge.com/?w3tc_buy_pro_plugin' );
+if (!defined('EDD_W3EDGE_STORE_URL')) define('EDD_W3EDGE_STORE_URL', '' );
+if (!defined('EDD_W3EDGE_STORE_URL_PLUGIN')) define('EDD_W3EDGE_STORE_URL_PLUGIN', '' );
 
 // the name of your product. This should match the download name in EDD exactly
 define('EDD_W3EDGE_W3TC_NAME', 'W3 Total Cache Pro: Annual Subscription');

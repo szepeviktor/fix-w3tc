@@ -11,7 +11,7 @@
         <td>
             <a href="<?php esc_attr_e(wp_nonce_url(w3_admin_url('admin.php?page=w3tc_dashboard&w3tc_cdn_maxcdn_signup'), 'w3tc'))?>" target="_blank" id="netdna-maxcdn-create-account" class="button-primary"><?php _e('Create Account', 'w3-total-cache') ?></a>
             <br />
-            <span class="description"><?php _e('Are you a new customer? Click the Create Account button to receive a discount on a new MaxCDN account.', 'w3-total-cache')?></span>
+            <span class="description"><?php _e('Are you a new customer? Click the Create Account button.', 'w3-total-cache')?></span>
         </td>
     </tr>
 <?php endif ?>

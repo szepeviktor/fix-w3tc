@@ -9,9 +9,9 @@
     <tr>
         <th style="width: 300px;"><label><?php _e('Create account:', 'w3-total-cache')?></label></th>
         <td>
-            <a href="<?php esc_attr_e(wp_nonce_url(w3_admin_url('admin.php?page=w3tc_dashboard&w3tc_cdn_maxcdn_signup'), 'w3tc'))?>" target="_blank" id="netdna-maxcdn-create-account" class="button-primary"><?php _e('Sign Up Now and Save 25%', 'w3-total-cache') ?></a>
+            <a href="<?php esc_attr_e(wp_nonce_url(w3_admin_url('admin.php?page=w3tc_dashboard&w3tc_cdn_maxcdn_signup'), 'w3tc'))?>" target="_blank" id="netdna-maxcdn-create-account" class="button-primary"><?php _e('Create Account', 'w3-total-cache') ?></a>
             <br />
-            <span class="description"><?php _e('MaxCDN is a service that lets you speed up your site even more with W3 Total Cache. 100% Money Back Guarantee (30 Days)!', 'w3-total-cache')?></span>
+            <span class="description"><?php _e('MaxCDN is a service that lets you speed up your site even more with W3 Total Cache.', 'w3-total-cache')?></span>
         </td>
     </tr>
 <?php endif ?>

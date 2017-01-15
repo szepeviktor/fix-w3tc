@@ -101,7 +101,7 @@ class CloudFlareAdmin {
             'author' => 'W3 EDGE',
             'description' =>  sprintf( __('CloudFlare protects and accelerates websites. <a href="%s" target="_blank">Sign up now for free</a> to get started,
         	or if you have an account simply log in to obtain your <abbr title="Application Programming Interface">API</abbr> key from the <a target="_blank" href="https://www.cloudflare.com/my-account">account page</a> to enter it on the General Settings box that appears after plugin activation.
-        	Contact the CloudFlare <a href="http://www.cloudflare.com/help.html" target="_blank">support team</a> with any questions.', 'w3-total-cache'), 'https://www.cloudflare.com/sign-up.html?affiliate=w3edge&amp;seed_domain=' . w3_get_host() . '&amp;email=' . htmlspecialchars($cloudflare_signup_email) . '&amp;username=' . htmlspecialchars($cloudflare_signup_user) ),
+        	Contact the CloudFlare <a href="http://www.cloudflare.com/help.html" target="_blank">support team</a> with any questions.', 'w3-total-cache'), 'https://www.cloudflare.com/sign-up.html?seed_domain=' . w3_get_host() . '&amp;email=' . htmlspecialchars($cloudflare_signup_email) . '&amp;username=' . htmlspecialchars($cloudflare_signup_user) ),
             'author uri' => 'http://www.w3-edge.com/',
             'extension uri' => 'http://www.w3-edge.com/',
             'extension id' => 'cloudflare',
