@@ -538,9 +538,9 @@ class Minify_Environment {
 
 		$rules = '';
 		$rules .= W3TC_MARKER_BEGIN_MINIFY_CACHE . "\n";
-		if ( $compatibility ) {
-			$rules .= "Options -MultiViews\n";
-		}
+		$rules .= "<IfModule mod_negotiation.c>\n";
+		$rules .= "    Options -MultiViews\n";
+		$rules .= "</IfModule>\n";
 
 		if ( $etag ) {
 			$rules .= "FileETag MTime Size\n";
