@@ -747,7 +747,104 @@ Please reach out to all of these people and support their projects if you're so 
 
 == Changelog ==
 
+= 0.9.4.6.2 =
+* Fixed a strict mode error specific to PHP 5.4/5.6 users
+* Configuration file loader adjustment to handle a case of someone going from v0.9.5.2+ to v0.9.4.x
+
+= 0.9.4.6.1 =
+* CSSTidy (minifier) updated.  Now supports CSS3.0 + new options and a few bug fixes
+* AWS v4 signature updates
+* Enhancement to query string handling for disk enhanced mode
+* AMP plugin compatibility fix
+* Config reader performance boost
+* Cloudfront CDN patch
+* Embedded minified content (js and css) has been tweaked
+* House-cleaning to fix some file mismatches
+* Removed rtf/rtx and svg/svgz from the HTML mime types
+* Fixed APCu implementation in the dashboard
+* User agent is now used during cache priming
+
+= 0.9.4.6 =
+* Amazon Web Services (AWS) v4 signature support (fixes the AWS4-HMAC-SHA256 error issue)
+  Note: for existing S3 users, you will need to set the bucket region under the CDN section
+* Added new AWS regions and endpoints
+* Can change cache directory location without php warnings
+* Rebranded internally to the w3-total-cache-fixed folder
+* Update notifications and future installs of this plugin are now done directly within the WP plugin page
+* Prevents activation (with admin notice) when another W3TC install is active
+* Corrected export setting to have a .json extension
+
+= 0.9.4.5.6 =
+* Fixed an SNS vulnerability
+* Fixed an SSRF security flaw
+* Removed deprecated WordPress code
+* WP-CLI new feature: Prime cache pages
+* Support for WEBP image format
+* New feature to allow embedding of minified JS and CSS content directly into the HTML page (good for AMP, Service Workers, and prefetching)
+* Fixed bug where it was attempting to delete an addin object cache file before knowing if it existed
+* Added in a dashboard widget showing the latest release
+
+= 0.9.4.5.5 =
+* Adds a new "Hide Plugin Update Notification" checkbox under General Settings' Miscellaneous area
+* Fragment caching fix when using PHP7
+* Modified the support link that is visible in the Admin bar to point ot this fork's Issues forum
+* Addendum to make ready for WP 4.7+ changes that was made back in 0.9.4.5.1
+* Fix to the Hide Update Notification message that was causing problems when deactivating/adding plugins
+
+= 0.9.4.5.4 =
+* Fixes the 4 security flaws (security token bypass, file upload/download, eval)
+
+= 0.9.4.5.3 =
+* Fixed sitemap plugins like Yoast which dropped the priority attribute
+* No longer includes external scripts and styles for AMP pages (see v0.4.5.6 for a new feature that allows minified files to be embeded)
+* Proper caching and client-side returns of feeds and sitemaps for disk enhanced when "Handle XML Mime Type" is selected
+* Fixed a PHP warning notice that occurred when attempting to minify an xml file
+* Tweak was made to the Purge Sitemaps default regex
+* Sitemaps are now set to not cach by default on fresh installs
+* Modified wp's plugin page display name to reflect the real name of this repo
+* Page cache bug fix -- Was allowing the calling script to auto allow itself to be cached as well as allowing queries to be cached
+
+= 0.9.4.5.2 =
+* Adjusted "w3tc_pgcache_lifetime" filter and added extra optional parameters
+* New fields under Page Cache Advanced section: Never cache pages associated with categories, tags, authors, and custom fields
+* Flush cached sitemaps
+* Cleaned up dashboard
+* Fixed security issue -- xss vulnerability
+
+= 0.9.4.5.1 =
+* Expanded regular expression support for several Page Cache and Minify fields
+* Google PageSpeed - added a new feature (under General Settings) to allow users to provide an optional http referrer for better security
+* Amazon Cloudfront (origin pull) expires header now works
+* w3tc_pgcache_lifetime filter
+* nginx rules fix
+* Alow the use of "~" (tilde) in boxes that allow for regex input
+* Added "w3tc_pgcache_lifetime" filter to allow control of how long a page can live
+* Added smart browser cache default settings
+* WP v4.7+ changes the behavior of $wp_filter so this has now been reflected in code
+* Fixed a bug for the "Cache Exception List" field.
+* Fixed a bug where all "Expires Header" checkboxes became unchecked and disabled when just selecting Amazon Cloudfront (origin pull) despite the CDN not being enabled
+* Fixes the "Recently an error occurred while creating the CSS / JS minify cache: File "XXX" doesn't exist" bug
+* URL parsing fix for page cache flushing
+* SSL caching -- fixes a bug where SSL pages were always getting cached despite the "Cache SSL (https) Requests" option being unchecked
+* Fixes the role removal issue bug
+* Memcached Extension Support
+* Fixed incorrect labels on Redis settings page
+* Page cache compatibility mode now Apache 2.4+ aware
+* Load balancer fix -- for ssl sites behind load balancers
+* Fixes an old locale bug
+* "Accepted Query Strings" field and "Rejected Cookies" field allow for key/value pairs input as well as regex support
+
 = 0.9.4.5 =
+* Removed Deprecated WordPress Code
+* Full PHP7 Compliancy (Passes PHPCompatibility: 100%)
+* Memcache Extension Support
+* APCu Support
+* OPcache Support
+* WOFF2 Font Support
+* Proper HTTPS Caching
+* AMP Support
+* Redis Support
+* Removed Nag Screens, Obsolete Widgets, & Licensing
 * Added Redis support
 * Fixed some bugs: https://github.com/szepeviktor/fix-w3tc/blob/master/README.md#fix
 
