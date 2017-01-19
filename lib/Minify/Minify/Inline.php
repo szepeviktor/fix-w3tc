@@ -5,8 +5,6 @@ abstract class Minify_Inline {
     protected $_minifier = null;
     protected $_minifierOptions = array();
 
-    abstract static function minify($content, $minifier, $options = array());
-
     public function setTag($tag) {
         $this->_tag = $tag;
     }
