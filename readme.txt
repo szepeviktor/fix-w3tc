@@ -3,7 +3,7 @@ Contributors: fredericktownes
 Tags: w3totalcache, w3 totalcache, w3total cache, wpo, web performance optimization, performance, availability, scaling, scalability, user experience, cache, caching, page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, gzip, deflate, minify, cdn, content delivery network, media library, performance, speed, multiple hosts, css, merge, combine, unobtrusive javascript, compress, optimize, optimizer, javascript, js, cascading style sheet, plugin, yslow, yui, google, google rank, google page speed, mod_pagespeed, new relic, newrelic, aws, s3, cloudfront, sns, elasticache, rds, flash media server, amazon web services, cloud files, rackspace, akamai, max cdn, limelight, cloudflare, mod_cloudflare, microsoft, microsoft azure, iis, nginx, litespeed, apache, varnish, xcache, apc, eacclerator, wincache, mysql, w3 total cache, batcache, wp cache, wp super cache, quick cache, wp minify, bwp-minify, buddypress
 Requires at least: 3.2
 Tested up to: 4.7.1
-Stable tag: 0.9.4.6.1
+Stable tag: 0.9.4.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -340,7 +340,7 @@ Install the plugin to read the full FAQ on the plugins FAQ tab.
 
 **May 2012:**
 
-* [﻿W3 Total Cache Settings](﻿http://techod.com/w3-total-cache-settings/), ﻿Jason Graham
+* [W3 Total Cache Settings](http://techod.com/w3-total-cache-settings/), Jason Graham
 * [Leverage Browser Caching with W3 Total Cache](http://www.mvestormedia.com/leverage-browser-caching-w3-total-cache/), Ian Rogers
 
 **April 2012:**
@@ -368,15 +368,15 @@ Install the plugin to read the full FAQ on the plugins FAQ tab.
 **March 2012:**
 
 * [The Plugins and Code Behind WPForce 2.0](http://wpforce.com/plugins-and-code-behind-wpforce/), Jonathan Dingman
-* [﻿5 Must Have Plugins for WordPress Bloggers](﻿http://igaret.com/wordpress/5-must-have-plugins-for-wordpress-bloggers), ﻿Garet McKinley
+* [5 Must Have Plugins for WordPress Bloggers](http://igaret.com/wordpress/5-must-have-plugins-for-wordpress-bloggers), Garet McKinley
 * [10 Million hits a day with WordPress using a $15 server](http://www.ewanleith.com/blog/900/10-million-hits-a-day-with-wordpress-using-a-15-server), Ewan Leith via [Hacker News](http://news.ycombinator.com/item?id=3775715)
 * [High-Performance WordPress with W3 Total Cache and Nginx](http://elivz.com/blog/single/wordpress_with_w3tc_on_nginx/), Eli Van Zoeren
 * [How To Speed Up Your WordPress Blog](http://managewp.com/how-to-speed-up-your-wordpress-blog), Vladimir Prelovac
-* [﻿The Lab + W3 Total Cache](﻿http://www.purpleturtleproductions.ca/the-lab/new-category-the-lab-w3-total-cache/), Simon
+* [The Lab + W3 Total Cache](http://www.purpleturtleproductions.ca/the-lab/new-category-the-lab-w3-total-cache/), Simon
 * [5 Powerful WordPress Plugins To Increase Sharing Of Your Articles](http://blog.kissmetrics.com/5-powerful-wordpress-plugins/)
-* [﻿How I increased Websitez.com’s performance by an additional 20%](﻿http://websitez.com/how-i-increased-websitez-coms-performance-by-an-additional-20/), ﻿Eric Stolz
-* [﻿WordPress with W3 Total Cache on Nginx with APC ](﻿http://chrisgilligan.com/wordpress/wordpress-with-w3-total-cache-on-nginx-with-apc-virtualmin/), ﻿Chris Gilligan
-* [﻿Screencast Tuesday: Using W3 Total Cache Part 1](﻿http://headwaythemes.com/screencast-tuesday-using-w3-total-cache-part-1/), AJ Morris
+* [How I increased Websitez.com’s performance by an additional 20%](http://websitez.com/how-i-increased-websitez-coms-performance-by-an-additional-20/), Eric Stolz
+* [WordPress with W3 Total Cache on Nginx with APC ](http://chrisgilligan.com/wordpress/wordpress-with-w3-total-cache-on-nginx-with-apc-virtualmin/), Chris Gilligan
+* [Screencast Tuesday: Using W3 Total Cache Part 1](http://headwaythemes.com/screencast-tuesday-using-w3-total-cache-part-1/), AJ Morris
 * [Screencast Tuesday: Using W3 Total Cache Part 2 – Implementing a CDN](http://headwaythemes.com/screencast-tuesday-using-w3-total-cache-part-2-implementing-a-cdn/), AJ Morris
 * [A Quick Bit About WordPress Caching](http://blog.ryantoohil.com/2012/03/a-quick-bit-about-wordpress-caching.php), Ryan Toohil
 * [How To Find Out Which WordPress Plugins Are Making Your Site Slow](http://www.business2community.com/blogging/how-to-find-out-which-wordpress-plugins-are-making-your-site-slow-0138577), Kim Castleberry
@@ -408,7 +408,7 @@ Install the plugin to read the full FAQ on the plugins FAQ tab.
 * [How I increased Websitez.com’s performance by an additional 20%](http://websitez.com/how-i-increased-websitez-coms-performance-by-an-additional-20/), Eric Stolz
 * [WordPress with W3 Total Cache on Nginx with APC](http://chrisgilligan.com/wordpress/wordpress-with-w3-total-cache-on-nginx-with-apc-virtualmin/), Chris Gilligan
 * [Speed Up Your Website With The "W3 Total Cache" Wordpress Plugin](http://www.youtube.com/watch?v=Luf2Y_F23l0)
-* [WordPress W3 Total Cache Eklentisi Ayarları](http://www.55dakika.com/wordpress-w3-total-cache-eklentisi-ayarlari-34124.html)
+* [WordPress W3 Total Cache Eklentisi Ayarlar](http://www.55dakika.com/wordpress-w3-total-cache-eklentisi-ayarlari-34124.html)
 * [9 Essential WordPress Plugins](http://www.ostraining.com/blog/wordpress/9-essential-wordpress-plugins/), Ed Andrea
 * [15 Must Have WordPress Plugins for the New Blogger](http://avgjoegeek.net/15must-have-wordpress-plugins/), Jason Mathes
 * [10 Must Have WordPress Plugins For Your Blog](http://www.tricksmachine.com/2012/03/10-must-have-wordpress-plugins.html)
@@ -457,11 +457,11 @@ Install the plugin to read the full FAQ on the plugins FAQ tab.
 
 **January 2012:**
 
-* [﻿Speed up WordPress with W3 Total Cache and Amazon CloudFront (CDN)](﻿http://richwp.com/wordpress-cdn-total-cache-amazon-cloudfront/), Dustin
-* [﻿The Ultimate Quickstart Guide to Speeding Up Your WordPress Site](﻿http://wp.tutsplus.com/tutorials/the-ultimate-quickstart-guide-to-speeding-up-your-wordpress-site/), ﻿Matt Pilott
+* [Speed up WordPress with W3 Total Cache and Amazon CloudFront (CDN)](http://richwp.com/wordpress-cdn-total-cache-amazon-cloudfront/), Dustin
+* [The Ultimate Quickstart Guide to Speeding Up Your WordPress Site](http://wp.tutsplus.com/tutorials/the-ultimate-quickstart-guide-to-speeding-up-your-wordpress-site/), Matt Pilott
 * [Speed Up WordPress with W3 Total Cache](http://www.doitwithwp.com/speed-up-wordpress-with-w3-total-cache/), Dave Clements
 * [Speed Up your WordPress Site with W3 Total Cache](http://wplifeguard.com/day-8-speed-up-your-wordpress-site-with-w3-total-cache/)
-* [﻿How to Speed Up Your WordPress Site and Reduce Your Hosting Costs](﻿http://www.washingtonsblog.com/2012/01/how-to-speed-up-your-wordpress-site-and-reduce-your-hosting-costs.html)
+* [How to Speed Up Your WordPress Site and Reduce Your Hosting Costs](http://www.washingtonsblog.com/2012/01/how-to-speed-up-your-wordpress-site-and-reduce-your-hosting-costs.html)
 * [Why I Switched From Drupal to WordPress](http://eagereyes.org/blog/2012/why-i-switched-drupal-wordpress), Robert Kosara
 * [Top 10 Best WordPress Plugins](http://ebusinessmatters.com/top10-best-wordpress-plugins/), Brian Duffy
 * [WordPress Plug-ins](http://www.crazyxhtml.com/blog/wordpress-plug-ins/)
@@ -484,7 +484,7 @@ Install the plugin to read the full FAQ on the plugins FAQ tab.
 * [(mt):Install APC for use with W3 Total Cache](http://wiki.mediatemple.net/w/(mt):Install_APC_for_use_with_W3_Total_Cache)
 * [The Perfect APC Configuration](http://gregrickaby.com/2012/01/the-perfect-apc-configuration.html), Greg Rickaby
 * [CloudFlare – A Review](http://complete-concrete-concise.com/web-tools/cloudflare-a-review)
-* [W3 Total Cache Kurulumu ve Ayarları](http://bcakir.com/w3-total-cache-kurulumu-ve-ayarlari.html)
+* [W3 Total Cache Kurulumu ve Ayarlar](http://bcakir.com/w3-total-cache-kurulumu-ve-ayarlari.html)
 
 **December 2011:**
 

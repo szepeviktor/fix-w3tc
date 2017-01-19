@@ -1,3 +1,7 @@
+= 0.9.4.6.2 =
+* Fixed a strict mode error specific to PHP 5.4/5.6 users
+* Configuration file loader adjustment to handle a case of someone going from v0.9.5.2+ to v0.9.4.x
+
 = 0.9.4.6.1 =
 * CSSTidy (minifier) updated.  Now supports CSS3.0 + new options and a few bug fixes
 * AWS v4 signature updates
