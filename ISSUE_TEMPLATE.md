@@ -1,7 +1,6 @@
-Thank you for reporting an issue!
+_Thank you for reporting an issue!_
 
-Please make sure you describe your use case and the issue itself.
+_Please make sure you describe the issue and your use case._
 
-If you would like propose a solution then please elaborate on that.
-Why is it the adequate solution?
+_If you are also proposing a solution then please make sure to elaborate on why this is an adequate solution._
 
