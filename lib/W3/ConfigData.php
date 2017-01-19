@@ -114,7 +114,7 @@ class W3_ConfigData {
      * @param bool $unserialize
      * @return array or null
      */
-    static function get_array_from_file($filename, $unserialize = false) {
+    static function get_array_from_file($filename, &$write = false, $unserialize = false) {
 
         if (file_exists($filename) && is_readable($filename)) {
             // include errors not hidden by @ since they still terminate
@@ -132,7 +132,18 @@ class W3_ConfigData {
                 // broken config file, still doesnt affect runtime since 
                 // config cache is used
                 $content = @file_get_contents($filename);
-                $config = @eval(substr($content, 5));
+                
+                $config = @json_decode( substr( $content, 14 ), true ); // check if it's a v0.9.5.2 file format
+                
+                if ( is_array( $config ) )
+                {
+                    $config['version'] = w3_current_version();
+                    $config['extensions.active'] = array();
+                    unset($config['extensions.active_frontend']);
+                    $write = true;
+                }
+                else
+                    $config = @eval(substr($content, 5));
             }
 
             if (is_array($config)) {
@@ -151,13 +162,20 @@ class W3_ConfigData {
      * @return boolean
      */
     function read($filename, $unserialize = false) {
-        $config = W3_ConfigData::get_array_from_file($filename, $unserialize);
+        $config = W3_ConfigData::get_array_from_file($filename, $write, $unserialize);
         if (is_null($config))
             return false;
-        
+
         foreach ($config as $key => $value)
             $this->set($key, $value);
 
+        if ($write) {
+            try {
+                $this->write($filename,false);
+            }catch (Exception $ex) {   // dont care here about file permissions
+            }
+        }
+		
         return true;
     }
 
