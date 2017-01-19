@@ -1,6 +1,6 @@
-_Thank you for reporting an issue!_
+Thank you for reporting an issue!
 
-_Please make sure you describe the issue and your use case._
+Please make sure you describe the issue and your use case.
 
-_If you are also proposing a solution then please make sure to elaborate on why this is an adequate solution._
+If you are also proposing a solution then please make sure to elaborate on why your solution is adequate.
 
