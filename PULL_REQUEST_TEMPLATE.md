@@ -1,11 +1,7 @@
-Thank you for proposing a fix!
+_Thank you for proposing a fix!  Please make sure you describe the issue, your use case, and elaborate on why your solution is an adequate one._
 
-Please make sure you describe your use case and issue itself.
+#### _In Summary:_
 
-And please elaborate on why it is the adequate solution.
-
-So:
-
-1. What is the problem?
-1. Where is the cause?
-1. How could it be solved?
+1. _What is the problem?_
+1. _Where is the cause?_
+1. _How was it solved?_
