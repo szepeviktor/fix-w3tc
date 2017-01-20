@@ -1007,10 +1007,12 @@ class _Cdn_Plugin_ContentFilter {
 				foreach ( $masks as $mask ) {
 					if ( !empty( $mask ) ) {
 						if ( Util_Environment::is_url( $mask ) ) {
-                            $parse_url = @parse_url( $mask );
-                            $mask = $parse_url["path"];			
-                            $domain_url = Util_Environment::get_url_regexp( sprintf( '%s://%s%s', $parse_url['scheme'], $parse_url['host'], ( isset( $parse_url['port'] ) && $parse_url['port'] != 80 ? ':' . (int) $parse_url['port'] : '' ) ) );
-                            $custom_regexps_urls[] = array('domain' => $domain_url, 'path' => Cdn_Util::get_regexp_by_mask( $mask ));
+							$parse_url = @parse_url( $mask );
+                            if ( $parse_url && isset( $parse_url['host'] ) ) {
+								$mask = $parse_url["path"];			
+								$domain_url = Util_Environment::get_url_regexp( sprintf( '%s://%s%s', ( isset( $parse_url['scheme'] ) ? $parse_url['scheme']:'' ), $parse_url['host'], ( isset( $parse_url['port'] ) && $parse_url['port'] != 80 ? ':' . (int) $parse_url['port'] : '' ) ) );
+								$custom_regexps_urls[] = array('domain' => $domain_url, 'path' => Cdn_Util::get_regexp_by_mask( $mask ));
+                            }
 						} elseif ( substr( $mask, 0, 1 ) == '/' ) {   // uri
 							$custom_regexps_uris[] = Cdn_Util::get_regexp_by_mask( $mask );
 						} else {
