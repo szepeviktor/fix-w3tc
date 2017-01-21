@@ -1007,8 +1007,10 @@ class _Cdn_Plugin_ContentFilter {
 				foreach ( $masks as $mask ) {
 					if ( !empty( $mask ) ) {
 						if ( Util_Environment::is_url( $mask ) ) {
-							$custom_regexps_urls[] = Cdn_Util::get_regexp_by_mask( $mask );
-						} elseif ( substr( $mask, 0, 1 ) == '/' ) {   // uri
+							$mask = Util_Environment::url_to_uri( $mask );
+						}
+						
+						if ( substr( $mask, 0, 1 ) == '/' ) {   // uri
 							$custom_regexps_uris[] = Cdn_Util::get_regexp_by_mask( $mask );
 						} else {
 							$file = Util_Environment::normalize_path( $mask );   // \ -> backspaces
