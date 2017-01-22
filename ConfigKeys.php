@@ -1767,6 +1767,10 @@ $keys = array(
 		'type' => 'string',
 		'default' => ''
 	),
+    'widget.pagespeed.key.restrict.referrer' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
 	'widget.pagespeed.show_in_admin_bar' => array(
 		'type' => 'boolean',
 		'default' => false

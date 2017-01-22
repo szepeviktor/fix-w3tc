@@ -204,7 +204,9 @@ class Generic_AdminActions_Test {
 
 		$config = Dispatcher::config();
 		$key = $config->get_string( 'widget.pagespeed.key' );
-		$w3_pagespeed = new PageSpeed_Api( $key );
+		$ref = $config->get_string( 'widget.pagespeed.key.restrict.referrer' );
+		
+		$w3_pagespeed = new PageSpeed_Api( $key, $ref );
 
 		$results = $w3_pagespeed->analyze( get_home_url() );
 		include W3TC_INC_POPUP_DIR . '/pagespeed_results.php';

@@ -11,6 +11,7 @@ class Generic_ConfigLabels {
 				'cluster.messagebus.sns.topic_arn' => __( 'Topic <acronym title="Identification">ID</acronym>:', 'w3-total-cache' ),
 				'cluster.messagebus.debug' =>  __( 'Message Bus', 'w3-total-cache' ),
 				'widget.pagespeed.key' => __( 'Page Speed <acronym title="Application Programming Interface">API</acronym> Key:', 'w3-total-cache' ),
+				'widget.pagespeed.key.restrict.referrer' => __( 'Key Restriction (Referrer):', 'w3-total-cache' ),
 				'common.force_master' => __( 'Use single network configuration file for all sites.', 'w3-total-cache' ),
 				'config.path' => __( 'Nginx server configuration file path', 'w3-total-cache' ),
 				'config.check' => __( 'Verify rewrite rules', 'w3-total-cache' ),
