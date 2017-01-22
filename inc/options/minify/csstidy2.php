@@ -14,7 +14,8 @@ $csstidy_templates = array(
 $optimise_shorthands_values = array(
 	0 => __( 'Don\'t optimise', 'w3-total-cache' ),
 	1 => __( 'Safe optimisations', 'w3-total-cache' ),
-	2 => __( 'All optimisations', 'w3-total-cache' )
+    2 => __( 'Level II optimisations', 'w3-total-cache' ),
+    3 => __( 'All optimisations', 'w3-total-cache' )
 );
 
 $case_properties_values = array(

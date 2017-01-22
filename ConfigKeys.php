@@ -807,11 +807,11 @@ $keys = array(
 	),
 	'minify.csstidy.options.compress_colors' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'minify.csstidy.options.compress_font-weight' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'minify.csstidy.options.lowercase_s' => array(
 		'type' => 'boolean',
@@ -819,12 +819,16 @@ $keys = array(
 	),
 	'minify.csstidy.options.optimise_shorthands' => array(
 		'type' => 'integer',
-		'default' => 1
+		'default' => 0
 	),
 	'minify.csstidy.options.remove_last_;' => array(
 		'type' => 'boolean',
 		'default' => false
 	),
+    'minify.csstidy.options.remove_space_before_important' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
 	'minify.csstidy.options.case_properties' => array(
 		'type' => 'integer',
 		'default' => 1
@@ -839,15 +843,19 @@ $keys = array(
 	),
 	'minify.csstidy.options.merge_selectors' => array(
 		'type' => 'integer',
-		'default' => 2
+		'default' => 0
 	),
+    'minify.csstidy.options.discard_invalid_selectors' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
 	'minify.csstidy.options.discard_invalid_properties' => array(
 		'type' => 'boolean',
 		'default' => false
 	),
 	'minify.csstidy.options.css_level' => array(
 		'type' => 'string',
-		'default' => 'CSS2.1'
+		'default' => 'CSS3.0'
 	),
 	'minify.csstidy.options.preserve_css' => array(
 		'type' => 'boolean',
@@ -859,7 +867,7 @@ $keys = array(
 	),
 	'minify.csstidy.options.template' => array(
 		'type' => 'string',
-		'default' => 'default'
+		'default' => 'highest_compression'
 	),
 	'minify.htmltidy.options.clean' => array(
 		'type' => 'boolean',
