@@ -205,17 +205,17 @@ class W3_Plugin_TotalCacheAdmin extends W3_Plugin {
         ?>
     <style type="text/css" media="screen">
         #toplevel_page_w3tc_dashboard .wp-menu-image {
-            background: url(<?php echo plugins_url('w3-total-cache-fixed/pub/img/w3tc-sprite.png')?>) no-repeat 0 -32px !important;
+            background: url(<?php echo plugins_url('pub/img/w3tc-sprite.png', W3TC_FILE)?>) no-repeat 0 -32px !important;
         }
         #toplevel_page_w3tc_dashboard:hover .wp-menu-image,
         #toplevel_page_w3tc_dashboard.wp-has-current-submenu .wp-menu-image {
             background-position:0 0 !important;
         }
         #icon-edit.icon32-posts-casestudy {
-            background: url(<?php echo plugins_url('w3-total-cache-fixed/pub/img/w3tc-sprite.png') ?>) no-repeat;
+            background: url(<?php echo plugins_url('pub/img/w3tc-sprite.png', W3TC_FILE) ?>) no-repeat;
         }
         span.regex:before {
-        	content: url(<?php echo plugins_url('w3-total-cache-fixed/pub/img/w3tc-regex-qs.gif') ?>);
+        	content: url(<?php echo plugins_url('pub/img/w3tc-regex-qs.gif', W3TC_FILE) ?>);
         	padding:0 10px;
         }
         /**
@@ -227,7 +227,7 @@ class W3_Plugin_TotalCacheAdmin extends W3_Plugin {
         (min-resolution: 120dpi) {
             
             #toplevel_page_w3tc_dashboard .wp-menu-image {
-                background-image: url(<?php echo plugins_url('w3-total-cache-fixed/pub/img/w3tc-sprite-retina.png')?>) !important;
+                background-image: url(<?php echo plugins_url('pub/img/w3tc-sprite-retina.png', W3TC_FILE)?>) !important;
                 background-size: 30px 64px !important;
             }
             #toplevel_page_w3tc_dashboard:hover .wp-menu-image,
@@ -235,7 +235,7 @@ class W3_Plugin_TotalCacheAdmin extends W3_Plugin {
                 background-position:0 0 !important;
             }
             #icon-edit.icon32-posts-casestudy {
-                background-image: url(<?php echo plugins_url('w3-total-cache-fixed/pub/img/w3tc-sprite-retina.png') ?>) !important;
+                background-image: url(<?php echo plugins_url('pub/img/w3tc-sprite-retina.png', W3TC_FILE) ?>) !important;
                 background-size: 30px 64px !important;
             }
         }
