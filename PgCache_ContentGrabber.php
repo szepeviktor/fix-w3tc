@@ -615,7 +615,7 @@ class PgCache_ContentGrabber {
 			return false;
 		}
 
-        if ( !$this->_check_cache_exception() ) {
+        if ( !$this->_check_cache_exception() && ( is_single() || is_page() ) ) {
 			if ( is_single() ) {
                 /**
                  * Don't cache pages associated with categories
