@@ -430,6 +430,24 @@ $keys = array(
 			'index\.php'
 		)
 	),
+    'pgcache.reject.categories' => array(
+        'type' => 'array',
+        'default' => array()
+    ),
+    'pgcache.reject.tags' => array(
+        'type' => 'array',
+        'default' => array()
+    ),
+    'pgcache.reject.authors' => array(
+        'type' => 'array',
+        'default' => array()
+    ),
+    'pgcache.reject.custom' => array(
+        'type' => 'array',
+        'default' => array(
+            'w3tc=dontcache'
+        )
+    ),
 	'pgcache.reject.ua' => array(
 		'type' => 'array',
 		'default' => array()
