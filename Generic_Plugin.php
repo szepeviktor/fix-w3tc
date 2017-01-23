@@ -261,7 +261,7 @@ class Generic_Plugin {
 				'id' => 'w3tc',
 				'title' =>
 				'<img src="' .
-				plugins_url( 'w3-total-cache/pub/img/w3tc-sprite-admin-bar.png' ) .
+				plugins_url( 'pub/img/w3tc-sprite-admin-bar.png', W3TC_FILE ) .
 				'" style="vertical-align:middle; margin-right:5px; width: 29px; height: 29px" />' .
 				__( 'Performance', 'w3-total-cache' ) .
 				$menu_postfix,
