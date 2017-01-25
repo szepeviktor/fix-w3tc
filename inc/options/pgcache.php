@@ -142,7 +142,7 @@ Util_Ui::config_item( array(
 					<input id="pgcache_prime_limit" type="text" name="pgcache__prime__limit"
 						<?php Util_Ui::sealing_disabled( 'pgcache.' ) ?>
 						value="<?php echo esc_attr( $this->_config->get_integer( 'pgcache.prime.limit' ) ); ?>" size="8" /><br />
-					<span class="description"><?php _e( 'Limit the number of pages to create per batch. Fewer pages may be better for under-powered servers.', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Limit the number of pages to create per batch. Fewer pages may be better for under-powered servers. Set to 0 for no limit.', 'w3-total-cache' ); ?></span>
 				</td>
 			</tr>
 			<tr>

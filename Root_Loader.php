@@ -115,6 +115,7 @@ class Root_Loader {
 	 * Deactivation action hook
 	 */
 	public function deactivate() {
+		w3tc_wpcli_stop_prime(); // Stop the WP-CLI page cache prime if it's still running
 		Root_AdminActivation::deactivate();
 	}
 

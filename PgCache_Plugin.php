@@ -58,6 +58,8 @@ class PgCache_Plugin {
 		}
 
 		add_action( 'w3_pgcache_prime', array( $this, 'prime' ) );
+        
+        add_action( 'w3_pgcache_prime_cli', array( $this, 'prime_cli' ), 10, 4 );
 
 		Util_AttachToActions::flush_posts_on_actions();
 
@@ -114,6 +116,20 @@ class PgCache_Plugin {
 	function prime( $start = 0 ) {
 		$this->_get_admin()->prime( $start );
 	}
+
+    /**
+     * Prime cache (WP_CLI)
+     *
+     * @param   integer $user_limit     Pages per batch size
+     * @param   integer $user_interval  Number of seconds to wait before creating another batch
+     * @param   string  $user_sitemap   The sitemap url to use
+     * @param   integer $start          Index position within the sitemap to prime cache
+     * @param   boolean $boot           Indicates if the prime cache is about to start for the first time
+     * @return  void
+     */
+    function prime_cli( $user_limit, $user_interval, $user_sitemap, $start, $boot = false ) {
+        $this->_get_admin()->prime_cli( $user_limit, $user_interval, $user_sitemap, $start, $boot );
+    }
 
 	/**
 	 * Instantiates worker on demand
