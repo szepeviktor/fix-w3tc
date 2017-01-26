@@ -42,6 +42,11 @@ class S3
 	const ACL_PUBLIC_READ_WRITE = 'public-read-write';
 	const ACL_AUTHENTICATED_READ = 'authenticated-read';
 
+	const LOCATION_US = '';
+
+	const ORIGIN_TYPE_S3 = 'S3';
+	const ORIING_TYPE_CUSTOM = 'Custom';
+
 	const STORAGE_CLASS_STANDARD = 'STANDARD';
 	const STORAGE_CLASS_RRS = 'REDUCED_REDUNDANCY';
 	const STORAGE_CLASS_STANDARD_IA = 'STANDARD_IA';
@@ -583,7 +588,7 @@ class S3
 		$rest = new S3Request('PUT', $bucket, '', self::$endpoint);
 		$rest->setAmzHeader('x-amz-acl', $acl);
 
-		if ($location === false) $location = self::getRegion();
+		if (empty($location)) $location = self::getRegion();
 
 		if ($location !== false && $location !== "us-east-1")
 		{
@@ -1373,7 +1378,7 @@ class S3
 	* @param array $trustedSigners Array of trusted signers
 	* @return array | false
 	*/
-	public static function createDistribution($bucket, $enabled = true, $cnames = array(), $comment = null, $defaultRootObject = null, $originAccessIdentity = null, $trustedSigners = array())
+	public static function createDistribution($bucket, $originType = self::ORIGIN_TYPE_S3, $enabled = true, $cnames = array(), $comment = null, $defaultRootObject = null, $originAccessIdentity = null, $trustedSigners = array())
 	{
 		if (!extension_loaded('openssl'))
 		{
@@ -1386,7 +1391,8 @@ class S3
 		self::$useSSL = true; // CloudFront requires SSL
 		$rest = new S3Request('POST', '', '2010-11-01/distribution', 'cloudfront.amazonaws.com');
 		$rest->data = self::getCloudFrontDistributionConfigXML(
-			$bucket.(stripos(strrev($bucket), "moc.swanozama.3s.") === 0?'':'.s3.amazonaws.com'),
+			$bucket,
+			$originType,
 			$enabled,
 			(string)$comment,
 			(string)microtime(true),
@@ -1477,6 +1483,7 @@ class S3
 		$rest = new S3Request('PUT', '', '2010-11-01/distribution/'.$dist['id'].'/config', 'cloudfront.amazonaws.com');
 		$rest->data = self::getCloudFrontDistributionConfigXML(
 			$dist['origin'],
+			$dist['type'],
 			$dist['enabled'],
 			$dist['comment'],
 			$dist['callerReference'],
@@ -1756,15 +1763,22 @@ class S3
 	* @param array $trustedSigners Array of trusted signers
 	* @return string
 	*/
-	private static function getCloudFrontDistributionConfigXML($bucket, $enabled, $comment, $callerReference = '0', $cnames = array(), $defaultRootObject = null, $originAccessIdentity = null, $trustedSigners = array())
+	private static function getCloudFrontDistributionConfigXML($bucket, $originType, $enabled, $comment, $callerReference = '0', $cnames = array(), $defaultRootObject = null, $originAccessIdentity = null, $trustedSigners = array())
 	{
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->formatOutput = true;
 		$distributionConfig = $dom->createElement('DistributionConfig');
 		$distributionConfig->setAttribute('xmlns', 'http://cloudfront.amazonaws.com/doc/2010-11-01/');
 
-		$origin = $dom->createElement('S3Origin');
-		$origin->appendChild($dom->createElement('DNSName', $bucket));
+		if ($originType == 's3') {
+			$origin = $dom->createElement('S3Origin');
+			$origin->appendChild($dom->createElement('DNSName', $bucket));
+		} else {
+			$origin = $dom->createElement('CustomOrigin');
+			$origin->appendChild($dom->createElement('DNSName', $bucket));
+			$origin->appendChild($dom->createElement('OriginProtocolPolicy', 'http-only'));
+		}
+		
 		if ($originAccessIdentity !== null) $origin->appendChild($dom->createElement('OriginAccessIdentity', $originAccessIdentity));
 		$distributionConfig->appendChild($origin);
 
@@ -1818,12 +1832,24 @@ class S3
 
 		if (isset($node->S3Origin))
 		{
-			if (isset($node->S3Origin->DNSName))
-				$dist['origin'] = (string)$node->S3Origin->DNSName;
+            $dist['type'] = 's3';
+			
+            if (isset($node->S3Origin->DNSName)) {
+                $dist['origin'] = (string)$node->S3Origin->DNSName;
+            }
 
-			$dist['originAccessIdentity'] = isset($node->S3Origin->OriginAccessIdentity) ?
-			(string)$node->S3Origin->OriginAccessIdentity : null;
-		}
+            $dist['originAccessIdentity'] = isset($node->S3Origin->OriginAccessIdentity) ?
+            (string)$node->S3Origin->OriginAccessIdentity : null;
+        } elseif (isset($node->CustomOrigin)) {
+            $dist['type'] = 'custom';
+
+            if (isset($node->CustomOrigin->DNSName)) {
+                $dist['origin'] = (string) $node->CustomOrigin->DNSName;
+            }
+
+            $dist['originAccessIdentity'] = isset($node->S3Origin->OriginAccessIdentity) ?
+            (string)$node->S3Origin->OriginAccessIdentity : null;
+        }
 
 		$dist['defaultRootObject'] = isset($node->DefaultRootObject) ? (string)$node->DefaultRootObject : null;
 

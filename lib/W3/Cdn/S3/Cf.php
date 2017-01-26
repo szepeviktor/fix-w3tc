@@ -72,14 +72,18 @@ class W3_Cdn_S3_Cf extends W3_Cdn_S3 {
         }
         
 		if ($this->type == W3TC_CDN_CF_TYPE_S3 && empty($this->_config['bucket_location'])) {
-            $error = 'Empty bucket region';
-            
-            return false;
-        }
-
-		$region = $this->_config['bucket_location'];
-		$endpoint = 's3.dualstack.'.$region.'.amazonaws.com';
+			$region = '';
+			$endpoint = 's3.amazonaws.com';
+        } else {
+			$region = $this->_config['bucket_location'];
+			$endpoint = 's3.dualstack.'.$region.'.amazonaws.com';
+		}
+		
         $this->_s3 = new S3($this->_config['key'], $this->_config['secret'], false, $endpoint, $region);
+
+        if ( empty( $region ) ) {
+        	$this->_s3->setSignatureVersion( 'v2' );
+        }
 
         return true;
     }
@@ -357,7 +361,7 @@ class W3_Cdn_S3_Cf extends W3_Cdn_S3 {
         $origin = $this->_get_origin();
 
         $this->_set_error_handler();
-        $dist = @$this->_s3->createDistribution($origin, true, $cnames);
+        $dist = @$this->_s3->createDistribution($origin, $this->type, true, $cnames);
         $this->_restore_error_handler();
 
         if (!$dist) {

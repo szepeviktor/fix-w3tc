@@ -24,6 +24,7 @@
 		<input id="cdn_s3_bucket" type="text" name="cdn.s3.bucket"
                    <?php $this->sealing_disabled('cdn') ?> value="<?php echo esc_attr($this->_config->get_string('cdn.s3.bucket')); ?>" size="30" />
 		<select id="cdn_s3_bucket_location" name="cdn.s3.bucket.location" style="margin-top:-4px">
+                        <option value="" style="display:none;">Select Bucket Location</option>
                         <option value="us-east-1"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'us-east-1'); ?>>US East (N. Virginia)</option>
                         <option value="us-east-2"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'us-east-2'); ?>>US East (Ohio)</option>
                         <option value="us-west-1"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'us-west-1'); ?>>US-West (N. California)</option>
@@ -40,8 +41,7 @@
                         <option value="sa-east-1"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'sa-east-1'); ?>>South America (S&atilde;o Paulo)</option>
                     </select>
 		<b>or</b>
-		<input id="cdn_create_container" class="button {type: 's3', nonce: '<?php echo wp_create_nonce('w3tc'); ?>'}" type="button" value="<?php _e('Create as new bucket', 'w3-total-cache'); ?>" />
-		<span id="cdn_create_container_status" class="w3tc-status w3tc-process"></span>
+		<input id="cdn_create_container" class="button {type: 's3', nonce: '<?php echo wp_create_nonce('w3tc'); ?>'}" type="button" value="<?php _e('Create as new bucket', 'w3-total-cache'); ?>" /> <span id="cdn_create_container_status" class="w3tc-status w3tc-process"></span>
 
 	</td>
 </tr>
