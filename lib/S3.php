@@ -32,7 +32,7 @@
 * Amazon S3 PHP class
 *
 * @link http://undesigned.org.za/2007/10/22/amazon-s3-php-class
-* @version 0.5.1
+* @version 0.5.1 + Signature v4 support ;)
 */
 class S3
 {
@@ -44,8 +44,8 @@ class S3
 
 	const LOCATION_US = '';
 
-	const ORIGIN_TYPE_S3 = 'S3';
-	const ORIING_TYPE_CUSTOM = 'Custom';
+	const ORIGIN_TYPE_S3 = 's3';
+	const ORIGIN_TYPE_CUSTOM = 'custom';
 
 	const STORAGE_CLASS_STANDARD = 'STANDARD';
 	const STORAGE_CLASS_RRS = 'REDUCED_REDUNDANCY';
@@ -1370,6 +1370,7 @@ class S3
 	* Create a CloudFront distribution
 	*
 	* @param string $bucket Bucket name
+    * @param string $originType origin type (s3 or custom)
 	* @param boolean $enabled Enabled (true/false)
 	* @param array $cnames Array containing CNAME aliases
 	* @param string $comment Use the bucket name as the hostname
@@ -1754,6 +1755,7 @@ class S3
 	*
 	* @internal Used to create XML in createDistribution() and updateDistribution()
 	* @param string $bucket S3 Origin bucket
+	* @param string $originType origin type (s3 or custom)
 	* @param boolean $enabled Enabled (true/false)
 	* @param string $comment Comment to append
 	* @param string $callerReference Caller reference
@@ -1770,7 +1772,7 @@ class S3
 		$distributionConfig = $dom->createElement('DistributionConfig');
 		$distributionConfig->setAttribute('xmlns', 'http://cloudfront.amazonaws.com/doc/2010-11-01/');
 
-		if ($originType == 's3') {
+		if ($originType == self::ORIGIN_TYPE_S3) {
 			$origin = $dom->createElement('S3Origin');
 			$origin->appendChild($dom->createElement('DNSName', $bucket));
 		} else {
@@ -1790,10 +1792,12 @@ class S3
 		if ($comment !== '') $distributionConfig->appendChild($dom->createElement('Comment', $comment));
 		$distributionConfig->appendChild($dom->createElement('Enabled', $enabled ? 'true' : 'false'));
 
-		$trusted = $dom->createElement('TrustedSigners');
-		foreach ($trustedSigners as $id => $type)
-			$trusted->appendChild($id !== '' ? $dom->createElement($type, $id) : $dom->createElement($type));
-		$distributionConfig->appendChild($trusted);
+        if (!empty($trustedSigners)) {		
+            $trusted = $dom->createElement('TrustedSigners');
+            foreach ($trustedSigners as $id => $type)
+                $trusted->appendChild($id !== '' ? $dom->createElement($type, $id) : $dom->createElement($type));
+            $distributionConfig->appendChild($trusted);
+        }
 
 		$dom->appendChild($distributionConfig);
 		//var_dump($dom->saveXML());
@@ -1832,7 +1836,7 @@ class S3
 
 		if (isset($node->S3Origin))
 		{
-            $dist['type'] = 's3';
+            $dist['type'] = self::ORIGIN_TYPE_S3;
 			
             if (isset($node->S3Origin->DNSName)) {
                 $dist['origin'] = (string)$node->S3Origin->DNSName;
@@ -1841,7 +1845,7 @@ class S3
             $dist['originAccessIdentity'] = isset($node->S3Origin->OriginAccessIdentity) ?
             (string)$node->S3Origin->OriginAccessIdentity : null;
         } elseif (isset($node->CustomOrigin)) {
-            $dist['type'] = 'custom';
+            $dist['type'] = self::ORIGIN_TYPE_CUSTOM;
 
             if (isset($node->CustomOrigin->DNSName)) {
                 $dist['origin'] = (string) $node->CustomOrigin->DNSName;
@@ -1915,47 +1919,11 @@ class S3
 	* @param string &$file File path
 	* @return string
 	*/
-	private static function getMIMEType(&$file)
-	{
-		static $exts = array(
-			'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'gif' => 'image/gif',
-			'png' => 'image/png', 'ico' => 'image/x-icon', 'pdf' => 'application/pdf',
-			'tif' => 'image/tiff', 'tiff' => 'image/tiff', 'svg' => 'image/svg+xml',
-			'svgz' => 'image/svg+xml', 'swf' => 'application/x-shockwave-flash', 
-			'zip' => 'application/zip', 'gz' => 'application/x-gzip',
-			'tar' => 'application/x-tar', 'bz' => 'application/x-bzip',
-			'bz2' => 'application/x-bzip2',  'rar' => 'application/x-rar-compressed',
-			'exe' => 'application/x-msdownload', 'msi' => 'application/x-msdownload',
-			'cab' => 'application/vnd.ms-cab-compressed', 'txt' => 'text/plain',
-			'asc' => 'text/plain', 'htm' => 'text/html', 'html' => 'text/html',
-			'css' => 'text/css', 'js' => 'text/javascript',
-			'xml' => 'text/xml', 'xsl' => 'application/xsl+xml',
-			'ogg' => 'application/ogg', 'mp3' => 'audio/mpeg', 'wav' => 'audio/x-wav',
-			'avi' => 'video/x-msvideo', 'mpg' => 'video/mpeg', 'mpeg' => 'video/mpeg',
-			'mov' => 'video/quicktime', 'flv' => 'video/x-flv', 'php' => 'text/x-php'
-		);
-
-		$ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-		if (isset($exts[$ext])) return $exts[$ext];
-
-		// Use fileinfo if available
-		if (extension_loaded('fileinfo') && isset($_ENV['MAGIC']) &&
-		($finfo = finfo_open(FILEINFO_MIME, $_ENV['MAGIC'])) !== false)
-		{
-			if (($type = finfo_file($finfo, $file)) !== false)
-			{
-				// Remove the charset and grab the last content-type
-				$type = explode(' ', str_replace('; charset=', ';charset=', $type));
-				$type = array_pop($type);
-				$type = explode(';', $type);
-				$type = trim(array_shift($type));
-			}
-			finfo_close($finfo);
-			if ($type !== false && strlen($type) > 0) return $type;
-		}
-
-		return 'application/octet-stream';
-	}
+    private static function getMIMEType(&$file) {
+        w3_require_once(W3TC_INC_DIR . '/functions/mime.php');
+        $type = w3_get_mime_type($file);
+        return $type;
+    }
 
 
 	/**
@@ -2016,7 +1984,7 @@ class S3
 	*/
 	public static function getSignatureV4($aHeaders, $headers, $method='GET', $uri='', $data = '', $parameters=array())
 	{		
-		$service = 's3';
+		$service = self::ORIGIN_TYPE_S3;
 		$region = S3::getRegion();
 		
 		$algorithm = 'AWS4-HMAC-SHA256';
@@ -2226,13 +2194,8 @@ final class S3Request
 		
 		$this->endpoint = $endpoint;
 		$this->verb = $verb;
-		$this->bucket = $bucket;
+		$this->bucket = strtolower($bucket);
 		$this->uri = $uri !== '' ? '/'.str_replace('%2F', '/', rawurlencode($uri)) : '/';
-
-		//if ($this->bucket !== '')
-		//	$this->resource = '/'.$this->bucket.$this->uri;
-		//else
-		//	$this->resource = $this->uri;
 
 		if ($this->bucket !== '')
 		{

@@ -71,7 +71,7 @@ class W3_Cdn_S3_Cf extends W3_Cdn_S3 {
             return false;
         }
         
-		if ($this->type == W3TC_CDN_CF_TYPE_S3 && empty($this->_config['bucket_location'])) {
+		if (empty($this->_config['bucket_location'])) {
 			$region = '';
 			$endpoint = 's3.amazonaws.com';
         } else {
