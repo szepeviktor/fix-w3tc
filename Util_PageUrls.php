@@ -91,12 +91,21 @@ class Util_PageUrls {
 
 		if ( !isset( $post_urls[$post_id] ) ) {
 			$full_urls = array();
-			$post_link = get_permalink( $post_id );
+			$post = get_post( $post_id );
+			
+			// On the admin page when changing a post type to "Draft" or "Pending Review"
+			// the get_permalink() returns back in the form: http://foo.bar/?p=###
+			// even if the site's permalink setting is different (e.g. http://foo.bar/post-name/).
+			// When this happens the post can potentially not get flushed.
+			// Setting the "post_status" to empty forces get_permalink() to return 
+			// the correct url for flushing.
+			
+			$post->post_status = "";
+			$post_link = get_permalink( $post );
 			$post_uri = str_replace( Util_Environment::home_domain_root_url(), '', $post_link );
 
 			$full_urls[] = $post_link;
 			$uris[] = $post_uri;
-			$post = get_post( $post_id );
 			$matches =array();
 			if ( $post && ( $post_pages_number = preg_match_all( '/\<\!\-\-nextpage\-\-\>/', $post->post_content, $matches ) )>0 ) {
 				global $wp_rewrite;

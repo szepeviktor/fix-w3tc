@@ -15,6 +15,56 @@ class Util_AttachToActions {
 
 		$o = new Util_AttachToActions();
 
+		add_action( 'publish_phone', array(
+				$o,
+				'on_change'
+			), 0 );
+
+		add_action( 'wp_trash_post', array(
+				$o,
+				'on_post_change'
+			), 0 );
+
+		add_action( 'save_post', array(
+				$o,
+				'on_post_change'
+			), 0 );
+
+		add_action( 'comment_post', array(
+				$o,
+				'on_comment_change'
+			), 0 );
+
+		add_action( 'edit_comment', array(
+				$o,
+				'on_comment_change'
+			), 0 );
+
+		add_action( 'delete_comment', array(
+				$o,
+				'on_comment_change'
+			), 0 );
+
+		add_action( 'wp_set_comment_status', array(
+				$o,
+				'on_comment_status'
+			), 0, 2 );
+
+		add_action( 'trackback_post', array(
+				$o,
+				'on_comment_change'
+			), 0 );
+
+		add_action( 'pingback_post', array(
+				$o,
+				'on_comment_change'
+			), 0 );
+
+		add_action( 'delete_post', array(
+				$o,
+				'on_post_change'
+			), 0 );
+
 		add_action( 'clean_post_cache', array(
 				$o,
 				'on_post_change'
@@ -90,4 +140,36 @@ class Util_AttachToActions {
 		$cacheFlush = Dispatcher::component( 'CacheFlush' );
 		$cacheFlush->flush_posts();
 	}
+
+
+
+	/**
+	 * Comment change action
+	 *
+	 * @param integer $comment_id
+	 */
+	function on_comment_change( $comment_id ) {
+		$post_id = 0;
+
+		if ( $comment_id ) {
+			$comment = get_comment( $comment_id, ARRAY_A );
+			$post_id = !empty( $comment['comment_post_ID'] ) ? (int) $comment['comment_post_ID'] : 0;
+		}
+
+		$this->on_post_change( $post_id );
+	}
+
+
+
+	/**
+	 * Comment status action
+	 *
+	 * @param integer $comment_id
+	 * @param string  $status
+	 */
+	function on_comment_status( $comment_id, $status ) {
+		if ( $status === 'approve' || $status === '1' ) {
+			$this->on_comment_change( $comment_id );
+		}
+	}	
 }
