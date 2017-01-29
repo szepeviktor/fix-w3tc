@@ -116,8 +116,7 @@ CloudFlare not available: <?php echo $error_message; ?>
 				'label' => __( 'Cache time:', 'w3-total-cache' ),
 				'control' => 'textbox',
 				'description' =>
-				'How many minutes data retrieved from CloudFlare:' .
-				'should be stored. Minimum is 1 minute.'
+				'How many minutes data retrieved from CloudFlare should be stored. Minimum is 1 minute.'
 			)
 		);
 
