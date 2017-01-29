@@ -67,7 +67,19 @@ class CdnEngine_S3_Cf extends CdnEngine_S3 {
 			return false;
 		}
 
-		$this->_s3 = new \S3( $this->_config['key'], $this->_config['secret'], false );
+        if ( empty( $this->_config['bucket_location'] ) ) {
+            $region = '';
+            $endpoint = 's3.amazonaws.com';
+        } else {
+            $region = $this->_config['bucket_location'];
+            $endpoint = 's3.dualstack.'.$region.'.amazonaws.com';
+        }
+
+        $this->_s3 = new \S3( $this->_config['key'], $this->_config['secret'], false, $endpoint, $region );
+
+        if ( empty( $region ) ) {
+        	$this->_s3->setSignatureVersion( 'v2' );
+        }
 
 		return true;
 	}
@@ -193,7 +205,7 @@ class CdnEngine_S3_Cf extends CdnEngine_S3 {
 		}
 
 		$this->_set_error_handler();
-		$invalidation = @$this->_s3->createInvalidation( $dist['id'], $paths );
+		$invalidation = @$this->_s3->invalidateDistribution( $dist['id'], $paths );
 		$this->_restore_error_handler();
 
 		if ( !$invalidation ) {
@@ -358,7 +370,7 @@ class CdnEngine_S3_Cf extends CdnEngine_S3 {
 
 		$matches = null;
 
-		if ( preg_match( '~^(.+)\.cloudfront\.net$~', $dist['domain'], $matches ) ) {
+		if ( !empty( $dist['domain'] ) && preg_match( '~^(.+)\.cloudfront\.net$~', $dist['domain'], $matches ) ) {
 			$container_id = $matches[1];
 		}
 

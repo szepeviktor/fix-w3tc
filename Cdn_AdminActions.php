@@ -492,12 +492,22 @@ class Cdn_AdminActions {
 	function w3tc_cdn_s3_bucket_location() {
 		$type = Util_Request::get_string( 'type', 's3' );
 
-		$locations = array(
-			'' => 'US (Default)',
-			'us-west-1' => __( 'US-West (Northern California)', 'w3-total-cache' ),
-			'EU' => 'Europe',
-			'ap-southeast-1' => __( 'AP-SouthEast (Singapore)', 'w3-total-cache' ),
-		);
+        $locations = array(
+            'us-east-1' 	=> __( 'US East (N. Virginia)', 'w3-total-cache' ),
+            'us-east-2' 	=> __( 'US East (Ohio)', 'w3-total-cache' ),
+            'us-west-1' 	=> __( 'US-West (N. California)', 'w3-total-cache' ),
+            'us-west-2' 	=> __( 'US-West (Oregon)', 'w3-total-cache' ),
+            'ca-central-1'	=> __( 'Canada (Central)', 'w3-total-cache' ),
+            'ap-south-1' 	=> __( 'Asia Pacific (Mumbai)', 'w3-total-cache' ),
+            'ap-northeast-2'=> __( 'Asia Pacific (Seoul)', 'w3-total-cache' ),
+            'ap-southeast-1'=> __( 'Asia Pacific (Singapore)', 'w3-total-cache' ),
+            'ap-southeast-2'=> __( 'Asia Pacific (Sydney)', 'w3-total-cache' ),
+            'ap-northeast-1'=> __( 'Asia Pacific (Tokyo)', 'w3-total-cache' ),
+            'eu-central-1' 	=> __( 'EU (Frankfurt)', 'w3-total-cache' ),
+            'eu-west-1' 	=> __( 'EU (Ireland)', 'w3-total-cache' ),
+            'eu-west-2' 	=> __( 'EU (London)', 'w3-total-cache' ),
+            'sa-east-1' 	=> __( 'South America (S&atilde;o Paulo)', 'w3-total-cache' ),
+        );
 
 		include W3TC_INC_DIR . '/lightbox/cdn_s3_bucket_location.php';
 	}

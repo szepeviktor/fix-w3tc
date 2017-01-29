@@ -43,7 +43,8 @@ input.w3tc-error, textarea.w3tc-error {
 
 
 .w3tc-status {
-    padding: 5px
+    padding: 5px;
+    line-height:2.3
 }
 
 #w3tc-help ul {
