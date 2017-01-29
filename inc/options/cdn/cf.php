@@ -28,26 +28,26 @@ if ( !defined( 'W3TC' ) )
 	<th><label for="cdn_cf_bucket"><?php _e( 'Bucket:', 'w3-total-cache' ); ?></label></th>
     <td>
         <input id="cdn_cf_bucket" type="text" name="cdn__cf__bucket"
-        <?php Util_Ui::sealing_disabled( 'cdn.' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'cdn.cf.bucket' ) ); ?>" size="30" />
+        <?php Util_Ui::sealing_disabled( 'cdn.' ) ?> value="<?php echo esc_attr( strtolower( $this->_config->get_string( 'cdn.cf.bucket' ) ) ); ?>" size="30" />
         <select id="cdn_cf_bucket_location" name="cdn__cf__bucket__location" style="margin-top:-4px">
             <option value="" style="display:none;">Select Bucket Location</option>
-            <option value="us-east-1"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'us-east-1'); ?>>US East (N. Virginia)</option>
-            <option value="us-east-2"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'us-east-2'); ?>>US East (Ohio)</option>
-            <option value="us-west-1"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'us-west-1'); ?>>US-West (N. California)</option>
-            <option value="us-west-2"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'us-west-2'); ?>>US-West (Oregon)</option>
-            <option value="ca-central-1"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'ca-central-1'); ?>>Canada (Central)</option>
-            <option value="ap-south-1"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'ap-south-1'); ?>>Asia Pacific (Mumbai)</option>
-            <option value="ap-northeast-2"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'ap-northeast-2'); ?>>Asia Pacific (Seoul)</option>
-            <option value="ap-southeast-1"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'ap-southeast-1'); ?>>Asia Pacific (Singapore)</option>
-            <option value="ap-southeast-2"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'ap-southeast-2'); ?>>Asia Pacific (Sydney)</option>
-            <option value="ap-northeast-1"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'ap-northeast-1'); ?>>Asia Pacific (Tokyo)</option>
-            <option value="eu-central-1"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'eu-central-1'); ?>>EU (Frankfurt)</option>
-            <option value="eu-west-1"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'eu-west-1'); ?>>EU (Ireland)</option>
-            <option value="eu-west-2"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'eu-west-2'); ?>>EU (London)</option>
-            <option value="sa-east-1"<?php selected($this->_config->get_string('cdn.cf.bucket.location'), 'sa-east-1'); ?>>South America (S&atilde;o Paulo)</option>
+            <option value="us-east-1"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'us-east-1' ); ?>>US East (N. Virginia)</option>
+            <option value="us-east-2"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'us-east-2' ); ?>>US East (Ohio)</option>
+            <option value="us-west-1"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'us-west-1' ); ?>>US-West (N. California)</option>
+            <option value="us-west-2"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'us-west-2' ); ?>>US-West (Oregon)</option>
+            <option value="ca-central-1"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'ca-central-1' ); ?>>Canada (Montreal)</option>
+            <option value="ap-south-1"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'ap-south-1' ); ?>>Asia Pacific (Mumbai)</option>
+            <option value="ap-northeast-2"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'ap-northeast-2' ); ?>>Asia Pacific (Seoul)</option>
+            <option value="ap-southeast-1"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'ap-southeast-1' ); ?>>Asia Pacific (Singapore)</option>
+            <option value="ap-southeast-2"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'ap-southeast-2' ); ?>>Asia Pacific (Sydney)</option>
+            <option value="ap-northeast-1"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'ap-northeast-1' ); ?>>Asia Pacific (Tokyo)</option>
+            <option value="eu-central-1"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'eu-central-1' ); ?>>EU (Frankfurt)</option>
+            <option value="eu-west-1"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'eu-west-1' ); ?>>EU (Ireland)</option>
+            <option value="eu-west-2"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'eu-west-2' ); ?>>EU (London)</option>
+            <option value="sa-east-1"<?php selected( $this->_config->get_string( 'cdn.cf.bucket.location' ), 'sa-east-1' ); ?>>South America (S&atilde;o Paulo)</option>
         </select>
         <b>or</b>
-        <input id="cdn_create_container" class="button {type: 'cf', nonce: '<?php echo wp_create_nonce('w3tc'); ?>'}" type="button" value="<?php _e('Create as new bucket with distribution', 'w3-total-cache'); ?>" /> <span id="cdn_create_container_status" class="w3tc-status w3tc-process"></span>
+        <input id="cdn_create_container" class="button {type: 'cf', nonce: '<?php echo wp_create_nonce( 'w3tc' ); ?>'}" type="button" value="<?php _e( 'Create as new bucket with distribution', 'w3-total-cache' ); ?>" /> <span id="cdn_create_container_status" class="w3tc-status w3tc-process"></span>
     </td>
 </tr>
 <tr>

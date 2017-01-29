@@ -691,6 +691,10 @@ jQuery(function() {
       var metadata = me.metadata();
       w3tc_use_poll_zone(metadata.type, metadata.nonce);
     });
+    
+    jQuery('#cdn_s3_bucket,#cdn_cf_bucket').focusout(function () {
+      jQuery(this).val(jQuery(this).val().toLowerCase());
+    });    
 
     jQuery('#cdn_test').click(function() {
         var me = jQuery(this);
