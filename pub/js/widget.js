@@ -50,7 +50,8 @@ jQuery(function() {
         jQuery('#submit_purge_urls').click(function(){
                 var data = {
                     'action': 'w3tc_action_purge_urls',
-                    'purge_urls': jQuery('#purge_urls').val()
+                    'purge_urls': jQuery('#purge_urls').val(),
+                    'nonce': jQuery('#purge_urls').data('nonce')
                 };
 
 		jQuery.post(ajaxurl, data, function(response) {

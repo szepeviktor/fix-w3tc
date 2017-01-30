@@ -74,8 +74,10 @@ class Generic_Plugin_PageCachePurge {
 	}
 
 	function action_purge_urls() {
-
-
+                if(!wp_verify_nonce( Util_Request::get_string( 'nonce' ), 'w3tc' )) {
+                    return false;
+                } 
+                
 		$urls = Util_Request::get_array( 'purge_urls' );
                 $Flusher = new PgCache_Flush();
                 
