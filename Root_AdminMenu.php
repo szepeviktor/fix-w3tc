@@ -81,11 +81,6 @@ class Root_AdminMenu {
 				'menu_text' => __( 'FAQ', 'w3-total-cache' ),
 				'visible_always' => true
 			),
-			'w3tc_support' => array(
-				'page_title' => __( 'Support', 'w3-total-cache' ),
-				'menu_text' => __( '<span style="color: red;">Support</span>', 'w3-total-cache' ),
-				'visible_always' => true
-			),
 			'w3tc_install' => array(
 				'page_title' => __( 'Install', 'w3-total-cache' ),
 				'menu_text' => __( 'Install', 'w3-total-cache' ),

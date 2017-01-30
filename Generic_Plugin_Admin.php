@@ -508,9 +508,6 @@ class Generic_Plugin_Admin {
 	function plugin_action_links( $links ) {
 		array_unshift( $links,
 			'<a class="edit" href="admin.php?page=w3tc_general">Settings</a>' );
-		array_unshift( $links,
-			'<a class="edit" style="color: red" href="admin.php?page=w3tc_support">Premium Support</a>' );
-
 
 		if ( !is_writable( WP_CONTENT_DIR ) ||
 			!is_writable( Util_Rule::get_browsercache_rules_cache_path() ) ) {

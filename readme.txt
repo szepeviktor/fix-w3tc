@@ -1,9 +1,9 @@
-=== Plugin Name ===
+﻿=== Plugin Name ===
 Contributors: fredericktownes
 Tags: seo, w3totalcache, w3 totalcache, w3total cache, wpo, web performance optimization, performance, availability, scaling, scalability, user experience, cache, caching, page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, gzip, deflate, minify, cdn, content delivery network, media library, performance, speed, multiple hosts, css, merge, combine, unobtrusive javascript, compress, optimize, optimizer, javascript, js, cascading style sheet, plugin, yui, yui compressor, zend, opcache, apcu, google drive, highwinds, full site delivery, full site acceleration, google, google rank, google page speed, mod_pagespeed, new relic, newrelic, aws, s3, cloudfront, sns, elasticache, rds, flash media server, amazon web services, cloud files, rackspace, akamai, max cdn, limelight, cloudflare, mod_cloudflare, microsoft, microsoft azure, iis, nginx, litespeed, apache, varnish, xcache, apc, eacclerator, wincache, redis, narcissus, wpmml, mysql, w3 total cache, batcache, wp cache, wp super cache, quick cache, wp minify, bwp-minify, buddypress
 Requires at least: 3.2
 Tested up to: 4.7.1
-Stable tag: 0.9.5.2
+Stable tag: 0.9.5.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -768,6 +768,20 @@ It's quite difficult to recall all of the innovators that have shared their thou
 Please reach out to all of these people and support their projects if you're so inclined.
 
 == Changelog ==
+
+= 0.9.5.2.1 =
+* New Feature - Dashboard Widget For Flushing Individual User-Inputted URLs
+* Bug Fix - Gzipped Cached Pages Are Not Decoded Correctly -- PHP 5.3.x Specific
+* Bug Fix - {uploads_dir} Placeholder & Full URLS Issue In CDN Custom Files Field
+* Update - CSSTidy Updated to v1.5.5 With New Options - Requires PHP 5.4+
+* New Feature - Google PageSpeed Widget - Key Restriction Field Added
+* New Feature - Page Cache - Added 4 New "Never Cache ..." Fields
+* Bug Fix - Admin Image URLs Malformed For Must-Use Plugins (mu-plugins)
+* New Feature - WP-CLI - Prime the Page Cache (Cache Preload)
+* Bug Fix - Flushing Not Working Consistently For Post Changes
+* Update - Amazon Web Services (AWS) Signature v4 Support & New Locations
+* Bug Fix - Save Cloudflare Settings - SSL Update Failure
+* New Feature - Rewrite URLs via wp...attachment_for_js() filter when CDN is Enabled
 
 = 0.9.5.2 =
 * Fixed security issue by protecting configuration data by adding .php to relevant files

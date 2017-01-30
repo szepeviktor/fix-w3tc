@@ -309,7 +309,7 @@ class Generic_Plugin {
 				'id' => 'w3tc_support',
 				'parent' => 'w3tc',
 				'title' => __( 'Support', 'w3-total-cache' ),
-				'href' => network_admin_url( 'admin.php?page=w3tc_support' )
+				'href' => "https://github.com/szepeviktor/w3-total-cache-fixed/issues"
 			);
 
 			if ( defined( 'W3TC_DEBUG' ) && W3TC_DEBUG ) {
