@@ -29,6 +29,12 @@ class Cdn_Plugin {
 	 */
 	function run() {
 		$cdn_engine = $this->_config->get_string( 'cdn.engine' );
+
+        add_filter( 'wp_prepare_attachment_for_js', array( 
+            $this, 
+            'w3tc_prepare_attachment_for_js'
+        ), 0 );
+
 		if ( Cdn_Util::is_engine_fsd( $cdn_engine ) ) {
 			$this->run_fsd();
 			return;
@@ -743,6 +749,57 @@ class Cdn_Plugin {
 
 		return $strings;
 	}
+
+	/**
+	 * Adjusts attachment urls to cdn. This is for those who rely on
+	 * wp_prepare_attachment_for_js()
+	 *
+	 * @param 	array   $response	Mixed collection of data about the attachment object
+	 * @return 	array
+	 */
+    function w3tc_prepare_attachment_for_js( $response ) {
+        $response['url'] = $this->adjust_for_cdn( $response['url'] );
+        $response['link'] = $this->adjust_for_cdn( $response['link'] );
+
+        if ( !empty( $response['sizes'] ) ) {
+            foreach( $response['sizes'] as $size => &$data ) {
+                $data['url'] = $this->adjust_for_cdn( $data['url'] );
+            }
+        }
+
+        return $response;
+    }
+
+	/**
+	 * An attachment's local url to modify into a cdn url
+	 *
+	 * @param 	string   $url	the local url to modify
+	 * @return 	string
+	 */
+    function adjust_for_cdn( $url ) {
+        static $allowed_files = null;
+
+        $url = trim( $url );
+
+        if ( !empty( $url ) ) {
+            if ( empty( $allowed_files ) ) {
+                $allowed_files = $this->get_files();
+            }
+        
+            $parsed = parse_url( $url );
+            $rel_url = ( isset( $parsed['path'] ) ? $parsed['path'] : '/' ) .
+                       ( isset( $parsed['query'] ) ? '?' . $parsed['query'] : '' );
+
+            if ( in_array( ltrim( $rel_url, '/' ), $allowed_files ) ) {
+                $common = Dispatcher::component( 'Cdn_Core' );
+                $cdn = $common->get_cdn();
+                $remote_path = $common->uri_to_cdn_uri( $rel_url );
+                $url = $cdn->_format_url( $remote_path );
+            }
+        }
+
+        return $url;
+    }		
 }
 
 class _Cdn_Plugin_ContentFilter {
