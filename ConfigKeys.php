@@ -1887,7 +1887,7 @@ $keys = array(
 	),
 	'common.track_usage' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'common.tweeted' => array(
 		'type' => 'boolean',

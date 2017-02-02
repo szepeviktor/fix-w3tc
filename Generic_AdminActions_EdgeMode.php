@@ -21,6 +21,7 @@ class Generic_AdminActions_EdgeMode {
 
 	public function w3tc_edge_mode_disable() {
 		$this->_config->set( 'common.edge', false );
+		$this->_config->set( 'common.track_usage', false );
 		$this->_config->save();
 
 		Util_Admin::redirect( array( 'w3tc_note' => 'disabled_edge' ) );
