@@ -21,14 +21,16 @@ env:
 # Old WordPress is incompatible with PHP 7.0+
 matrix:
   exclude:
-  - php: 7.0
-    env: WP_VERSION=3.7 WP_MULTISITE=0
-  - php: 7.0
-    env: WP_VERSION=3.7 WP_MULTISITE=1
-  - php: nightly
-    env: WP_VERSION=3.7 WP_MULTISITE=0
-  - php: nightly
-    env: WP_VERSION=3.7 WP_MULTISITE=1
+    - php: 7.0
+      env: WP_VERSION=3.7 WP_MULTISITE=0
+    - php: 7.0
+      env: WP_VERSION=3.7 WP_MULTISITE=1
+    - php: nightly
+      env: WP_VERSION=3.7 WP_MULTISITE=0
+    - php: nightly
+      env: WP_VERSION=3.7 WP_MULTISITE=1
+  allow_failures:
+    - php: nightly
 
 before_script:
   - if [[ $TRAVIS_PHP_VERSION =~ 5.[56] ]] ; then echo yes | pecl install apcu-4.0.10 ; fi
