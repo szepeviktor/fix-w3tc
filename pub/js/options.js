@@ -391,7 +391,74 @@ function w3tc_starts_with(s, starts_with) {
     return s.substr(0, starts_with.length) == starts_with;
 }
 
+function w3tc_security_headers() {
+    var directive_description = 
+        { 
+            browsercache_security_hsts_directive:
+            {
+                maxage: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using HTTPS. This only affects the site\'s main domain.',
+                maxagepre: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using HTTPS with a request to be included in Chrome\'s HSTS preload list - a list of sites that are hardcoded into Chrome as being HTTPS only. This only affects the site\'s main domain.',
+                maxageinc: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using HTTPS. This affects the site\'s subdomains as well.',
+                maxageincpre: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using HTTPS with a request to be included in Chrome\'s HSTS preload list - a list of sites that are hardcoded into Chrome as being HTTPS only. This affects the site\'s subdomains as well.'
+            },
+            browsercache_security_xfo_directive:
+            {
+                same: "The page can only be displayed in a frame on the same origin as the page itself.",
+                deny: "The page cannot be displayed in a frame, regardless of the site attempting to do so.",
+                allow: "The page can only be displayed in a frame on the specified URL."
+            },
+            browsercache_security_xss_directive:
+            {
+                0: "Disables XSS filtering.",
+                1: "Enables XSS filtering (usually default in browsers). If a cross-site scripting attack is detected, the browser will sanitize the page (remove the unsafe parts).",
+                block: "Enables XSS filtering. Rather than sanitizing the page, the browser will prevent rendering of the page if an attack is detected."
+            },
+            browsercache_security_pkp_extra:
+            {
+                maxage: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using one of the defined keys. This only affects the site\'s main domain.',
+                maxageinc: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using one of the defined keys. This affects the site\'s subdomains as well.'
+            },
+            browsercache_security_pkp_report_only:
+            {
+                0: 'This instructs the browser to enforce the HPKP policy.',
+                1: 'This sets up HPKP without enforcement allowing you to use pinning to test its impact without the risk of a failed connection caused by your site being unreachable or HPKP being misconfigured.'
+            }
+        };
 
+    jQuery('#browsercache_security_hsts_directive,#browsercache_security_xfo_directive,#browsercache_security_xss_directive,#browsercache_security_pkp_extra,#browsercache_security_pkp_report_only').change(
+    function() {
+        jQuery('#' + jQuery(this).attr('id') + '_description').html('<i>' + directive_description[jQuery(this).attr('id')][jQuery(this).val()] + '</i>');
+            if (jQuery(this).attr('id') == 'browsercache_security_xfo_directive') {
+                if (jQuery(this).val() == 'allow') {
+                    jQuery('#browsercache_security_xfo_allow').show();
+                }else {
+                    jQuery('#browsercache_security_xfo_allow').hide();
+                }
+            }
+    });
+
+    if(jQuery('#browsercache_security_xfo_allow').length) {
+        if (jQuery('#browsercache_security_xfo_directive').val() == 'allow') {
+            jQuery('#browsercache_security_xfo_allow').show();
+        } else {
+            jQuery('#browsercache_security_xfo_allow').hide();
+        }
+        jQuery('#browsercache_security_hsts_directive,#browsercache_security_xfo_directive,#browsercache_security_xss_directive,#browsercache_security_pkp_extra,#browsercache_security_pkp_report_only').change();
+    }
+}
+
+function w3tc_csp_reference() {
+    W3tc_Lightbox.open({
+        id: 'w3tc-overlay',
+        close: '',
+        width: 890,
+        height: 660,
+        content: '<div id="w3tc_csp"></div>'
+    });
+    jQuery('div#overlay,.lightbox-content').click(function() {
+        W3tc_Lightbox.close();
+    });
+}
 
 jQuery(function() {
     // general page
@@ -469,6 +536,8 @@ jQuery(function() {
         ['browsercache__cssjs__replace', 'browsercache__other__replace']);
     w3tc_toggle2('browsercache_nocookies',
         ['browsercache__cssjs__nocookies', 'browsercache__other__nocookies']);
+    
+    w3tc_security_headers();
 
     // minify page
     w3tc_input_enable('.html_enabled', jQuery('#minify__html__enable:checked').size());

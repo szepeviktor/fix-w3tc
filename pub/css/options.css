@@ -47,6 +47,11 @@ input.w3tc-error, textarea.w3tc-error {
     line-height:2.3
 }
 
+#browsercache_security_xfo_allow {
+    padding-top:0;
+    padding-bottom:4px;
+}
+
 #w3tc-help ul {
     float: left;
     width: 29%;
@@ -443,4 +448,11 @@ th.w3tc_extensions_manage_column_check {
     padding: 0 0 0 5px;
     vertical-align: middle;
     width: 2.2em;
+}
+
+#w3tc_csp {
+    width: 872px;
+    height: 654px;
+    background: url("../img/cspref.png") center center no-repeat;
+    margin: auto;
 }

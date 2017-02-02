@@ -334,10 +334,97 @@ class BrowserCache_Environment {
 			$rules .= $this->_rules_cache_generate_apache_for_type( $config,
 				$extensions, $type );
 
-		if ( $config->get_boolean( 'browsercache.hsts' ) ) {
-			$lifetime = $config->get_integer( 'browsercache.other.lifetime' );
+        $sec = "    php_flag session.cookie_httponly " . ( $config->get_boolean( 'browsercache.security.session.cookie_httponly' ) ? "on" : "off" ) . "\n" .
+               "    php_flag session.cookie_secure " . ( $config->get_boolean( 'browsercache.security.session.cookie_secure' ) ? "on" : "off" ) . "\n" .
+               "    php_flag session.use_only_cookies " . ( $config->get_boolean( 'browsercache.security.session.use_only_cookies' ) ? "on" : "off" ) . "\n</ifModule>\n";
+
+        $rules .= "<IfModule mod_php5.c>\n";
+        $rules .= $sec;
+        $rules .= "<IfModule mod_php7.c>\n";
+        $rules .= $sec;
+        $rules .= "<IfModule mod_suphp.c>\n";
+        $rules .= $sec;
+
+		if ( $config->get_boolean( 'browsercache.security.hsts' ) ||
+             $config->get_boolean( 'browsercache.security.xfo' )  ||
+             $config->get_boolean( 'browsercache.security.xss' )  ||
+             $config->get_boolean( 'browsercache.security.xcto' ) ||
+             $config->get_boolean( 'browsercache.security.pkp' )  ||
+             $config->get_boolean( 'browsercache.security.csp' )
+           ) {
+            $lifetime = $config->get_integer( 'browsercache.other.lifetime' );
+
 			$rules .= "<IfModule mod_headers.c>\n";
-			$rules .= "    Header set strict-transport-security \"max-age=$lifetime\"\n";
+            
+            if ( $config->get_boolean( 'browsercache.security.hsts' ) ) {
+                $dir = $config->get_string( 'browsercache.security.hsts.directive' );
+                $rules .= "    Header set Strict-Transport-Security \"max-age=$lifetime" . ( strpos( $dir,"inc" ) ? "; includeSubDomains" : "" ) . ( strpos( $dir, "pre" ) ? "; preload" : "" ) . "\"\n";
+            }
+
+            if ( $config->get_boolean( 'browsercache.security.xfo' ) ) {
+                $dir = $config->get_string( 'browsercache.security.xfo.directive' );
+                $url = trim( $config->get_string( 'browsercache.security.xfo.allow' ) );
+                if ( empty( $url ) ) {
+                    $url = Util_Environment::home_url_maybe_https();
+                }
+                $rules .= "    Header always append X-Frame-Options \"" . ( $dir == "same" ? "SAMEORIGIN" : ( $dir == "deny" ? "DENY" : "ALLOW-FROM $url" ) ) . "\"\n";
+            }
+
+            if ( $config->get_boolean( 'browsercache.security.xss' ) ) {
+                $dir = $config->get_string( 'browsercache.security.xss.directive' );
+                $rules .= "    Header set X-XSS-Protection \"" . ( $dir == "block" ? "1; mode=block" : $dir ) . "\"\n";
+            
+            }
+
+            if ( $config->get_boolean( 'browsercache.security.xcto' ) ) {
+                $rules .= "    Header set X-Content-Type-Options \"nosniff\"\n";
+            }
+
+            if ( $config->get_boolean( 'browsercache.security.pkp' ) ) {
+                $pin = trim( $config->get_string( 'browsercache.security.pkp.pin' ) );
+                $pinbak = trim( $config->get_string( 'browsercache.security.pkp.pin.backup' ) );
+                $extra = $config->get_string( 'browsercache.security.pkp.extra' );
+                $url = trim( $config->get_string( 'browsercache.security.pkp.report.url' ) );
+                $rep_only = $config->get_string( 'browsercache.security.pkp.report.only' ) == '1' ? true : false;
+                $rules .= "    Header set " . ( $rep_only ? "Public-Key-Pins-Report-Only" : "Public-Key-Pins" ) . " \"pin-sha256=\\\"$pin\\\"; pin-sha256=\\\"$pinbak\\\"; max-age=$lifetime" . ( strpos( $extra,"inc" ) ? "; includeSubDomains" : "" ) . ( !empty( $url ) ? "; report-uri=\\\"$url\\\"" : "" ) . "\"\n";
+            }
+
+            if ( $config->get_boolean( 'browsercache.security.csp' ) ) {
+                $base = trim( $config->get_string( 'browsercache.security.csp.base' ) );
+                $frame = trim( $config->get_string( 'browsercache.security.csp.frame' ) );
+                $connect = trim( $config->get_string( 'browsercache.security.csp.connect' ) );
+                $font = trim( $config->get_string( 'browsercache.security.csp.font' ) );
+                $script = trim( $config->get_string( 'browsercache.security.csp.script' ) );
+                $style = trim( $config->get_string( 'browsercache.security.csp.style' ) );
+                $img = trim( $config->get_string( 'browsercache.security.csp.img' ) );
+                $media = trim( $config->get_string( 'browsercache.security.csp.media' ) );
+                $object = trim( $config->get_string( 'browsercache.security.csp.object' ) );
+                $plugin = trim( $config->get_string( 'browsercache.security.csp.plugin' ) );
+                $form = trim( $config->get_string( 'browsercache.security.csp.form' ) );
+                $frame_ancestors = trim( $config->get_string( 'browsercache.security.csp.frame.ancestors' ) );
+                $sandbox = $config->get_string( 'browsercache.security.csp.sandbox' );
+                $default = trim( $config->get_string( 'browsercache.security.csp.default' ) );
+
+                $dir = rtrim( ( !empty( $base ) ? "base-uri $base; " : "" ).
+                       ( !empty( $frame ) ? "frame-src $frame; " : "" ).
+                       ( !empty( $connect ) ? "connect-src $connect; " : "" ).
+                       ( !empty( $font ) ? "font-src $font; " : "" ).
+                       ( !empty( $script ) ? "script-src $script; " : "" ).
+                       ( !empty( $style ) ? "style-src $style; " : "" ).
+                       ( !empty( $img ) ? "img-src $img; " : "" ).
+                       ( !empty( $media ) ? "media-src $media; " : "" ).
+                       ( !empty( $object ) ? "object-src $object; " : "" ).
+                       ( !empty( $plugin ) ? "plugin-types $plugin; " : "" ).
+                       ( !empty( $form ) ? "form-action $form; " : "" ).
+                       ( !empty( $frame_ancestors ) ? "frame-ancestors $frame_ancestors; " : "" ).
+                       ( !empty( $sandbox ) ? "sandbox " . trim( $sandbox ) . "; " : "" ).
+                       ( !empty( $default ) ? "default-src $default;" : "" ), "; " );
+
+                if ( !empty( $dir ) ) {
+                    $rules .= "    Header set Content-Security-Policy \"$dir\"\n";
+                }
+            }
+            
 			$rules .= "</IfModule>\n";
 		}
 
@@ -561,10 +648,88 @@ class BrowserCache_Environment {
 			$this->_rules_cache_generate_nginx_for_type( $config, $rules,
 				$extensions, $type );
 
-		if ( $config->get_boolean( 'browsercache.hsts' ) ) {
-			$lifetime = $config->get_integer( 'browsercache.other.lifetime' );
-			$rules .= "add_header strict-transport-security \"max-age=$lifetime\";\n";
-		}
+        $rules .= "fastcgi_param PHP_FLAG \"session.cookie_httponly=" . ( $config->get_boolean( 'browsercache.security.session.cookie_httponly' ) ? "on" : "off" ) . "\n" .
+        "session.cookie_secure=" . ( $config->get_boolean( 'browsercache.security.session.cookie_secure' ) ? "on" : "off" ) . "\n" .
+        "session.use_only_cookies=" . ( $config->get_boolean( 'browsercache.security.session.use_only_cookies' ) ? "on" : "off" ) . "\";";
+
+        if ( $config->get_boolean( 'browsercache.security.hsts' ) ||
+             $config->get_boolean( 'browsercache.security.xfo' )  ||
+             $config->get_boolean( 'browsercache.security.xss' )  ||
+             $config->get_boolean( 'browsercache.security.xcto' ) ||
+             $config->get_boolean( 'browsercache.security.pkp' )  ||
+             $config->get_boolean( 'browsercache.security.csp' )
+           ) {
+            $lifetime = $config->get_integer( 'browsercache.other.lifetime' );
+
+            if ( $config->get_boolean( 'browsercache.security.hsts' ) ) {
+                $dir = $config->get_string( 'browsercache.security.hsts.directive' );
+                $rules .= "add_header Strict-Transport-Security \"max-age=$lifetime" . ( strpos( $dir,"inc" ) ? "; includeSubDomains" : "" ) . ( strpos( $dir, "pre" ) ? "; preload" : "" ) . "\";\n";
+            }
+            
+            if ( $config->get_boolean( 'browsercache.security.xfo' ) ) {
+                $dir = $config->get_string( 'browsercache.security.xfo.directive' );
+                $url = trim( $config->get_string( 'browsercache.security.xfo.allow' ) );
+                if ( empty( $url ) ) {
+                    $url = Util_Environment::home_url_maybe_https();
+                }
+                $rules .= "add_header X-Frame-Options \"" . ( $dir == "same" ? "SAMEORIGIN" : ( $dir == "deny" ? "DENY" : "ALLOW-FROM $url" ) ) . "\";\n";
+            }
+            
+            if ( $config->get_boolean( 'browsercache.security.xss' ) ) {
+                $dir = $config->get_string( 'browsercache.security.xss.directive' );
+                $rules .= "add_header X-XSS-Protection \"" . ( $dir == "block" ? "1; mode=block" : $dir ) . "\";\n";
+            
+            }
+
+            if ( $config->get_boolean( 'browsercache.security.xcto' ) ) {
+                $rules .= "add_header X-Content-Type-Options \"nosniff\";\n";
+            }
+
+            if ( $config->get_boolean( 'browsercache.security.pkp' ) ) {
+                $pin = trim( $config->get_string( 'browsercache.security.pkp.pin' ) );
+                $pinbak = trim( $config->get_string( 'browsercache.security.pkp.pin.backup' ) );
+                $extra = $config->get_string( 'browsercache.security.pkp.extra' );
+                $url = trim( $config->get_string( 'browsercache.security.pkp.report.url' ) );
+                $rep_only = $config->get_string( 'browsercache.security.pkp.report.only' ) == '1' ? true : false;
+                $rules .= "add_header " . ( $rep_only ? "Public-Key-Pins-Report-Only" : "Public-Key-Pins" ) . " 'pin-sha256=\"$pin\"; pin-sha256=\"$pinbak\"; max-age=$lifetime" . ( strpos( $extra,"inc" ) ? "; includeSubDomains" : "" ) . ( !empty( $url ) ? "; report-uri=\"$url\"" : "" ) . "';\n";
+            }
+            
+            if ( $config->get_boolean( 'browsercache.security.csp' ) ) {
+                $base = trim( $config->get_string( 'browsercache.security.csp.base' ) );
+                $frame = trim( $config->get_string( 'browsercache.security.csp.frame' ) );
+                $connect = trim( $config->get_string( 'browsercache.security.csp.connect' ) );
+                $font = trim( $config->get_string( 'browsercache.security.csp.font' ) );
+                $script = trim( $config->get_string( 'browsercache.security.csp.script' ) );
+                $style = trim( $config->get_string( 'browsercache.security.csp.style' ) );
+                $img = trim( $config->get_string( 'browsercache.security.csp.img' ) );
+                $media = trim( $config->get_string( 'browsercache.security.csp.media' ) );
+                $object = trim( $config->get_string( 'browsercache.security.csp.object' ) );
+                $plugin = trim( $config->get_string( 'browsercache.security.csp.plugin' ) );
+                $form = trim( $config->get_string( 'browsercache.security.csp.form' ) );
+                $frame_ancestors = trim( $config->get_string( 'browsercache.security.csp.frame.ancestors' ) );
+                $sandbox = $config->get_string( 'browsercache.security.csp.sandbox' );
+                $default = trim( $config->get_string( 'browsercache.security.csp.default' ) );
+
+                $dir = rtrim( ( !empty( $base ) ? "base-uri $base; " : "" ).
+                       ( !empty( $frame ) ? "frame-src $frame; " : "" ).
+                       ( !empty( $connect ) ? "connect-src $connect; " : "" ).
+                       ( !empty( $font ) ? "font-src $font; " : "" ).
+                       ( !empty( $script ) ? "script-src $script; " : "" ).
+                       ( !empty( $style ) ? "style-src $style; " : "" ).
+                       ( !empty( $img ) ? "img-src $img; " : "" ).
+                       ( !empty( $media ) ? "media-src $media; " : "" ).
+                       ( !empty( $object ) ? "object-src $object; " : "" ).
+                       ( !empty( $plugin ) ? "plugin-types $plugin; " : "" ).
+                       ( !empty( $form ) ? "form-action $form; " : "" ).
+                       ( !empty( $frame_ancestors ) ? "frame-ancestors $frame_ancestors; " : "" ).
+                       ( !empty( $sandbox ) ? "sandbox " . trim( $sandbox ) . "; " : "" ).
+                       ( !empty( $default ) ? "default-src $default;" : "" ), "; " );
+
+                if ( !empty( $dir ) ) {
+                    $rules .= "add_header Content-Security-Policy \"$dir\";\n";
+                }
+            }
+        }
 
 		$rules .= W3TC_MARKER_END_BROWSERCACHE_CACHE . "\n";
 

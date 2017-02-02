@@ -123,7 +123,8 @@ $licensing_visible = ( ( !Util_Environment::is_wpmu() || is_network_admin() ) &&
                     <a href="#general"><?php _e( 'General', 'w3-total-cache' ); ?></a> |
                     <a href="#css_js"><?php _e( '<acronym title="Cascading Style Sheet">CSS</acronym> &amp; <acronym title="JavaScript">JS</acronym>', 'w3-total-cache' ); ?></a> |
                     <a href="#html_xml"><?php _e( '<acronym title="Hypertext Markup Language">HTML</acronym> &amp; <acronym title="eXtensible Markup Language">XML</acronym>', 'w3-total-cache' ); ?></a> |
-                    <a href="#media"><?php _e( 'Media', 'w3-total-cache' ); ?></a>
+                    <a href="#media"><?php _e( 'Media', 'w3-total-cache' ); ?></a> |
+                    <a href="#security"><?php _e( 'Security Headers', 'w3-total-cache' ); ?></a>
                 </p>
     <?php
 		break;
