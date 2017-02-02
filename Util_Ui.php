@@ -531,7 +531,7 @@ class Util_Ui {
 		$a = apply_filters( 'w3tc_ui_settings_item', $a );
 
 		if ( isset( $a['style'] ) ) {
-			echo '<tr><th colspan="2"';
+			echo '<tr><th colspan="2">';
 		} else {
 			echo '<tr><th';
 
