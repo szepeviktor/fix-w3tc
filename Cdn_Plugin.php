@@ -30,9 +30,14 @@ class Cdn_Plugin {
 	function run() {
 		$cdn_engine = $this->_config->get_string( 'cdn.engine' );
 
-        add_filter( 'wp_prepare_attachment_for_js', array( 
+        add_filter( 'wp_get_attachment_url', array( 
             $this, 
-            'w3tc_prepare_attachment_for_js'
+            'w3tc_attachment_url'
+        ), 0 );
+
+        add_filter( 'attachment_link', array( 
+            $this, 
+            'w3tc_attachment_url'
         ), 0 );
 
 		if ( Cdn_Util::is_engine_fsd( $cdn_engine ) ) {
@@ -752,32 +757,17 @@ class Cdn_Plugin {
 
 	/**
 	 * Adjusts attachment urls to cdn. This is for those who rely on
-	 * wp_prepare_attachment_for_js()
-	 *
-	 * @param 	array   $response	Mixed collection of data about the attachment object
-	 * @return 	array
-	 */
-    function w3tc_prepare_attachment_for_js( $response ) {
-        $response['url'] = $this->adjust_for_cdn( $response['url'] );
-        $response['link'] = $this->adjust_for_cdn( $response['link'] );
-
-        if ( !empty( $response['sizes'] ) ) {
-            foreach( $response['sizes'] as $size => &$data ) {
-                $data['url'] = $this->adjust_for_cdn( $data['url'] );
-            }
-        }
-
-        return $response;
-    }
-
-	/**
-	 * An attachment's local url to modify into a cdn url
+	 * wp_get_attachment_url()
 	 *
 	 * @param 	string   $url	the local url to modify
 	 * @return 	string
 	 */
-    function adjust_for_cdn( $url ) {
+    function w3tc_attachment_url( $url ) {
         static $allowed_files = null;
+
+		if ( $this->_config->get_boolean( 'cdn.reject.logged_roles' ) && !$this->_check_logged_in_role_allowed() ) {
+            return $url;
+        }
 
         $url = trim( $url );
 
@@ -785,7 +775,7 @@ class Cdn_Plugin {
             if ( empty( $allowed_files ) ) {
                 $allowed_files = $this->get_files();
             }
-        
+
             $parsed = parse_url( $url );
             $rel_url = ( isset( $parsed['path'] ) ? $parsed['path'] : '/' ) .
                        ( isset( $parsed['query'] ) ? '?' . $parsed['query'] : '' );
