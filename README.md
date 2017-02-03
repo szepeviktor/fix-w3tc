@@ -22,7 +22,7 @@ Make sure you select the correct generation that fits your environment.
 | Generation    | Date |Version | Download Link
 | ------------- |:-------------:|:-----:|-----|
 | For 0.9.5.x Users      | 2017-02-02 | 0.9.5.2.2 | [w3-total-cache-fixed-(for-v0.9.5.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.5.2.2/w3-total-cache-fixed-for-v0.9.5.x-users.zip) 
-| For 0.9.4.x Users      | 2017-01-19 | 0.9.4.6.2| [w3-total-cache-fixed-(for-v0.9.4.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.4.6.2/w3-total-cache-fixed-for-v0.9.4.x-users.zip)
+| For 0.9.4.x Users      | 2017-02-03 | 0.9.4.6.3 | [w3-total-cache-fixed-(for-v0.9.4.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.4.6.3/w3-total-cache-fixed-for-v0.9.4.x-users.zip)
 
 ---
 
