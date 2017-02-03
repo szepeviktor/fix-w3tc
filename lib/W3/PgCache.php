@@ -580,24 +580,25 @@ class W3_PgCache {
             return false;
         }
 
-        if (is_single() && !$this->_check_cache_exception()) {
+        if ( !$this->_check_cache_exception() && ( is_single() || is_page() ) ) {
+            if ( is_single() ) {
+                /**
+                 * Don't cache pages associated with categories
+                 */
+                if ($this->_check_categories()) {
+                    $this->cache_reject_reason = 'Page associated with a rejected category';
 
-            /**
-             * Don't cache pages associated with categories
-             */
-            if ($this->_check_categories()) {
-                $this->cache_reject_reason = 'Page associated with a rejected category';
+                    return false;
+                }
 
-                return false;
-            }
+                /**
+                 * Don't cache pages that use tags
+                 */
+                if ($this->_check_tags()) {
+                    $this->cache_reject_reason = 'Page using a rejected tag';
 
-            /**
-             * Don't cache pages that use tags
-             */
-            if ($this->_check_tags()) {
-                $this->cache_reject_reason = 'Page using a rejected tag';
-
-                return false;
+                    return false;
+                }
             }
 
             /**

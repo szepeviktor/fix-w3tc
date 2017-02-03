@@ -21,12 +21,12 @@ Make sure you select the correct generation that fits your environment.
 
 | Generation    | Date |Version | Download Link
 | ------------- |:-------------:|:-----:|-----|
-| For 0.9.4.x Users      | 2017-01-19 | 0.9.4.6.2| [w3-total-cache-fixed-(for-v0.9.4.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.4.6.2/w3-total-cache-fixed-for-v0.9.4.x-users.zip)
-| For 0.9.5.x Users      | ---  | --- | _coming soon_
+| For 0.9.4.x Users      | 2017-02-03 | 0.9.4.6.3 | [w3-total-cache-fixed-(for-v0.9.4.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.4.6.3/w3-total-cache-fixed-for-v0.9.4.x-users.zip)
+| For 0.9.5.x Users      | 2017-02-02 | 0.9.5.2.2 | [w3-total-cache-fixed-(for-v0.9.5.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.5.2.2/w3-total-cache-fixed-for-v0.9.5.x-users.zip)
 
 ---
 
-### Installation
+### Installation (for v0.9.4.x Users)
 _**Note:** After the following steps, all future updates and installations will be handled from within WordPress._
 
 1. Deactivate (but don't delete) your existing W3 Total Cache plugin (if installed) from within WordPress' Plugin page.
@@ -42,9 +42,10 @@ _**Note:** This list does not reflect all of the myriad of fixes/changes -- just
 
 ![DONE] Removed Deprecated WordPress Code<br>
 ![DONE] Full PHP7 Compliancy (Passes [PHPCompatibility](https://github.com/wimg/PHPCompatibility): 100%)<br>
-![DONE] Amazon Web Services (AWS) v4 Signature Support (IPv4 &amp; IPv6) with New Endpoints/Regions<br>
+![DONE] Security Headers Management for X-Frame-Options, X-XSS-Protection, X-Content-Type-Options, HPKP, CSP, HSTS policy<br>
+![DONE] Amazon Web Services (AWS) v4 Signature Support (IPv4 &amp; IPv6) with All Endpoints/Regions<br>
 ![DONE] Option to Embed Minified JS and CSS Content Directly into HTML Page<br>
-![DONE] Extended WP-CLI Support<br>
+![DONE] Extended WP-CLI Support, including Priming the Page Cache Asynchronously<br>
 ![DONE] Memcache & Memcached Extension Support<br>
 ![DONE] APCu Support<br>
 ![DONE] OPcache Support<br>

@@ -29,7 +29,7 @@
                         <option value="us-east-2"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'us-east-2'); ?>>US East (Ohio)</option>
                         <option value="us-west-1"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'us-west-1'); ?>>US-West (N. California)</option>
                         <option value="us-west-2"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'us-west-2'); ?>>US-West (Oregon)</option>
-                        <option value="ca-central-1"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'ca-central-1'); ?>>Canada (Central)</option>
+                        <option value="ca-central-1"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'ca-central-1'); ?>>Canada (Montreal)</option>
                         <option value="ap-south-1"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'ap-south-1'); ?>>Asia Pacific (Mumbai)</option>
                         <option value="ap-northeast-2"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'ap-northeast-2'); ?>>Asia Pacific (Seoul)</option>
                         <option value="ap-southeast-1"<?php selected($this->_config->get_string('cdn.s3.bucket.location'), 'ap-southeast-1'); ?>>Asia Pacific (Singapore)</option>
