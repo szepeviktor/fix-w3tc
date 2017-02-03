@@ -756,8 +756,9 @@ class Util_PageUrls {
 				continue;
 
 			foreach ( $home_urls as $home ) {
+				$home = trim( $home );
 				if ( !empty( $home ) ) {
-					$mirror_url = $home . substr( $url, strlen( $url_prefix ) );
+					$mirror_url = trailingslashit( $home ) . substr( $url, strlen( $url_prefix ) );
 					$queued_urls[$mirror_url] = '*';
 				}
 			}
