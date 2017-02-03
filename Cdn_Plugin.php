@@ -765,28 +765,27 @@ class Cdn_Plugin {
     function w3tc_attachment_url( $url ) {
         static $allowed_files = null;
 
-		if ( $this->_config->get_boolean( 'cdn.reject.logged_roles' ) && !$this->_check_logged_in_role_allowed() ) {
-            return $url;
-        }
+		if ( ( defined( 'WP_ADMIN' ) && $this->_config->get_boolean( 'cdn.admin.media_library' ) ) ||
+			 ( $this->can_cdn() && $this->can_cdn2( $empty ) ) ) {
+			$url = trim( $url );
 
-        $url = trim( $url );
+			if ( !empty( $url ) ) {
+				if ( empty( $allowed_files ) ) {
+					$allowed_files = $this->get_files();
+				}
 
-        if ( !empty( $url ) ) {
-            if ( empty( $allowed_files ) ) {
-                $allowed_files = $this->get_files();
-            }
+				$parsed = parse_url( $url );
+				$rel_url = ( isset( $parsed['path'] ) ? $parsed['path'] : '/' ) .
+						   ( isset( $parsed['query'] ) ? '?' . $parsed['query'] : '' );
 
-            $parsed = parse_url( $url );
-            $rel_url = ( isset( $parsed['path'] ) ? $parsed['path'] : '/' ) .
-                       ( isset( $parsed['query'] ) ? '?' . $parsed['query'] : '' );
-
-            if ( in_array( ltrim( $rel_url, '/' ), $allowed_files ) ) {
-                $common = Dispatcher::component( 'Cdn_Core' );
-                $cdn = $common->get_cdn();
-                $remote_path = $common->uri_to_cdn_uri( $rel_url );
-                $url = $cdn->_format_url( $remote_path );
-            }
-        }
+				if ( in_array( ltrim( $rel_url, '/' ), $allowed_files ) ) {
+					$common = Dispatcher::component( 'Cdn_Core' );
+					$cdn = $common->get_cdn();
+					$remote_path = $common->uri_to_cdn_uri( $rel_url );
+					$url = $cdn->_format_url( $remote_path );
+				}
+			}
+		}
 
         return $url;
     }		

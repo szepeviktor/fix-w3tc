@@ -181,6 +181,12 @@ if ( $cdn_engine == 'google_drive' || $cdn_engine == 'highwinds' ||
 			</tr>
 			<tr>
 				<th colspan="2">
+					<?php $this->checkbox( 'cdn.admin.media_library' ) ?> <?php Util_Ui::e_config_label( 'cdn.admin.media_library' ) ?></label><br />
+					<span class="description">All Media Library content will use CDN links on administration pages.</span>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2">
 					<?php $this->checkbox( 'cdn.reject.logged_roles' ) ?> <?php Util_Ui::e_config_label( 'cdn.reject.logged_roles' ) ?></label><br />
 					<span class="description"><?php _e( 'Select user roles that will use the origin server exclusively:', 'w3-total-cache' ) ?></span>
 

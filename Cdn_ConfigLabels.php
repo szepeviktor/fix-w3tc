@@ -16,6 +16,7 @@ class Cdn_ConfigLabels {
 				'cdn.import.external' => __( 'Import external media library attachments', 'w3-total-cache' ),
 				'cdn.canonical_header' => __( 'Add canonical header', 'w3-total-cache' ),
 				'cdn.reject.ssl' => __( 'Disable <acronym title="Content Delivery Network">CDN</acronym> on <acronym title="Secure Sockets Layer">SSL</acronym> pages', 'w3-total-cache' ),
+				'cdn.admin.media_library' => __( 'Use CDN links for the Media Library on admin pages', 'w3-total-cache' ),
 				'cdn.reject.logged_roles' => __( 'Disable <acronym title="Content Delivery Network">CDN</acronym> for the following roles', 'w3-total-cache' ),
 				'cdn.reject.uri' => __( 'Disable <acronym title="Content Delivery Network">CDN</acronym> on the following pages:', 'w3-total-cache' ),
 				'cdn.autoupload.enabled' => __( 'Export changed files automatically', 'w3-total-cache' ),
