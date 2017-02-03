@@ -3,7 +3,7 @@ Contributors: fredericktownes
 Tags: w3totalcache, w3 totalcache, w3total cache, wpo, web performance optimization, performance, availability, scaling, scalability, user experience, cache, caching, page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, gzip, deflate, minify, cdn, content delivery network, media library, performance, speed, multiple hosts, css, merge, combine, unobtrusive javascript, compress, optimize, optimizer, javascript, js, cascading style sheet, plugin, yslow, yui, google, google rank, google page speed, mod_pagespeed, new relic, newrelic, aws, s3, cloudfront, sns, elasticache, rds, flash media server, amazon web services, cloud files, rackspace, akamai, max cdn, limelight, cloudflare, mod_cloudflare, microsoft, microsoft azure, iis, nginx, litespeed, apache, varnish, xcache, apc, eacclerator, wincache, mysql, w3 total cache, batcache, wp cache, wp super cache, quick cache, wp minify, bwp-minify, buddypress
 Requires at least: 3.2
 Tested up to: 4.7.1
-Stable tag: 0.9.4.6.2
+Stable tag: 0.9.4.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -746,6 +746,14 @@ It's quite difficult to recall all of the innovators that have shared their thou
 Please reach out to all of these people and support their projects if you're so inclined.
 
 == Changelog ==
+
+= 0.9.4.6.3 =
+* Security Headers section added to Browser Cache -- X-Frame-Options, X-XSS-Protection, X-Content-Type-Options, HTTP Public Key Pinning, Content Security Policy, HTTP Strict Transport Security, and Session Cookies
+* Checkbox under CDN to allow CDN URLs to be used for the Media Library when on admin pages
+* Bug fix to Amazon Web Services (AWS) Cloudfront (origin pull) distributions
+* Bug fix for page cache's categories, tags, author, and custom fields
+* WP-CLI prime - tweak for sitemaps
+* Bug fix to now allow flushing of a post/page's cache when changing from published to draft/pending review
 
 = 0.9.4.6.2 =
 * Fixed a strict mode error specific to PHP 5.4/5.6 users

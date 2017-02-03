@@ -483,7 +483,7 @@ class W3_AdminActions_CdnActionsAdmin {
             'us-east-2' 	=> __('US East (Ohio)', 'w3-total-cache'),
             'us-west-1' 	=> __('US-West (N. California)', 'w3-total-cache'),
             'us-west-2' 	=> __('US-West (Oregon)', 'w3-total-cache'),
-            'ca-central-1'	=> __('Canada (Central)', 'w3-total-cache'),
+            'ca-central-1'	=> __('Canada (Montreal)', 'w3-total-cache'),
             'ap-south-1' 	=> __('Asia Pacific (Mumbai)', 'w3-total-cache'),
             'ap-northeast-2'=> __('Asia Pacific (Seoul)', 'w3-total-cache'),
             'ap-southeast-1'=> __('Asia Pacific (Singapore)', 'w3-total-cache'),

@@ -34,6 +34,16 @@ class W3_Plugin_Cdn extends W3_Plugin {
 
         $cdn_engine = $this->_config->get_string('cdn.engine');
 
+        add_filter( 'wp_get_attachment_url', array( 
+            &$this, 
+            'w3tc_attachment_url'
+        ), 0 );
+
+        add_filter( 'attachment_link', array( 
+            &$this, 
+            'w3tc_attachment_url'
+        ), 0 );
+
         if (!w3_is_cdn_mirror($cdn_engine)) {
             add_action('delete_attachment', array(
                 &$this,
@@ -1017,6 +1027,41 @@ class W3_Plugin_Cdn extends W3_Plugin {
                 $regexps[] = '~(["\'])\s*((' . $upload_url_domain_regexp . ')(([^"\'>]+)))~';
         }
         return $regexps;
+    }
+    
+    /**
+     * Adjusts attachment urls to cdn. This is for those who rely on
+     * wp_get_attachment_url()
+     *
+     * @param   string   $url   the local url to modify
+     * @return  string
+     */
+    function w3tc_attachment_url( $url ) {
+        static $allowed_files = null;
+
+        if ( ( defined( 'WP_ADMIN' ) && $this->_config->get_boolean( 'cdn.admin.media_library' ) ) ||
+             ( $this->can_cdn() && $this->can_cdn2( $empty ) ) ) {
+            $url = trim( $url );
+
+            if ( !empty( $url ) ) {
+                if ( empty( $allowed_files ) ) {
+                    $allowed_files = $this->get_files();
+                }
+
+                $parsed = parse_url( $url );
+                $rel_url = ( isset( $parsed['path'] ) ? $parsed['path'] : '/' ) .
+                           ( isset( $parsed['query'] ) ? '?' . $parsed['query'] : '' );
+
+                if ( in_array( ltrim( $rel_url, '/' ), $allowed_files ) ) {
+                    $common = w3_instance('W3_Plugin_CdnCommon');
+                    $cdn = $common->get_cdn();
+                    $remote_path = $common->uri_to_cdn_uri( $rel_url );
+                    $url = $cdn->format_url( $remote_path );
+                }
+            }
+        }
+
+        return $url;
     }
 }
 

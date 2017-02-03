@@ -380,7 +380,7 @@ function w3tc_toggle2(name, dependent_ids) {
     var id = '#' + name, dependants = '', n;
     for (n = 0; n < dependent_ids.length; n++)
         dependants += (n > 0 ? ',' : '') + '#' + dependent_ids[n];
-    
+
     jQuery(dependants).click(function() {
         var total_checked = true;
 
@@ -579,6 +579,75 @@ function w3tc_use_poll_zone(type, nonce) {
   }, 'json');
 }
 
+function w3tc_security_headers() {
+    var directive_description =
+        {
+            browsercache_security_hsts_directive:
+            {
+                maxage: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using HTTPS. This only affects the site\'s main domain.',
+                maxagepre: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using HTTPS with a request to be included in Chrome\'s HSTS preload list - a list of sites that are hardcoded into Chrome as being HTTPS only. This only affects the site\'s main domain.',
+                maxageinc: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using HTTPS. This affects the site\'s subdomains as well.',
+                maxageincpre: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using HTTPS with a request to be included in Chrome\'s HSTS preload list - a list of sites that are hardcoded into Chrome as being HTTPS only. This affects the site\'s subdomains as well.'
+            },
+            browsercache_security_xfo_directive:
+            {
+                same: "The page can only be displayed in a frame on the same origin as the page itself.",
+                deny: "The page cannot be displayed in a frame, regardless of the site attempting to do so.",
+                allow: "The page can only be displayed in a frame on the specified URL."
+            },
+            browsercache_security_xss_directive:
+            {
+                0: "Disables XSS filtering.",
+                1: "Enables XSS filtering (usually default in browsers). If a cross-site scripting attack is detected, the browser will sanitize the page (remove the unsafe parts).",
+                block: "Enables XSS filtering. Rather than sanitizing the page, the browser will prevent rendering of the page if an attack is detected."
+            },
+            browsercache_security_pkp_extra:
+            {
+                maxage: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using one of the defined keys. This only affects the site\'s main domain.',
+                maxageinc: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using one of the defined keys. This affects the site\'s subdomains as well.'
+            },
+            browsercache_security_pkp_report_only:
+            {
+                0: 'This instructs the browser to enforce the HPKP policy.',
+                1: 'This sets up HPKP without enforcement allowing you to use pinning to test its impact without the risk of a failed connection caused by your site being unreachable or HPKP being misconfigured.'
+            }
+        };
+
+    jQuery('#browsercache_security_hsts_directive,#browsercache_security_xfo_directive,#browsercache_security_xss_directive,#browsercache_security_pkp_extra,#browsercache_security_pkp_report_only').change(
+    function() {
+        jQuery('#' + jQuery(this).attr('id') + '_description').html('<i>' + directive_description[jQuery(this).attr('id')][jQuery(this).val()] + '</i>');
+            if (jQuery(this).attr('id') == 'browsercache_security_xfo_directive') {
+                if (jQuery(this).val() == 'allow') {
+                    jQuery('#browsercache_security_xfo_allow').show();
+                }else {
+                    jQuery('#browsercache_security_xfo_allow').hide();
+                }
+            }
+    });
+
+    if(jQuery('#browsercache_security_xfo_allow').length) {
+        if (jQuery('#browsercache_security_xfo_directive').val() == 'allow') {
+            jQuery('#browsercache_security_xfo_allow').show();
+        } else {
+            jQuery('#browsercache_security_xfo_allow').hide();
+        }
+        jQuery('#browsercache_security_hsts_directive,#browsercache_security_xfo_directive,#browsercache_security_xss_directive,#browsercache_security_pkp_extra,#browsercache_security_pkp_report_only').change();
+    }
+}
+
+function w3tc_csp_reference() {
+    W3tc_Lightbox.open({
+        id: 'w3tc-overlay',
+        close: '',
+        width: 890,
+        height: 660,
+        content: '<div id="w3tc_csp"></div>'
+    });
+    jQuery('div#overlay,.lightbox-content').click(function() {
+        W3tc_Lightbox.close();
+    });
+}
+
 jQuery(function() {
     // general page
     w3tc_toggle('enabled');
@@ -753,6 +822,8 @@ jQuery(function() {
         ['browsercache_cssjs_replace', 'browsercache_other_replace']);
     w3tc_toggle2('browsercache_nocookies',
         ['browsercache_cssjs_nocookies', 'browsercache_other_nocookies']);
+
+    w3tc_security_headers();
 
     // minify page
     w3tc_input_enable('.html_enabled', jQuery('#minify_html_enable:checked').size());
@@ -983,6 +1054,10 @@ jQuery(function() {
       w3tc_use_poll_zone(metadata.type, metadata.nonce);
     });
 
+    jQuery('#cdn_s3_bucket,#cdn_cf_bucket').focusout(function () {
+      jQuery(this).val(jQuery(this).val().toLowerCase());
+    });
+
     jQuery('#cdn_test').click(function() {
         var me = jQuery(this);
         var metadata = me.metadata();
@@ -1185,7 +1260,7 @@ jQuery(function() {
         status.removeClass('w3tc-error');
         status.removeClass('w3tc-success');
         status.addClass('w3tc-process');
-        
+
         var status2 = jQuery('#cdn_create_container_status');
         status2.removeClass('w3tc-error');
         status2.removeClass('w3tc-success');
@@ -1294,7 +1369,7 @@ jQuery(function() {
         var status2 = jQuery('#cdn_test_status');
         status2.removeClass('w3tc-error');
         status2.removeClass('w3tc-success');
-        status2.html('');            
+        status2.html('');
 
         status.html('Creating...');
 

@@ -61,7 +61,7 @@ if (defined('WP_CLI') && WP_CLI)
                     }
                     catch(Exception $e)
                     {
-                        WP_CLI::error("Flushing the minify cache failed: $e");
+                        WP_CLI::error("Flushing the minify cache failed: ". $e->getMessage());
                     }
 
                     WP_CLI::success(__('The minify cache has flushed successfully.', 'w3-total-cache'));
@@ -75,7 +75,7 @@ if (defined('WP_CLI') && WP_CLI)
                     }
                     catch(Exception $e)
                     {
-                        WP_CLI::error("Flushing the object cache failed: $e");
+                        WP_CLI::error("Flushing the object cache failed: ". $e->getMessage());
                     }
 
                     WP_CLI::success(__('The object cache has flushed successfully.', 'w3-total-cache'));
@@ -95,7 +95,7 @@ if (defined('WP_CLI') && WP_CLI)
                             }
                             catch(Exception $e)
                             {
-                                WP_CLI::error("Flushing the page from cache failed: $e");
+                                WP_CLI::error("Flushing the page from cache failed: ". $e->getMessage());
                             }
 
                             WP_CLI::success(__('The page has been flushed from cache successfully.', 'w3-total-cache'));
@@ -121,7 +121,7 @@ if (defined('WP_CLI') && WP_CLI)
                             }
                             catch(Exception $e)
                             {
-                                WP_CLI::error("Flushing the page from cache failed: $e");
+                                WP_CLI::error("Flushing the page from cache failed: ". $e->getMessage());
                             }
 
                             WP_CLI::success(__('The page has been flushed from cache successfully.', 'w3-total-cache'));
@@ -144,7 +144,7 @@ if (defined('WP_CLI') && WP_CLI)
                         }
                         catch(Exception $e)
                         {
-                            WP_CLI::error("Flushing the page cache failed: $e");
+                            WP_CLI::error("Flushing the page cache failed: ". $e->getMessage());
                         }
 
                         WP_CLI::success(__('The page cache has been flushed successfully.', 'w3-total-cache'));
@@ -177,21 +177,17 @@ if (defined('WP_CLI') && WP_CLI)
          *
          * ## EXAMPLES
          *
-         * wp w3-total-cache prime
-         *     Begin priming the page cache using the already defined interval, batch size,
-         *     and sitemap url values as shown under W3TC's Cache Preload section.
+         *     # Prime the page cache using settings held within the W3TC config.
+         *     $ wp w3-total-cache prime
          *
-         * wp w3-total-cache prime stop
-         *     If the page cache is currently being primed this will end that process.
+         *     # Stop the currently active prime process.
+         *     $ wp w3-total-cache prime stop
          *
-         * wp w3-total-cache prime --batch=2 --interval=30
-         *     Begin priming the page cache at the rate of 2 pages every 30 seconds using the
-         *     sitemap url held within W3TC's Cache Preload > Sitemap URL box.
+         *     # Prime the page cache (2 pages every 30 seconds).
+         *     $ wp w3-total-cache prime --batch=2 --interval=30
          *
-         * wp w3-total-cache prime --interval=30 --sitemap=http://domain.com/sitemap.xml
-         *     Using the provided sitemap url, its pages are primed in batch sizes (as defined
-         *     by W3TC's Performance > Page Cache > Cache Preload > Pages per Interval box)
-         *     every 30 seconds until all pages within said sitemap is complete.
+         *     # Prime the page cache every 30 seconds using the given sitemap.
+         *     $ wp w3-total-cache prime --interval=30 --sitemap=http://site.com/sitemap.xml
          */
         function prime($args = array() , $vars = array())
         {
@@ -242,7 +238,11 @@ if (defined('WP_CLI') && WP_CLI)
                     $interval = $user_interval == - 1 ? $config->get_integer('pgcache.prime.interval') : $user_interval;
                     $sitemap = empty($user_sitemap) ? $config->get_string('pgcache.prime.sitemap') : $user_sitemap;
                     
-                    if (($res = $w3_prime->prime_cli($limit, $interval, $sitemap, 0, true)) === false)
+                    if ( empty( $sitemap ) )
+                    {
+                        WP_CLI::error( __( "Prime page cache halted - Unable to load sitemap. A sitemap is needed to prime the page cache.", 'w3-total-cache' ) );
+                    }
+                    elseif (($res = $w3_prime->prime_cli($limit, $interval, $sitemap, 0, true)) === false)
                     {
                         WP_CLI::warning('Page cache priming is already active.');
                     }
@@ -255,7 +255,7 @@ if (defined('WP_CLI') && WP_CLI)
             }
             catch(Exception $e)
             {
-                WP_CLI::error("$e");
+                WP_CLI::error($e->getMessage());
             }
         }
 
@@ -271,7 +271,7 @@ if (defined('WP_CLI') && WP_CLI)
             }
             catch(Exception $e)
             {
-                WP_CLI::error(__('updating the query string failed. with error %s', 'w3-total-cache') , $e);
+                WP_CLI::error('updating the query string failed. with error '. $e->getMessage());
             }
 
             WP_CLI::success(__('The query string was updated successfully.', 'w3-total-cache'));
@@ -300,7 +300,7 @@ if (defined('WP_CLI') && WP_CLI)
             }
             catch(Exception $e)
             {
-                WP_CLI::error(__('Files did not successfully purge with error %s', 'w3-total-cache') , $e);
+                WP_CLI::error('Files did not successfully purge with error '. $e->getMessage());
             }
 
             WP_CLI::success(__('Files purged successfully.', 'w3-total-cache'));
@@ -347,7 +347,7 @@ if (defined('WP_CLI') && WP_CLI)
                     
                     if (is_wp_error($result))
                     {
-                        WP_CLI::error(__('Files did not successfully reload with error %s', 'w3-total-cache') , $result);
+                        WP_CLI::error('Files did not successfully reload with error '.$result->get_error_message());
                     }
                     else if ($result['response']['code'] != '200')
                     {
@@ -357,7 +357,7 @@ if (defined('WP_CLI') && WP_CLI)
             }
             catch(Exception $e)
             {
-                WP_CLI::error(__('Files did not successfully reload with error %s', 'w3-total-cache') , $e);
+                WP_CLI::error('Files did not successfully reload with error '.$e->getMessage());
             }
 
             WP_CLI::success(__('Files reloaded successfully.', 'w3-total-cache'));
@@ -404,7 +404,7 @@ if (defined('WP_CLI') && WP_CLI)
                     
                     if (is_wp_error($result))
                     {
-                        WP_CLI::error(__('Files did not successfully reload with error %s', 'w3-total-cache') , $result);
+                        WP_CLI::error('Files did not successfully reload with error '.$result->get_error_message());
                     }
                     else if ($result['response']['code'] != '200')
                     {
@@ -414,7 +414,7 @@ if (defined('WP_CLI') && WP_CLI)
             }
             catch(Exception $e)
             {
-                WP_CLI::error(__('Files did not successfully reload with error %s', 'w3-total-cache') , $e);
+                WP_CLI::error('Files did not successfully reload with error ' .$e->getMessage());
             }
 
             WP_CLI::success(__('Files reloaded successfully.', 'w3-total-cache'));
@@ -461,7 +461,7 @@ if (defined('WP_CLI') && WP_CLI)
                     
                     if (is_wp_error($result))
                     {
-                        WP_CLI::error(__('Files did not successfully delete with error %s', 'w3-total-cache') , $result);
+                        WP_CLI::error(__('Files did not successfully delete with error '.$result->get_error_message(), 'w3-total-cache'));
                     }
                     else if ($result['response']['code'] != '200')
                     {
@@ -471,7 +471,7 @@ if (defined('WP_CLI') && WP_CLI)
             }
             catch(Exception $e)
             {
-                WP_CLI::error(__('Files did not successfully delete with error %s', 'w3-total-cache') , $e);
+                WP_CLI::error(__('Files did not successfully delete with error '.$e->getMessage(), 'w3-total-cache'));
             }
 
             WP_CLI::success(__('Files deleted successfully.', 'w3-total-cache'));
@@ -517,7 +517,7 @@ if (defined('WP_CLI') && WP_CLI)
                     
                     if (is_wp_error($result))
                     {
-                        WP_CLI::error(__('Files did not successfully delete with error %s', 'w3-total-cache') , $result);
+                        WP_CLI::error(__('Files did not successfully delete with error '.$result->get_error_message(), 'w3-total-cache'));
                     }
                     else if ($result['response']['code'] != '200')
                     {
@@ -527,7 +527,7 @@ if (defined('WP_CLI') && WP_CLI)
             }
             catch(Exception $e)
             {
-                WP_CLI::error(__('Files did not successfully delete with error %s', 'w3-total-cache') , $e);
+                WP_CLI::error(__('Files did not successfully delete with error '.$e->getMessage(), 'w3-total-cache'));
             }
 
             WP_CLI::success(__('Files deleted successfully.', 'w3-total-cache'));
@@ -545,7 +545,7 @@ if (defined('WP_CLI') && WP_CLI)
             }
             catch(Exception $e)
             {
-                WP_CLI::error(__('PageCache Garbage cleanup did not start with error %s', 'w3-total-cache') , $e);
+                WP_CLI::error(__('PageCache Garbage cleanup did not start with error '.$e->getMessage(), 'w3-total-cache'));
             }
 
             WP_CLI::success(__('PageCache Garbage cleanup triggered successfully.', 'w3-total-cache'));

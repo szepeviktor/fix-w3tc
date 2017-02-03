@@ -1244,6 +1244,10 @@ $keys = array(
         'type' => 'boolean',
         'default' => false
     ),
+    'cdn.admin.media_library' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
     'cdncache.enabled' => array(
         'type' => 'boolean',
         'default' => false
@@ -1400,7 +1404,134 @@ $keys = array(
         'type' => 'array',
         'default' => array()
     ),
-
+    'browsercache.security.session.cookie_httponly' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
+    'browsercache.security.session.cookie_secure' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
+    'browsercache.security.session.use_only_cookies' => array(
+        'type' => 'boolean',
+        'default' => true
+    ),
+    'browsercache.security.hsts' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
+    'browsercache.security.hsts.directive' => array(
+        'type' => 'string',
+        'default' => 'maxage'
+    ),
+    'browsercache.security.xfo' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
+    'browsercache.security.xfo.directive' => array(
+        'type' => 'string',
+        'default' => 'same'
+    ),
+    'browsercache.security.xfo.allow' => array(
+            'type' => 'string',
+            'default' => ''
+    ),
+    'browsercache.security.xss' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
+    'browsercache.security.xss.directive' => array(
+        'type' => 'string',
+        'default' => 'block'
+    ),
+    'browsercache.security.xcto' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
+    'browsercache.security.pkp' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
+    'browsercache.security.pkp.pin' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.pkp.pin.backup' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.pkp.extra' => array(
+        'type' => 'string',
+        'default' => 'maxage'
+    ),
+    'browsercache.security.pkp.report.url' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.pkp.report.only' => array(
+        'type' => 'string',
+        'default' => '0'
+    ),
+    'browsercache.security.csp' => array(
+        'type' => 'boolean',
+        'default' => false
+    ),
+    'browsercache.security.csp.base' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.frame' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.connect' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.font' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.script' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.style' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.img' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.media' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.object' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.plugin' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.form' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.frame.ancestors' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.sandbox' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
+    'browsercache.security.csp.default' => array(
+        'type' => 'string',
+        'default' => ''
+    ),
     'mobile.enabled' => array(
         'type' => 'boolean',
         'default' => false
