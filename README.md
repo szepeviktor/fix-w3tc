@@ -56,3 +56,4 @@ Type | More Information |
 :beetle: Bug Fix | [Malformed HTML in Generated Item UIs (Admin Pages)](https://github.com/szepeviktor/w3-total-cache-fixed/pull/343) |
 :cyclone: New Feature | ["Security Headers" Section Added to Browser Cache](https://github.com/szepeviktor/w3-total-cache-fixed/pull/344) |
 :beetle: Bug Fix | [W3TC is Collecting Tracking Usage At All Times ](https://github.com/szepeviktor/w3-total-cache-fixed/pull/349) :fire: |
+:beetle: Bug Fix | [Additional Home URLs (of Page Cache) not Purging](https://github.com/szepeviktor/w3-total-cache-fixed/pull/357) |
