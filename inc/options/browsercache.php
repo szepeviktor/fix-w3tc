@@ -376,8 +376,14 @@
         <?php echo $this->postbox_footer(); ?>
 
         <?php echo $this->postbox_header(__('Security Headers', 'w3-total-cache'), '', 'security'); ?>
-        <p><?php _e( 'HTTP security headers provide another layer of security for your website by helping to mitigate attacks and security vulnerabilities.', 'w3-total-cache' ); ?></p>
+        <p><?php _e( 'HTTP security headers provide another layer of protection for your website by helping to mitigate attacks and security vulnerabilities.', 'w3-total-cache' ); ?></p>
         <table class="form-table">
+            <tr>
+                <th colspan="2">
+                    <?php $this->checkbox( 'browsercache.security.session.use_only_cookies' ) ?> <?php w3_e_config_label( 'browsercache.security.session.use_only_cookies' ) ?></label>
+                    <br /><span class="description"><?php _e( 'This setting prevents attacks that are caused by passing session IDs in URLs.', 'w3-total-cache' ); ?></span>
+                </th>
+            </tr>
             <tr>
                 <th colspan="2">
                     <?php $this->checkbox( 'browsercache.security.session.cookie_httponly' ) ?> <?php w3_e_config_label( 'browsercache.security.session.cookie_httponly' ) ?></label>
@@ -388,12 +394,6 @@
                 <th colspan="2">
                     <?php $this->checkbox( 'browsercache.security.session.cookie_secure' ) ?> <?php w3_e_config_label( 'browsercache.security.session.cookie_secure' ) ?></label>
                     <br /><span class="description"><?php _e( 'This will prevent the user\'s session ID from being transmitted in plain text, making it much harder to hijack the user\'s session.', 'w3-total-cache' ); ?></span>
-                </th>
-            </tr>
-            <tr>
-                <th colspan="2">
-                    <?php $this->checkbox( 'browsercache.security.session.use_only_cookies' ) ?> <?php w3_e_config_label( 'browsercache.security.session.use_only_cookies' ) ?></label>
-                    <br /><span class="description"><?php _e( 'This setting prevents attacks that are caused by passing session IDs in URLs.', 'w3-total-cache' ); ?></span>
                 </th>
             </tr>
             <tr>
@@ -446,7 +446,7 @@
             <tr>
                 <th colspan="2">
                     <?php $this->checkbox( 'browsercache.security.xss' ) ?> <?php w3_e_config_label( 'browsercache.security.xss' ) ?></label>
-                    <br /><span class="description"><?php _e( 'This header enables the Cross-site scripting (XSS) filter. Although this is already built into and enabled by default in most browsers today it is made available here to allow its reactivation if it was disabled within the user\'s browser.', 'w3-total-cache' ); ?></span>
+                    <br /><span class="description"><?php _e( 'This header enables the Cross-Site Scripting (XSS) filter. It helps to stop malicious scripts from being injected into your website. Although this is already built into and enabled by default in most browsers today it is made available here to enforce its reactivation if it was disabled within the user\'s browser.', 'w3-total-cache' ); ?></span>
                 </th>
             </tr>
             <tr>
@@ -468,7 +468,7 @@
             <tr>
                 <th colspan="2">
                     <?php $this->checkbox( 'browsercache.security.xcto' ) ?> <?php w3_e_config_label( 'browsercache.security.xcto' ) ?></label>
-                    <br /><span class="description"><?php _e( 'This tells Internet Explorer and Google Chrome to not MIME-sniff a response outside its declared content-type. This helps reduces drive-by download attacks and sites serving mischievous content that could masquerade as an executable or dynamic HTML file.', 'w3-total-cache' ); ?></span>
+                    <br /><span class="description"><?php _e( 'This instructs the browser to not MIME-sniff a response outside its declared content-type. It helps to reduce drive-by download attacks and stops sites from serving malevolent content that could masquerade as an executable or dynamic HTML file.', 'w3-total-cache' ); ?></span>
                 </th>
             </tr>
             <tr>
@@ -494,7 +494,7 @@
                 <td>
                     <input id="browsercache_security_pkp_pin_backup" type="text" name="browsercache.security.pkp.pin.backup"
                         <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.pkp.pin.backup' ) ); ?>" size="50" placeholder="Enter the Base64-Encode of the SHA256 Hash" />
-                        <div><i><?php _e( 'This field is <b>also required</b> and represents your backup <acronym title="Subject Public Key Information">SPKI</acronym> fingerprint. This pin is any public key not in your current certificate chain and serves as backup in case your certificate expires or has to be revoked.' ); ?></i></div>
+                        <div><i><?php _e( 'This field is <b>also required</b> and represents your backup <acronym title="Subject Public Key Information">SPKI</acronym> fingerprint. This pin is any public key not in your current certificate chain and serves as a backup in case your certificate expires or has to be revoked.' ); ?></i></div>
                 </td>
             </tr>
             <tr>
@@ -540,7 +540,7 @@
             <tr>
                 <th colspan="2">
                     <?php $this->checkbox( 'browsercache.security.csp' ) ?> <?php w3_e_config_label( 'browsercache.security.csp' ) ?></label>
-                    <br /><span class="description"><?php _e( 'The Content Security Policy (CSP) header reduces the risk of XSS attacks by allowing you to define where resources can be loaded from, preventing browsers from loading data from any other locations. This makes it harder for an attacker to inject malicious code into your site.' ); ?></span>
+                    <br /><span class="description"><?php _e( 'The Content Security Policy (CSP) header reduces the risk of <acronym title="Cross-Site Scripting">XSS</acronym> attacks by allowing you to define where resources can be retrieved from, preventing browsers from loading data from any other locations. This makes it harder for an attacker to inject malicious code into your site.' ); ?></span>
                     <p><a onclick="w3tc_csp_reference()" href="javascript:void(0);">Quick Reference Chart</a></p>
                 </th>
             </tr>
@@ -550,7 +550,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_base" type="text" name="browsercache.security.csp.base"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.base' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.base' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
                     <div><i><?php _e( 'Restricts the URLs which can be used in a document\'s &lt;base&gt; element.' ); ?></i></div>
                 </td>
             </tr>
@@ -560,8 +560,8 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_connect" type="text" name="browsercache.security.csp.connect"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.connect' ) ); ?>" size="50" />
-                    <div><i><?php _e( 'Limits the origins to which you can connect (via XMLHttpRequest, WebSockets, and EventSource).' ); ?></i></div>
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.connect' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
+                    <div><i><?php _e( 'Limits the origins to which you can connect via XMLHttpRequest, WebSockets, and EventSource.' ); ?></i></div>
                 </td>
             </tr>
             <tr>
@@ -570,7 +570,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_font" type="text" name="browsercache.security.csp.font"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.font' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.font' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
                     <div><i><?php _e( 'Specifies the origins that can serve web fonts.' ); ?></i></div>
                 </td>
             </tr>
@@ -580,7 +580,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_frame" type="text" name="browsercache.security.csp.frame"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.frame' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.frame' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
                     <div><i><?php _e( 'Restricts from where the protected resource can embed frames.' ); ?></i></div>
                 </td>
             </tr>
@@ -590,8 +590,8 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_img" type="text" name="browsercache.security.csp.img"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.img' ) ); ?>" size="50" />
-                    <div><i><?php _e( 'Specifies valid sources of images and favicons.' ); ?></i></div>
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.img' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
+                    <div><i><?php _e( 'Specifies valid sources for images and favicons.' ); ?></i></div>
                 </td>
             </tr>
             <tr>
@@ -600,7 +600,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_media" type="text" name="browsercache.security.csp.media"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.media' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.media' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
                     <div><i><?php _e( 'Specifies valid sources for loading media using the &lt;audio&gt; and &lt;video&gt; elements.' ); ?></i></div>
                 </td>
             </tr>
@@ -610,7 +610,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_object" type="text" name="browsercache.security.csp.object"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.object' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.object' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
                     <div><i><?php _e( 'Allows control over the &lt;object&gt;, &lt;embed&gt;, and &lt;applet&gt; elements used by Flash and other plugins.' ); ?></i></div>
                 </td>
             </tr>
@@ -620,7 +620,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_script" type="text" name="browsercache.security.csp.script"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.script' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.script' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
                     <div><i><?php _e( 'Specifies valid sources for JavaScript.' ); ?></i></div>
                 </td>
             </tr>
@@ -630,7 +630,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_style" type="text" name="browsercache.security.csp.style"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.style' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.style' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
                     <div><i><?php _e( 'Specifies valid sources for CSS stylesheets.' ); ?></i></div>
                 </td>
             </tr>
@@ -640,8 +640,8 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_form" type="text" name="browsercache.security.csp.form"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.form' ) ); ?>" size="50" />
-                    <div><i><?php _e( 'Restricts the URLs which can be used as the target of a form submissions from a given context.' ); ?></i></div>
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.form' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
+                    <div><i><?php _e( 'Restricts the URLs which can be used as the target of form submissions from a given context.' ); ?></i></div>
                 </td>
             </tr>
             <tr>
@@ -650,7 +650,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_frame_ancestors" type="text" name="browsercache.security.csp.frame.ancestors"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.frame' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.frame' ) ); ?>" size="50" placeholder="Example: 'none'" />
                     <div><i><?php _e( 'Specifies valid parents that may embed a page using &lt;frame&gt;, &lt;iframe&gt;, &lt;object&gt;, &lt;embed&gt;, or &lt;applet&gt;.' ); ?></i></div>
                 </td>
             </tr>
@@ -660,7 +660,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_plugin" type="text" name="browsercache.security.csp.plugin"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.plugin' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.plugin' ) ); ?>" size="50" placeholder="Example: application/x-shockwave-flash" />
                     <div><i><?php _e( 'Restricts the set of plugins that can be embedded into a document by limiting the types of resources which can be loaded.' ); ?></i></div>
                 </td>
             </tr>
@@ -670,7 +670,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_sandbox" type="text" name="browsercache.security.csp.sandbox"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.sandbox' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.sandbox' ) ); ?>" size="50" placeholder="Example: allow-popups" />
                     <div><i><?php _e( 'This directive operates similarly to the &lt;iframe&gt; sandbox attribute by applying restrictions to a page\'s actions, including preventing popups, preventing the execution of plugins and scripts, and enforcing a same-origin policy.' ); ?></i></div>
                 </td>
             </tr>
@@ -680,7 +680,7 @@
                 </th>
                 <td>
                     <input id="browsercache_security_csp_default" type="text" name="browsercache.security.csp.default"
-                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.default' ) ); ?>" size="50" />
+                        <?php $this->sealing_disabled( 'browsercache' ) ?> value="<?php echo esc_attr( $this->_config->get_string( 'browsercache.security.csp.default' ) ); ?>" size="50" placeholder="Example: 'self' 'unsafe-inline' *.domain.com" />
                     <div><i><?php _e( 'Defines the defaults for directives you leave unspecified. Generally, this applies to any directive that ends with -src.' ); ?></i></div>
                 </td>
             </tr>
