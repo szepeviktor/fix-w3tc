@@ -1648,23 +1648,23 @@ $keys = array(
     ),
     'browsercache.security.csp.connect' => array(
         'type' => 'string',
-        'default' => ''
+        'default' => '\'self\''
     ),
     'browsercache.security.csp.font' => array(
         'type' => 'string',
-        'default' => ''
+        'default' => '\'self\' fonts.gstatic.com'
     ),
     'browsercache.security.csp.script' => array(
         'type' => 'string',
-        'default' => ''
+        'default' => '\'self\' *.googleapis.com'
     ),
     'browsercache.security.csp.style' => array(
         'type' => 'string',
-        'default' => ''
+        'default' => '\'self\' *.googleapis.com'
     ),
     'browsercache.security.csp.img' => array(
         'type' => 'string',
-        'default' => ''
+        'default' => '\'self\' *.gravatar.com'
     ),
     'browsercache.security.csp.media' => array(
         'type' => 'string',
@@ -1692,7 +1692,7 @@ $keys = array(
     ),
     'browsercache.security.csp.default' => array(
         'type' => 'string',
-        'default' => ''
+        'default' => '\'none\''
     ),
 	'browsercache.other.replace' => array(
 		'type' => 'boolean',
