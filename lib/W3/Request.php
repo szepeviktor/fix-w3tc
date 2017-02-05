@@ -131,7 +131,7 @@ class W3_Request {
      */
     static function get_request() {
 
-    	if( !isset(self::$request) ){
+    	if( !isset(self::$request) || current_filter() === 'init' ){
 	        if (!isset($_GET)) {
 	            $_GET = array();
 	        }
