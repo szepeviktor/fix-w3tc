@@ -54,6 +54,6 @@ Type | More Information |
 :beetle: Bug Fix | [Save Cloudflare Settings - SSL Update Failure](https://github.com/szepeviktor/w3-total-cache-fixed/pull/334) |
 :cyclone: New Feature | [Rewrite URLs via _wp_..._attachment_for_js()_ filter when CDN is Enabled](https://github.com/szepeviktor/w3-total-cache-fixed/pull/336)<br>:wrench: [+ **Extra: #PR350** - Checkbox to Use CDN URLs for Media Library](https://github.com/szepeviktor/w3-total-cache-fixed/pull/350) |
 :beetle: Bug Fix | [Malformed HTML in Generated Item UIs (Admin Pages)](https://github.com/szepeviktor/w3-total-cache-fixed/pull/343) |
-:cyclone: New Feature | ["Security Headers" Section Added to Browser Cache](https://github.com/szepeviktor/w3-total-cache-fixed/pull/344) |
+:cyclone: New Feature | ["Security Headers" Section Added to Browser Cache](https://github.com/szepeviktor/w3-total-cache-fixed/pull/344)<br>:wrench: [+ **Extra: #PR363** - Adds Default Values to CSP (Security Headers)](https://github.com/szepeviktor/w3-total-cache-fixed/pull/363) |
 :beetle: Bug Fix | [W3TC is Collecting Tracking Usage At All Times ](https://github.com/szepeviktor/w3-total-cache-fixed/pull/349) :fire: |
-:beetle: Bug Fix | [Additional Home URLs (of Page Cache) not Purging](https://github.com/szepeviktor/w3-total-cache-fixed/pull/357) |
+:beetle: Bug Fix | [Additional Home URLs (set in Page Cache) not Purging](https://github.com/szepeviktor/w3-total-cache-fixed/pull/357) |
