@@ -108,14 +108,33 @@ class Config {
 		$this->load();
 	}
 
-
-
 	/**
 	 * Returns config value. Implementation for overriding
+	 * @see self::config_get($key, $default)
 	 */
 	public function get( $key, $default = null ) {
+		static $cache_values = null;
+		
+		// try cached values
+		if( isset($cache_values[$key]) ){
+			return $cache_values[$key];
+		}
+		
+		$value = $this->config_get($key, $default);
+		
+		// store in cache
+		$cache_values[$key] = $value;
+		
+		return $value;
+	}
+	
+	/**
+	 * Returns config value.
+	 */
+	private function config_get( $key, $default = null ) {
+		
 		$v = $this->_get( $this->_data, $key );
-		if ( !is_null( $v ) )
+		if ( null !== $v )
 			return $v;
 
 		// take default value
@@ -124,12 +143,12 @@ class Config {
 
 		// try cached default values
 		static $default_values = null;
-		if ( is_null( $default_values ) )
+		if ( null === $default_values )
 			$default_values = apply_filters( 'w3tc_config_default_values',
 				array() );
 
 		$v = $this->_get( $default_values, $key );
-		if ( !is_null( $v ) )
+		if ( null !== $v )
 			return $v;
 
 		// update default values
@@ -137,7 +156,7 @@ class Config {
 			array() );
 
 		$v = $this->_get( $default_values, $key );
-		if ( !is_null( $v ) )
+		if ( null !== $v )
 			return $v;
 
 		return $default;
