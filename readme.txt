@@ -775,6 +775,8 @@ Please reach out to all of these people and support their projects if you're so 
 * New Feature - Checkbox to Use CDN URLs for Media Library on Admin pages
 * Bug Fix - W3TC was Collecting Tracking Usage At All Times
 * Bug Fix - Additional Home URLs (of Page Cache) not Purging
+* New Feature - Improved Performance For Configuration Reading
+* Bug Fix - Configuration Bug where Redis/Memcached server entries were not being parsed correctly
 
 = 0.9.5.2.1 =
 * New Feature - Dashboard Widget For Flushing Individual User-Inputted URLs
