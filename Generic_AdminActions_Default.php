@@ -740,7 +740,7 @@ class Generic_AdminActions_Default {
 				array_map( 'stripslashes_deep', $request_value );
 			else
 				$request_value = stripslashes( $request_value );
-			if ( strpos( $request_key, 'memcached_servers' ) )
+			if ( strpos( $request_key, 'memcached__servers' ) || strpos( $request_key, 'redis__servers' ) )
 				$request_value = explode( ',', $request_value );
 
 			$key = Util_Ui::config_key_from_http_name( $request_key );
