@@ -57,5 +57,5 @@ Type | More Information |
 :cyclone: New Feature | ["Security Headers" Section Added to Browser Cache](https://github.com/szepeviktor/w3-total-cache-fixed/pull/344)<br>:wrench: [+ **Extra: #PR363** - Adds Default Values to CSP (Security Headers)](https://github.com/szepeviktor/w3-total-cache-fixed/pull/363) |
 :beetle: Bug Fix | [W3TC is Collecting Tracking Usage At All Times ](https://github.com/szepeviktor/w3-total-cache-fixed/pull/349) :fire: |
 :beetle: Bug Fix | [Additional Home URLs (set in Page Cache) not Purging](https://github.com/szepeviktor/w3-total-cache-fixed/pull/357) |
-:cyclone: New Feature | [Improved Performance For Configuration Reading](https://github.com/szepeviktor/w3-total-cache-fixed/pull/365) |
 :beetle: Bug Fix | [Configuration Bug -- Redis/Memcached Server Entries](https://github.com/szepeviktor/w3-total-cache-fixed/pull/367) |
+:beetle: Bug Fix | [Fix For Undefined Variable "is_amp_endpoint"](https://github.com/szepeviktor/w3-total-cache-fixed/pull/370) |
