@@ -19,11 +19,12 @@ class Extension_Amp_Plugin {
 
 
 	private function is_amp_endpoint() {
-		if ( is_null( $is_amp_endpoint ) && function_exists('is_amp_endpoint') ) {
-			$is_amp_endpoint = is_amp_endpoint();
+		
+		if ( function_exists('is_amp_endpoint') ) {
+			return is_amp_endpoint();
 		}
 
-		return $is_amp_endpoint;
+		return null;
 	}
 
 
