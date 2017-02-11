@@ -3,7 +3,7 @@ namespace W3TC;
 
 class Extension_Amp_Plugin {
 	function __construct() {
-		$is_amp_endpoint = null;
+
 	}
 
 	public function run() {
