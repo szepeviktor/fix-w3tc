@@ -1743,14 +1743,40 @@ class PgCache_ContentGrabber {
 		return in_array( $content_type, $cache_headers );
 	}
 
-	private function _check_query_string() {
-		$accept_qs = $this->_config->get_array( 'pgcache.accept.qs' );
-		foreach ( $_GET as $key => $value ) {
-			if ( !in_array( strtolower( $key ), $accept_qs ) )
-				return false;
-		}
-		return true;
-	}
+    private function _check_query_string() {
+        $accept_qs = $this->_config->get_array( 'pgcache.accept.qs' );
+
+		$accept_qs = array_filter( $accept_qs, function( $val ) { return $val != ""; } );
+
+        foreach ( $accept_qs as &$val ) {
+        	$val = preg_quote( trim( str_replace( "+", " ", $val ) ), "~" );
+        }
+
+        $pass=false;
+
+        foreach ( $_GET as $key => $value ) {
+            $match = false;
+            foreach ( $accept_qs as $qs ) {
+                $qs .=  ( strpos( $qs, '=' ) === false ? '.*?' : '' );
+
+                if ( @preg_match( '~^' . $qs . '$~i', $key . "=$value" ) ) {
+                    $match=true;
+                    $pass=true;
+                    break;
+                }
+            }
+
+            if (!$match) {
+            	return false;
+            }
+        }
+
+        if ($pass) {
+        	return true;
+        }
+
+        return false;
+    }
 
 	/**
 	 *

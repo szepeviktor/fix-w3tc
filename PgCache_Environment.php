@@ -592,6 +592,28 @@ class PgCache_Environment {
 			$rules .= "    RewriteRule ^(.*\\/)?w3tc_rewrite_test([0-9]+)/?$ $1?w3tc_rewrite_test=1 [L]\n";
 		}
 
+        /**
+         * Set accept query strings
+         */
+        $w3tc_query_strings = array_filter( $config->get_array( 'pgcache.accept.qs' ), function( $val ) { return $val != ""; } );
+
+        if ( !empty( $w3tc_query_strings ) ) {
+            foreach ( $w3tc_query_strings as &$val ) {
+                $val = trim( str_replace( " ", "\+", preg_quote( $val ) ) );
+            }
+
+            $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%{QUERY_STRING}]\n";
+
+            foreach ( $w3tc_query_strings as $query ) {
+                $query .=  ( strpos( $query, '=' ) === false ? '.*?' : '' );
+                $rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^(.*?&|)".$query."(&.*|)$ [NC]\n";
+                $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%1%2]\n";
+            }
+
+            $rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^&+$\n";
+            $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING]\n";
+        }
+
 		/**
 		 * Check for mobile redirect
 		 */
@@ -697,10 +719,11 @@ class PgCache_Environment {
 		 */
 		$use_cache_rules .= "    RewriteCond %{REQUEST_METHOD} !=POST\n";
 
-		/**
-		 * Query string should be empty
-		 */
-		$use_cache_rules .= "    RewriteCond %{QUERY_STRING} =\"\"\n";
+        /**
+         * Query string should be empty
+         */
+        $use_cache_rules .= empty( $w3tc_query_strings ) ? "    RewriteCond %{QUERY_STRING} =\"\"\n" :
+                                                           "    RewriteCond %{ENV:W3TC_QUERY_STRING} =\"\"\n";
 
 		/**
 		 * Check permalink structure trailing slash
@@ -818,6 +841,30 @@ class PgCache_Environment {
 			$rules .= "rewrite ^(.*\\/)?w3tc_rewrite_test([0-9]+)/?$ $1?w3tc_rewrite_test=1 last;\n";
 		}
 
+        /**
+         * Set accept query strings
+         */
+        $w3tc_query_strings = array_filter( $config->get_array( 'pgcache.accept.qs' ), function( $val ) { return $val != ""; } );
+		
+        if ( !empty( $w3tc_query_strings ) ) {
+            foreach ( $w3tc_query_strings as &$val ) {
+                $val = trim( str_replace( " ", "\+", preg_quote( $val ) ) );
+            }
+
+            $rules .= "set \$w3tc_query_string \$query_string;\n";
+
+            foreach ( $w3tc_query_strings as $query ) {
+                $query .=  ( strpos( $query, '=' ) === false ? '.*?' : '' );
+                $rules .= "if (\$w3tc_query_string ~* \"^(.*?&|)".$query."(&.*|)$\") {\n";
+                $rules .= "    set \$w3tc_query_string $1$2;\n";
+                $rules .= "}\n";
+            }
+
+            $rules .= "if (\$w3tc_query_string ~ ^&+$) {\n";
+            $rules .= "    set \$w3tc_query_string \"\";\n";
+            $rules .= "}\n";
+        }
+
 		/**
 		 * Check for mobile redirect
 		 */
@@ -873,12 +920,12 @@ class PgCache_Environment {
 		$rules .= "    set \$w3tc_rewrite 0;\n";
 		$rules .= "}\n";
 
-		/**
-		 * Query string should be empty
-		 */
-		$rules .= "if (\$query_string != \"\") {\n";
-		$rules .= "    set \$w3tc_rewrite 0;\n";
-		$rules .= "}\n";
+        /**
+         * Query string should be empty
+         */
+        $rules .= "if (".( empty( $w3tc_query_strings ) ? "\$query_string" : "\$w3tc_query_string" ) . " != \"\") {\n";
+        $rules .= "    set \$w3tc_rewrite 0;\n";
+        $rules .= "}\n";
 
 		/**
 		 * Check permalink structure trailing slash
