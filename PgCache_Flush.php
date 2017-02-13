@@ -59,8 +59,11 @@ class PgCache_Flush extends PgCache_ContentGrabber {
 		}
 
 		$post = get_post( $post_id );
-		$post_type = in_array( $post->post_type, array(
-				'post', 'page', 'attachment', 'revision' ) ) ? null : $post->post_type;
+		$post_type = null;
+		if( is_object($post) ){
+			$post_type = in_array( $post->post_type, array(
+					'post', 'page', 'attachment', 'revision' ) ) ? null : $post->post_type;
+		}
 		$front_page = get_option( 'show_on_front' );
 
 		/**
