@@ -336,7 +336,7 @@ if ( $this->_config->get_string( 'pgcache.engine' ) == 'memcached' ) {
 					<textarea id="pgcache_accept_qs" name="pgcache__accept__qs"
 						<?php Util_Ui::sealing_disabled( 'pgcache.' ) ?>
 							  cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'pgcache.accept.qs' ) ) ); ?></textarea><br />
-					<span class="description"><?php _e( 'Always cache <acronym title="Uniform Resource Locator">URL</acronym>s with these query strings.', 'w3-total-cache' ); ?></span>
+					<span class="description"><?php _e( 'Always cache <acronym title="Uniform Resource Locator">URL</acronym>s that use these query string name-value pairs. The value part is not required. But if used, separate name-value pairs with an equals sign (i.e., name=value). Each pair should be on their own line.', 'w3-total-cache' ); ?></span>
 				</td>
 			</tr>
 			<tr>
@@ -404,7 +404,7 @@ echo sprintf(
                     <textarea id="pgcache_reject_custom" name="pgcache__reject__custom" 
                         <?php Util_Ui::sealing_disabled( 'pgcache' ) ?>
                         cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array('pgcache.reject.custom' ) ) ); ?></textarea><br />
-                    <span class="description"><?php _e( 'Always ignore all pages filed under the specified custom fields. Separate name/value pairs with an equals sign (i.e., name=value).', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Always ignore all pages filed under the specified custom fields. Separate name-value pairs with an equals sign (i.e., name=value).', 'w3-total-cache' ); ?></span>
                 </td>
             </tr>
 			<tr>
