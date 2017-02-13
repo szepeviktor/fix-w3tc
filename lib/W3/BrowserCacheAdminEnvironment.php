@@ -328,17 +328,6 @@ class W3_BrowserCacheAdminEnvironment {
             $rules .= $this->_rules_cache_generate_apache_for_type($config, 
                 $extensions, $type);
 
-        $sec = "    php_flag session.cookie_httponly " . ( $config->get_boolean( 'browsercache.security.session.cookie_httponly' ) ? "on" : "off" ) . "\n" .
-               "    php_flag session.cookie_secure " . ( $config->get_boolean( 'browsercache.security.session.cookie_secure' ) ? "on" : "off" ) . "\n" .
-               "    php_flag session.use_only_cookies " . ( $config->get_boolean( 'browsercache.security.session.use_only_cookies' ) ? "on" : "off" ) . "\n</ifModule>\n";
-
-        $rules .= "<IfModule mod_php5.c>\n";
-        $rules .= $sec;
-        $rules .= "<IfModule mod_php7.c>\n";
-        $rules .= $sec;
-        $rules .= "<IfModule mod_suphp.c>\n";
-        $rules .= $sec;
-
         if ( $config->get_boolean( 'browsercache.security.hsts' ) ||
              $config->get_boolean( 'browsercache.security.xfo' )  ||
              $config->get_boolean( 'browsercache.security.xss' )  ||
@@ -593,10 +582,6 @@ class W3_BrowserCacheAdminEnvironment {
         foreach ($mime_types as $type => $extensions)
             $this->_rules_cache_generate_nginx_for_type($config, $rules, 
                 $extensions, $type);
-
-        $rules .= "fastcgi_param PHP_FLAG \"session.cookie_httponly=" . ( $config->get_boolean( 'browsercache.security.session.cookie_httponly' ) ? "on" : "off" ) . "\n" .
-        "session.cookie_secure=" . ( $config->get_boolean( 'browsercache.security.session.cookie_secure' ) ? "on" : "off" ) . "\n" .
-        "session.use_only_cookies=" . ( $config->get_boolean( 'browsercache.security.session.use_only_cookies' ) ? "on" : "off" ) . "\";";
 
         if ( $config->get_boolean( 'browsercache.security.hsts' ) ||
              $config->get_boolean( 'browsercache.security.xfo' )  ||

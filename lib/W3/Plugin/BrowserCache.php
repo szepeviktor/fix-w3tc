@@ -40,6 +40,10 @@ class W3_Plugin_BrowserCache extends W3_Plugin {
                 'w3tc_cdn_url')
                 ,0, 2);
         }
+
+        @ini_set( 'session.use_only_cookies', $this->_config->get_boolean( 'browsercache.security.session.use_only_cookies' ) ? '1' : '0' );
+        @ini_set( 'session.cookie_httponly', $this->_config->get_boolean( 'browsercache.security.session.cookie_httponly' ) ? '1' : '0' );
+        @ini_set( 'session.cookie_secure', $this->_config->get_boolean( 'browsercache.security.session.cookie_secure' ) ? '1' : '0' );
     }
 
     /**
