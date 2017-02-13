@@ -1757,28 +1757,15 @@ class PgCache_ContentGrabber {
             $val .=  ( strpos( $val, '=' ) === false ? '.*?' : '' );
         }
 
-        $pass=false;
+		$accept_qs = implode( '|', $accept_qs );
 
         foreach ( $_GET as $key => $value ) {
-            $match = false;
-            foreach ( $accept_qs as $qs ) {
-                if ( @preg_match( '~^' . $qs . '$~i', $key . "=$value" ) ) {
-                    $match=true;
-                    $pass=true;
-                    break;
-                }
-            }
-
-            if ( !$match ) {
-            	return false;
+			if ( !@preg_match( '~^(' . $accept_qs . ')$~i', $key . "=$value" ) ) {
+				return false;
             }
         }
 
-        if ( $pass ) {
-        	return true;
-        }
-
-        return false;
+        return true;
     }
 
 	/**
