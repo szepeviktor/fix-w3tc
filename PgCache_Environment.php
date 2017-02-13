@@ -592,26 +592,26 @@ class PgCache_Environment {
 			$rules .= "    RewriteRule ^(.*\\/)?w3tc_rewrite_test([0-9]+)/?$ $1?w3tc_rewrite_test=1 [L]\n";
 		}
 
-        /**
-         * Set accept query strings
-         */
-        $w3tc_query_strings = array_filter( $config->get_array( 'pgcache.accept.qs' ), function( $val ) { return $val != ""; } );
+       /**
+        * Set accept query strings
+        */
+       $w3tc_query_strings = array_filter( $config->get_array( 'pgcache.accept.qs' ), function( $val ) { return $val != ""; } );
 
-        if ( !empty( $w3tc_query_strings ) ) {
-            foreach ( $w3tc_query_strings as &$val ) {
-                $val = trim( str_replace( " ", "\+", preg_quote( $val ) ) );
-            }
+       if ( !empty( $w3tc_query_strings ) ) {
+           foreach ( $w3tc_query_strings as &$val ) {
+               $val = trim( str_replace( " ", "\+", preg_quote( $val ) ) );
+           }
 
-            $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%{QUERY_STRING}]\n";
+           $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%{QUERY_STRING}]\n";
 
-            foreach ( $w3tc_query_strings as $query ) {
-                $query .=  ( strpos( $query, '=' ) === false ? '.*?' : '' );
-                $rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^(.*?&|)".$query."(&.*|)$ [NC]\n";
-                $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%1%2]\n";
-            }
+           foreach ( $w3tc_query_strings as $query ) {
+               $query .=  ( strpos( $query, '=' ) === false ? '.*?' : '' );
+               $rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^(.*?&|)".$query."(&.*|)$ [NC]\n";
+               $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%1%2]\n";
+           }
 
-            $rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^&+$\n";
-            $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING]\n";
+           $rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^&+$\n";
+           $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING]\n";
         }
 
 		/**
@@ -845,7 +845,7 @@ class PgCache_Environment {
          * Set accept query strings
          */
         $w3tc_query_strings = array_filter( $config->get_array( 'pgcache.accept.qs' ), function( $val ) { return $val != ""; } );
-		
+
         if ( !empty( $w3tc_query_strings ) ) {
             foreach ( $w3tc_query_strings as &$val ) {
                 $val = trim( str_replace( " ", "\+", preg_quote( $val ) ) );
