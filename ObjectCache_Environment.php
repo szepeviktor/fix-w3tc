@@ -115,7 +115,7 @@ class ObjectCache_Environment {
 					if ( isset( $_GET['page'] ) )
 						$url = 'admin.php?page=' . $_GET['page'] . '&amp;';
 					else
-						$url = basename( Util_Environment::remove_query(
+						$url = basename( Util_Environment::remove_query_all(
 								$_SERVER['REQUEST_URI'] ) ) . '?page=w3tc_dashboard&amp;';
 					$remove_url = Util_Ui::admin_url( $url .
 						'w3tc_default_remove_add_in=objectcache' );
