@@ -835,7 +835,7 @@ class Util_Environment {
 	 * Removes WP query string from URL
 	 */
 	static public function remove_query( $url ) {
-		$url = preg_replace( '~[&\?]+(ver=([a-z0-9-_\.]+|[0-9-]+))~i', '', $url );
+		$url = preg_replace( '~(\?|&amp;|&#038;|&)+ver=[a-z0-9-_\.]+~i', '', $url );
 
 		return $url;
 	}
