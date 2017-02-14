@@ -179,7 +179,6 @@ class BrowserCache_Plugin {
 	private function mutate_url( $url, $mutate_by_querystring ) {
 		$id = $this->get_filename_uniqualizator();
 
-		$url = Util_Environment::remove_query( $url );
 		$query_pos = strpos( $url, '?' );
 
 		if ( $mutate_by_querystring ) {
