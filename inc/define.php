@@ -1229,9 +1229,20 @@ function w3_translate_file($file) {
  * @return string
  */
 function w3_remove_query($url) {
-    $url = preg_replace('~[&\?]+(ver=([a-z0-9-_\.]+|[0-9-]+))~i', '', $url);
+    $url = preg_replace('~(\?|&amp;|&#038;|&)+ver=[a-z0-9-_\.]+~i', '', $url);
 
     return $url;
+}
+
+/**
+ * Removes all query strings from url
+ */
+function w3_remove_query_all($url) {
+    $pos = strpos( $url, '?' );
+    if ( $pos === false )
+        return $url;
+
+    return substr( $url, 0, $pos );
 }
 
 /**

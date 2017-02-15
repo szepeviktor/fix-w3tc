@@ -281,9 +281,9 @@ class W3_Plugin_Cdn extends W3_Plugin {
                 if ($this->_config->get_boolean('cdn.includes.enable')) {
                     $mask = $this->_config->get_string('cdn.includes.files');
                     if ($mask != '') {
-                        $regexps[] = '~(["\'(])\s*((' . $domain_url_regexp . ')?(' . w3_preg_quote($site_path . WPINC) . '/(' . $this->get_regexp_by_mask($mask) . ')))~';
+                        $regexps[] = '~(["\'(])\s*((' . $domain_url_regexp . ')?(' . w3_preg_quote($site_path . WPINC) . '/(' . $this->get_regexp_by_mask($mask) . ')([^"\'() >]*)))~';
                         if ($site_domain_url_regexp)
-                            $regexps[] = '~(["\'(])\s*((' . $site_domain_url_regexp . ')?(' . w3_preg_quote($site_path . WPINC) . '/(' . $this->get_regexp_by_mask($mask) . ')))~';
+                            $regexps[] = '~(["\'(])\s*((' . $site_domain_url_regexp . ')?(' . w3_preg_quote($site_path . WPINC) . '/(' . $this->get_regexp_by_mask($mask) . ')([^"\'() >]*)))~';
                     }
                 }
 
@@ -293,11 +293,11 @@ class W3_Plugin_Cdn extends W3_Plugin {
                     $mask = $this->_config->get_string('cdn.theme.files');
 
                     if ($mask != '') {
-                        $regexps[] = '~(["\'(])\s*((' . $domain_url_regexp . ')?(' . w3_preg_quote($theme_dir) . '/(' . $this->get_regexp_by_mask($mask) . ')))~';
+                        $regexps[] = '~(["\'(])\s*((' . $domain_url_regexp . ')?(' . w3_preg_quote($theme_dir) . '/(' . $this->get_regexp_by_mask($mask) . ')([^"\'() >]*)))~';
                         if ($site_domain_url_regexp) {
                             $theme_dir2 = preg_replace('~' . $site_domain_url_regexp. '~i', '', get_theme_root_uri());
-                            $regexps[] = '~(["\'(])\s*((' . $site_domain_url_regexp . ')?(' . w3_preg_quote($theme_dir) . '/(' . $this->get_regexp_by_mask($mask) . ')))~';
-                            $regexps[] = '~(["\'(])\s*((' . $site_domain_url_regexp . ')?(' . w3_preg_quote($theme_dir2) . '/(' . $this->get_regexp_by_mask($mask) . ')))~';
+                            $regexps[] = '~(["\'(])\s*((' . $site_domain_url_regexp . ')?(' . w3_preg_quote($theme_dir) . '/(' . $this->get_regexp_by_mask($mask) . ')([^"\'() >]*)))~';
+                            $regexps[] = '~(["\'(])\s*((' . $site_domain_url_regexp . ')?(' . w3_preg_quote($theme_dir2) . '/(' . $this->get_regexp_by_mask($mask) . ')([^"\'() >]*)))~';
                         }
                     }
                 }
@@ -317,9 +317,9 @@ class W3_Plugin_Cdn extends W3_Plugin {
                             }
                         }
 
-                        $regexps[] = '~(["\'(])\s*((' . $domain_url_regexp . ')?(' . w3_preg_quote($site_path) . '(' . implode('|', $mask_regexps) . ')))~i';
+                        $regexps[] = '~(["\'(])\s*((' . $domain_url_regexp . ')?(' . w3_preg_quote($site_path) . '(' . implode('|', $mask_regexps) . ')([^"\'() >]*)))~i';
                         if ($site_domain_url_regexp)
-                            $regexps[] = '~(["\'(])\s*((' . $site_domain_url_regexp . ')?(' . w3_preg_quote($site_path) . '(' . implode('|', $mask_regexps) . ')))~i';
+                            $regexps[] = '~(["\'(])\s*((' . $site_domain_url_regexp . ')?(' . w3_preg_quote($site_path) . '(' . implode('|', $mask_regexps) . ')([^"\'() >]*)))~i';
                     }
                 }
 

@@ -146,7 +146,6 @@ class W3_Plugin_BrowserCache extends W3_Plugin {
         if ($id === null)
             $id = $this->get_replace_id();
 
-        $url = w3_remove_query($url);
         $url .= (strstr($url, '?') !== false ? '&amp;' : '?') . $id;
 
         if ($attr != 'w3tc_load_js(')
@@ -163,7 +162,7 @@ class W3_Plugin_BrowserCache extends W3_Plugin {
     function w3tc_cdn_url($url, $original_url) {
         // decouple extension
         $matches = array();
-        if (!preg_match('/\.([a-zA-Z0-9]+)$/', $original_url, $matches))
+        if (!preg_match('/\.([a-zA-Z0-9]+)($|[\?])/', $original_url, $matches))
             return $url;
         $extension = $matches[1];
 

@@ -107,7 +107,7 @@ class W3_DbCacheAdminEnvironment {
                 if (isset($_GET['page']))
                     $url = 'admin.php?page=' . $_GET['page'] . '&amp;';
                 else
-                    $url = basename(w3_remove_query($_SERVER['REQUEST_URI'])) . '?page=w3tc_dashboard&amp;';
+                    $url = basename(w3_remove_query_all($_SERVER['REQUEST_URI'])) . '?page=w3tc_dashboard&amp;';
                 $remove_url = w3_admin_url($url . 'w3tc_default_remove_add_in=dbcache');
                 throw new FilesystemOperationException(
                     sprintf(__('The Database add-in file db.php is not a W3 Total Cache drop-in.
