@@ -271,13 +271,21 @@ class Minify_Environment {
 				$response['response']['code'] == 200 &&
 				trim( $response['body'] ) == 'Minify OK' );
 
-			if ( $is_ok )
+			if ( $is_ok ){
 				$result = 'ok';
-			else
-				$result = is_wp_error( $response ) ?
-					$response->get_error_message() :
-					implode( ' ', $response['body'] );
-
+			} else {
+				if( is_wp_error( $response ) ){
+					$result = $response->get_error_message();
+				} elseif ( isset($response['body']) ) {
+					if( is_array($response['body']) ){
+					    $result = implode( ' ', $response['body'] );
+					} else {
+						$result = $response['body'];
+					}
+				} else {
+					$result = $response;
+				}
+			}
 			set_site_transient( $key, $result, 30 );
 		}
 
