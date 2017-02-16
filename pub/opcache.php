@@ -1,6 +1,6 @@
 <?php
 /**
- * W3 Total Cache APC
+ * W3 Total Cache OPcache
  */
 
 if ( !defined( 'ABSPATH' ) ) {
