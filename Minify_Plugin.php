@@ -138,7 +138,7 @@ class Minify_Plugin {
 	 * @return string
 	 */
 	function ob_callback( $buffer ) {
-		$enable = Util_Content::is_html( $buffer ) &&
+		$enable = Util_Content::is_html_xml( $buffer ) &&
 			$this->can_minify2( $buffer );
 		$enable = apply_filters( 'w3tc_minify_enable', $enable );
 		if ( !$enable )
