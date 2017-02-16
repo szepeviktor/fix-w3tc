@@ -764,6 +764,14 @@ class PgCache_Environment {
 		$rules .= "    RewriteRule .* \"" . $uri_prefix . $ext .
 			$env_W3TC_ENC . "\" [L]\n";
 
+        if ($config->get_boolean('pgcache.cache.apache_handle_xml')) {
+            $ext = '.xml';
+            $rules .= "    RewriteCond \"" . $document_root . $uri_prefix . $ext .
+                $env_W3TC_ENC . "\"" . $switch . "\n";
+            $rules .= "    RewriteRule .* \"" . $uri_prefix . $ext .
+                $env_W3TC_ENC . "\" [L]\n";
+        }
+
 		$rules .= "</IfModule>\n";
 
 		$rules .= W3TC_MARKER_END_PGCACHE_CORE . "\n";

@@ -1305,17 +1305,24 @@ class PgCache_ContentGrabber {
 			$key .= '_preview';
 		}
 
-		if ( $this->_enhanced_mode ) {
-			/**
-			 * Append HTML extension.
-			 * For nginx - we create .xml cache entries and redirect to them
-			 */
-			if ( Util_Environment::is_nginx() && substr( $content_type, 0, 8 ) == 'text/xml' &&
-				$this->_config->get_boolean( 'pgcache.cache.nginx_handle_xml' ) )
-				$key .= '.xml';
-			else
-				$key .= '.html';
-		}
+        if ( $this->_enhanced_mode ) {
+            $ext = "html";
+            if ( @preg_match( "~(text/xml|text/xsl|application/rdf\+xml|application/rss\+xml|application/atom\+xml)~i", $content_type ) ||
+                strpos( $this->_request_uri, "/feed/" ) !== false ||
+                strpos( $this->_request_uri, ".xsl" ) !== false ) {
+                $ext = "xml";
+            }
+            if ( Util_Environment::is_nginx() ) {
+                if ( !$this->_config->get_boolean( 'pgcache.cache.nginx_handle_xml' ) ) {
+                    $ext = "html";
+                }
+            } else {
+                if ( !$this->_config->get_boolean( 'pgcache.cache.apache_handle_xml' ) ) {
+                    $ext = "html";
+                }
+            }
+            $key .= ".$ext";
+        }
 
 		/**
 		 * Append compression
@@ -1736,8 +1743,8 @@ class PgCache_ContentGrabber {
 		$cache_headers = apply_filters( 'w3tc_is_cacheable_content_type',
 			array(
 				'' /* redirects, they have only Location header set */,
-				'application/json', 'text/html', 'text/xml',
-				'application/xhtml+xml'
+				'application/json', 'text/html', 'text/xml', 'text/xsl',
+				'application/xhtml+xml', 'application/rss+xml', 'application/atom+xml', 'application/rdf+xml'
 			)
 		);
 		return in_array( $content_type, $cache_headers );

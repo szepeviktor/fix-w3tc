@@ -345,6 +345,10 @@ $keys = array(
 		'type' => 'boolean',
 		'default' => false
 	),
+	'pgcache.cache.apache_handle_xml' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
 	'pgcache.cache.ssl' => array(
 		'type' => 'boolean',
 		'default' => false
