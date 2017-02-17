@@ -532,7 +532,7 @@ $keys = array(
 	),
 	'pgcache.purge.sitemap_regex' => array(
 		'type' => 'string',
-		'default' => '([a-z0-9_\-]*?)sitemap([a-z0-9_\-]*)?\.xml'
+		'default' => '[a-z0-9_\-]*sitemap[a-z0-9_\-]*\.(xml|xsl|html?)(\.gz)?'
 	),
 	'pgcache.prime.enabled' => array(
 		'type' => 'boolean',
@@ -684,7 +684,8 @@ $keys = array(
 		'type' => 'array',
 		'default' => array(
 			'google_ad_',
-			'RSPEAK_'
+			'RSPEAK_',
+			'mfunc'
 		)
 	),
 	'minify.css.combine' => array(
@@ -1455,7 +1456,7 @@ $keys = array(
 		'type' => 'array',
 		'default' => array(
 			'robots\.txt',
-			'[a-z0-9_\-]*sitemap[a-z0-9_\-]*\.(xml|xsl|html)(\.gz)?'
+			'[a-z0-9_\-]*sitemap[a-z0-9_\-]*\.(xml|xsl|html?)(\.gz)?'
 		)
 	),
 	'browsercache.cssjs.last_modified' => array(
