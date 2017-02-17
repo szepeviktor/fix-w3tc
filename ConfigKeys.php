@@ -1468,7 +1468,7 @@ $keys = array(
 	),
 	'browsercache.cssjs.expires' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.cssjs.lifetime' => array(
 		'type' => 'integer',
@@ -1476,11 +1476,11 @@ $keys = array(
 	),
 	'browsercache.cssjs.nocookies' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.cssjs.cache.control' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.cssjs.cache.policy' => array(
 		'type' => 'string',
@@ -1488,7 +1488,7 @@ $keys = array(
 	),
 	'browsercache.cssjs.etag' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.cssjs.w3tc' => array(
 		'type' => 'boolean',
@@ -1508,7 +1508,7 @@ $keys = array(
 	),
 	'browsercache.html.expires' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.html.lifetime' => array(
 		'type' => 'integer',
@@ -1516,7 +1516,7 @@ $keys = array(
 	),
 	'browsercache.html.cache.control' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.html.cache.policy' => array(
 		'type' => 'string',
@@ -1524,7 +1524,7 @@ $keys = array(
 	),
 	'browsercache.html.etag' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.html.w3tc' => array(
 		'type' => 'boolean',
@@ -1544,7 +1544,7 @@ $keys = array(
 	),
 	'browsercache.other.expires' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.other.lifetime' => array(
 		'type' => 'integer',
@@ -1552,11 +1552,11 @@ $keys = array(
 	),
 	'browsercache.other.nocookies' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.other.cache.control' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.other.cache.policy' => array(
 		'type' => 'string',
@@ -1564,7 +1564,7 @@ $keys = array(
 	),
 	'browsercache.other.etag' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'browsercache.other.w3tc' => array(
 		'type' => 'boolean',
