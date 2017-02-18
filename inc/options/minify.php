@@ -486,7 +486,7 @@ if ( $this->_config->get_string( 'minify.engine' ) == 'memcached' ) {
                 <td>
                     <textarea id="minify_reject_uri" name="minify__reject__uri"
                         <?php Util_Ui::sealing_disabled( 'minify.' ) ?> cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'minify.reject.uri' ) ) ); ?></textarea><br />
-                    <span class="description"><?php _e( 'Always ignore the specified pages / directories. Use relative paths. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Always ignore the specified pages / directories. Use relative paths. Supports regular expressions. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
                 </td>
             </tr>
             <tr>
@@ -494,7 +494,7 @@ if ( $this->_config->get_string( 'minify.engine' ) == 'memcached' ) {
                 <td>
                     <textarea id="minify_reject_files_js" name="minify__reject__files__js"
                         <?php Util_Ui::sealing_disabled( 'minify.' ) ?> cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'minify.reject.files.js' ) ) ); ?></textarea><br />
-                    <span class="description"><?php _e( 'Always ignore the specified <acronym title="JavaScript">JS</acronym> files. Use relative paths. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Always ignore the specified <acronym title="JavaScript">JS</acronym> files. Use relative paths. Supports regular expressions. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
                 </td>
             </tr>
             <tr>
@@ -502,7 +502,7 @@ if ( $this->_config->get_string( 'minify.engine' ) == 'memcached' ) {
                 <td>
                     <textarea id="minify_reject_files_css" name="minify__reject__files__css"
                         <?php Util_Ui::sealing_disabled( 'minify.' ) ?> cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'minify.reject.files.css' ) ) ); ?></textarea><br />
-                    <span class="description"><?php _e( 'Always ignore the specified <acronym title="Cascading Style Sheet">CSS</acronym> files. Use relative paths. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Always ignore the specified <acronym title="Cascading Style Sheet">CSS</acronym> files. Use relative paths. Supports regular expressions. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
                 </td>
             </tr>
             <tr>
@@ -511,7 +511,7 @@ if ( $this->_config->get_string( 'minify.engine' ) == 'memcached' ) {
                     <textarea id="minify_reject_ua" name="minify__reject__ua"
                         <?php Util_Ui::sealing_disabled( 'minify.' ) ?>
                         cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'minify.reject.ua' ) ) ); ?></textarea><br />
-                    <span class="description"><?php _e( 'Specify user agents that will never receive minified content.', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Specify user agents that will never receive minified content. Supports regular expressions.', 'w3-total-cache' ); ?></span>
                 </td>
             </tr>
             <?php if ( $auto ): ?>

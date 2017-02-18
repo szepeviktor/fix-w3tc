@@ -22,10 +22,8 @@ class Util_Rule {
 	 * Removes empty elements
 	 */
 	static public function array_trim( &$a ) {
-		for ( $n = count( $a ) - 1; $n >= 0; $n-- ) {
-			if ( empty( $a[$n] ) )
-				array_splice( $a, $n, 1 );
-		}
+        $a = array_map( 'trim', $a );
+        $a = array_filter( $a, function( $val ) { return $val != ""; } );
 	}
 
 	/**

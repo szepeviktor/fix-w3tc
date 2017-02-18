@@ -635,7 +635,20 @@ class Minify_Page extends Base_Page_Settings {
 		$files = array_map( array( '\W3TC\Util_Environment', 'normalize_file_minify' ), $files );
 		$files = array_unique( $files );
 		$ignore_files = $this->_config->get_array( 'minify.reject.files.js' );
-		$files = array_diff( $files, $ignore_files );
+
+        $ignore_files = str_replace( "~", "\~", $ignore_files ) );
+        Util_Rule::array_trim( $ignore_files );
+
+        if ( !empty( $ignore_files ) ) {
+            $diff = array();
+            foreach( $files as $file ) {
+                if ( !@preg_match( '~' . implode( "|", $ignore_files ) . '~i', $file ) ) {
+                    $diff[] = $file;
+                }
+            }
+            $files = $diff;                   
+        }
+
 		return $files;
 	}
 
@@ -654,7 +667,19 @@ class Minify_Page extends Base_Page_Settings {
 		$files = array_map( array( '\W3TC\Util_Environment', 'normalize_file_minify' ), $files );
 		$files = array_unique( $files );
 		$ignore_files = $this->_config->get_array( 'minify.reject.files.css' );
-		$files = array_diff( $files, $ignore_files );
+		
+        $ignore_files = str_replace( "~", "\~", $ignore_files ) );
+        Util_Rule::array_trim( $ignore_files );
+
+        if ( !empty( $ignore_files ) ) {
+            $diff = array();
+            foreach( $files as $file ) {
+                if ( !@preg_match( '~' . implode( "|", $ignore_files ) . '~i', $file ) ) {
+                    $diff[] = $file;
+                }
+            }
+            $files = $diff;                   
+        }
 
 		return $files;
 	}

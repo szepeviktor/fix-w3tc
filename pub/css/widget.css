@@ -145,3 +145,7 @@
 .maxcdn-netdna-widget-base.sign-up p span.desc {
     color:#8F8F8F;
 }
+
+#purge_urls {
+    width: 100%;
+}
