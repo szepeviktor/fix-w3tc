@@ -636,7 +636,7 @@ class Minify_Page extends Base_Page_Settings {
 		$files = array_unique( $files );
 		$ignore_files = $this->_config->get_array( 'minify.reject.files.js' );
 
-        $ignore_files = str_replace( "~", "\~", $ignore_files ) );
+        $ignore_files = str_replace( "~", "\~", $ignore_files );
         Util_Rule::array_trim( $ignore_files );
 
         if ( !empty( $ignore_files ) ) {
@@ -668,7 +668,7 @@ class Minify_Page extends Base_Page_Settings {
 		$files = array_unique( $files );
 		$ignore_files = $this->_config->get_array( 'minify.reject.files.css' );
 		
-        $ignore_files = str_replace( "~", "\~", $ignore_files ) );
+        $ignore_files = str_replace( "~", "\~", $ignore_files );
         Util_Rule::array_trim( $ignore_files );
 
         if ( !empty( $ignore_files ) ) {

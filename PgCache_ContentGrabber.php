@@ -783,8 +783,9 @@ class PgCache_ContentGrabber {
         $accept_uri = $this->_config->get_array( 'pgcache.accept.files' );
         $accept_uri = array_map( array( '\W3TC\Util_Environment', 'parse_path' ), $accept_uri );
 
-        $accept_uri = str_replace( "~", "\~", $accept_uri ) );
+        $accept_uri = str_replace( "~", "\~", $accept_uri );
         Util_Rule::array_trim( $accept_uri );
+
         if ( !empty( $accept_uri ) && @preg_match( '~' . implode( "|", $accept_uri ) . '~i', $this->_request_uri ) ) {
         	return true;
         }
@@ -863,9 +864,9 @@ class PgCache_ContentGrabber {
      */
     function _check_custom_fields() {
         $reject_custom = $this->_config->get_array( 'pgcache.reject.custom' );
-        foreach ( $reject_custom as &$val ) {
-            $val = Util_Environment::preg_quote( trim( $val ) );
-        }
+		
+        Util_Rule::array_trim( $reject_custom );
+        $reject_custom = array_map( array( '\W3TC\Util_Environment', 'preg_quote' ), $reject_custom );
 
         $reject_custom = implode( "|",array_filter( $reject_custom ) );
 
