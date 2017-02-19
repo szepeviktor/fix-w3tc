@@ -228,7 +228,7 @@ class Minify_Plugin {
 					$handled_styles[] = $file;
 					$this->replaced_styles[] = $file;
 
-                    $ignore_css_files = str_replace( "~", "\~", $ignore_css_files ) );
+                    $ignore_css_files = str_replace( "~", "\~", $ignore_css_files );
                     Util_Rule::array_trim( $ignore_css_files );
 
 					if ( !empty( $ignore_css_files ) && @preg_match( '~' . implode("|", $ignore_css_files ) . '~i', $file ) ) {
@@ -1048,7 +1048,7 @@ class Minify_Plugin {
                     W3TC_POWERED_BY
                 ) );
 
-            $uas = str_replace( "~", "\~", $uas ) );
+            $uas = str_replace( "~", "\~", $uas );
             Util_Rule::array_trim( $uas );
 
             if ( !empty( $uas ) && @preg_match( '~' . implode( "|", $uas ) . '~i', $_SERVER['HTTP_USER_AGENT'] ) ) {
@@ -1409,7 +1409,7 @@ class _W3_MinifyJsAuto {
 		// ignored files
 		$this->ignore_js_files = $this->config->get_array( 'minify.reject.files.js' );
 
-        $this->ignore_js_files  = str_replace( "~", "\~", $this->ignore_js_files  ) );
+        $this->ignore_js_files  = str_replace( "~", "\~", $this->ignore_js_files  );
         Util_Rule::array_trim( $this->ignore_js_files  );
 
 		// define embed type
