@@ -572,7 +572,9 @@ class Extension_FragmentCache_WpObjectCache {
 	 */
 	public function w3tc_footer_comment( $strings ) {
 		if ( $this->_config->get_boolean( array( 'fragmentcache', 'debug' ) ) ) {
+			$strings[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~";
 			$strings[] = "Fragment Cache debug info:";
+			$strings[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~";
 			$strings[] = sprintf( "%s%s", str_pad( 'Engine: ', 20 ), Cache::engine_name( $this->_config->get_string( array( 'fragmentcache', 'engine' ) ) ) );
 			$strings[] = sprintf( "%s%s", str_pad( 'Caching: ', 20 ), ( $this->_caching ? 'enabled' : 'disabled' ) );
 
