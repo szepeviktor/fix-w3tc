@@ -595,6 +595,7 @@ class W3_PgCacheAdminEnvironment {
          */
         $reject_cookies = array_merge($reject_cookies, $config->get_array('pgcache.reject.cookie'));
         w3_array_trim($reject_cookies);
+        $reject_cookies = str_replace( ' ', '\+', $reject_cookies );
 
         $reject_user_agents = $config->get_array('pgcache.reject.ua');
         if ($config->get_boolean('pgcache.compatibility')) {
@@ -632,6 +633,7 @@ class W3_PgCacheAdminEnvironment {
 
             foreach ($w3tc_query_strings as $query) {
                 $query = (strpos($query, '=')===false?$query.'.*?':$query);
+                $query = str_replace( ' ', '\+', $query );
                 $rules .= "    RewriteCond %{ENV:W3TC_QUERY_STRING} ^(.*?&|)".$query."(&.*|)$ [NC]\n";
                 $rules .= "    RewriteRule ^ - [E=W3TC_QUERY_STRING:%1%2]\n";
             }
@@ -858,6 +860,7 @@ class W3_PgCacheAdminEnvironment {
          */
         $reject_cookies = array_merge($reject_cookies, $config->get_array('pgcache.reject.cookie'));
         w3_array_trim($reject_cookies);
+        $reject_cookies = str_replace( ' ', '\+', $reject_cookies );
         
         $reject_user_agents = $config->get_array('pgcache.reject.ua');
         if ($config->get_boolean('pgcache.compatibility')) {
@@ -891,6 +894,7 @@ class W3_PgCacheAdminEnvironment {
 
             foreach ($w3tc_query_strings as $query) {
                 $query = (strpos($query, '=')===false?$query.'.*?':$query);
+                $query = str_replace( ' ', '\+', $query );
                 $rules .= "if (\$w3tc_query_string ~* \"^(.*?&|)".$query."(&.*|)$\") {\n";
                 $rules .= "    set \$w3tc_query_string $1$2;\n";
                 $rules .= "}\n";
