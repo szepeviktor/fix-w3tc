@@ -22,20 +22,24 @@ class Generic_Environment {
 		$this->add_index_to_folders();
 
 		if ( count( $exs->exceptions() ) <= 0 ) {
-			$f = file_exists( Config::util_config_filename( 0, false ) );
-			$f2 = file_exists( Config::util_config_filename_legacy_v2( 0, false ) );
-
-			$c = Dispatcher::config_master();
-			if ( ( $f || $f2 ) && $c->is_compiled() ) {
-				$c->save();
+			try {
 				$f = file_exists( Config::util_config_filename( 0, false ) );
+				$f2 = file_exists( Config::util_config_filename_legacy_v2( 0, false ) );
+
+				$c = Dispatcher::config_master();
+				if ( ( $f || $f2 ) && $c->is_compiled() ) {
+					$c->save();
+					$f = file_exists( Config::util_config_filename( 0, false ) );
+				}
+
+				if ( $f && $f2 )
+					@unlink( Config::util_config_filename_legacy_v2( 0, false ) );
+
+				if ( !$f && !$f2 && $config->get_integer( 'common.instance_id', 0 ) == 0 )
+					$this->notify_no_config_present( $config, $exs );
+			} catch ( \Exception $ex ) {
+				$exs->push( $ex );
 			}
-
-			if ( $f && $f2 )
-				@unlink( Config::util_config_filename_legacy_v2( 0, false ) );
-
-			if ( !$f && !$f2 && $config->get_integer( 'common.instance_id', 0 ) == 0 )
-				$this->notify_no_config_present( $config, $exs );
 		}
 
 		if ( count( $exs->exceptions() ) > 0 )
