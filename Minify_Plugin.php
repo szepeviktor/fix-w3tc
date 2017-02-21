@@ -720,7 +720,6 @@ class Minify_Plugin {
 			case ( is_author() && ( $template_file = get_author_template() ) ):
 			case ( is_date() && ( $template_file = get_date_template() ) ):
 			case ( is_archive() && ( $template_file = get_archive_template() ) ):
-			case ( is_comments_popup() && ( $template_file = get_comments_popup_template() ) ):
 			case ( is_paged() && ( $template_file = get_paged_template() ) ):
 				break;
 
