@@ -613,7 +613,9 @@ class DbCache_WpdbInjection_QueryCaching extends DbCache_WpdbInjection {
 
 	public function w3tc_footer_comment( $strings ) {
 		if ( $this->debug ) {
+			$strings[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~";
 			$strings[] = "Db cache debug info:";
+			$strings[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~";
 			$strings[] = sprintf( "%s%s", str_pad( 'Engine: ', 20 ), Cache::engine_name( $this->_config->get_string( 'dbcache.engine' ) ) );
 			$strings[] = sprintf( "%s%d", str_pad( 'Total queries: ', 20 ), $this->query_total );
 			$strings[] = sprintf( "%s%d", str_pad( 'Cached queries: ', 20 ), $this->query_hits );
@@ -639,7 +641,8 @@ class DbCache_WpdbInjection_QueryCaching extends DbCache_WpdbInjection {
 						trim( $query['query'] ) );
 				}
 			}
-		} else {
+		} elseif ( $this->_config->get_string( 'common.support' ) == '' &&
+					!$this->_config->get_boolean( 'common.tweeted' ) ){
 			$reason = $this->get_reject_reason();
 			$append = ( $reason ? sprintf( ' (%s)', $reason ) : '' );
 
