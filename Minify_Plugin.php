@@ -1594,6 +1594,16 @@ class _W3_MinifyJsAuto {
 
 		// find embed position
 		$embed_pos = $this->embed_pos;
+		
+		if ( $this->minify_group_number <= 0 && $this->group_type == 'head' ) {
+			// try forced embed position
+			$forced_embed_pos = strpos($this->buffer, '<!-- W3TC-include-js-head -->');
+		
+			if ($forced_embed_pos !== false) {
+				$this->buffer = str_replace('<!-- W3TC-include-js-head -->', '', $this->buffer);
+				$embed_pos = $forced_embed_pos;
+			}
+		}
 
 		// build minified script tag
 		$data = array(
