@@ -1349,18 +1349,19 @@ class PgCache_ContentGrabber {
 	 * @return string
 	 */
 	public function w3tc_footer_comment( $strings ) {
-		$strings[] = sprintf(
+		$comment = sprintf(
 			__( 'Page Caching using %s%s', 'w3-total-cache' ),
 			Cache::engine_name( $this->_config->get_string( 'pgcache.engine' ) ),
 			( $this->cache_reject_reason != ''
 				? sprintf( ' (%s)', $this->cache_reject_reason )
 				: '' ) );
 
-
 		if ( $this->_debug ) {
 			$time_total = Util_Debug::microtime() - $this->_time_start;
 			$engine = $this->_config->get_string( 'pgcache.engine' );
+			$strings[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~";
 			$strings[] = "Page cache debug info:";
+			$strings[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~";
 			$strings[] = sprintf( "%s%s", str_pad( 'Engine: ', 20 ), Cache::engine_name( $engine ) );
 			$strings[] = sprintf( "%s%s", str_pad( 'Cache key: ', 20 ), $this->_page_key );
 
@@ -1379,9 +1380,12 @@ class PgCache_ContentGrabber {
 				foreach ( $headers['plain'] as $i ) {
 					$strings[] = sprintf( "%s%s",
 						str_pad( $i['name'] . ': ', 20 ),
-						Util_Content::escape_comment( $i['value'] ) );
+						Util_Content::escape_comment( trim( $i['value'] ) ) );
 				}
 			}
+		} elseif ( $this->_config->get_string( 'common.support' ) == '' &&
+					!$this->_config->get_boolean( 'common.tweeted' ) ){
+			$strings[] = $comment;
 		}
 
 		return $strings;

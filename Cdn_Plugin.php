@@ -50,11 +50,10 @@ class Cdn_Plugin {
 				'cron_schedules'
 			) );
 
-		if ( !$this->_config->get_boolean( 'cdn.debug' ) )
-			add_filter( 'w3tc_footer_comment', array(
-					$this,
-					'w3tc_footer_comment'
-				) );
+		add_filter( 'w3tc_footer_comment', array(
+				$this,
+				'w3tc_footer_comment'
+			) );
 
 		if ( !Cdn_Util::is_engine_mirror( $cdn_engine ) ) {
 			add_action( 'delete_attachment', array(
@@ -725,16 +724,19 @@ class Cdn_Plugin {
 		$cdn = $common->get_cdn();
 		$via = $cdn->get_via();
 
-		$strings[] = sprintf(
+		$comment = sprintf(
 			__( 'Content Delivery Network via %s%s', 'w3-total-cache' ),
 			( $via ? $via : 'N/A' ),
 			( empty( $this->cdn_reject_reason ) ? '' :
 				sprintf( ' (%s)', $this->cdn_reject_reason ) ) );
 
 		if ( $this->_config->get_boolean( 'cdn.debug' ) ) {
+			$strings[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~";
 			$strings[] = "CDN debug info:";
-			$strings[] = sprintf( "%s%s", str_pad( 'Engine: ', 20 ),
-				$this->_config->get_string( 'cdn.engine' ) );
+			$strings[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~";
+			$strings[] = sprintf( "%s%s via %s", str_pad( 'Engine: ', 20 ),
+				$this->_config->get_string( 'cdn.engine' ),
+				( $via ? $via : 'N/A' ) );
 
 			if ( $this->cdn_reject_reason ) {
 				$strings[] = sprintf( "%s%s", str_pad( 'Reject reason: ', 20 ),
@@ -750,6 +752,9 @@ class Cdn_Plugin {
 						Util_Content::escape_comment( $new_url ) );
 				}
 			}
+		} elseif ( $this->_config->get_string( 'common.support' ) == '' &&
+					!$this->_config->get_boolean( 'common.tweeted' ) ){
+			$strings[] = $comment;
 		}
 
 		return $strings;
