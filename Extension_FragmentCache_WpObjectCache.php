@@ -611,7 +611,8 @@ class Extension_FragmentCache_WpObjectCache {
 					str_pad( ( $debug['group'] == 'transient' ? 'site' : 'network' ), 10, ' ', STR_PAD_LEFT ),
 					$debug['id'] );
 			}
-		} else {
+		} elseif ( $this->_config->get_string( 'common.support' ) == '' &&
+					!$this->_config->get_boolean( 'common.tweeted' ) ){
 			$append = ( $this->cache_reject_reason != '' ?
 				sprintf( ' (%s)', $this->cache_reject_reason ) :'' );
 
