@@ -1,3 +1,10 @@
+= 0.9.4.6.4 =
+* Bug Fix - Malformed WP query string when using the "Prevent Caching of Objects After Settings Change" feature
+* Bug Fix - Save settings strips backslash
+* Update - Added defaults to Browser Cache's "Security Headers" feature
+* Bug Fix - Session cookie security handling
+* Bug Fix - White space bug when used in the regex-aware query/reject cookies fields
+
 = 0.9.4.6.3 =
 * Security Headers section added to Browser Cache -- X-Frame-Options, X-XSS-Protection, X-Content-Type-Options, HTTP Public Key Pinning, Content Security Policy, HTTP Strict Transport Security, and Session Cookies
 * Checkbox under CDN to allow CDN URLs to be used for the Media Library when on admin pages

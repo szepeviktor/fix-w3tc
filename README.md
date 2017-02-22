@@ -21,8 +21,8 @@ Make sure you select the correct generation that fits your environment.
 
 | Generation    | Date |Version | Download Link
 | ------------- |:-------------:|:-----:|-----|
-| For 0.9.4.x Users      | 2017-02-03 | 0.9.4.6.3 | [w3-total-cache-fixed-(for-v0.9.4.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.4.6.3/w3-total-cache-fixed-for-v0.9.4.x-users.zip)
-| For 0.9.5.x Users      | 2017-02-02 | 0.9.5.2.2 | [w3-total-cache-fixed-(for-v0.9.5.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.5.2.2/w3-total-cache-fixed-for-v0.9.5.x-users.zip)
+| For 0.9.4.x Users      | 2017-02-21 | 0.9.4.6.4 | [w3-total-cache-fixed-(for-v0.9.4.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.4.6.4/w3-total-cache-fixed-for-v0.9.4.x-users.zip)
+| For 0.9.5.x Users      | 2017-02-21 | 0.9.5.2.3 | [w3-total-cache-fixed-(for-v0.9.5.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.5.2.3/w3-total-cache-fixed-for-v0.9.5.x-users.zip)
 
 ---
 
@@ -31,7 +31,7 @@ _**Note:** After the following steps, all future updates and installations will 
 
 1. Deactivate (but don't delete) your existing W3 Total Cache plugin (if installed) from within WordPress' Plugin page.
 1. Use FTP or some other file manager to navigate to _`wp-content/plugins/`_.
-1. Download the **_latest release_** (see above) and extract its contents into _`wp-content/plugins/`_.
+1. Download the **_latest release_** (see above) and extract its contents into _`wp-content/plugins/`_. The extracted directory name should be: **`w3-total-cache-fixed`**. If not, then rename it.
 1. Activate the _W3 Total Cache (Fixed)_ plugin from within WordPress' Plugin page.
 1. Verify everything is working correctly and that your original configuration settings are still present. However, if any problems do occur during this installation then just deactivate this plugin and reactivate your original one.  **_Do not attempt to activate both plugins._**
 1. Delete the previously deactivated plugin (step 1) from within WordPress' Plugin page.
