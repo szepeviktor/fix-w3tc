@@ -2,8 +2,8 @@
 Contributors: fredericktownes
 Tags: seo, w3totalcache, w3 totalcache, w3total cache, wpo, web performance optimization, performance, availability, scaling, scalability, user experience, cache, caching, page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, gzip, deflate, minify, cdn, content delivery network, media library, performance, speed, multiple hosts, css, merge, combine, unobtrusive javascript, compress, optimize, optimizer, javascript, js, cascading style sheet, plugin, yui, yui compressor, zend, opcache, apcu, google drive, highwinds, full site delivery, full site acceleration, google, google rank, google page speed, mod_pagespeed, new relic, newrelic, aws, s3, cloudfront, sns, elasticache, rds, flash media server, amazon web services, cloud files, rackspace, akamai, max cdn, limelight, cloudflare, mod_cloudflare, microsoft, microsoft azure, iis, nginx, litespeed, apache, varnish, xcache, apc, eacclerator, wincache, redis, narcissus, wpmml, mysql, w3 total cache, batcache, wp cache, wp super cache, quick cache, wp minify, bwp-minify, buddypress
 Requires at least: 3.2
-Tested up to: 4.7.1
-Stable tag: 0.9.5.2.2
+Tested up to: 4.7.2
+Stable tag: 0.9.5.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,28 @@ http://www.youtube.com/watch?v=rkmrQP8S5KY
 * Reverse proxy integration via Nginx or Varnish
 
 Improve the user experience for your readers without having to change WordPress, your theme, your plugins or how you produce your content.
+
+== Installation ==
+
+1. Deactivate and uninstall any other caching plugin you may be using. Pay special attention if you have customized the rewrite rules for fancy permalinks, have previously installed a caching plugin or have any browser caching rules as W3TC will automate management of all best practices. Also make sure wp-content/ and wp-content/uploads/ (temporarily) have 777 permissions before proceeding, e.g. in the terminal: `# chmod 777 /var/www/vhosts/domain.com/httpdocs/wp-content/` using your web hosting control panel or your FTP / SSH account.
+
+2. Login as an administrator to your WordPress Admin account. Using the "Add New" menu option under the "Plugins" section of the navigation, you can click the "Upload" link, find the .zip file you downloaded and then click "Install Now". Or you can unzip and FTP upload the plugin to your plugins directory (wp-content/plugins/). In either case, when done the directory path: wp-content/plugins/w3-total-cache/ should exist.
+
+3. Locate and activate the plugin on the "Plugins" page. Page caching will **automatically be running** in basic mode. Set the permissions of wp-content and wp-content/uploads back to 755, e.g. in the terminal: `# chmod 755 /var/www/vhosts/domain.com/httpdocs/wp-content/`.
+
+4. Now click the "Settings" link to proceed to the "General Settings" tab; in most cases, "disk enhanced" mode for page cache is a "good" starting point.
+
+5. The "Compatibility mode" option found in the advanced section of the "Page Cache Settings" tab will enable functionality that optimizes the interoperablity of caching with WordPress, is disabled by default, but highly recommended. Years of testing in hundreds of thousands of installations have helped us learn how to make caching behave well with WordPress. The tradeoff is that disk enhanced page cache performance under load tests will be decreased by ~20% at scale.
+
+6. *Recommended:* On the "Minify Settings" tab, all of the recommended settings are preset. If auto mode causes issues with your web site's layout, switch to manual mode and use the help button to simplify discovery of your CSS and JS files and groups. Pay close attention to the method and location of your JS group embeddings. See the plugin's FAQ for more information on usage.
+1. *Recommended:* On the "Browser Cache" tab, HTTP compression is enabled by default. Make sure to enable other options to suit your goals.
+
+7. *Recommended:* If you already have a content delivery network (CDN) provider, proceed to the "Content Delivery Network" tab and populate the fields and set your preferences. If you do not use the Media Library, you will need to import your images etc into the default locations. Use the Media Library Import Tool on the "Content Delivery Network" tab to perform this task. If you do not have a CDN provider, you can still improve your site's performance using the "Self-hosted" method. On your own server, create a subdomain and matching DNS Zone record; e.g. static.domain.com and configure FTP options on the "Content Delivery Network" tab accordingly. Be sure to FTP upload the appropriate files, using the available upload buttons.
+1. *Optional:* On the "Database Cache" tab, the recommended settings are preset. If using a shared hosting account use the "disk" method with caution, the response time of the disk may not be fast enough, so this option is disabled by default. Try object caching instead for shared hosting.
+
+8. *Optional:* On the "Object Cache" tab, all of the recommended settings are preset. If using a shared hosting account use the "disk" method with caution, the response time of the disk may not be fast enough, so this option is disabled by default. Test this option with and without database cache to ensure that it provides a performance increase.
+
+9. *Optional:* On the "User Agent Groups" tab, specify any user agents, like mobile phones if a mobile theme is used. 
 
 == Frequently Asked Questions ==
 
@@ -244,19 +266,6 @@ Yes! Please [reach out to us](https://www.w3-edge.com/contact/) and we'll get yo
 
 Install the plugin to read the full FAQ on the plugins FAQ tab.
 
-== Installation ==
-
-1. Deactivate and uninstall any other caching plugin you may be using. Pay special attention if you have customized the rewrite rules for fancy permalinks, have previously installed a caching plugin or have any browser caching rules as W3TC will automate management of all best practices. Also make sure wp-content/ and wp-content/uploads/ (temporarily) have 777 permissions before proceeding, e.g. in the terminal: `# chmod 777 /var/www/vhosts/domain.com/httpdocs/wp-content/` using your web hosting control panel or your FTP / SSH account.
-1. Login as an administrator to your WordPress Admin account. Using the "Add New" menu option under the "Plugins" section of the navigation, you can either search for: w3 total cache or if you've downloaded the plugin already, click the "Upload" link, find the .zip file you download and then click "Install Now". Or you can unzip and FTP upload the plugin to your plugins directory (wp-content/plugins/). In either case, when done wp-content/plugins/w3-total-cache/ should exist.
-1. Locate and activate the plugin on the "Plugins" page. Page caching will **automatically be running** in basic mode. Set the permissions of wp-content and wp-content/uploads back to 755, e.g. in the terminal: `# chmod 755 /var/www/vhosts/domain.com/httpdocs/wp-content/`.
-1. Now click the "Settings" link to proceed to the "General Settings" tab; in most cases, "disk enhanced" mode for page cache is a "good" starting point.
-1. The "Compatibility mode" option found in the advanced section of the "Page Cache Settings" tab will enable functionality that optimizes the interoperablity of caching with WordPress, is disabled by default, but highly recommended. Years of testing in hundreds of thousands of installations have helped us learn how to make caching behave well with WordPress. The tradeoff is that disk enhanced page cache performance under load tests will be decreased by ~20% at scale.
-1. *Recommended:* On the "Minify Settings" tab, all of the recommended settings are preset. If auto mode causes issues with your web site's layout, switch to manual mode and use the help button to simplify discovery of your CSS and JS files and groups. Pay close attention to the method and location of your JS group embeddings. See the plugin's FAQ for more information on usage.
-1. *Recommended:* On the "Browser Cache" tab, HTTP compression is enabled by default. Make sure to enable other options to suit your goals.
-1. *Recommended:* If you already have a content delivery network (CDN) provider, proceed to the "Content Delivery Network" tab and populate the fields and set your preferences. If you do not use the Media Library, you will need to import your images etc into the default locations. Use the Media Library Import Tool on the "Content Delivery Network" tab to perform this task. If you do not have a CDN provider, you can still improve your site's performance using the "Self-hosted" method. On your own server, create a subdomain and matching DNS Zone record; e.g. static.domain.com and configure FTP options on the "Content Delivery Network" tab accordingly. Be sure to FTP upload the appropriate files, using the available upload buttons.
-1. *Optional:* On the "Database Cache" tab, the recommended settings are preset. If using a shared hosting account use the "disk" method with caution, the response time of the disk may not be fast enough, so this option is disabled by default. Try object caching instead for shared hosting.
-1. *Optional:* On the "Object Cache" tab, all of the recommended settings are preset. If using a shared hosting account use the "disk" method with caution, the response time of the disk may not be fast enough, so this option is disabled by default. Test this option with and without database cache to ensure that it provides a performance increase.
-1. *Optional:* On the "User Agent Groups" tab, specify any user agents, like mobile phones if a mobile theme is used. 
 
 == What users have to say: ==
 
@@ -769,6 +778,20 @@ Please reach out to all of these people and support their projects if you're so 
 
 == Changelog ==
 
+= 0.9.5.2.3 =
+* Bug Fix - Incorrect Use of Removing Query String From URLs
+* Update - Enhanced remove_query() to Recognize Other Ampersand Forms
+* Bug Fix - WP Query String Being Stripped Unexpectedly
+* New Feature - Filter to Set Cache Lifetime Period On A Per-Page Basis
+* Bug Fix - Warning: Invalid Arguments in Minify_Environment
+* Bug Fix - Feeds Not Caching Nor Serving Back as XML
+* Update - Smart Browser Cache Default Settings
+* Update - Expanded Regex Support & Improved Page Cache Cookies
+* Bug Fix - Debug Mode Not Working
+* Bug Fix - PHP Deprecation Notice – is_comments_popup()
+* Bug Fix - W3TC-Include-JS-Head Tag Implementation Missing For Auto Mode
+* Bug Fix - Catch Exceptions Thrown When Saving Config
+
 = 0.9.5.2.2 =
 * Bug Fix - Malformed HTML in Generated Item UIs (Admin Pages)
 * New Feature - "Security Headers" Section Added to Browser Cache
@@ -776,7 +799,9 @@ Please reach out to all of these people and support their projects if you're so 
 * Bug Fix - W3TC was Collecting Tracking Usage At All Times
 * Bug Fix - Additional Home URLs (of Page Cache) not Purging
 * Bug Fix - Configuration Bug where Redis/Memcached server entries were not being parsed correctly
-* Bug Fix - Fix For Undefined Variable "is_amp_endpoint"
+* Bug Fix - Undefined Variable: "is_amp_endpoint"
+* Bug Fix - Error Message: "Trying to Get Property of Non-Object"
+* Update - Page Cache -- "Accepted Query Strings" Enhancement
 
 = 0.9.5.2.1 =
 * New Feature - Dashboard Widget For Flushing Individual User-Inputted URLs
