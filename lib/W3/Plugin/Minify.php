@@ -1408,16 +1408,24 @@ class _W3_MinifyJsAuto {
         $urls = $this->minify_helpers->get_minify_urls_for_files(
             $this->files_to_minify, 'js');
 
-        $script = '';
+        $script  = '';
+        $preload = '';
         if (is_array($urls)) {
             foreach ($urls as $url) {
-                $script .= $this->minify_helpers->generate_script_tag($url, 
-                    $this->embed_type);
+                $script .= $this->minify_helpers->generate_script_tag($url, $this->embed_type);
+                if ($this->embed_type == 'blocking') {
+                	$preload = '<link rel="preload" href="'.str_replace('&', '&amp;', $url).'" as="script" />';
+                }
             }
         }
 
         // replace
         $this->buffer = substr_replace($this->buffer, $script, $embed_pos, 0);
+        
+        if( !empty($preload) ){
+        	$this->buffer = substr_replace($this->buffer, $preload, '<!-- W3TC-include-js-head -->', 0);
+        }
+        
         $this->files_to_minify = array();
         $this->minify_group_number++;
     }
