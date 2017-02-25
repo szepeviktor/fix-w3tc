@@ -112,7 +112,7 @@ Util_Ui::config_item( array(
 		'control' => 'textarea',
 		'label' => __( 'Additional home <acronym title="Uniform Resource Locator">URL</acronym>s:', 'w3-total-cache' ),
 		'enabled' => !Util_Environment::is_wpmu_subdomain(),
-		'description' => __( 'Specify full home <acronym title="Uniform Resource Locator">URL</acronym>s of your mirrors so that plugin will flush it\'s cache when content is changed. For example:<br /> http://my-site.com<br />http://www.my-site.com<br />https://my-site.com',
+		'description' => __( 'Specify full home <acronym title="Uniform Resource Locator">URL</acronym>s of your mirrors so that the plugin will flush its cache when content is changed. For example:<br /> http://my-site.com<br />http://www.my-site.com<br />https://my-site.com',
 			'w3-total-cache' )
 	) );
 ?>
