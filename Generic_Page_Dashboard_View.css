@@ -112,6 +112,34 @@
     float:left;
     margin-right:10px;
 }
+
+@media only screen and (max-device-width: 480px) {
+	#w3tc-dashboard-widgets #postbox-container-left {
+		margin-right: 0px;
+	}
+	#w3tc-dashboard-widgets {
+        min-width: auto;
+    }
+    #postbox-container-right {
+        width: 100%;
+        white-space: nowrap;
+        float: left;
+        margin-left: 0px;
+    }
+    #w3tc-dashboard-widgets {
+        background: none;
+    }
+    #w3tc-dashboard-widgets #normal-sortables .postbox {
+        width: 100%;
+    }
+    .w3tc_generic_widgetservice_label {
+        display: inline;
+    }
+    #cdn_maxcdn_authorization_key {
+        width: 100%;
+    }
+}
+
 /**
  * HiDPI Displays
  */

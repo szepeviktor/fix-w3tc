@@ -47,7 +47,7 @@ class Root_Loader {
 			$plugins[] = new PgCache_Plugin_Admin();
 			$plugins[] = new Minify_Plugin_Admin();
 			$plugins[] = new Generic_WidgetSpreadTheWord_Plugin();
-			$plugins[] = new Generic_Plugin_WidgetNews();
+			//$plugins[] = new Generic_Plugin_WidgetNews();
 			$plugins[] = new Generic_Plugin_WidgetForum();
 			$plugins[] = new SystemOpCache_Plugin_Admin();
 
