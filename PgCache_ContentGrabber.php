@@ -957,9 +957,11 @@ class PgCache_ContentGrabber {
 
         $reject_cookies = implode( '|', $reject_cookies );
 
-        foreach ( $_COOKIE as $key => $value ) {
-            if ( @preg_match( '~' . $reject_cookies . '~i', $key . "=$value" ) ) {
-                return false;
+        if ( !empty( $reject_cookies ) ) {
+            foreach ( $_COOKIE as $key => $value ) {
+                if ( @preg_match( '~' . $reject_cookies . '~i', $key . "=$value" ) ) {
+                    return false;
+                }
             }
         }
 
