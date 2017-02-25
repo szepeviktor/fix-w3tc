@@ -73,3 +73,6 @@ Type | More Information |
 :beetle: Bug Fix | [PHP Deprecation Notice &ndash; _is_comments_popup()_](https://github.com/szepeviktor/w3-total-cache-fixed/pull/407) |
 :beetle: Bug Fix | [_W3TC-Include-JS-Head_ Tag Implementation Missing For Auto Mode](https://github.com/szepeviktor/w3-total-cache-fixed/pull/401) |
 :beetle: Bug Fix | [Catch Exceptions Thrown When Saving Config](https://github.com/szepeviktor/w3-total-cache-fixed/pull/408) |
+:beetle: Bug Fix | [Fix feeds on the dashboard](https://github.com/szepeviktor/w3-total-cache-fixed/pull/413) |
+:diamond_shape_with_a_dot_inside: Update | [Make the dashboard responsive](https://github.com/szepeviktor/w3-total-cache-fixed/pull/414) |
+:beetle: Bug Fix | [Deprecated the "Allow, Deny, and Order" directives](https://github.com/szepeviktor/w3-total-cache-fixed/pull/418) |
