@@ -506,8 +506,6 @@ class Util_Environment {
 		return str_replace( '\\', DIRECTORY_SEPARATOR, $home_path );
 	}
 
-
-
 	/**
 	 * Returns absolute path to document root
 	 *
@@ -529,7 +527,7 @@ class Util_Environment {
 				$_SERVER['PHP_SELF'] );
 			if ( substr( $script_filename, -strlen( $php_self ) ) == $php_self ) {
 				$document_root = substr( $script_filename, 0, -strlen( $php_self ) );
-				$document_root = realpath( $document_root );
+				$document_root = Util_Environment::normalize_path(realpath( $document_root ));
 				return $document_root;
 			}
 		}
@@ -545,7 +543,7 @@ class Util_Environment {
 			$document_root = ABSPATH;
 		}
 
-		$document_root = realpath( $document_root );
+		$document_root = Util_Environment::normalize_path(realpath( $document_root ));
 		return $document_root;
 	}
 
