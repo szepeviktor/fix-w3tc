@@ -117,7 +117,7 @@ class Util_Environment {
         $document_root = Util_Environment::document_root();
         
         if ( DIRECTORY_SEPARATOR != '/' ){
-        	$filename = str_replace( DIRECTORY_SEPARATOR, '/', $filename);
+        	$filename = str_replace(DIRECTORY_SEPARATOR, '/', $filename);
         }
 		
         if ( substr( $filename, 0, strlen( $document_root ) ) != $document_root ){
