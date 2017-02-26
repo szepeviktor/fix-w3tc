@@ -107,27 +107,30 @@ class Util_Environment {
 		return $str;
 	}
 
-	/*
-     * Returns URL from filename/dirname
-     *
-     * @return string
-     */
-	static public function filename_to_url( $filename, $use_site_url = false ) {
-		// using wp-content instead of document_root as known dir since dirbased
-		// multisite wp adds blogname to the path inside site_url
-		if ( substr( $filename, 0, strlen( WP_CONTENT_DIR ) ) != WP_CONTENT_DIR )
-			return '';
-		$uri_from_wp_content = substr( $filename, strlen( WP_CONTENT_DIR ) );
+    /*
+    * Returns URL from filename/dirname
+    *
+    * @return string
+    */
+    static public function filename_to_url( $filename, $use_site_url = false ) {
+		
+        $document_root = Util_Environment::document_root();
+		
+        if ( substr( $filename, 0, strlen( $document_root ) ) != $document_root ){
+            return '';
+        }
+		
+        $uri_from_document_root = substr($filename, strlen($document_root) - strlen($filename));
+		
+        if ( DIRECTORY_SEPARATOR != '/' ){
+            $uri_from_document_root = str_replace( DIRECTORY_SEPARATOR, '/', $uri_from_document_root);
+        }
+		
+        $url = home_url($uri_from_document_root);
+        $url = apply_filters( 'w3tc_filename_to_url', $url );
 
-		if ( DIRECTORY_SEPARATOR != '/' )
-			$uri_from_wp_content = str_replace( DIRECTORY_SEPARATOR, '/',
-				$uri_from_wp_content );
-
-		$url = content_url( $uri_from_wp_content );
-		$url = apply_filters( 'w3tc_filename_to_url', $url );
-
-		return $url;
-	}
+        return $url;
+    }
 
 	/**
 	 * Returns true if database cluster is used
