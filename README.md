@@ -76,3 +76,5 @@ Type | More Information |
 :beetle: Bug Fix | [Fix feeds on the dashboard](https://github.com/szepeviktor/w3-total-cache-fixed/pull/413) |
 :diamond_shape_with_a_dot_inside: Update | [Make the dashboard responsive](https://github.com/szepeviktor/w3-total-cache-fixed/pull/414) |
 :beetle: Bug Fix | [Deprecated the "Allow, Deny, and Order" directives](https://github.com/szepeviktor/w3-total-cache-fixed/pull/418) |
+:beetle: Bug Fix | [Util_Environment::document_root() On Windows return "/" instead of "\\"](https://github.com/szepeviktor/w3-total-cache-fixed/pull/422) |
+:cyclone: New Feature | [Customize Cache Directory](https://github.com/szepeviktor/w3-total-cache-fixed/pull/423) |
