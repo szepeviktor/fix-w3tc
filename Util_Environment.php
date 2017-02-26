@@ -113,17 +113,10 @@ class Util_Environment {
      * @return string
      */
 	static public function filename_to_url( $filename, $use_site_url = false ) {
-		// using wp-content instead of document_root as known dir since dirbased
-		// multisite wp adds blogname to the path inside site_url
-		if ( substr( $filename, 0, strlen( WP_CONTENT_DIR ) ) != WP_CONTENT_DIR )
-			return '';
-		$uri_from_wp_content = substr( $filename, strlen( WP_CONTENT_DIR ) );
-
-		if ( DIRECTORY_SEPARATOR != '/' )
-			$uri_from_wp_content = str_replace( DIRECTORY_SEPARATOR, '/',
-				$uri_from_wp_content );
-
-		$url = content_url( $uri_from_wp_content );
+        // this code now allows you to go outside the WP_CONTENT_DIR for minifiied/cached files
+        $filenamePath = substr($filename, strlen(Util_Environment::document_root())-strlen($filename));
+        // this maps to to root home even on multisite.
+        $url = home_url($filenamePath);
 		$url = apply_filters( 'w3tc_filename_to_url', $url );
 
 		return $url;
