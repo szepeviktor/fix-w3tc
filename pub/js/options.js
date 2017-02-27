@@ -1153,24 +1153,24 @@ jQuery(function() {
             case 'yuijs':
                 jQuery.extend(params, {
                     engine: 'yuijs',
-                    path_java: jQuery('#minify__yuijs__path__java').val(),
-                    path_jar: jQuery('#minify__yuijs__path__jar').val()
+                    path_java: jQuery('#minify_yuijs_path_java').val(),
+                    path_jar: jQuery('#minify_yuijs_path_jar').val()
                 });
                 break;
 
             case 'yuicss':
                 jQuery.extend(params, {
                     engine: 'yuicss',
-                    path_java: jQuery('#minify__yuicss__path__java').val(),
-                    path_jar: jQuery('#minify__yuicss__path__jar').val()
+                    path_java: jQuery('#minify_yuicss_path_java').val(),
+                    path_jar: jQuery('#minify_yuicss_path_jar').val()
                 });
                 break;
 
             case 'ccjs':
                 jQuery.extend(params, {
                     engine: 'ccjs',
-                    path_java: jQuery('#minify__ccjs__path__java').val(),
-                    path_jar: jQuery('#minify__ccjs__path__jar').val()
+                    path_java: jQuery('#minify_ccjs_path_java').val(),
+                    path_jar: jQuery('#minify_ccjs_path_jar').val()
                 });
                 break;
             case 'googleccjs':
