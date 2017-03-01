@@ -90,7 +90,14 @@ class Minify_ClosureCompiler {
             ),
             $userOptions
         );
-        $cmd = self::$javaExecutable . ' -jar ' . escapeshellarg(self::$jarFile)
+        
+        $javaExecutable = self::$javaExecutable;
+        
+        if( false !== strpos(trim($javaExecutable), ' ') ){
+        	$javaExecutable = '"'.$javaExecutable.'"';
+        }
+        	
+        $cmd = $javaExecutable . ' -jar ' . escapeshellarg(self::$jarFile)
              . (preg_match('/^[\\da-zA-Z0-9\\-]+$/', $o['charset'])
                 ? " --charset {$o['charset']}"
                 : '');
