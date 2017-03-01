@@ -79,3 +79,4 @@ Type | More Information |
 :beetle: Bug Fix | [Util_Environment::document_root() On Windows return "/" instead of "\\"](https://github.com/szepeviktor/w3-total-cache-fixed/pull/422) |
 :cyclone: New Feature | [Customize Cache Directory](https://github.com/szepeviktor/w3-total-cache-fixed/pull/423) |
 :beetle: Bug Fix | [YUI Compressor fix for JAVA path](https://github.com/szepeviktor/w3-total-cache-fixed/pull/426) |
+:beetle: Bug Fix | [Closure Compiler fix for JAVA path](https://github.com/szepeviktor/w3-total-cache-fixed/pull/428) |
