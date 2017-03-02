@@ -38,7 +38,10 @@ class Generic_AdminActions_Test {
 	 * @return void
 	 */
 	function w3tc_test_redis() {
-		$servers = Util_Request::get_array( 'servers' );
+		$servers    = Util_Request::get_array( 'servers' );
+		$persistent = Util_Request::get_boolean( 'persistent', false );
+		$password   = Util_Request::get_string('password', '');
+		$dbid       = Util_Request::get_integer( 'dbid', 0 );
 
 		if ( count( $servers ) <= 0 )
 			$success = false;
@@ -47,8 +50,10 @@ class Generic_AdminActions_Test {
 
 			foreach ( $servers as $server ) {
 				@$cache = Cache::instance( 'redis', array(
-						'servers' => $server,
-						'persistent' => false
+						'servers'    => $server,
+						'persistent' => $persistent,
+						'password'   => $password,
+						'dbid'       => $dbid
 					) );
 				if ( is_null( $cache ) )
 					$success = false;
