@@ -80,3 +80,4 @@ Type | More Information |
 :cyclone: New Feature | [Customize Cache Directory](https://github.com/szepeviktor/w3-total-cache-fixed/pull/423) |
 :beetle: Bug Fix | [YUI Compressor fix for JAVA path](https://github.com/szepeviktor/w3-total-cache-fixed/pull/426) |
 :beetle: Bug Fix | [Closure Compiler fix for JAVA path](https://github.com/szepeviktor/w3-total-cache-fixed/pull/428) |
+:beetle: Bug Fix | [Fixed Redis Test on Admin Dashboard](https://github.com/szepeviktor/w3-total-cache-fixed/pull/430) |
