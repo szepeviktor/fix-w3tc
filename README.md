@@ -81,3 +81,4 @@ Type | More Information |
 :beetle: Bug Fix | [YUI Compressor fix for JAVA path](https://github.com/szepeviktor/w3-total-cache-fixed/pull/426) |
 :beetle: Bug Fix | [Closure Compiler fix for JAVA path](https://github.com/szepeviktor/w3-total-cache-fixed/pull/428) |
 :beetle: Bug Fix | [Fixed Redis Test on Admin Dashboard](https://github.com/szepeviktor/w3-total-cache-fixed/pull/430) |
+:cyclone: New Feature | [Extends "http 2 push" to page cache enhanced](https://github.com/szepeviktor/w3-total-cache-fixed/pull/433) |
