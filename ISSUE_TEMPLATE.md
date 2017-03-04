@@ -12,8 +12,8 @@ It is helpful if you provide details of your environment:
 
 Please provide an error log if you can by adding these lines to your `wp-config.php`:
 
-
 define( 'WP_DEBUG', true );
+
 define( 'WP_DEBUG_LOG', true );
 
 WordPress puts the error log in `/wp-content/debug.log`
