@@ -378,7 +378,7 @@ Util_Ui::config_item( array(
 
         <?php Util_Ui::button_config_save( 'browsercache_media' ); ?>
         <?php Util_Ui::postbox_footer(); ?>
-        
+
         <?php Util_Ui::postbox_header( __( 'Security Headers', 'w3-total-cache' ), '', 'security' ); ?>
         <p><?php _e( 'HTTP security headers provide another layer of protection for your website by helping to mitigate attacks and security vulnerabilities.', 'w3-total-cache' ); ?></p>
         <table class="form-table">
@@ -409,12 +409,12 @@ Util_Ui::config_item( array(
             <tr>
                 <th>
                     <label for="browsercache_security_hsts_directive"><?php Util_Ui::e_config_label( 'browsercache.security.hsts.directive' ) ?></label>
-                </th>			 
+                </th>
                 <td>
                     <select id="browsercache_security_hsts_directive"
                         <?php Util_Ui::sealing_disabled( 'browsercache.' ) ?>
                         name="browsercache__security__hsts__directive">
-                        <?php $value = $this->_config->get_string( 'browsercache.security.hsts.directive' ); ?>				
+                        <?php $value = $this->_config->get_string( 'browsercache.security.hsts.directive' ); ?>
                         <option value="maxage"<?php selected( $value, 'maxage' ); ?>><?php _e( 'max-age=EXPIRES_SECONDS', 'w3-total-cache' ); ?></option>
                         <option value="maxagepre"<?php selected( $value, 'maxagepre' ); ?>><?php _e( 'max-age=EXPIRES_SECONDS; preload', 'w3-total-cache' ); ?></option>
                         <option value="maxageinc"<?php selected( $value, 'maxageinc' ); ?>><?php _e( 'max-age=EXPIRES_SECONDS; includeSubDomains', 'w3-total-cache' ); ?></option>
@@ -432,7 +432,7 @@ Util_Ui::config_item( array(
             <tr>
                 <th>
                     <label for="browsercache_security_xfo_directive"><?php Util_Ui::e_config_label( 'browsercache.security.xfo.directive' ) ?></label>
-                </th>			 
+                </th>
                 <td>
                     <select id="browsercache_security_xfo_directive"
                         <?php Util_Ui::sealing_disabled( 'browsercache.' ) ?>
@@ -456,7 +456,7 @@ Util_Ui::config_item( array(
             <tr>
                 <th>
                     <label for="browsercache_security_xss_directive"><?php Util_Ui::e_config_label( 'browsercache.security.xss.directive' ) ?></label>
-                </th>			 
+                </th>
                 <td>
                     <select id="browsercache_security_xss_directive"
                         <?php Util_Ui::sealing_disabled( 'browsercache.' ) ?>
@@ -539,6 +539,33 @@ Util_Ui::config_item( array(
                         <option value="1"<?php selected( $value, '1' ); ?>><?php _e( 'Yes = Don\'t Enforce HPKP', 'w3-total-cache' ); ?></option>
                     </select>
                     <div id="browsercache_security_pkp_report_only_description"></div>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <?php $this->checkbox( 'browsercache.security.referrer.policy' ) ?> <?php Util_Ui::e_config_label( 'browsercache.security.referrer.policy' ) ?></label>
+                    <br /><span class="description"><?php _e( 'This header restricts the values of the referer header in outbound links.' ); ?></span>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <label for="browsercache_security_referrer_policy_directive"><?php Util_Ui::e_config_label( 'browsercache.security.referrer.policy.directive' ) ?></label>
+                </th>
+                <td>
+                    <select id="browsercache_security_referrer_policy_directive"
+                        <?php Util_Ui::sealing_disabled( 'browsercache.' ) ?>
+                        name="browsercache__security__referrer__policy__directive">
+                        <?php $value = $this->_config->get_string( 'browsercache.security.referrer.policy.directive' ); ?>
+                        <option value="0"<?php selected( $value, '0' ); ?>><?php _e( '""', 'w3-total-cache' ); ?></option>
+                        <option value="no-referrer"<?php selected( $value, 'no-referrer' ); ?>><?php _e( 'no-referrer', 'w3-total-cache' ); ?></option>
+                        <option value="no-referrer-when-downgrade"<?php selected( $value, 'no-referrer-when-downgrade' ); ?>><?php _e( 'no-referrer-when-downgrade', 'w3-total-cache' ); ?></option>
+                        <option value="same-origin"<?php selected( $value, 'same-origin' ); ?>><?php _e( 'same-origin', 'w3-total-cache' ); ?></option>
+                        <option value="origin"<?php selected( $value, 'origin' ); ?>><?php _e( 'origin', 'w3-total-cache' ); ?></option>
+                        <option value="strict-origin"<?php selected( $value, 'strict-origin' ); ?>><?php _e( 'strict-origin', 'w3-total-cache' ); ?></option>
+                        <option value="origin-when-cross-origin"<?php selected( $value, 'origin-when-cross-origin' ); ?>><?php _e( 'origin-when-cross-origin', 'w3-total-cache' ); ?></option>
+                        <option value="unsafe-url"<?php selected( $value, 'unsafe-url' ); ?>><?php _e( 'unsafe-url', 'w3-total-cache' ); ?></option>
+                    </select>
+                    <div id="browsercache_security_referrer_policy_directive_description"></div>
                 </td>
             </tr>
             <tr>

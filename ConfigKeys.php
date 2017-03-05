@@ -1639,6 +1639,14 @@ $keys = array(
         'type' => 'string',
         'default' => '0'
     ),
+    'browsercache.security.referrer.policy' => array(
+        'type' => 'boolean',
+        'default' => 'false'
+    ),
+    'browsercache.security.referrer.policy.directive' => array(
+        'type' => 'string',
+        'default' => '0'
+    ),
     'browsercache.security.csp' => array(
         'type' => 'boolean',
         'default' => false

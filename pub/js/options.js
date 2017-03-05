@@ -392,8 +392,8 @@ function w3tc_starts_with(s, starts_with) {
 }
 
 function w3tc_security_headers() {
-    var directive_description = 
-        { 
+    var directive_description =
+        {
             browsercache_security_hsts_directive:
             {
                 maxage: 'The time, in seconds (as defined under the "Expires Header Lifetime" box of "Media & Other Files"), that the browser should remember that this site is only to be accessed using HTTPS. This only affects the site\'s main domain.',
@@ -422,10 +422,22 @@ function w3tc_security_headers() {
             {
                 0: 'This instructs the browser to enforce the HPKP policy.',
                 1: 'This sets up HPKP without enforcement allowing you to use pinning to test its impact without the risk of a failed connection caused by your site being unreachable or HPKP being misconfigured.'
+            },
+            browsercache_security_referrer_policy_directive:
+            {
+                0: 'This instructs the browser to fallback to a Referrer Policy defined via other mechanisms. This has no impact but confirms that the site has intentionally omitted it.',
+                'no-referrer': 'This instructs the browser to never send the referer header with requests that are made from your site, including request on this site.',
+                'no-referrer-when-downgrade': 'This instructs the browser to not send the referrer header when navigating from HTTPS to HTTP, but always send the full URL in the referrer header when navigating from HTTP to any origin. It doesn\'t matter whether the source and destination are the same site or not, only the scheme.',
+                'same-origin': 'This instructs the browser to only set the referrer header on requests to the same origin. If the destination is another origin then no referrer information will be sent.',
+                'origin': 'This instructs the browser to always set the referrer header to the origin from which the request was made. This will strip any path information from the referrer information.',
+                'strict-origin': 'This instructs the browser to always set the referrer header to the origin from which the request was made. This will strip any path information from the referrer information. Will not allow the secure origin to be sent on a HTTP request, only HTTPS.',
+                'origin-when-cross-origin': 'This instructs the browser to send the full URL to requests to the same origin but only send the origin when requests are cross-origin.',
+                'strict-origin-when-cross-origin': 'This instructs the browser to send the full URL to requests to the same origin but only send the origin when requests are cross-origin. Will not allow any information to be sent when a scheme downgrade happens (the user is navigating from HTTPS to HTTP).',
+                'unsafe-url': 'The browser will always send the full URL with any request to any origin.',
             }
         };
 
-    jQuery('#browsercache_security_hsts_directive,#browsercache_security_xfo_directive,#browsercache_security_xss_directive,#browsercache_security_pkp_extra,#browsercache_security_pkp_report_only').change(
+    jQuery('#browsercache_security_hsts_directive,#browsercache_security_xfo_directive,#browsercache_security_xss_directive,#browsercache_security_pkp_extra,#browsercache_security_pkp_report_only,#browsercache_security_referrer_policy_directive').change(
     function() {
         jQuery('#' + jQuery(this).attr('id') + '_description').html('<i>' + directive_description[jQuery(this).attr('id')][jQuery(this).val()] + '</i>');
             if (jQuery(this).attr('id') == 'browsercache_security_xfo_directive') {
@@ -443,7 +455,7 @@ function w3tc_security_headers() {
         } else {
             jQuery('#browsercache_security_xfo_allow').hide();
         }
-        jQuery('#browsercache_security_hsts_directive,#browsercache_security_xfo_directive,#browsercache_security_xss_directive,#browsercache_security_pkp_extra,#browsercache_security_pkp_report_only').change();
+        jQuery('#browsercache_security_hsts_directive,#browsercache_security_xfo_directive,#browsercache_security_xss_directive,#browsercache_security_pkp_extra,#browsercache_security_pkp_report_only,#browsercache_security_referrer_policy_directive').change();
     }
 }
 
@@ -536,7 +548,7 @@ jQuery(function() {
         ['browsercache__cssjs__replace', 'browsercache__other__replace']);
     w3tc_toggle2('browsercache_nocookies',
         ['browsercache__cssjs__nocookies', 'browsercache__other__nocookies']);
-    
+
     w3tc_security_headers();
 
     // minify page
@@ -760,10 +772,10 @@ jQuery(function() {
       var metadata = me.metadata();
       w3tc_use_poll_zone(metadata.type, metadata.nonce);
     });
-    
+
     jQuery('#cdn_s3_bucket,#cdn_cf_bucket').focusout(function () {
       jQuery(this).val(jQuery(this).val().toLowerCase());
-    });    
+    });
 
     jQuery('#cdn_test').click(function() {
         var me = jQuery(this);
@@ -972,7 +984,7 @@ jQuery(function() {
         status.removeClass('w3tc-error');
         status.removeClass('w3tc-success');
         status.addClass('w3tc-process');
-        
+
         var status2 = jQuery('#cdn_create_container_status');
         status2.removeClass('w3tc-error');
         status2.removeClass('w3tc-success');
@@ -1084,7 +1096,7 @@ jQuery(function() {
         var status2 = jQuery('#cdn_test_status');
         status2.removeClass('w3tc-error');
         status2.removeClass('w3tc-success');
-        status2.html('');            
+        status2.html('');
 
         status.html('Creating...');
 

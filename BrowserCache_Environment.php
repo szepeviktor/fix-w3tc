@@ -344,7 +344,7 @@ class BrowserCache_Environment {
             $lifetime = $config->get_integer( 'browsercache.other.lifetime' );
 
 			$rules .= "<IfModule mod_headers.c>\n";
-            
+
             if ( $config->get_boolean( 'browsercache.security.hsts' ) ) {
                 $dir = $config->get_string( 'browsercache.security.hsts.directive' );
                 $rules .= "    Header set Strict-Transport-Security \"max-age=$lifetime" . ( strpos( $dir,"inc" ) ? "; includeSubDomains" : "" ) . ( strpos( $dir, "pre" ) ? "; preload" : "" ) . "\"\n";
@@ -362,7 +362,7 @@ class BrowserCache_Environment {
             if ( $config->get_boolean( 'browsercache.security.xss' ) ) {
                 $dir = $config->get_string( 'browsercache.security.xss.directive' );
                 $rules .= "    Header set X-XSS-Protection \"" . ( $dir == "block" ? "1; mode=block" : $dir ) . "\"\n";
-            
+
             }
 
             if ( $config->get_boolean( 'browsercache.security.xcto' ) ) {
@@ -376,6 +376,11 @@ class BrowserCache_Environment {
                 $url = trim( $config->get_string( 'browsercache.security.pkp.report.url' ) );
                 $rep_only = $config->get_string( 'browsercache.security.pkp.report.only' ) == '1' ? true : false;
                 $rules .= "    Header set " . ( $rep_only ? "Public-Key-Pins-Report-Only" : "Public-Key-Pins" ) . " \"pin-sha256=\\\"$pin\\\"; pin-sha256=\\\"$pinbak\\\"; max-age=$lifetime" . ( strpos( $extra,"inc" ) ? "; includeSubDomains" : "" ) . ( !empty( $url ) ? "; report-uri=\\\"$url\\\"" : "" ) . "\"\n";
+            }
+
+            if ( $config->get_boolean( 'browsercache.security.referrer.policy' ) ) {
+                $dir = $config->get_string( 'browsercache.security.referrer.policy.directive' );
+                $rules .= "    Header set Referrer-Policy \"" . ($dir == "0" ? "" : $dir ) . "\"\n";
             }
 
             if ( $config->get_boolean( 'browsercache.security.csp' ) ) {
@@ -413,7 +418,7 @@ class BrowserCache_Environment {
                     $rules .= "    Header set Content-Security-Policy \"$dir\"\n";
                 }
             }
-            
+
 			$rules .= "</IfModule>\n";
 		}
 
@@ -642,6 +647,7 @@ class BrowserCache_Environment {
              $config->get_boolean( 'browsercache.security.xss' )  ||
              $config->get_boolean( 'browsercache.security.xcto' ) ||
              $config->get_boolean( 'browsercache.security.pkp' )  ||
+             $config->get_boolean( 'browsercache.security.referrer.policy' )  ||
              $config->get_boolean( 'browsercache.security.csp' )
            ) {
             $lifetime = $config->get_integer( 'browsercache.other.lifetime' );
@@ -650,7 +656,7 @@ class BrowserCache_Environment {
                 $dir = $config->get_string( 'browsercache.security.hsts.directive' );
                 $rules .= "add_header Strict-Transport-Security \"max-age=$lifetime" . ( strpos( $dir,"inc" ) ? "; includeSubDomains" : "" ) . ( strpos( $dir, "pre" ) ? "; preload" : "" ) . "\";\n";
             }
-            
+
             if ( $config->get_boolean( 'browsercache.security.xfo' ) ) {
                 $dir = $config->get_string( 'browsercache.security.xfo.directive' );
                 $url = trim( $config->get_string( 'browsercache.security.xfo.allow' ) );
@@ -659,11 +665,11 @@ class BrowserCache_Environment {
                 }
                 $rules .= "add_header X-Frame-Options \"" . ( $dir == "same" ? "SAMEORIGIN" : ( $dir == "deny" ? "DENY" : "ALLOW-FROM $url" ) ) . "\";\n";
             }
-            
+
             if ( $config->get_boolean( 'browsercache.security.xss' ) ) {
                 $dir = $config->get_string( 'browsercache.security.xss.directive' );
                 $rules .= "add_header X-XSS-Protection \"" . ( $dir == "block" ? "1; mode=block" : $dir ) . "\";\n";
-            
+
             }
 
             if ( $config->get_boolean( 'browsercache.security.xcto' ) ) {
@@ -678,7 +684,12 @@ class BrowserCache_Environment {
                 $rep_only = $config->get_string( 'browsercache.security.pkp.report.only' ) == '1' ? true : false;
                 $rules .= "add_header " . ( $rep_only ? "Public-Key-Pins-Report-Only" : "Public-Key-Pins" ) . " 'pin-sha256=\"$pin\"; pin-sha256=\"$pinbak\"; max-age=$lifetime" . ( strpos( $extra,"inc" ) ? "; includeSubDomains" : "" ) . ( !empty( $url ) ? "; report-uri=\"$url\"" : "" ) . "';\n";
             }
-            
+
+            if ( $config->get_boolean( 'browsercache.security.referrer.policy' ) ) {
+                $dir = $config->get_string( 'browsercache.security.referrer.policy.directive' );
+                $rules .= "add_header Referrer-Policy \"" . ( $dir == "0" ? "" : $dir ) . "\";\n";
+            }
+
             if ( $config->get_boolean( 'browsercache.security.csp' ) ) {
                 $base = trim( $config->get_string( 'browsercache.security.csp.base' ) );
                 $frame = trim( $config->get_string( 'browsercache.security.csp.frame' ) );

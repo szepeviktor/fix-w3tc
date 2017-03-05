@@ -52,6 +52,8 @@ class BrowserCache_ConfigLabels {
                 'browsercache.security.pkp.extra' => __( 'Extra Parameters:', 'w3-total-cache' ),
                 'browsercache.security.pkp.report.url' => __( 'Report URL:', 'w3-total-cache' ),
                 'browsercache.security.pkp.report.only' => __( 'Report Mode Only:', 'w3-total-cache' ),
+                'browsercache.security.referrer.policy' => __( 'Referrer Policy', 'w3-total-cache' ),
+                'browsercache.security.referrer.policy.directive' => __( 'Directive:', 'w3-total-cache' ),
                 'browsercache.security.csp' => __( 'Content Security Policy', 'w3-total-cache' ),
                 'browsercache.security.csp.base' => __( 'base-uri:', 'w3-total-cache' ),
                 'browsercache.security.csp.frame' => __( 'frame-src:', 'w3-total-cache' ),
