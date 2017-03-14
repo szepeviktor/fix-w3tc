@@ -191,10 +191,10 @@ class ObjectCache_WpObjectCache_Regular {
 			$found = ( $value !== false );
 		}
 
-		$this->cache[$key] = $value;
 		$this->cache_total++;
 
 		if ( $value !== false ) {
+			$this->cache[$key] = $value;
 			$this->cache_hits++;
 		} else {
 			$this->cache_misses++;
