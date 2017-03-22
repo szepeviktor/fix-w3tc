@@ -39,7 +39,7 @@ class Minify_IgnoredCommentPreserver {
 
     protected function _isIgnoredComment(&$comment) {
         foreach ($this->_ignoredComments as $ignoredComment) {
-            if (stristr($comment, $ignoredComment) !== false) {
+            if ( !empty($ignoredComment) && stristr($comment, $ignoredComment) !== false) {
                 return true;
             }
         }

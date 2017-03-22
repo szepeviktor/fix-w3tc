@@ -184,7 +184,7 @@ class Minify_HTML {
     protected function _ignoredComment($comment)
     {
         foreach ($this->_ignoredComments as $ignoredComment) {
-            if (stristr($comment, $ignoredComment) !== false) {
+            if ( !empty($ignoredComment) && stristr($comment, $ignoredComment) !== false) {
                 return true;
             }
         }
