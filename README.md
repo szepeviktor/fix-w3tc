@@ -83,3 +83,4 @@ Type | More Information |
 :beetle: Bug Fix | [Fixed Redis Test on Admin Dashboard](https://github.com/szepeviktor/w3-total-cache-fixed/pull/430) |
 :cyclone: New Feature | [Extends "http 2 push" to page cache enhanced](https://github.com/szepeviktor/w3-total-cache-fixed/pull/433) |
 :beetle: Bug Fix | [Fixed Object Cache setting cache value on missed gets](https://github.com/szepeviktor/w3-total-cache-fixed/issues/438) |
+:beetle: Bug Fix | [Call to a member function using_index_permalinks() on null](https://github.com/szepeviktor/w3-total-cache-fixed/issues/445) |

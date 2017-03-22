@@ -510,7 +510,7 @@ class Util_PageUrls {
 
 		$base = trailingslashit( get_bloginfo( 'url' ) );
 
-		if ( $wp_rewrite->using_index_permalinks() && ( $pagenum > 1 || '' != $request ) )
+		if ( !is_null($wp_rewrite) && $wp_rewrite->using_index_permalinks() && ( $pagenum > 1 || '' != $request ) )
 			$base .= 'index.php/';
 
 		if ( $pagenum > 1 ) {
