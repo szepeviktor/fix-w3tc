@@ -81,7 +81,7 @@ Type | More Information |
 :beetle: Bug Fix | [YUI Compressor fix for JAVA path](https://github.com/szepeviktor/w3-total-cache-fixed/pull/426) |
 :beetle: Bug Fix | [Closure Compiler fix for JAVA path](https://github.com/szepeviktor/w3-total-cache-fixed/pull/428) |
 :beetle: Bug Fix | [Fixed Redis Test on Admin Dashboard](https://github.com/szepeviktor/w3-total-cache-fixed/pull/430) |
-:cyclone: New Feature | [Extends "http 2 push" to page cache enhanced](https://github.com/szepeviktor/w3-total-cache-fixed/pull/433) |
+:cyclone: New Feature | [Extends "http 2 push" to page cache enhanced](https://github.com/szepeviktor/w3-total-cache-fixed/pull/433)<br>:wrench: [+ **Extra: #PR320** &ndash; Support for more than 50 assets](https://github.com/szepeviktor/w3-total-cache-fixed/pull/450) |
 :beetle: Bug Fix | [Fixed Object Cache setting cache value on missed gets](https://github.com/szepeviktor/w3-total-cache-fixed/issues/438) |
 :beetle: Bug Fix | [Call to a member function using_index_permalinks() on null](https://github.com/szepeviktor/w3-total-cache-fixed/issues/445) |
 :beetle: Bug Fix | [stristr(): Empty needle](https://github.com/szepeviktor/w3-total-cache-fixed/issues/447) |

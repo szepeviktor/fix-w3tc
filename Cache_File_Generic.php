@@ -100,19 +100,18 @@ class Cache_File_Generic extends Cache_File {
 			if( isset($var['headers'][0]) ){
 				
 				$links = '';
+				$i = 0;
 				
-				for($i = 0; $i < 100; $i++){
-					
-					if( !isset($var['headers'][$i]) ){
-						break;
-					}
+				while( isset($var['headers'][$i]) ){
 					
 					$name  = isset($var['headers'][$i]['n']) ? $var['headers'][$i]['n'] : '';
 					$value = isset($var['headers'][$i]['v']) ? $var['headers'][$i]['v'] : '';
 					
 					if( ($name == 'Link') && (false !== strpos($value, 'rel=preload')) ){
-						$links .= "    Header add Link '".trim($var['headers'][$i]['v'])."'\n";
+						$links .= "    Header add Link '".trim($value)."'\n";
 					}
+					
+					$i++;
 				}
 				
 				if( !empty($links) ){
