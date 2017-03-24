@@ -123,7 +123,7 @@ class Cdn_AdminActions {
 		$response = array(
 			'limit' => $limit,
 			'offset' => $offset,
-			'count' => count( $results ),
+			'count' => $count,
 			'total' => $total,
 			'results' => $results
 		);
