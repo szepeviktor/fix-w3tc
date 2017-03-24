@@ -118,7 +118,7 @@ class Cdn_AdminActions {
 		$results = array();
 
 		$w3_plugin_cdn->export_library( $limit, $offset, $count, $total,
-			$results, time() + 5 );
+			$results, time() + 120 );
 
 		$response = array(
 			'limit' => $limit,
