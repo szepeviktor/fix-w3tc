@@ -79,7 +79,7 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 	function upload( $files, &$results, $force_rewrite = false, $timeout_time = NULL ) {
 		if ( is_null( $this->_service ) )
 			return false;
-		
+
 		$allow_refresh_token = true;
 		$result = true;
 
@@ -96,8 +96,13 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 			}
 			if ( $r != 'success' )
 				$result = false;
-			if ( $r == 'timeout' )
-				break;
+			if ( $r == 'timeout' ) {
+				$results = array_merge( $results, $this->_get_results(
+					$files_chunk, W3TC_CDN_RESULT_ERROR,
+					"Upload batch timed out." );
+				continue;
+			}
+
 		}
 
 		return $result;

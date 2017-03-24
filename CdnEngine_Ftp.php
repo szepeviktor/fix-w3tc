@@ -164,11 +164,14 @@ class CdnEngine_Ftp extends CdnEngine_Base {
 		}
 
 		foreach ( $files as $file ) {
-			if ( !is_null( $timeout_time ) && time() > $timeout_time )
-				break;
-
-			$local_path = $file['local_path'];
 			$remote_path = $file['remote_path'];
+			$local_path = $file['local_path'];
+
+			if ( !is_null( $timeout_time ) && time() > $timeout_time ) {
+				$results[] = $this->_get_result( $local_path, $remote_path,
+					W3TC_CDN_RESULT_ERROR, "Upload batch timed out.", $file );
+				continue;
+			}
 
 			if ( !file_exists( $local_path ) ) {
 				$results[] = $this->_get_result( $local_path, $remote_path,

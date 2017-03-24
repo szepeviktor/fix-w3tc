@@ -27,7 +27,7 @@ class CdnEngine_Azure extends CdnEngine_Base {
 
 		parent::__construct( $config );
 
-		require_once W3TC_LIB_DIR . DIRECTORY_SEPARATOR . 'Azure' . 
+		require_once W3TC_LIB_DIR . DIRECTORY_SEPARATOR . 'Azure' .
 			DIRECTORY_SEPARATOR . 'loader.php';
 	}
 
@@ -66,7 +66,7 @@ class CdnEngine_Azure extends CdnEngine_Base {
 			$error = $ex->getMessage();
 			return false;
 		}
-		
+
 
 		return true;
 	}
@@ -90,10 +90,14 @@ class CdnEngine_Azure extends CdnEngine_Base {
 		}
 
 		foreach ( $files as $file ) {
-			if ( !is_null( $timeout_time ) && time() > $timeout_time )
-				break;
-
 			$remote_path = $file['remote_path'];
+			$local_path = $file['local_path'];
+
+			if ( !is_null( $timeout_time ) && time() > $timeout_time ) {
+				$results[] = $this->_get_result( $local_path, $remote_path,
+					W3TC_CDN_RESULT_ERROR, "Upload batch timed out.", $file );
+				continue;
+			}
 
 			$results[] = $this->_upload( $file, $force_rewrite );
 		}
