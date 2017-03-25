@@ -66,7 +66,7 @@ Type | More Information |
 :beetle: Bug Fix | [WP Query String Being Stripped Unexpectedly](https://github.com/szepeviktor/w3-total-cache-fixed/pull/384) |
 :cyclone: New Feature | [Filter to Set Cache Lifetime Period On A Per-Page Basis](https://github.com/szepeviktor/w3-total-cache-fixed/pull/388) |
 :beetle: Bug Fix | [Warning: _Invalid Arguments in Minify_Environment.php_](https://github.com/szepeviktor/w3-total-cache-fixed/pull/389) |
-:beetle: Bug Fix | [Feeds Not Caching Nor Serving Back as XML](https://github.com/szepeviktor/w3-total-cache-fixed/pull/393) |
+:beetle: Bug Fix | [Feeds Not Caching Nor Serving Back as XML](https://github.com/szepeviktor/w3-total-cache-fixed/pull/393)<br>:wrench: [+ **Extra: &ndash; Fix admin setting always disabled on nginx](https://github.com/szepeviktor/w3-total-cache-fixed/pull/454) |
 :diamond_shape_with_a_dot_inside: Update | [Smart Browser Cache Default Settings](https://github.com/szepeviktor/w3-total-cache-fixed/pull/394)<br>:wrench: [+ **Extra: #PR395** &ndash; A Few More Useful Smart Default Settings](https://github.com/szepeviktor/w3-total-cache-fixed/pull/395) |
 :diamond_shape_with_a_dot_inside: Update | [Expanded Regex Support & Improved Page Cache Cookies](https://github.com/szepeviktor/w3-total-cache-fixed/pull/398) |
 :beetle: Bug Fix | [Debug Mode Not Working](https://github.com/szepeviktor/w3-total-cache-fixed/pull/405)<br>:wrench: [+ **Extra: #PR406** &ndash; Missed File - Debug Mode Not Working](https://github.com/szepeviktor/w3-total-cache-fixed/pull/406) |
