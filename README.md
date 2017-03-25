@@ -85,3 +85,4 @@ Type | More Information |
 :beetle: Bug Fix | [Fixed Object Cache setting cache value on missed gets](https://github.com/szepeviktor/w3-total-cache-fixed/issues/438) |
 :beetle: Bug Fix | [Call to a member function using_index_permalinks() on null](https://github.com/szepeviktor/w3-total-cache-fixed/issues/445) |
 :beetle: Bug Fix | [stristr(): Empty needle](https://github.com/szepeviktor/w3-total-cache-fixed/issues/447) |
+:beetle: Bug Fix | [Media Library Export skips files](https://github.com/szepeviktor/w3-total-cache-fixed/pull/452) |
