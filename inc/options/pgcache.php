@@ -438,11 +438,19 @@ echo sprintf(
 			</tr>
 			<?php if ( $this->_config->get_string( 'pgcache.engine' ) == 'file_generic' ): ?>
 			<tr>
-				<th><label><?php Util_Ui::e_config_label(Util_Environment::is_nginx()?'pgcache.cache.nginx_handle_xml':'pgcache.cache.apache_handle_xml') ?></label></th>
+				<?php if( Util_Environment::is_nginx() ): ?>
+				<th><label><?php Util_Ui::e_config_label('pgcache.cache.nginx_handle_xml') ?></label></th>
 				<td>
-					<?php $this->checkbox(Util_Environment::is_nginx()?'pgcache.cache.nginx_handle_xml':'pgcache.cache.apache_handle_xml', Util_Environment::is_nginx()?true:false) ?> <?php Util_Ui::e_config_label(Util_Environment::is_nginx()?'pgcache.cache.nginx_handle_xml':'pgcache.cache.apache_handle_xml') ?></label><br />
+					<?php $this->checkbox('pgcache.cache.nginx_handle_xml') ?> <?php Util_Ui::e_config_label('pgcache.cache.nginx_handle_xml') ?><br />
 					<span class="description"><?php _e( 'Return correct Content-Type header for XML files (e.g., feeds and sitemaps). Slows down cache engine.', 'w3-total-cache' ); ?></span>
 				</td>
+				<?php else: ?>
+				<th><label><?php Util_Ui::e_config_label('pgcache.cache.apache_handle_xml') ?></label></th>
+				<td>
+					<?php $this->checkbox('pgcache.cache.apache_handle_xml') ?> <?php Util_Ui::e_config_label('pgcache.cache.apache_handle_xml') ?></label><br />
+					<span class="description"><?php _e( 'Return correct Content-Type header for XML files (e.g., feeds and sitemaps). Slows down cache engine.', 'w3-total-cache' ); ?></span>
+				</td>
+				<?php endif; ?>
 			</tr>
 			<?php endif; ?>
 		</table>
