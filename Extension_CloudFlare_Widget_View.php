@@ -6,7 +6,7 @@ if ( !defined( 'W3TC' ) )
 
 ?>
 <?php if ( is_null( $stats ) ): ?>
-<?php _e( 'You have not configured well email, API key or domain', 'w3-total-cache' ) ?>
+<?php _e( 'You have not configured your email, API key or domain', 'w3-total-cache' ) ?>
 <?php else: ?>
 
 <p class="cloudflare_p">
