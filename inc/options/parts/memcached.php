@@ -38,7 +38,7 @@ if ( !defined( 'W3TC' ) )
         <span class="description">
             <?php
 if ( !Util_Installed::memcached_aws() )
-	_e( 'ElastiCache PHP module not found', 'w3-total-cache' );
+	_e( 'ElastiCache <acronym title="Hypertext Preprocessor">PHP</acronym> module not found', 'w3-total-cache' );
 else
 	_e( 'When Amazon ElastiCache used, specify configuration endpoint as Memcached host', 'w3-total-cache' );
 ?>

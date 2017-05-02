@@ -191,13 +191,11 @@ class Varnish_Flush {
 
 	private function do_flush() {
 		if ( !is_network_admin() ) {
-			$queued_urls[ get_home_url() . '/.*' ] = '*';
+			$full_urls = array( get_home_url() . '/.*' );
+			$full_urls = Util_PageUrls::complement_with_mirror_urls(
+				$full_urls );
 
-			// add mirror urls
-			$queued_urls = Util_PageUrls::complement_with_mirror_urls(
-				$queued_urls );
-
-			foreach ( $queued_urls as $url => $nothing )
+			foreach ( $full_urls as $url )
 				$this->_purge( $url );
 		} else {
 			// todo: remove. doesnt work for all caches.
@@ -380,16 +378,19 @@ class Varnish_Flush {
 				$full_urls[] = Util_Environment::home_domain_root_url() . '/' . trim( $sitemap_regex, "^$" );
 			}
 
+			// add mirror urls
+			$full_urls = Util_PageUrls::complement_with_mirror_urls(
+				$full_urls );
+
+			$full_urls = apply_filters( 'varnish_flush_post_queued_urls',
+				$full_urls );
+
 			/**
 			 * Queue flush
 			 */
 			if ( count( $full_urls ) ) {
 				foreach ( $full_urls as $url )
 					$this->queued_urls[$url] = '*';
-
-				// add mirror urls
-				$this->queued_urls = Util_PageUrls::complement_with_mirror_urls(
-					$this->queued_urls );
 			}
 
 			return true;

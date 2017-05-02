@@ -55,7 +55,12 @@ class BrowserCache_Plugin {
 		/**
 		 * Replace feature should be enabled
 		 */
-		if ( !$this->_config->get_boolean( 'browsercache.cssjs.replace' ) && !$this->_config->get_boolean( 'browsercache.html.replace' ) && !$this->_config->get_boolean( 'browsercache.other.replace' ) ) {
+		if ( !$this->_config->get_boolean( 'browsercache.cssjs.replace' ) &&
+			!$this->_config->get_boolean( 'browsercache.html.replace' ) &&
+			!$this->_config->get_boolean( 'browsercache.other.replace' ) &&
+			!$this->_config->get_boolean( 'browsercache.cssjs.querystring' ) &&
+			!$this->_config->get_boolean( 'browsercache.html.querystring' ) &&
+			!$this->_config->get_boolean( 'browsercache.other.querystring' )) {
 			return false;
 		}
 
@@ -125,7 +130,7 @@ class BrowserCache_Plugin {
 			$buffer = preg_replace_callback(
 				'~(href|src|action|extsrc|asyncsrc|w3tc_load_js\()=?([\'"])((' .
 				$domain_url_regexp .
-				')?(/[^\'"]*\.([a-z-_]+)(\?[^\'"]*)?))[\'"]~Ui', array(
+				')?(/[^\'"/][^\'"]*\.([a-z-_]+)([\?#][^\'"]*)?))[\'"]~Ui', array(
 					$this,
 					'link_replace_callback'
 				), $buffer );
@@ -143,10 +148,11 @@ class BrowserCache_Plugin {
 	function link_replace_callback( $matches ) {
 		list ( $match, $attr, $quote, $url, , , , , $extension ) = $matches;
 
-		if ( !$this->_url_has_to_be_replaced( $url, $extension ) )
+		$ops = $this->_get_url_mutation_operations( $url, $extension );
+		if ( is_null( $ops ) )
 			return $match;
 
-		$url = $this->mutate_url( $url, !$this->browsercache_rewrite );
+		$url = $this->mutate_url( $url, $ops, !$this->browsercache_rewrite );
 
 		if ( $attr != 'w3tc_load_js(' )
 			return $attr . '=' . $quote . $url . $quote;
@@ -166,63 +172,83 @@ class BrowserCache_Plugin {
 			return $url;
 		$extension = $matches[1];
 
-		if ( !$this->_url_has_to_be_replaced( $original_url, $extension ) )
+		$ops = $this->_get_url_mutation_operations( $original_url, $extension );
+		if ( is_null( $ops ) )
 			return $url;
 
 		// for push cdns each flush would require manual reupload of files
 		$mutate_by_querystring = !$this->browsercache_rewrite || !$is_cdn_mirror;
 
-		$url = $this->mutate_url( $url, $mutate_by_querystring );
+		$url = $this->mutate_url( $url, $ops, $mutate_by_querystring );
 		return $url;
 	}
 
-	private function mutate_url( $url, $mutate_by_querystring ) {
-		$id = $this->get_filename_uniqualizator();
-
+	private function mutate_url( $url, $ops, $mutate_by_querystring ) {
 		$query_pos = strpos( $url, '?' );
-
-		if ( $mutate_by_querystring ) {
-			$url .= ( $query_pos !== false ? '&amp;' : '?' ) . $id;
-		} else {
-			// add $id to url before extension
-
-			$url_query = '';
-			if ( $query_pos !== false ) {
-				$url_query = substr( $url, $query_pos );
-				$url = substr( $url, 0, $query_pos );
-			}
-
-			$ext_pos = strrpos( $url, '.' );
-			$extension = substr( $url, $ext_pos );
-
-			$url = substr( $url, 0, strlen( $url ) - strlen( $extension ) ) . '.' .
-				$id . $extension . $url_query;
+		if ( isset( $ops['querystring'] ) && $query_pos !== false ) {
+			$url = substr( $url, 0, $query_pos );
+			$query_pos = false;
 		}
+
+		if ( isset( $ops['replace'] ) ) {
+			$id = $this->get_filename_uniqualizator();
+
+			if ( $mutate_by_querystring ) {
+				if ( $query_pos !== false ) {
+					$url = substr( $url, 0, $query_pos + 1 ) . $id . '&amp;' .
+						substr( $url, $query_pos + 1 );
+				} else {
+					$tag_pos = strpos( $url, '#' );
+					if ( $tag_pos === false ) {
+						$url .= '?' . $id;
+					} else {
+						$url = substr( $url, 0, $tag_pos ) . '?' . $id .
+							substr( $url, $tag_pos );
+					}
+				}
+
+			} else {
+				// add $id to url before extension
+
+				$url_query = '';
+				if ( $query_pos !== false ) {
+					$url_query = substr( $url, $query_pos );
+					$url = substr( $url, 0, $query_pos );
+				}
+
+				$ext_pos = strrpos( $url, '.' );
+				$extension = substr( $url, $ext_pos );
+
+				$url = substr( $url, 0, strlen( $url ) - strlen( $extension ) ) .
+					'.' . $id . $extension . $url_query;
+			}
+		}
+
 		return $url;
 	}
 
-	function _url_has_to_be_replaced( $url, $extension ) {
+	function _get_url_mutation_operations( $url, $extension ) {
 		static $extensions = null;
 		if ( $extensions === null ) {
 			$core = Dispatcher::component( 'BrowserCache_Core' );
-			$extensions = $core->get_replace_extensions( $this->_config );
+			$extensions = $core->get_replace_querystring_extensions( $this->_config );
 		}
 
 		static $exceptions = null;
 		if ( $exceptions === null )
 			$exceptions = $this->_config->get_array( 'browsercache.replace.exceptions' );
 
-		if ( !in_array( $extension, $extensions ) )
-			return false;
+		if ( !isset( $extensions[$extension] ) )
+			return null;
 
 		$test_url = Util_Environment::remove_query( $url );
 		foreach ( $exceptions as $exception ) {
 			$escaped = str_replace( '~', '\~', $exception );
 			if ( trim( $exception ) && preg_match( '~' . $escaped . '~', $test_url ) )
-				return false;
+				return null;
 		}
 
-		return true;
+		return $extensions[$extension];
 	}
 
 	/**

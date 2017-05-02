@@ -370,7 +370,7 @@ Note: To disable page caching of specific theme templates or plugin files you ne
 		<p>When using Minify and JS/CSS placement, custom placement, the following tags are available:</p>
 			<ul>
 			<li>&lt;!-- W3TC-include-css --&gt;<br / >Used with "Auto" and "Manual". Inserts the minified/combined <acronym title="Cascading Style Sheet">CSS</acronym> files at the location you choose.</li>
-			<li>&lt;!-- W3TC-include-js-head --&gt;<br / >Used with "Auto" and "Manual". Inserts the minified/combined <acronym title="JavaScript">JS</acronym> files. Embed location "in &lt;head&gt;" in "Manual" mode.</li>
+			<li>&lt;!-- W3TC-include-js-head --&gt;<br / >Used with "Manual". Inserts the minified/combined <acronym title="JavaScript">JS</acronym> files. Embed location "in &lt;head&gt;" in "Manual" mode.</li>
 			<li>&lt;!-- W3TC-include-js-body-start --&gt;<br / >Used with "Manual". Inserts the minified/combined <acronym title="JavaScript">JS</acronym> files. Embed location "after &lt;body&gt;" in "Manual" mode.</li>
 			<li>&lt;!-- W3TC-include-js-body-end --&gt;<br / >Used with "Manual". Inserts the minified/combined <acronym title="JavaScript">JS</acronym> files. Embed location "before &lt;/body&gt;" in "Manual" mode.</li>
 			</ul>

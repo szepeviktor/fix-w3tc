@@ -1,9 +1,9 @@
 <?php
 /**
- * Class Minify  
+ * Class Minify
  * @package Minify
  */
- 
+
 /**
  * Minify - Combines, minifies, and caches JavaScript and CSS files on demand.
  *
@@ -23,7 +23,7 @@
  * @link http://code.google.com/p/minify/
  */
 class Minify0_Minify {
-    
+
     const VERSION = '2.1.7';
     const TYPE_CSS = 'text/css';
     const TYPE_HTML = 'text/html';
@@ -31,20 +31,20 @@ class Minify0_Minify {
     // Apache default and what Yahoo! uses..
     const TYPE_JS = 'application/x-javascript';
     const URL_DEBUG = 'http://code.google.com/p/minify/wiki/Debugging';
-    
+
     /**
      * How many hours behind are the file modification times of uploaded files?
-     * 
+     *
      * If you upload files from Windows to a non-Windows server, Windows may report
-     * incorrect mtimes for the files. Immediately after modifying and uploading a 
-     * file, use the touch command to update the mtime on the server. If the mtime 
-     * jumps ahead by a number of hours, set this variable to that number. If the mtime 
+     * incorrect mtimes for the files. Immediately after modifying and uploading a
+     * file, use the touch command to update the mtime on the server. If the mtime
+     * jumps ahead by a number of hours, set this variable to that number. If the mtime
      * moves back, this should not be needed.
      *
      * @var int $uploaderHoursBehind
      */
     public static $uploaderHoursBehind = 0;
-    
+
     /**
      * If this string is not empty AND the serve() option 'bubbleCssImports' is
      * NOT set, then serve() will check CSS files for @import declarations that
@@ -57,7 +57,7 @@ class Minify0_Minify {
 
     /**
      * Has the DOCUMENT_ROOT been set in user code?
-     * 
+     *
      * @var bool
      */
     public static $isDocRootSet = false;
@@ -71,13 +71,13 @@ class Minify0_Minify {
     /**
      * Specify a cache object (with identical interface as Minify_Cache_File) or
      * a path to use with Minify_Cache_File.
-     * 
-     * If not called, Minify will not use a cache and, for each 200 response, will 
+     *
+     * If not called, Minify will not use a cache and, for each 200 response, will
      * need to recombine files, minify and encode the output.
      *
      * @param mixed $cache object with identical interface as Minify_Cache_File or
      * a directory path, or null to disable caching. (default = '')
-     * 
+     *
      * @param bool $fileLocking (default = true) This only applies if the first
      * parameter is a string.
      *
@@ -91,76 +91,76 @@ class Minify0_Minify {
             self::$_cache = $cache;
         }
     }
-    
+
     /**
-     * Serve a request for a minified file. 
-     * 
+     * Serve a request for a minified file.
+     *
      * Here are the available options and defaults in the base controller:
-     * 
-     * 'isPublic' : send "public" instead of "private" in Cache-Control 
+     *
+     * 'isPublic' : send "public" instead of "private" in Cache-Control
      * headers, allowing shared caches to cache the output. (default true)
-     * 
+     *
      * 'quiet' : set to true to have serve() return an array rather than sending
      * any headers/output (default false)
-     * 
+     *
      * 'encodeOutput' : set to false to disable content encoding, and not send
      * the Vary header (default true)
-     * 
-     * 'encodeMethod' : generally you should let this be determined by 
+     *
+     * 'encodeMethod' : generally you should let this be determined by
      * HTTP_Encoder (leave null), but you can force a particular encoding
      * to be returned, by setting this to 'gzip' or '' (no encoding)
-     * 
+     *
      * 'encodeLevel' : level of encoding compression (0 to 9, default 9)
-     * 
+     *
      * 'contentTypeCharset' : appended to the Content-Type header sent. Set to a falsey
-     * value to remove. (default 'utf-8')  
-     * 
+     * value to remove. (default 'utf-8')
+     *
      * 'maxAge' : set this to the number of seconds the client should use its cache
      * before revalidating with the server. This sets Cache-Control: max-age and the
      * Expires header. Unlike the old 'setExpires' setting, this setting will NOT
      * prevent conditional GETs. Note this has nothing to do with server-side caching.
-     * 
+     *
      * 'rewriteCssUris' : If true, serve() will automatically set the 'currentDir'
      * minifier option to enable URI rewriting in CSS files (default true)
-     * 
+     *
      * 'bubbleCssImports' : If true, all @import declarations in combined CSS
      * files will be move to the top. Note this may alter effective CSS values
      * due to a change in order. (default false)
-     * 
+     *
      * 'debug' : set to true to minify all sources with the 'Lines' controller, which
      * eases the debugging of combined files. This also prevents 304 responses.
      * @see Minify_Lines::minify()
-     * 
-     * 'minifiers' : to override Minify's default choice of minifier function for 
-     * a particular content-type, specify your callback under the key of the 
+     *
+     * 'minifiers' : to override Minify's default choice of minifier function for
+     * a particular content-type, specify your callback under the key of the
      * content-type:
      * <code>
      * // call customCssMinifier($css) for all CSS minification
      * $options['minifiers'][Minify::TYPE_CSS] = 'customCssMinifier';
-     * 
+     *
      * // don't minify Javascript at all
      * $options['minifiers'][Minify::TYPE_JS] = '';
      * </code>
-     * 
+     *
      * 'minifierOptions' : to send options to the minifier function, specify your options
-     * under the key of the content-type. E.g. To send the CSS minifier an option: 
+     * under the key of the content-type. E.g. To send the CSS minifier an option:
      * <code>
-     * // give CSS minifier array('optionName' => 'optionValue') as 2nd argument 
+     * // give CSS minifier array('optionName' => 'optionValue') as 2nd argument
      * $options['minifierOptions'][Minify::TYPE_CSS]['optionName'] = 'optionValue';
      * </code>
-     * 
-     * 'contentType' : (optional) this is only needed if your file extension is not 
+     *
+     * 'contentType' : (optional) this is only needed if your file extension is not
      * js/css/html. The given content-type will be sent regardless of source file
      * extension, so this should not be used in a Groups config with other
      * Javascript/CSS files.
-     * 
+     *
      * Any controller options are documented in that controller's setupSources() method.
-     * 
+     *
      * @param mixed $controller instance of subclass of Minify_Controller_Base or string
      * name of controller. E.g. 'Files'
-     * 
+     *
      * @param array $options controller/serve options
-     * 
+     *
      * @return null|array if the 'quiet' option is set to true, an array
      * with keys "success" (bool), "statusCode" (int), "content" (string), and
      * "headers" (array).
@@ -179,13 +179,13 @@ class Minify0_Minify {
             $controller = new $class();
             /* @var Minify_Controller_Base $controller */
         }
-        
+
         // set up controller sources and mix remaining options with
         // controller defaults
         $options = $controller->setupSources($options);
         $options = $controller->analyzeSources($options);
         self::$_options = $controller->mixInDefaultOptions($options);
-        
+
         // check request validity
         if (! $controller->sources) {
             // invalid request!
@@ -201,14 +201,14 @@ class Minify0_Minify {
                 );
             }
         }
-        
+
         self::$_controller = $controller;
-        
+
         if (self::$_options['debug']) {
             self::_setupDebug($controller->sources);
             self::$_options['maxAge'] = 0;
         }
-        
+
         // determine encoding
         if (self::$_options['encodeOutput']) {
             $sendVary = true;
@@ -226,7 +226,7 @@ class Minify0_Minify {
         } else {
             self::$_options['encodeMethod'] = ''; // identity (no encoding)
         }
-        
+
         // check client cache
         $cgOptions = array(
             'lastModifiedTime' => self::$_options['lastModifiedTime']
@@ -245,7 +245,7 @@ class Minify0_Minify {
             // client's cache is valid
             if (! self::$_options['quiet']) {
                 self::$lastServed = array(
-                    'fullCacheId' =>self::_getCacheId() . 
+                    'fullCacheId' =>self::_getCacheId() .
                     (self::$_options['encodeMethod']
                         ? '.' . self::$_options['encodeMethod']
                         : '')
@@ -270,7 +270,7 @@ class Minify0_Minify {
             && self::$_options['rewriteCssUris']) {
             foreach($controller->sources as $key => $source) {
                 if (self::$_options['rewriteCssUris']
-                    && $source->filepath 
+                    && $source->filepath
                     && !isset($source->minifyOptions['currentDir'])
                     && !isset($source->minifyOptions['prependRelativePath'])
                 ) {
@@ -280,12 +280,12 @@ class Minify0_Minify {
                 $source->minifyOptions['processCssImports'] = self::$_options['processCssImports'];
             }
         }
-        
+
         // check server cache
         $content = array();
         if (null !== self::$_cache && ! self::$_options['debug']) {
             // using cache
-            // the goal is to use only the cache methods to sniff the length and 
+            // the goal is to use only the cache methods to sniff the length and
             // output the content, as they do not require ever loading the file into
             // memory.
             $cacheId = self::_getCacheId();
@@ -293,7 +293,7 @@ class Minify0_Minify {
                 ? $cacheId . '.' . self::$_options['encodeMethod']
                 : $cacheId;
             // check cache for valid entry
-            $cacheIsReady = self::$_cache->isValid($fullCacheId, self::$_options['lastModifiedTime']); 
+            $cacheIsReady = self::$_cache->isValid($fullCacheId, self::$_options['lastModifiedTime']);
             if ($cacheIsReady) {
                 $cacheContentLength = self::$_cache->getSize($fullCacheId);
             } else {
@@ -310,10 +310,10 @@ class Minify0_Minify {
                 self::$_cache->store($cacheId, $content);
                 if (function_exists('gzencode') && self::$_options['encodeMethod'] && self::$_options['encodeOutput']) {
                     $compressed = $content;
-                    $compressed['content'] = gzencode($content['content'], 
+                    $compressed['content'] = gzencode($content['content'],
                         self::$_options['encodeLevel']);
 
-                    self::$_cache->store($cacheId . '.' . self::$_options['encodeMethod'],
+                    self::$_cache->store($cacheId . '_' . self::$_options['encodeMethod'],
                         $compressed);
                 }
             }
@@ -342,7 +342,7 @@ class Minify0_Minify {
             }
             // still need to encode
         }
-        
+
         // add headers
         if ( !defined( 'W3TC_MINIFY_CONTENT_LENGTH_OFF' ) ) {
             $headers['Content-Length'] = $cacheIsReady
@@ -352,7 +352,7 @@ class Minify0_Minify {
                     : strlen($content['content'])
                 );
         }
-        
+
         $headers['Content-Type'] = self::$_options['contentTypeCharset']
             ? self::$_options['contentType'] . '; charset=' . self::$_options['contentTypeCharset']
             : self::$_options['contentType'];
@@ -379,7 +379,7 @@ class Minify0_Minify {
         } else {
             if ($cacheIsReady)
                 $content = self::$_cache->fetch($fullCacheId);
-            
+
             return array(
                 'success' => true
                 ,'statusCode' => 200
@@ -388,14 +388,14 @@ class Minify0_Minify {
             );
         }
     }
-    
+
     private static $lastServed = array();
 
     public static function getUsageStatistics() {
         if (isset(self::$lastServed['fullCacheId']))
             self::$lastServed = self::$_cache->fetch(self::$lastServed['fullCacheId']);
 
-        if (isset(self::$lastServed['content']) && 
+        if (isset(self::$lastServed['content']) &&
                 isset(self::$lastServed['originalLength'])) {
             return array(
                 'content_type' => self::$_options['contentType'],
@@ -411,12 +411,12 @@ class Minify0_Minify {
      * Return combined minified content for a set of sources
      *
      * No internal caching will be used and the content will not be HTTP encoded.
-     * 
+     *
      * @param array $sources array of filepaths and/or Minify_Source objects
-     * 
+     *
      * @param array $options (optional) array of options for serve. By default
      * these are already set: quiet = true, encodeMethod = '', lastModifiedTime = 0.
-     * 
+     *
      * @return string
      */
     public static function combine($sources, $options = array())
@@ -433,10 +433,10 @@ class Minify0_Minify {
         self::$_cache = $cache;
         return $out['content'];
     }
-    
+
     /**
      * Set $_SERVER['DOCUMENT_ROOT']. On IIS, the value is created from SCRIPT_FILENAME and SCRIPT_NAME.
-     * 
+     *
      * @param string $docRoot value to use for DOCUMENT_ROOT
      */
     public static function setDocRoot($docRoot = '')
@@ -462,14 +462,14 @@ class Minify0_Minify {
      * @var Minify_Cache_File
      */
     private static $_cache = null;
-    
+
     /**
      * Active controller for current request
      *
      * @var Minify_Controller_Base
      */
     protected static $_controller = null;
-    
+
     /**
      * Options for current request
      *
@@ -511,7 +511,7 @@ class Minify0_Minify {
             );
         }
     }
-    
+
     /**
      * Combines sources and minifies the result.
      *
@@ -522,7 +522,7 @@ class Minify0_Minify {
     protected static function _combineMinify()
     {
         $type = self::$_options['contentType']; // ease readability
-        
+
         // when combining scripts, make sure all statements separated and
         // trailing single line comment is terminated
         $implodeSeparator = ($type === self::TYPE_JS)
@@ -597,11 +597,11 @@ class Minify0_Minify {
         } while ($source);
 
         $content = implode($implodeSeparator, $content);
-        
+
         if ($type === self::TYPE_CSS && false !== strpos($content, '@import')) {
             $content = self::_handleCssImports($content);
         }
-        
+
         // do any post-processing (esp. for editing build URIs)
         if (self::$_options['postprocessorRequire']) {
             require_once self::$_options['postprocessorRequire'];
@@ -614,7 +614,7 @@ class Minify0_Minify {
             'content' => $content
         );
     }
-    
+
     /**
      * Sets cache ID
      * @param string $cacheId
@@ -634,8 +634,8 @@ class Minify0_Minify {
 
     /**
      * Make a unique cache id for for this request.
-     * 
-     * Any settings that could affect output are taken into consideration  
+     *
+     * Any settings that could affect output are taken into consideration
      *
      * @param string $prefix
      *
@@ -652,7 +652,7 @@ class Minify0_Minify {
             ,self::$_options['processCssImports']
         ))));
     }
-    
+
     /**
      * Bubble CSS @imports to the top or prepend a warning if an import is detected not at the top.
      *

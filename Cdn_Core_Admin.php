@@ -210,7 +210,7 @@ class Cdn_Core_Admin {
                 p.post_type = "attachment"  AND (pm.meta_value IS NOT NULL OR pm2.meta_value IS NOT NULL)
             GROUP BY
             	p.ID
-			ORDER BY
+	    ORDER BY
 				p.ID', $wpdb->prefix, $wpdb->prefix, $wpdb->prefix );
 
 			if ( $limit ) {

@@ -59,10 +59,10 @@ class Minify_Plugin {
 		add_filter( 'w3tc_admin_bar_menu',
 			array( $this, 'w3tc_admin_bar_menu' ) );
 
-		add_filter( 'w3tc_footer_comment', array(
-				$this,
-				'w3tc_footer_comment'
-			) );
+			add_filter( 'w3tc_footer_comment', array(
+					$this,
+					'w3tc_footer_comment'
+				) );
 
 		if ( $this->_config->get_string( 'minify.engine' ) == 'file' ) {
 			add_action( 'w3_minify_cleanup', array(
@@ -779,12 +779,26 @@ class Minify_Plugin {
 		);
 
 		if ( !empty( $groups[$theme][$template][$location]['files'] ) ) {
-			$return['url'] = $this->format_url_group( $theme, $template, $location, $type );
+			if ( $this->_config->get_boolean( 'minify.css.embed' ) ) {
+				$minify = Dispatcher::component( 'Minify_MinifiedFileRequestHandler' );
+				$minify_filename = $this->get_minify_manual_filename(
+					$theme, $template, $location, $type );
 
-			if ( $return['url'] ) {
-				$import = ( isset( $groups[$theme][$template][$location]['import'] ) ? (boolean) $groups[$theme][$template][$location]['import'] : false );
+				$m = $minify->process( $minify_filename, true );
+				if ( isset( $m['content'] ) )
+					$style = $m['content'];
+				else
+					$style = 'not set';
 
-				$return['body'] = $this->get_style( $return['url'], $import );
+				$return['body'] = "<style type=\"text/css\" media=\"all\">$style</style>\r\n";
+			} else {
+				$return['url'] = $this->get_minify_manual_url( $theme, $template, $location, $type );
+
+				if ( $return['url'] ) {
+					$import = ( isset( $groups[$theme][$template][$location]['import'] ) ? (boolean) $groups[$theme][$template][$location]['import'] : false );
+
+					$return['body'] = $this->get_style( $return['url'], $import );
+				}
 			}
 		}
 
@@ -815,7 +829,7 @@ class Minify_Plugin {
 		);
 
 		if ( !empty( $groups[$theme][$template][$location]['files'] ) ) {
-			$return['url'] = $this->format_url_group( $theme, $template, $location, $fileType );
+			$return['url'] = $this->get_minify_manual_url( $theme, $template, $location, $fileType );
 
 			if ( $return['url'] ) {
 				$return['body'] = $this->minify_helpers->generate_script_tag(
@@ -856,27 +870,24 @@ class Minify_Plugin {
 	}
 
 	/**
-	 * Formats URL
-	 *
-	 * @param string  $theme
-	 * @param string  $template
-	 * @param string  $location
-	 * @param string  $type
-	 * @return string
+	 * Generates filename for minify manual resource
 	 */
-	function format_url_group( $theme, $template, $location, $type ) {
-		$w3_minify = Dispatcher::component( 'Minify_MinifiedFileRequestHandler' );
+	function get_minify_manual_filename( $theme, $template, $location, $type ) {
+		$minify = Dispatcher::component( 'Minify_MinifiedFileRequestHandler' );
+		$id = $minify->get_id_group( $theme, $template, $location, $type );
+		if ( !$id )
+			return false;
 
-		$url = false;
-		$id = $w3_minify->get_id_group( $theme, $template, $location, $type );
+		return $theme . '.' . $template . '.' . $location . '.'. $id .
+			'.' . $type;
+	}
 
-		if ( $id ) {
-			$minify_filename = $theme . '.' . $template . '.' . $location .
-				'.'. $id . '.' . $type;
-			$url = Minify_Core::minified_url( $minify_filename );
-		}
-
-		return $url;
+	/**
+	 * Generates URL for minify manual resource
+	 */
+	function get_minify_manual_url( $theme, $template, $location, $type ) {
+		return Minify_Core::minified_url( $this->get_minify_manual_filename(
+			$theme, $template, $location, $type ) );
 	}
 
 	/**
@@ -894,7 +905,7 @@ class Minify_Plugin {
 			foreach ( $js_templates as $js_template => $js_locations ) {
 				foreach ( (array) $js_locations as $js_location => $js_config ) {
 					if ( !empty( $js_config['files'] ) ) {
-						$files[] = $this->format_url_group( $js_theme, $js_template, $js_location, 'js' );
+						$files[] = $this->get_minify_manual_url( $js_theme, $js_template, $js_location, 'js' );
 					}
 				}
 			}
@@ -904,7 +915,7 @@ class Minify_Plugin {
 			foreach ( $css_templates as $css_template => $css_locations ) {
 				foreach ( (array) $css_locations as $css_location => $css_config ) {
 					if ( !empty( $css_config['files'] ) ) {
-						$files[] = $this->format_url_group( $css_theme, $css_template, $css_location, 'css' );
+						$files[] = $this->get_minify_manual_url( $css_theme, $css_template, $css_location, 'css' );
 					}
 				}
 			}
@@ -1284,7 +1295,7 @@ class _W3_MinifyHelpers {
 		if ( Util_Environment::is_url( $file_normalized ) ) {
 			if ( $this->debug ) {
 				Minify_Core::log(
-					'is_file_for_minification: its url ' . $file );
+					'is_file_for_minification: its url ' . $file . ' for url ' . $url );
 			}
 
 			return '';

@@ -281,10 +281,10 @@ class Minify_Environment {
 					    $result = implode( ' ', $response['body'] );
 					} else {
 						$result = $response['body'];
-					}
+				}
 				} else {
 					$result = $response;
-				}
+			}
 			}
 			set_site_transient( $key, $result, 30 );
 		}
@@ -393,7 +393,7 @@ class Minify_Environment {
 		if ( $engine == 'file' ) {
 			if ( $compression ) {
 				$rules .= "    RewriteCond %{HTTP:Accept-Encoding} gzip\n";
-				$rules .= "    RewriteRule .* - [E=APPEND_EXT:.gzip]\n";
+				$rules .= "    RewriteRule .* - [E=APPEND_EXT:_gzip]\n";
 				$rules .= "    RewriteCond %{REQUEST_FILENAME}%{ENV:APPEND_EXT} -" . ( $config->get_boolean( 'minify.file.nfs' ) ? 'F' : 'f' ) . "\n";
 				$rules .= "    RewriteRule (.*) $1%{ENV:APPEND_EXT} [L]\n";
 			} else {
@@ -448,7 +448,7 @@ class Minify_Environment {
 
 			if ( $compression ) {
 				$rules .= "if (\$http_accept_encoding ~ gzip) {\n";
-				$rules .= "    set \$w3tc_enc .gzip;\n";
+				$rules .= "    set \$w3tc_enc _gzip;\n";
 				$rules .= "}\n";
 			}
 
@@ -548,13 +548,10 @@ class Minify_Environment {
 
 		$rules = '';
 		$rules .= W3TC_MARKER_BEGIN_MINIFY_CACHE . "\n";
-		/* workaround for .gzip
+		// workaround for .gzip
 		if ( $compatibility ) {
 			$rules .= "Options -MultiViews\n";
-		}*/
-		$rules .= "<IfModule mod_negotiation.c>\n";
-		$rules .= "    Options -MultiViews\n";
-		$rules .= "</IfModule>\n";
+		}
 
 		if ( $etag ) {
 			$rules .= "FileETag MTime Size\n";
@@ -562,17 +559,15 @@ class Minify_Environment {
 
 		if ( $compression ) {
 			$rules .= "<IfModule mod_mime.c>\n";
-			$rules .= "    AddEncoding gzip .gzip\n";
-			$rules .= "    <Files *.css.gzip>\n";
-			$rules .= "        ForceType text/css\n";
-			$rules .= "    </Files>\n";
-			$rules .= "    <Files *.js.gzip>\n";
-			$rules .= "        ForceType application/x-javascript\n";
-			$rules .= "    </Files>\n";
+			$rules .= "    AddType text/css .css_gzip\n";
+			$rules .= "    AddEncoding gzip .css_gzip\n";
+			$rules .= "    AddType application/x-javascript .js_gzip\n";
+			$rules .= "    AddEncoding gzip .js_gzip\n";
 			$rules .= "</IfModule>\n";
 			$rules .= "<IfModule mod_deflate.c>\n";
 			$rules .= "    <IfModule mod_setenvif.c>\n";
-			$rules .= "        SetEnvIfNoCase Request_URI \\.gzip$ no-gzip\n";
+			$rules .= "        SetEnvIfNoCase Request_URI \\.css_gzip$ no-gzip\n";
+			$rules .= "        SetEnvIfNoCase Request_URI \\.js_gzip$ no-gzip\n";
 			$rules .= "    </IfModule>\n";
 			$rules .= "</IfModule>\n";
 		}
@@ -735,7 +730,7 @@ class Minify_Environment {
 		$rules .= "}\n";
 
 		if ( $compression ) {
-			$rules .= "location ~ " . $cache_uri . ".*js\\.gzip$ {\n";
+			$rules .= "location ~ " . $cache_uri . ".*js_gzip$ {\n";
 			$rules .= "    gzip off;\n";
 			$rules .= "    types {}\n";
 			$rules .= "    default_type application/x-javascript;\n";
@@ -743,7 +738,7 @@ class Minify_Environment {
 			$rules .= "    add_header Content-Encoding gzip;\n";
 			$rules .= "}\n";
 
-			$rules .= "location ~ " . $cache_uri . ".*css\\.gzip$ {\n";
+			$rules .= "location ~ " . $cache_uri . ".*css_gzip$ {\n";
 			$rules .= "    gzip off;\n";
 			$rules .= "    types {}\n";
 			$rules .= "    default_type text/css;\n";

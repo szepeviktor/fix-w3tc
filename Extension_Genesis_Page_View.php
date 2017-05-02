@@ -81,6 +81,12 @@ Util_Ui::config_item( array(
 		'description' => __( 'Caches the posts listed on tag, categories, author and other term pages, pagination is supported.', 'w3-total-cache' )
 	) );
 Util_Ui::config_item( array(
+		'key' => array( 'genesis.theme', 'loop_terms_excluded' ),
+		'control' => 'textarea',
+		'label' => __( 'Excluded terms pages / posts:', 'w3-total-cache' ),
+		'description' => __( 'List of pages / posts that should not have the terms loop cached. Specify one page / post per line. This area supports regular expressions.', 'w3-total-cache' )
+	) );
+Util_Ui::config_item( array(
 		'key' => array( 'genesis.theme', 'flush_terms' ),
 		'control' => 'checkbox',
 		'checkbox_label' => __( 'Enable', 'w3-total-cache' ),

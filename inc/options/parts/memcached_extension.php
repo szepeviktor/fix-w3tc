@@ -42,7 +42,7 @@ Util_Ui::config_item( array(
 		'disabled' => ( Util_Installed::memcached_aws() ? null : true ),
 		'description' =>
 		( !Util_Installed::memcached_aws() ?
-			__( 'ElastiCache PHP module not found', 'w3-total-cache' ) :
+			__( 'ElastiCache <acronym title="Hypertext Preprocessor">PHP</acronym> module not found', 'w3-total-cache' ) :
 			__( 'When Amazon ElastiCache used, specify configuration endpoint as Memecached host', 'w3-total-cache' )
 		)
 	) );

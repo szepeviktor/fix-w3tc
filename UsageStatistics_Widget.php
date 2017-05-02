@@ -9,7 +9,7 @@ class UsageStatistics_Widget {
 
 	public function init() {
 		$c = Dispatcher::config();
-		$this->enabled = ( $c->get_boolean( 'stats.enabled' ) && 
+		$this->enabled = ( $c->get_boolean( 'stats.enabled' ) &&
 			Util_Environment::is_w3tc_pro( $c ) );
 
 		add_action( 'admin_print_styles-toplevel_page_w3tc_dashboard',
@@ -22,7 +22,7 @@ class UsageStatistics_Widget {
 		add_action( 'w3tc_widget_setup', array(
 				$this,
 				'w3tc_widget_setup'
-			) );
+			), 300 );
 		add_action( 'w3tc_ajax_ustats_get', array( $this, 'w3tc_ajax_ustats_get' ) );
 	}
 
@@ -33,7 +33,7 @@ class UsageStatistics_Widget {
 			'<div class="w3tc-widget-w3tc-logo"></div>' .
 			'<div class="w3tc-widget-text">' .
 			__( 'Caching Statistics', 'w3-total-cache' ) .
-			'</div>',			
+			'</div>',
 			array( $this, 'widget_form' ),
 			Util_Ui::admin_url( 'admin.php?page=w3tc_general#miscellaneous' ),
 			'normal' );

@@ -594,6 +594,7 @@ class Util_Ui {
 	 *   selectbox_optgroups =>
 	 *   textbox_size =>
 	 *
+	 *   control_after => something after control to add
 	 *   description => description shown to the user below
 	 */
 	static public function config_item( $a ) {
@@ -666,6 +667,9 @@ class Util_Ui {
 					'disabled' => $disabled
 				);
 			}
+
+		if ( isset( $a['control_after'] ) )
+			$table_tr['html'] = $a['control_after'];
 
 		if ( isset( $a['description'] ) )
 			$table_tr['description'] = $a['description'];

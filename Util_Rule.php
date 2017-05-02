@@ -383,7 +383,10 @@ class Util_Rule {
 	 * @return bool
 	 */
 	static public function can_check_rules() {
-		return Util_Environment::is_apache() || Util_Environment::is_litespeed() || Util_Environment::is_nginx();
+		return Util_Environment::is_apache() ||
+			Util_Environment::is_litespeed() ||
+			Util_Environment::is_nginx() ||
+			Util_Environment::is_iis();
 	}
 
 	/**

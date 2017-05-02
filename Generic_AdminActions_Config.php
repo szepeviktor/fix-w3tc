@@ -193,7 +193,6 @@ class Generic_AdminActions_Config {
 		$track_usage = Util_Request::get_boolean( 'track_usage' );
 		$this->_config->set( 'common.support', $support );
 		$this->_config->set( 'common.tweeted', $tweeted );
-
 		if ( $track_usage )
 			$this->_config->set( 'common.track_usage', true );
 		else

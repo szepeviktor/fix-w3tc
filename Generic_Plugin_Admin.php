@@ -508,6 +508,9 @@ class Generic_Plugin_Admin {
 	function plugin_action_links( $links ) {
 		array_unshift( $links,
 			'<a class="edit" href="admin.php?page=w3tc_general">Settings</a>' );
+		array_unshift( $links,
+			'<a class="edit" style="color: red" href="admin.php?page=w3tc_support">Premium Support</a>' );
+
 
 		if ( !is_writable( WP_CONTENT_DIR ) ||
 			!is_writable( Util_Rule::get_browsercache_rules_cache_path() ) ) {
@@ -608,7 +611,6 @@ class Generic_Plugin_Admin {
 		$error_messages = array(
 			'fancy_permalinks_disabled_pgcache' => sprintf( __( 'Fancy permalinks are disabled. Please %s it first, then re-attempt to enabling enhanced disk mode.', 'w3-total-cache' ), Util_Ui::button_link( 'enable', 'options-permalink.php' ) ),
 			'fancy_permalinks_disabled_browsercache' => sprintf( __( 'Fancy permalinks are disabled. Please %s it first, then re-attempt to enabling the \'Do not process 404 errors for static objects with WordPress\'.', 'w3-total-cache' ), Util_Ui::button_link( 'enable', 'options-permalink.php' ) ),
-			'support_request' => __( 'Failed to send support request.', 'w3-total-cache' ),
 			'support_request_type' => __( 'Please select request type.', 'w3-total-cache' ),
 			'support_request_url' => __( 'Please enter the address of the site in the site <acronym title="Uniform Resource Locator">URL</acronym> field.', 'w3-total-cache' ),
 			'support_request_name' => __( 'Please enter your name in the Name field', 'w3-total-cache' ),

@@ -486,7 +486,7 @@ msgid "HTML Tidy extension:"
 msgstr "HTML Tidy ekstenzija:"
 
 #: ../inc/lightbox/self_test.php:124
-msgid "(required for HTML Tidy minifier suppport)"
+msgid "(required for HTML Tidy minifier support)"
 msgstr "(potrebno za podršku za HTML Tidy umanjivač)"
 
 #: ../inc/lightbox/self_test.php:128

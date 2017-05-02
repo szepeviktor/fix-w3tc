@@ -15,6 +15,8 @@ class Cdn_CloudFrontFsd_Popup {
 			array( $o, 'w3tc_ajax_cdn_cloudfront_fsd_view_distribution' ) );
 		add_action( 'w3tc_ajax_cdn_cloudfront_fsd_configure_distribution',
 			array( $o, 'w3tc_ajax_cdn_cloudfront_fsd_configure_distribution' ) );
+		add_action( 'w3tc_ajax_cdn_cloudfront_fsd_configure_distribution_skip',
+			array( $o, 'w3tc_ajax_cdn_cloudfront_fsd_configure_distribution_skip' ) );
 	}
 
 
@@ -325,6 +327,47 @@ class Cdn_CloudFrontFsd_Popup {
 		}
 
 		$distribution_domain = $response['DomainName'];
+
+		$c = Dispatcher::config();
+		$c->set( 'cdn.cloudfront_fsd.access_key', $access_key );
+		$c->set( 'cdn.cloudfront_fsd.secret_key', $secret_key );
+		$c->set( 'cdn.cloudfront_fsd.distribution_id', $distribution_id );
+		$c->set( 'cdn.cloudfront_fsd.distribution_domain', $distribution_domain );
+		$c->save();
+
+		$details = array(
+			'name' => $distribution['Comment'],
+			'home_domain' => Util_Environment::home_url_host(),
+			'dns_cname_target' => $distribution_domain,
+		);
+
+		include  W3TC_DIR . '/Cdn_CloudFrontFsd_Popup_View_Success.php';
+		exit();
+	}
+
+
+
+	public function w3tc_ajax_cdn_cloudfront_fsd_configure_distribution_skip() {
+		$access_key = $_REQUEST['access_key'];
+		$secret_key = $_REQUEST['secret_key'];
+		$distribution_id = Util_Request::get( 'distribution_id', '' );
+
+		$origin_id = rand();
+
+		try {
+			$api = new Cdn_CloudFrontFsd_Api( $access_key, $secret_key );
+			$distribution = $api->distribution_get( $distribution_id );
+		} catch ( \Exception $ex ) {
+			$this->render_intro( array(
+					'error_message' => 'Failed to configure distribution: ' . $ex->getMessage()
+				) );
+			exit();
+		}
+
+		if ( isset( $distribution['DomainName'] ) )
+			$distribution_domain = $distribution['DomainName'];
+		else
+			$distribution_domain = 'n/a';
 
 		$c = Dispatcher::config();
 		$c->set( 'cdn.cloudfront_fsd.access_key', $access_key );

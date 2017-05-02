@@ -540,7 +540,7 @@ class ObjectCache_WpObjectCache_Regular {
 			if ( ! isset( $value ) )
 				$value = get_site_option( $transient_option );
 		} else {
-			$value == false;
+			$value = false;
 		}
 
 		return $value;
@@ -876,7 +876,7 @@ class ObjectCache_WpObjectCache_Regular {
 					str_pad( $debug['group'], 15, ' ', STR_PAD_LEFT ),
 					$debug['id'] );
 			}
-		} elseif ( $this->_config->get_string( 'common.support' ) == '' &&
+		} else if ( $this->_config->get_string( 'common.support' ) == '' &&
 					!$this->_config->get_boolean( 'common.tweeted' ) ){
 			$reason = $this->get_reject_reason();
 			$append = ( $reason != '' ? sprintf( ' (%s)', $reason ) : '' );

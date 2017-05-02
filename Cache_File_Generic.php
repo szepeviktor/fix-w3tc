@@ -78,9 +78,9 @@ class Cache_File_Generic extends Cache_File {
 			@rename( $tmppath, $path );
 		}
 
-		@unlink( $tmppath ); 
+		@unlink( $tmppath );
 
-		$old_entry_path = $path . '.old';
+		$old_entry_path = $path . '_old';
 		@unlink( $old_entry_path );
 
 		if ( Util_Environment::is_apache() && isset( $var['headers'] ) ) {
@@ -146,7 +146,7 @@ class Cache_File_Generic extends Cache_File {
 			return array( $data, $has_old_data );
 
 
-		$path_old = $path . '.old';
+		$path_old = $path . '_old';
 		$too_old_time = time() - 30;
 
 		if ( $exists = file_exists( $path_old ) ) {
@@ -217,7 +217,7 @@ class Cache_File_Generic extends Cache_File {
 		if ( !file_exists( $path ) )
 			return true;
 
-		$old_entry_path = $path . '.old';
+		$old_entry_path = $path . '_old';
 		if ( ! @rename( $path, $old_entry_path ) ) {
 			// if we can delete old entry - do second attempt to store in old-entry file
 			if ( ! @unlink( $old_entry_path ) || ! @rename( $path, $old_entry_path ) ) {
@@ -230,7 +230,7 @@ class Cache_File_Generic extends Cache_File {
 	}
 
 	/**
-	 * Key to delete, deletes .old and primary if exists.
+	 * Key to delete, deletes _old and primary if exists.
 	 *
 	 * @param unknown $key
 	 * @return bool
@@ -238,7 +238,7 @@ class Cache_File_Generic extends Cache_File {
 	function hard_delete( $key ) {
 		$key = $this->get_item_key( $key );
 		$path = $this->_cache_dir . DIRECTORY_SEPARATOR . $this->_get_path( $key );
-		$old_entry_path = $path . '.old';
+		$old_entry_path = $path . '_old';
 		@unlink( $old_entry_path );
 
 		if ( !file_exists( $path ) )

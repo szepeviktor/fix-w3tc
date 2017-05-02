@@ -70,7 +70,7 @@ class Extension_NewRelic_Plugin {
 	function ob_callback_browser( $buffer ) {
 		$core = Dispatcher::component( 'Extension_NewRelic_Core' );
 		$app = $core->get_effective_browser_application();
-		if ( isset( $app['loader_script'] ) ) {
+		if ( isset( $app['loader_script'] ) && !$this->_should_disable_auto_rum() ) {
 			$buffer = preg_replace( '~<head(\s+[^>]*)*>~Ui',
 				'\\0' . $app['loader_script'], $buffer, 1 );
 		}
@@ -104,6 +104,14 @@ class Extension_NewRelic_Plugin {
 	}
 
 	function _should_disable_auto_rum() {
+		$reject_reason = apply_filters( 'w3tc_newrelic_should_disable_auto_rum', null );
+		if ( !empty( $reject_reason ) ) {
+			$this->newrelic_reject_reason =
+				__( 'rejected by filter: ', 'w3-total-cache' ) . $reject_reason;
+			return true;
+		}
+
+
 		/**
 		 * Disable for AJAX so its not messed up
 		 */

@@ -116,7 +116,7 @@ class DbCache_WpdbInjection_QueryCaching extends DbCache_WpdbInjection {
 			$caching = false;
 		}
 
-		if ( preg_match( '~^\s*insert\b|^\s*delete\b|^\s*update\b|^\s*replace\b|^\s*commit\b|^\s*truncate\b~is', $query ) ) {
+		if ( preg_match( '~^\s*insert\b|^\s*delete\b|^\s*update\b|^\s*replace\b|^\s*commit\b|^\s*truncate\b|^\s*drop\b|^\s*create\b~is', $query ) ) {
 			if ( $caching ) {
 				$this->cache_reject_reason = 'modification query';
 				$caching = false;
@@ -363,7 +363,7 @@ class DbCache_WpdbInjection_QueryCaching extends DbCache_WpdbInjection {
 		$ajax_skip = false;
 		if ( defined( 'DOING_AJAX' ) ) {
 			// wp_admin is always defined for ajax requests, check by referrer
-			if ( isset( $_SERVER['HTTP_REFERER'] ) && 
+			if ( isset( $_SERVER['HTTP_REFERER'] ) &&
 				strpos( $_SERVER['HTTP_REFERER'], '/wp-admin/' ) === false )
 				$ajax_skip = true;
 		}

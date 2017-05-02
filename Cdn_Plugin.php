@@ -31,7 +31,7 @@ class Cdn_Plugin {
 		$cdn_engine = $this->_config->get_string( 'cdn.engine' );
 
         add_filter( 'wp_get_attachment_url', array( 
-            $this, 
+             $this,
             'w3tc_attachment_url'
         ), 0 );
 
@@ -50,10 +50,10 @@ class Cdn_Plugin {
 				'cron_schedules'
 			) );
 
-		add_filter( 'w3tc_footer_comment', array(
-				$this,
-				'w3tc_footer_comment'
-			) );
+			add_filter( 'w3tc_footer_comment', array(
+					$this,
+					'w3tc_footer_comment'
+				) );
 
 		if ( !Cdn_Util::is_engine_mirror( $cdn_engine ) ) {
 			add_action( 'delete_attachment', array(
@@ -348,7 +348,7 @@ class Cdn_Plugin {
 	 */
 	function get_files_includes() {
 		$includes_root = Util_Environment::normalize_path( ABSPATH . WPINC );
-		$doc_root = Util_Environment::document_root();
+		$doc_root = Util_Environment::normalize_path( Util_Environment::document_root() );
 		$includes_path = ltrim( str_replace( $doc_root, '', $includes_root ), '/' );
 
 		$files = Cdn_Util::search_files(
@@ -377,7 +377,7 @@ class Cdn_Plugin {
 
 		$themes_root = Util_Environment::normalize_path( $themes_root );
 		$themes_path = ltrim( str_replace(
-				Util_Environment::document_root(), '', $themes_root ), '/' );
+				Util_Environment::normalize_path( Util_Environment::document_root() ), '', $themes_root ), '/' );
 		$files = Cdn_Util::search_files(
 			$themes_root, $themes_path, $this->_config->get_string( 'cdn.theme.files' )
 		);
@@ -401,8 +401,10 @@ class Cdn_Plugin {
 
 			$minify = Dispatcher::component( 'Minify_Plugin' );
 
-			$document_root = Util_Environment::document_root();
-			$minify_root = Util_Environment::cache_blog_dir( 'minify' );
+			$document_root = Util_Environment::normalize_path(
+				Util_Environment::document_root() );
+			$minify_root = Util_Environment::normalize_path(
+				Util_Environment::cache_blog_dir( 'minify' ) );
 			$minify_path = ltrim( str_replace( $document_root, '', $minify_root ), '/' );
 			$urls = $minify->get_urls();
 
@@ -452,14 +454,15 @@ class Cdn_Plugin {
 	 */
 	function get_files_custom() {
 		$files = array();
-		$document_root = Util_Environment::document_root();
+		$document_root = Util_Environment::normalize_path(
+			Util_Environment::document_root() );
 		$custom_files = $this->_config->get_array( 'cdn.custom.files' );
 		$custom_files = array_map( array( '\W3TC\Util_Environment', 'parse_path' ), $custom_files );
-		$site_root = Util_Environment::site_root();
+		$site_root = Util_Environment::normalize_path( Util_Environment::site_root() );
 		$path = Util_Environment::site_url_uri();
 		$site_root_dir = str_replace( $document_root, '', $site_root );
 		if ( strstr( WP_CONTENT_DIR, Util_Environment::site_root() ) === false ) {
-			$site_root = Util_Environment::document_root();
+			$site_root = Util_Environment::normalize_path( Util_Environment::document_root() );
 			$path = '';
 		}
 
@@ -1058,10 +1061,15 @@ class _Cdn_Plugin_ContentFilter {
 				foreach ( $masks as $mask ) {
 					if ( !empty( $mask ) ) {
 						if ( Util_Environment::is_url( $mask ) ) {
-							$mask = Util_Environment::url_to_uri( $mask );
-						}
-						
-						if ( substr( $mask, 0, 1 ) == '/' ) {   // uri
+							$url_match = array();
+							if ( preg_match( '~^((https?:)?//([^/]*))(.*)~', $mask, $url_match ) ) {
+								$custom_regexps_urls[] = array(
+									'domain_url' => Util_Environment::get_url_regexp(
+										$url_match[1] ),
+									'uri' => Cdn_Util::get_regexp_by_mask( $url_match[4] )
+								);
+							}
+						} elseif ( substr( $mask, 0, 1 ) == '/' ) {   // uri
 							$custom_regexps_uris[] = Cdn_Util::get_regexp_by_mask( $mask );
 						} else {
 							$file = Util_Environment::normalize_path( $mask );   // \ -> backspaces
@@ -1074,15 +1082,17 @@ class _Cdn_Plugin_ContentFilter {
 				}
 
 				if ( count( $custom_regexps_urls ) > 0 ) {
-					foreach ( $custom_regexps_urls as $regexp )
-						$regexps[] = '~(["\'(=])\s*((' . $regexp . ')?(()([^"\'() >]*)))~i';
+					foreach ( $custom_regexps_urls as $regexp ) {
+						$regexps[] = '~(["\'(=])\s*((' . $regexp['domain_url'] .
+						')?((' . $regexp['uri'] . ')([^"\'() >]*)))~i';
+					}
 				}
 				if ( count( $custom_regexps_uris ) > 0 ) {
 					$regexps[] = '~(["\'(=])\s*((' . $domain_url_regexp .
 						')?((' . implode( '|', $custom_regexps_uris ) . ')([^"\'() >]*)))~i';
 				}
 
-				if ( count( $custom_regexps_docroot_related ) > 0) {
+				if ( count( $custom_regexps_docroot_related ) > 0 ) {
 					$regexps[] = '~(["\'(=])\s*((' . $domain_url_regexp .
 						')?(' . Util_Environment::preg_quote( $site_path ) .
 						'(' . implode( '|', $custom_regexps_docroot_related ) . ')([^"\'() >]*)))~i';

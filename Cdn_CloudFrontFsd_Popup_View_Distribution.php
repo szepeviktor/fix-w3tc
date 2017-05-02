@@ -23,12 +23,12 @@ Util_Ui::hidden( '', 'distribution_comment', $details['distribution_comment'] );
                 <th>Origin:</th>
                 <td><?php $this->render_zone_ip_change( $details, 'origin' ) ?><br />
                     <span class="description">
-                        Create DNS record pointing to your WordPress host IP.
-                        CloudFront will use this host to grab your content.
-                        It can not be your real domain name, since you will
-                        point it to CloudFront's IP. For example for myblog.com
-                        create origin.myblog.com and point it to the same IP
-                        as myblog.com
+                        Create an apex <acronym title="Domain Name System">DNS</acronym> record pointing to your WordPress host <acronym title="Internet Protocol">IP</acronym>.
+                        CloudFront will use this host to mirror your site.
+
+                        Tip: If you real domain name is domain.com, then the host 
+                        for the apex record should be origin.domain.com with the host 
+                        <acronym title="Internet Protocol">IP</acronym> of domain.com, e.g.: 
                     </span>
                 </td>
             </tr>
@@ -54,6 +54,9 @@ Util_Ui::hidden( '', 'distribution_comment', $details['distribution_comment'] );
             <input type="button"
                 class="w3tc_cdn_cloudfront_fsd_configure_distribution w3tc-button-save button-primary"
                 value="<?php _e( 'Apply', 'w3-total-cache' ); ?>" />
+            <input type="button"
+                class="w3tc_cdn_cloudfront_fsd_configure_distribution_skip w3tc-button-save button"
+                value="<?php _e( 'Don\'t reconfigure, I know what I\'m doing', 'w3-total-cache' ); ?>" />
         </p>
         <?php Util_Ui::postbox_footer(); ?>
     </div>

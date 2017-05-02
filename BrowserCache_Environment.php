@@ -258,6 +258,7 @@ class BrowserCache_Environment {
 
 			$rules .= "</IfModule>\n";
 
+
 			$rules .= "<IfModule mod_expires.c>\n";
 			$rules .= "    ExpiresActive On\n";
 
@@ -532,18 +533,18 @@ class BrowserCache_Environment {
 		} else {
 			if ( $compatibility ) {
 				$rules .= "    FileETag None\n";
-				$headers_rules .= "        Header unset ETag\n";
+				$headers_rules .= "         Header unset ETag\n";
 			}
 		}
 
 		if ( $unset_setcookie )
-			$headers_rules .= "        Header unset Set-Cookie\n";
+			$headers_rules .= "         Header unset Set-Cookie\n";
 
 		if ( !$set_last_modified )
-			$headers_rules .= "        Header unset Last-Modified\n";
+			$headers_rules .= "         Header unset Last-Modified\n";
 
 		if ( $w3tc )
-			$headers_rules .= "        Header set X-Powered-By \"" .
+			$headers_rules .= "         Header set X-Powered-By \"" .
 				Util_Environment::w3tc_header() . "\"\n";
 
 		if ( strlen( $headers_rules ) > 0 ) {
@@ -725,7 +726,7 @@ class BrowserCache_Environment {
                     $rules .= "add_header Content-Security-Policy \"$dir\";\n";
                 }
             }
-        }
+		}
 
 		$rules .= W3TC_MARKER_END_BROWSERCACHE_CACHE . "\n";
 

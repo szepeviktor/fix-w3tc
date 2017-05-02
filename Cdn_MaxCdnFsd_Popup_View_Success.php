@@ -11,9 +11,9 @@ if ( !defined( 'W3TC' ) )
 
         <div style="text-align: center">
             Pull Zone <?php echo $details['name'] ?> was successfully configured.<br />
-            Now you need to change DNS records of your domain
-            <strong><?php echo $details['home_domain'] ?></strong> and CNAME it to
-            <strong><?php echo $details['dns_cname_target'] ?></strong> to make caching work.
+            Next, update the domain <acronym title="Domain Name System">DNS</acronym> records
+            <strong><?php echo $details['home_domain'] ?></strong> and add <acronym title="Canonical Name">CNAME</acronym> alias to
+            <strong><?php echo $details['dns_cname_target'] ?></strong> to enable caching.
         </div>
 
         <p class="submit">

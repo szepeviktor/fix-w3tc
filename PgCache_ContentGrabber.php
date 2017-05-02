@@ -279,7 +279,9 @@ class PgCache_ContentGrabber {
 		if ( $with_filter ) {
 			// return empty value if caching should not happen
 			$this->_page_key = apply_filters( 'w3tc_page_extract_key',
-				$this->_page_key );
+				$this->_page_key, $mobile_group, $referrer_group,
+				$encryption, $compression, $content_type,
+				$this->_request_host . $this->_request_uri );
 		}
 
 		if ( !empty( $this->_page_key ) )
@@ -534,7 +536,7 @@ class PgCache_ContentGrabber {
 				return false;
 			}
 		}
-        
+
 		return true;
 	}
 
@@ -614,7 +616,6 @@ class PgCache_ContentGrabber {
 
 			return false;
 		}
-
         if ( !$this->_check_cache_exception() && ( is_single() || is_page() ) ) {
 			if ( is_single() ) {
                 /**
@@ -622,38 +623,31 @@ class PgCache_ContentGrabber {
                  */
                 if ( $this->_check_categories() ) {
                     $this->cache_reject_reason = 'Page associated with a rejected category';
-
                     return false;
                 }
-
                 /**
                  * Don't cache pages that use tags
                  */
                 if ( $this->_check_tags() ) {
                     $this->cache_reject_reason = 'Page using a rejected tag';
-
                     return false;
                 }
             }
-
             /**
              * Don't cache pages by these authors
              */
             if ( $this->_check_authors() ) {
                 $this->cache_reject_reason = 'Page written by a rejected author';
-
                 return false;
             }
-
             /**
              * Don't cache pages using custom fields
              */
             if ( $this->_check_custom_fields() ) {
                 $this->cache_reject_reason = 'Page using a rejected custom field';
-
                 return false;
             }
-        }
+		}
 
 		return true;
 	}
@@ -774,7 +768,7 @@ class PgCache_ContentGrabber {
 		return $cache;
 	}
 
-    /**
+	/**
      * Check if in the cache exception list
      *
      * @return boolean
@@ -801,7 +795,6 @@ class PgCache_ContentGrabber {
     function _check_categories() {
         $reject_categories = $this->_config->get_array( 'pgcache.reject.categories' );
         $reject_categories = array_map( 'strtolower', $reject_categories );
-
         if ( !empty( $reject_categories ) ) {
             if ( $cats = get_the_category() ) {
 	           foreach( $cats as $cat ) {
@@ -811,10 +804,8 @@ class PgCache_ContentGrabber {
                }
             }
         }
-
         return false;
     }
-
     /**
      * Checks page against rejected tags
      *
@@ -823,7 +814,6 @@ class PgCache_ContentGrabber {
     function _check_tags() {
         $reject_tags = $this->_config->get_array( 'pgcache.reject.tags' );
         $reject_tags = array_map( 'strtolower', $reject_tags );
-
         if ( !empty( $reject_tags ) ) {
             if ( $tags = get_the_tags() ) {
 	           foreach( $tags as $tag ) {
@@ -833,10 +823,8 @@ class PgCache_ContentGrabber {
                }
             }
         }
-
         return false;
     }
-
     /**
      * Checks page against rejected authors
      *
@@ -845,7 +833,6 @@ class PgCache_ContentGrabber {
     function _check_authors() {
         $reject_authors = $this->_config->get_array( 'pgcache.reject.authors' );
         $reject_authors = array_map( 'strtolower', $reject_authors );
-
         if ( !empty( $reject_authors ) ) {
             if ( $author = get_the_author_meta( "user_login" ) ) {
                 if ( in_array( $author, $reject_authors ) ) {
@@ -853,10 +840,8 @@ class PgCache_ContentGrabber {
                 }
             }
         }
-
         return false;
     }
-
     /**
      * Checks page against rejected custom fields
      *
@@ -961,11 +946,11 @@ class PgCache_ContentGrabber {
             foreach ( $_COOKIE as $key => $value ) {
                 if ( @preg_match( '~' . $reject_cookies . '~i', $key . "=$value" ) ) {
                     return false;
-                }
-            }
-        }
+				}
+			}
+		}
 
-        return true;
+		return true;
 	}
 
 	/**
@@ -1407,7 +1392,7 @@ class PgCache_ContentGrabber {
 		// headers are sent as name->value and array(n=>, v=>)
 		// to support repeating headers
 		foreach ( $headers as $name0 => $value0 ) {
-			if ( is_array($value0) && isset( $value0['n'] ) ) {
+			if ( is_array( $value0 ) && isset( $value0['n'] ) ) {
 				$name = $value0['n'];
 				$value = $value0['v'];
 			} else {

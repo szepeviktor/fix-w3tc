@@ -73,8 +73,7 @@ class Root_AdminActivation {
 
 		try {
 			$e = Dispatcher::component( 'Root_Environment' );
-			$config = Dispatcher::config();
-			$e->fix_after_deactivation( $config );
+			$e->fix_after_deactivation();
 
 			Generic_AdminLinks::link_delete();
 		} catch ( Util_Environment_Exceptions $exs ) {

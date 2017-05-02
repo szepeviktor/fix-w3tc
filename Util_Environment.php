@@ -106,31 +106,35 @@ class Util_Environment {
 
 		return $str;
 	}
-
-    /*
-    * Returns URL from filename/dirname
-    *
-    * @return string
-    */
-    static public function filename_to_url( $filename, $use_site_url = false ) {
+	
+	/*
+	 * Returns URL from filename/dirname
+	 *
+	 * @return string
+	 */
+	static public function filename_to_url( $filename, $use_site_url = false ) {
+	
+		$document_root = Util_Environment::document_root();
 		
-        $document_root = Util_Environment::document_root();
-        
-        if ( DIRECTORY_SEPARATOR != '/' ){
-        	$filename = str_replace(DIRECTORY_SEPARATOR, '/', $filename);
-        }
+		if ( DIRECTORY_SEPARATOR != '/' ){
+			$filename = str_replace( DIRECTORY_SEPARATOR, '/', $filename);
+		}
+	
+		if ( substr( $filename, 0, strlen( $document_root ) ) != $document_root ){
+			return '';
+		}
+	
+		$uri_from_document_root = substr($filename, strlen($document_root) - strlen($filename));
+	
+		if ( DIRECTORY_SEPARATOR != '/' ){
+			$uri_from_document_root = str_replace( DIRECTORY_SEPARATOR, '/', $uri_from_document_root);
+		}
+	
+		$url = home_url($uri_from_document_root);
+		$url = apply_filters( 'w3tc_filename_to_url', $url );
 		
-        if ( substr( $filename, 0, strlen( $document_root ) ) != $document_root ){
-            return '';
-        }
-		
-        $uri_from_document_root = substr($filename, strlen($document_root) - strlen($filename));
-		
-        $url = home_url($uri_from_document_root);
-        $url = apply_filters( 'w3tc_filename_to_url', $url );
-
-        return $url;
-    }
+		return $url;
+	}
 
 	/**
 	 * Returns true if database cluster is used
@@ -274,6 +278,15 @@ class Util_Environment {
 	 */
 	static public function is_nginx() {
 		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( $_SERVER['SERVER_SOFTWARE'], 'nginx' ) !== false;
+	}
+
+	/**
+	 * Returns true if server is nginx
+	 *
+	 * @return boolean
+	 */
+	static public function is_iis() {
+		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( $_SERVER['SERVER_SOFTWARE'], 'IIS' ) !== false;
 	}
 
 	/**
@@ -508,6 +521,8 @@ class Util_Environment {
 
 		return str_replace( '\\', DIRECTORY_SEPARATOR, $home_path );
 	}
+
+
 
 	/**
 	 * Returns absolute path to document root
@@ -920,6 +935,14 @@ class Util_Environment {
 	 */
 	static public function url_relative_to_full( $relative_url ) {
 		$relative_url = Util_Environment::path_remove_dots( $relative_url );
+
+		if (version_compare(PHP_VERSION, '5.4.7') < 0) {
+			if ( substr( $relative_url, 0, 2) == '//' ) {
+				$relative_url =
+					( Util_Environment::is_https() ? 'https' : 'http' ) .
+					':' . $relative_url;
+			}
+		}
 
 		$rel = parse_url( $relative_url );
 		// it's full url already

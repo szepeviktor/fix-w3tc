@@ -111,7 +111,7 @@ class Minify_Plugin_Admin {
 				'exclude' => array(
 					'*.files',
 					'.htaccess',
-					'index.php'
+					'index.html'
 				),
 				'cache_dir' => Util_Environment::cache_blog_dir( 'minify' ),
 				'expire' => $this->_config->get_integer( 'minify.file.gc' ),

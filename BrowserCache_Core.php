@@ -36,6 +36,44 @@ class BrowserCache_Core {
 
 
 	/**
+	 * Returns replace extensions
+	 *
+	 * @return array
+	 */
+	public function get_replace_querystring_extensions( $config ) {
+		$extensions = array();
+
+		if ( $config->get_boolean( 'browsercache.cssjs.replace' ) )
+			$this->_fill_extensions( $extensions, $this->_get_cssjs_types(), 'replace' );
+		if ( $config->get_boolean( 'browsercache.html.replace' ) )
+			$this->_fill_extensions( $extensions, $this->_get_html_types(), 'replace' );
+		if ( $config->get_boolean( 'browsercache.other.replace' ) )
+			$this->_fill_extensions( $extensions, $this->_get_other_types(), 'replace' );
+
+		if ( $config->get_boolean( 'browsercache.cssjs.querystring' ) )
+			$this->_fill_extensions( $extensions, $this->_get_cssjs_types(), 'querystring' );
+		if ( $config->get_boolean( 'browsercache.html.querystring' ) )
+			$this->_fill_extensions( $extensions, $this->_get_html_types(), 'querystring' );
+		if ( $config->get_boolean( 'browsercache.other.querystring' ) )
+			$this->_fill_extensions( $extensions, $this->_get_other_types(), 'querystring' );
+
+		return $extensions;
+	}
+
+
+
+	private function _fill_extensions( &$extensions, $types, $operation ) {
+		foreach ( array_keys( $types ) as $type ) {
+			$type_extensions = explode( '|', $type );
+			foreach ( $type_extensions as $ext ) {
+				if ( !isset( $extensions[$ext] ) )
+					$extensions[$ext] = array();
+				$extensions[$ext][$operation] = true;
+			}
+		}
+	}
+
+	/**
 	 * Returns CSS/JS mime types
 	 *
 	 * @return array

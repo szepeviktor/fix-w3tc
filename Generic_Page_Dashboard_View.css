@@ -32,15 +32,15 @@
 #w3tc-dashboard-widgets div.postbox,
 #w3tc-dashboard-widgets #postbox-container-3 .hndle,
 #w3tc-dashboard-widgets #postbox-container-3 .inside,
-#w3tc-dashboard-widgets #postbox-container-3 .meta-box-sortables
-#w3tc-dashboard-widgets #postbox-container-3 .widefat{
+#w3tc-dashboard-widgets #postbox-container-3 .meta-box-sortables,
+#w3tc-dashboard-widgets #postbox-container-3 .widefat {
     background: none;
 }
 #w3tc-dashboard-widgets #postbox-container-3 .postbox,
 #w3tc-dashboard-widgets #postbox-container-3 .hndle,
 #w3tc-dashboard-widgets #postbox-container-3 .inside,
-#w3tc-dashboard-widgets #postbox-container-3 .meta-box-sortables
-#w3tc-dashboard-widgets #postbox-container-3 .widefat{
+#w3tc-dashboard-widgets #postbox-container-3 .meta-box-sortables,
+#w3tc-dashboard-widgets #postbox-container-3 .widefat {
     border:none;
 }
 #w3tc-dashboard-widgets {
