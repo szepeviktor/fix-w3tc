@@ -25,7 +25,7 @@ echo Util_Ui::nonce_field( 'w3tc' );
             <div class="spinner" style="float: right; display: block"></div>
             <div style="text-align: left">
                 Service <?php echo $details['name'] ?> was successfully created.<br />
-                Waiting for RackSpace to finish publishing process.<br />
+                Waiting for RackSpace to finish the provisioning process.<br />
                 <br />
 
                 Actual state is:
@@ -39,9 +39,9 @@ echo Util_Ui::nonce_field( 'w3tc' );
                     Service <?php echo $details['name'] ?> was successfully configured.<br />
                     <?php if ( !$is_https ): ?>
                         <br />
-                        Now you need to change DNS records of your domain
-                        <strong><?php echo $details['cname'] ?></strong> and CNAME it to<br />
-                        <strong class="w3tc_rackspace_access_url"></strong> to make caching work.
+                        Next, update the domain's <acronym title="Domain Name System">DNS</acronym> records
+                        <strong><?php echo $details['cname'] ?></strong> and add <acronym title="Canonical Name">CNAME</acronym> alias to<br />
+                        <strong class="w3tc_rackspace_access_url"></strong> to enable caching.
                     <?php endif; ?>
                 </div>
             </div>

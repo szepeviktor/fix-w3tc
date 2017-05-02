@@ -26,6 +26,7 @@ class BrowserCache_Page extends Base_Page_Settings {
 		$browsercache_w3tc = ( $this->_config->get_boolean( 'browsercache.cssjs.w3tc' ) && $this->_config->get_boolean( 'browsercache.html.w3tc' ) && $this->_config->get_boolean( 'browsercache.other.w3tc' ) );
 		$browsercache_compression = ( $this->_config->get_boolean( 'browsercache.cssjs.compression' ) && $this->_config->get_boolean( 'browsercache.html.compression' ) && $this->_config->get_boolean( 'browsercache.other.compression' ) );
 		$browsercache_replace = ( $this->_config->get_boolean( 'browsercache.cssjs.replace' ) && $this->_config->get_boolean( 'browsercache.other.replace' ) );
+		$browsercache_querystring = ( $this->_config->get_boolean( 'browsercache.cssjs.querystring' ) && $this->_config->get_boolean( 'browsercache.other.querystring' ) );
 		$browsercache_update_media_qs = ( $this->_config->get_boolean( 'browsercache.cssjs.replace' ) || $this->_config->get_boolean( 'browsercache.other.replace' ) );
 		$browsercache_nocookies =
 			( $this->_config->get_boolean( 'browsercache.cssjs.nocookies' ) &&

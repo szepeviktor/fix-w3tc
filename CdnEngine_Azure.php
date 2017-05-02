@@ -142,13 +142,24 @@ class CdnEngine_Azure extends CdnEngine_Base {
 		}
 
 		$headers = $this->_get_headers( $file );
-		$headers = array_merge( $headers, array(
-				'Content-MD5' => $content_md5
-			) );
 
 		try {
 			// $headers
-			$this->_client->createBlockBlob( $this->_config['container'], $remote_path, $contents );
+			$options = new \MicrosoftAzure\Storage\Blob\Models\CreateBlobOptions();
+			$options->setBlobContentMD5( $content_md5 );
+			if ( isset( $headers['Content-Length'] ) )
+				$options->setBlobContentLength( $headers['Content-Length'] );
+			if ( isset( $headers['Content-Type'] ) )
+				$options->setBlobContentType( $headers['Content-Type'] );
+			if ( isset( $headers['Content-Encoding'] ) )
+				$options->setBlobContentEncoding( $headers['Content-Encoding'] );
+			if ( isset( $headers['Content-Language'] ) )
+				$options->setBlobContentLanguage( $headers['Content-Language'] );
+			if ( isset( $headers['Cache-Control'] ) )
+				$options->setBlobCacheControl( $headers['Cache-Control'] );
+
+			$this->_client->createBlockBlob( $this->_config['container'],
+				$remote_path, $contents, $options );
 		} catch ( \Exception $exception ) {
 			return $this->_get_result( $local_path, $remote_path,
 				W3TC_CDN_RESULT_ERROR,
@@ -181,7 +192,7 @@ class CdnEngine_Azure extends CdnEngine_Base {
 			$remote_path = $file['remote_path'];
 
 			try {
-				$this->_client->deleteBlob( $this->_config['container'], $remote_path );
+				$r = $this->_client->deleteBlob( $this->_config['container'], $remote_path );
 				$results[] = $this->_get_result( $local_path, $remote_path,
 					W3TC_CDN_RESULT_OK, 'OK', $file );
 			} catch ( \Exception $exception ) {
@@ -389,33 +400,6 @@ class CdnEngine_Azure extends CdnEngine_Base {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Returns array of headers
-	 *
-	 * @param array   $file CDN file array
-	 * @return array
-	 */
-	function _get_headers( $file, $block_expires = false ) {
-		$allowed_headers = array(
-			'Content-Length',
-			'Content-Type',
-			'Content-Encoding',
-			'Content-Language',
-			'Content-MD5',
-			'Cache-Control',
-		);
-
-		$headers = parent::_get_headers( $file, true );
-
-		foreach ( $headers as $header => $value ) {
-			if ( !in_array( $header, $allowed_headers ) ) {
-				unset( $headers[$header] );
-			}
-		}
-
-		return $headers;
 	}
 
 	/**

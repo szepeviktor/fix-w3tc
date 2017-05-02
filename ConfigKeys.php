@@ -848,10 +848,10 @@ $keys = array(
 		'type' => 'boolean',
 		'default' => false
 	),
-    'minify.csstidy.options.remove_space_before_important' => array(
-        'type' => 'boolean',
-        'default' => false
-    ),
+	'minify.csstidy.options.remove_space_before_important' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
 	'minify.csstidy.options.case_properties' => array(
 		'type' => 'integer',
 		'default' => 1
@@ -868,10 +868,10 @@ $keys = array(
 		'type' => 'integer',
 		'default' => 0
 	),
-    'minify.csstidy.options.discard_invalid_selectors' => array(
-        'type' => 'boolean',
-        'default' => false
-    ),
+	'minify.csstidy.options.discard_invalid_selectors' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
 	'minify.csstidy.options.discard_invalid_properties' => array(
 		'type' => 'boolean',
 		'default' => false
@@ -1499,6 +1499,10 @@ $keys = array(
 		'type' => 'boolean',
 		'default' => false
 	),
+	'browsercache.cssjs.querystring' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
 	'browsercache.html.compression' => array(
 		'type' => 'boolean',
 		'default' => true
@@ -1708,6 +1712,10 @@ $keys = array(
         'default' => '\'none\''
     ),
 	'browsercache.other.replace' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
+	'browsercache.other.querystring' => array(
 		'type' => 'boolean',
 		'default' => false
 	),
@@ -2004,7 +2012,8 @@ $keys = array(
 		'type' => 'array',
 		'default' => array(
 			'newrelic' => 'w3-total-cache/Extension_NewRelic_Plugin.php',
-			'fragmentcache' => 'w3-total-cache/Extension_FragmentCache_Plugin.php'
+			'fragmentcache' => 'w3-total-cache/Extension_FragmentCache_Plugin.php',
+			'swarmify' => 'w3-total-cache/Extension_Swarmify_Plugin.php'
 		)
 	),
 	'extensions.active_frontend' => array(

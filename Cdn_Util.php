@@ -230,7 +230,7 @@ class Cdn_Util {
 
 			$upload_dir = Util_Environment::wp_upload_dir();
 			if ( isset( $upload_dir['baseurl'] ) )
-				$uploads_uri = $upload_dir['baseurl'];
+				$uploads_uri = Util_Environment::url_to_uri( $upload_dir['baseurl'] );
 			else
 				$uploads_uri = '';
 		}

@@ -8,7 +8,7 @@ if ( !defined( 'W3TC' ) )
 <p>
 	<?php
 echo Util_Ui::button_link(
-	__( 'purge CDN completely', 'w3-total-cache' ),
+	__( 'Purge CDN completely', 'w3-total-cache' ),
 	Util_Ui::url( array( 'w3tc_cdn_flush' => 'y' ) ) );
 ?>
 </p>

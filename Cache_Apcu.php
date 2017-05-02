@@ -129,7 +129,7 @@ class Cache_Apcu extends Cache_Base {
 	}
 
 	/**
-	 * Key to delete, deletes .old and primary if exists.
+	 * Deletes _old and primary if exists.
 	 *
 	 * @param unknown $key
 	 * @return bool

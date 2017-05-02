@@ -861,7 +861,7 @@ msgid "HTML Tidy extension:"
 msgstr ""
 
 #: inc/lightbox/self_test.php:124
-msgid "(required for HTML Tidy minifier suppport)"
+msgid "(required for HTML Tidy minifier support)"
 msgstr ""
 
 #: inc/lightbox/self_test.php:128

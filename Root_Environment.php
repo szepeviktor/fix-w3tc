@@ -23,7 +23,7 @@ class Root_Environment {
 			}
 		}
 		// call plugin-related handlers
-		foreach ( $this->get_handlers( $config ) as $h ) {
+		foreach ( $this->get_handlers() as $h ) {
 			try {
 				$h->fix_on_wpadmin_request( $config, $force_all_checks );
 				if ( $fix_on_event ) {
@@ -54,7 +54,7 @@ class Root_Environment {
 		$exs = new Util_Environment_Exceptions();
 
 		// call plugin-related handlers
-		foreach ( $this->get_handlers( $config ) as $h ) {
+		foreach ( $this->get_handlers() as $h ) {
 			try {
 				$h->fix_on_event( $config, $event );
 			} catch ( Util_Environment_Exceptions $ex ) {
@@ -79,11 +79,11 @@ class Root_Environment {
 	 * @param Config  $config
 	 * @throws Util_Environment_Exceptions
 	 */
-	public function fix_after_deactivation( $config ) {
+	public function fix_after_deactivation() {
 		$exs = new Util_Environment_Exceptions();
 
 		// call plugin-related handlers
-		foreach ( $this->get_handlers( $config ) as $h ) {
+		foreach ( $this->get_handlers() as $h ) {
 			try {
 				$h->fix_after_deactivation();
 			} catch ( Util_Environment_Exceptions $ex ) {
@@ -92,8 +92,7 @@ class Root_Environment {
 		}
 
 		try {
-			do_action( 'w3tc_environment_fix_after_deactivation',
-				$config );
+			do_action( 'w3tc_environment_fix_after_deactivation' );
 		} catch ( Util_Environment_Exceptions $ex ) {
 			$exs->push( $ex );
 		}
@@ -110,7 +109,7 @@ class Root_Environment {
 	 */
 	public function get_required_rules( $config ) {
 		$required_rules = array();
-		foreach ( $this->get_handlers( $config ) as $h ) {
+		foreach ( $this->get_handlers() as $h ) {
 			$required_rules_current = $h->get_required_rules( $config );
 
 			if ( !is_null( $required_rules_current ) )
@@ -165,7 +164,7 @@ class Root_Environment {
 	 * @param Config  $config
 	 * @return array
 	 */
-	private function get_handlers( $config ) {
+	private function get_handlers() {
 		$a = array(
 			new Generic_Environment(),
 			new Minify_Environment(),
@@ -182,7 +181,7 @@ class Root_Environment {
 	public function get_other_instructions( $config ) {
 		$instructions_descriptors = array();
 
-		foreach ( $this->get_handlers( $config ) as $h ) {
+		foreach ( $this->get_handlers() as $h ) {
 			if ( method_exists( $h, 'get_instructions' ) ) {
 				$instructions = $h->get_instructions( $config );
 				if ( !is_null( $instructions ) ) {

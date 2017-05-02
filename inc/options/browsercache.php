@@ -85,6 +85,14 @@ if ( !defined( 'W3TC' ) )
                 </th>
             </tr>
             <tr>
+                <th colspan="2">
+                    <label><input id="browsercache_querystring" type="checkbox"
+                        <?php Util_Ui::sealing_disabled( 'browsercache.' ) ?>
+                        name="querystring" value="1"<?php checked( $browsercache_querystring, true ); ?> /> <?php _e( 'Remove query strings from static resources', 'w3-total-cache' ); ?></label>
+                    <br /><span class="description"><?php _e( 'Resources with a "?" in the URL are not cached by some proxy caching servers.', 'w3-total-cache' ); ?></span>
+                </th>
+            </tr>
+            <tr>
                 <th><label for="browsercache_replace_exceptions"><?php Util_Ui::e_config_label( 'browsercache.replace.exceptions' ) ?></label></th>
                 <td>
                     <textarea id="browsercache_replace_exceptions"
@@ -206,6 +214,12 @@ Util_Ui::config_item( array(
                 <th colspan="2">
                     <?php $this->checkbox( 'browsercache.cssjs.replace' ) ?> <?php Util_Ui::e_config_label( 'browsercache.cssjs.replace' ) ?></label>
                     <br /><span class="description"><?php _e( 'Whenever settings are changed, a new query string will be generated and appended to objects allowing the new policy to be applied.', 'w3-total-cache' ); ?></span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <?php $this->checkbox( 'browsercache.cssjs.querystring' ) ?> <?php _e( 'Remove query strings from static resources', 'w3-total-cache' ); ?></label>
+                    <br /><span class="description"><?php _e( 'Resources with a "?" in the URL are not cached by some proxy caching servers.', 'w3-total-cache' ); ?></span>
                 </th>
             </tr>
             <tr>
@@ -370,6 +384,12 @@ Util_Ui::config_item( array(
             </tr>
             <tr>
                 <th colspan="2">
+                    <?php $this->checkbox( 'browsercache.other.querystring' ) ?> <?php _e( 'Remove query strings from static resources', 'w3-total-cache' ); ?></label>
+                    <br /><span class="description"><?php _e( 'Resources with a "?" in the URL are not cached by some proxy caching servers.', 'w3-total-cache' ); ?></span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
                     <?php $this->checkbox( 'browsercache.other.nocookies' ) ?> <?php Util_Ui::e_config_label( 'browsercache.other.nocookies' ) ?></label>
                     <br /><span class="description"><?php _e( 'Removes Set-Cookie header for responses.', 'w3-total-cache' ); ?></span>
                 </th>
@@ -378,7 +398,7 @@ Util_Ui::config_item( array(
 
         <?php Util_Ui::button_config_save( 'browsercache_media' ); ?>
         <?php Util_Ui::postbox_footer(); ?>
-
+        
         <?php Util_Ui::postbox_header( __( 'Security Headers', 'w3-total-cache' ), '', 'security' ); ?>
         <p><?php _e( 'HTTP security headers provide another layer of protection for your website by helping to mitigate attacks and security vulnerabilities.', 'w3-total-cache' ); ?></p>
         <table class="form-table">
@@ -409,12 +429,12 @@ Util_Ui::config_item( array(
             <tr>
                 <th>
                     <label for="browsercache_security_hsts_directive"><?php Util_Ui::e_config_label( 'browsercache.security.hsts.directive' ) ?></label>
-                </th>
+                </th>			 
                 <td>
                     <select id="browsercache_security_hsts_directive"
                         <?php Util_Ui::sealing_disabled( 'browsercache.' ) ?>
                         name="browsercache__security__hsts__directive">
-                        <?php $value = $this->_config->get_string( 'browsercache.security.hsts.directive' ); ?>
+                        <?php $value = $this->_config->get_string( 'browsercache.security.hsts.directive' ); ?>				
                         <option value="maxage"<?php selected( $value, 'maxage' ); ?>><?php _e( 'max-age=EXPIRES_SECONDS', 'w3-total-cache' ); ?></option>
                         <option value="maxagepre"<?php selected( $value, 'maxagepre' ); ?>><?php _e( 'max-age=EXPIRES_SECONDS; preload', 'w3-total-cache' ); ?></option>
                         <option value="maxageinc"<?php selected( $value, 'maxageinc' ); ?>><?php _e( 'max-age=EXPIRES_SECONDS; includeSubDomains', 'w3-total-cache' ); ?></option>
@@ -432,7 +452,7 @@ Util_Ui::config_item( array(
             <tr>
                 <th>
                     <label for="browsercache_security_xfo_directive"><?php Util_Ui::e_config_label( 'browsercache.security.xfo.directive' ) ?></label>
-                </th>
+                </th>			 
                 <td>
                     <select id="browsercache_security_xfo_directive"
                         <?php Util_Ui::sealing_disabled( 'browsercache.' ) ?>
@@ -456,7 +476,7 @@ Util_Ui::config_item( array(
             <tr>
                 <th>
                     <label for="browsercache_security_xss_directive"><?php Util_Ui::e_config_label( 'browsercache.security.xss.directive' ) ?></label>
-                </th>
+                </th>			 
                 <td>
                     <select id="browsercache_security_xss_directive"
                         <?php Util_Ui::sealing_disabled( 'browsercache.' ) ?>

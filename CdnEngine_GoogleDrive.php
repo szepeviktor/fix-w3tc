@@ -99,7 +99,7 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 			if ( $r == 'timeout' ) {
 				$results = array_merge( $results, $this->_get_results(
 					$files_chunk, W3TC_CDN_RESULT_ERROR,
-					"Upload batch timed out." );
+					"Upload batch timed out." ));
 				continue;
 			}
 

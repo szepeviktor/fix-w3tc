@@ -27,9 +27,9 @@ class Extension_NewRelic_Widget {
 		$o = new Extension_NewRelic_Widget();
 		$o->_config = Dispatcher::config();
 
-		add_action( 'w3tc_widget_setup', array( $o, 'wp_dashboard_setup' ) );
+		add_action( 'w3tc_widget_setup', array( $o, 'wp_dashboard_setup' ), 350 );
 		add_action( 'w3tc_network_dashboard_setup',
-			array( $o, 'wp_dashboard_setup' ) );
+			array( $o, 'wp_dashboard_setup' ), 350 );
 
 		$nerser = Dispatcher::component( 'Extension_NewRelic_Service' );
 		$view_application = $nerser->get_effective_application_id();

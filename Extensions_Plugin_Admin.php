@@ -46,6 +46,10 @@ class Extensions_Plugin_Admin {
 				'w3tc_extensions' ),
 			10, 2 );
 		add_filter( 'w3tc_extensions', array(
+				'\W3TC\Extension_Swarmify_Plugin_Admin',
+				'w3tc_extensions' ),
+			10, 2 );
+		add_filter( 'w3tc_extensions', array(
 				'\W3TC\Extension_WordPressSeo_Plugin_Admin',
 				'w3tc_extensions' ),
 			10, 2 );

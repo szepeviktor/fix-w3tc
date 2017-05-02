@@ -57,7 +57,7 @@ class Minify_MinifiedFileRequestHandler {
 				if ( ( function_exists( 'gzencode' ) &&
 						$this->_config->get_boolean( 'browsercache.enabled' ) &&
 						$this->_config->get_boolean( 'browsercache.cssjs.compression' ) ) )
-					if ( !$cache->store( basename( $file ) . '.gzip',
+					if ( !$cache->store( basename( $file ) . '_gzip',
 							array( 'content' => gzencode( 'content ok' ) ) ) ) {
 						echo 'error storing';
 						exit();
@@ -712,8 +712,8 @@ class Minify_MinifiedFileRequestHandler {
 					Util_Environment::cache_blog_minify_dir(),
 					array(
 						'.htaccess',
-						'index.php',
-						'*.old'
+						'index.html',
+						'*_old'
 					),
 					$this->_config->get_boolean( 'minify.file.locking' ),
 					$this->_config->get_integer( 'timelimit.cache_flush' ),

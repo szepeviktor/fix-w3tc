@@ -112,7 +112,7 @@ Util_Ui::config_item( array(
 		'control' => 'textarea',
 		'label' => __( 'Additional home <acronym title="Uniform Resource Locator">URL</acronym>s:', 'w3-total-cache' ),
 		'enabled' => !Util_Environment::is_wpmu_subdomain(),
-		'description' => __( 'Specify full home <acronym title="Uniform Resource Locator">URL</acronym>s of your mirrors so that the plugin will flush its cache when content is changed. For example:<br /> http://my-site.com<br />http://www.my-site.com<br />https://my-site.com',
+		'description' => __( 'Specify full home <acronym title="Uniform Resource Locator">URL</acronym>s of your mirrors so that plugin will flush it\'s cache when content is changed. For example:<br /> http://my-site.com<br />http://www.my-site.com<br />https://my-site.com',
 			'w3-total-cache' )
 	) );
 ?>
@@ -262,7 +262,7 @@ Util_Ui::postbox_header( __( 'Purge Policy: ', 'w3-total-cache' ) . implode( ', 
 				<td>
 					<input type="hidden" name="pgcache__late_caching" value="0" />
 					<label><input id="pgcache_late_caching" type="checkbox" name="pgcache__late_caching" value="1"<?php checked( $this->_config->get_string( 'pgcache.engine' ) != 'file_generic' && $this->_config->get_boolean( 'pgcache.late_caching' ) ); ?> <?php disabled( $this->_config->get_string( 'pgcache.engine' ), 'file_generic' ) ?> /> <?php _e( 'Enable', 'w3-total-cache' ); ?></label>
-					<br /><span class="description"><?php _e( 'Allows overwriting of page caching key via custom filters by postponing entry extraction in the init action.', 'w3-total-cache' )?></span>
+					<br /><span class="description"><?php _e( 'Overwrites key of page caching via custom filters by postponing entry extraction during the init action.', 'w3-total-cache' )?></span>
 				</td>
 			</tr>
 			<?php
@@ -354,7 +354,7 @@ if ( $this->_config->get_string( 'pgcache.engine' ) == 'memcached' ) {
 					<textarea id="pgcache_reject_cookie" name="pgcache__reject__cookie"
 						<?php Util_Ui::sealing_disabled( 'pgcache.' ) ?>
 						cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'pgcache.reject.cookie' ) ) ); ?></textarea><br />
-					<span class="description"><?php _e( 'Never cache pages that use these specified cookie name-value pairs. The value part is not required. But if used, separate name-value pairs with an equals sign (i.e., name=value). Each pair should be on their own line.', 'w3-total-cache' ); ?></span>
+					<span class="description"><?php _e( 'Never cache pages that use the specified cookies.', 'w3-total-cache' ); ?></span>
 				</td>
 			</tr>
 			<tr>
@@ -366,7 +366,7 @@ if ( $this->_config->get_string( 'pgcache.engine' ) == 'memcached' ) {
 					<span class="description">
 						<?php
 echo sprintf(
-	__( 'Always ignore the specified pages / directories. Use relative paths. Supports regular expressions (See <a href="%s">FAQ</a>)', 'w3-total-cache' ),           network_admin_url( 'admin.php?page=w3tc_faq#q82' )
+	__( 'Always ignore the specified pages / directories. Supports regular expressions (See <a href="%s">FAQ</a>)', 'w3-total-cache' ),           network_admin_url( 'admin.php?page=w3tc_faq#q82' )
 ); ?>
 					</span>
 				</td>
@@ -405,15 +405,15 @@ echo sprintf(
                         <?php Util_Ui::sealing_disabled( 'pgcache' ) ?>
                         cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array('pgcache.reject.custom' ) ) ); ?></textarea><br />
                     <span class="description"><?php _e( 'Always ignore all pages filed under the specified custom fields. Separate name-value pairs with an equals sign (i.e., name=value).', 'w3-total-cache' ); ?></span>
-                </td>
-            </tr>
+				</td>
+			</tr>
 			<tr>
 				<th><label for="pgcache_accept_files"><?php Util_Ui::e_config_label( 'pgcache.accept.files' ) ?></label></th>
 				<td>
 					<textarea id="pgcache_accept_files" name="pgcache__accept__files"
 						<?php Util_Ui::sealing_disabled( 'pgcache.' ) ?>
 						cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'pgcache.accept.files' ) ) ); ?></textarea><br />
-					<span class="description"><?php echo sprintf( __( 'Cache the specified pages / directories even if listed in the "Never Cache" fields. Use relative paths. Supports regular expression (See <a href="%s">FAQ</a>)', 'w3-total-cache' ), network_admin_url( 'admin.php?page=w3tc_faq#q82' ) ); ?></span>
+					<span class="description"><?php echo sprintf( __( 'Cache the specified pages / directories even if listed in the "never cache the following pages" field. Supports regular expression (See <a href="%s">FAQ</a>)', 'w3-total-cache' ), network_admin_url( 'admin.php?page=w3tc_faq#q82' ) ); ?></span>
 				</td>
 			</tr>
 			<?php if ( substr( $permalink_structure, -1 ) == '/' ): ?>

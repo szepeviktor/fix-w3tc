@@ -314,11 +314,11 @@ if ( file_exists( $js_engine_file2 ) ) {
             <?php
 Util_Ui::config_item( array(
         'key' => 'minify.js.http2push',
-        'label' => 'HTTP/2 push',
+        'label' => '<acronym title="Hypertext Markup Language">HTTP</acronym>/2 push',
         'control' => 'checkbox',
         'checkbox_label' => __( 'Enable', 'w3-total-cache' ),
-        'description' => __( 'For better performance, send files to browser before they are requested when using the HTTP/2 protocol.',
-            'w3-total-cache' ) 
+        'description' => __( 'For better performance, send files to browser before they are requested when using the <acronym title="Hypertext Markup Language">HTTP</acronym>/2 protocol.',
+            'w3-total-cache' )
     ) ); ?>
         </table>
 
@@ -437,10 +437,10 @@ if ( file_exists( $css_engine_file2 ) ) {
             <?php
 Util_Ui::config_item( array(
         'key' => 'minify.css.http2push',
-        'label' => 'HTTP/2 push',
+        'label' => '<acronym title="Hypertext Markup Language">HTTP</acronym>/2 push',
         'control' => 'checkbox',
         'checkbox_label' => __( 'Enable', 'w3-total-cache' ),
-        'description' => __( 'For better performance, send files to browser before they are requested when using the HTTP/2 protocol.',
+        'description' => __( 'For better performance, send files to browser before they are requested when using the <acronym title="Hypertext Markup Language">HTTP</acronym>/2 protocol.',
             'w3-total-cache' )
     ) ); ?>
         </table>
@@ -482,7 +482,7 @@ if ( $this->_config->get_string( 'minify.engine' ) == 'memcached' ) {
                 <td>
                     <textarea id="minify_reject_uri" name="minify__reject__uri"
                         <?php Util_Ui::sealing_disabled( 'minify.' ) ?> cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'minify.reject.uri' ) ) ); ?></textarea><br />
-                    <span class="description"><?php _e( 'Always ignore the specified pages / directories. Use relative paths. Supports regular expressions. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Always ignore the specified pages / directories. Use relative paths. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
                 </td>
             </tr>
             <tr>
@@ -490,7 +490,7 @@ if ( $this->_config->get_string( 'minify.engine' ) == 'memcached' ) {
                 <td>
                     <textarea id="minify_reject_files_js" name="minify__reject__files__js"
                         <?php Util_Ui::sealing_disabled( 'minify.' ) ?> cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'minify.reject.files.js' ) ) ); ?></textarea><br />
-                    <span class="description"><?php _e( 'Always ignore the specified <acronym title="JavaScript">JS</acronym> files. Use relative paths. Supports regular expressions. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Always ignore the specified <acronym title="JavaScript">JS</acronym> files. Use relative paths. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
                 </td>
             </tr>
             <tr>
@@ -498,7 +498,7 @@ if ( $this->_config->get_string( 'minify.engine' ) == 'memcached' ) {
                 <td>
                     <textarea id="minify_reject_files_css" name="minify__reject__files__css"
                         <?php Util_Ui::sealing_disabled( 'minify.' ) ?> cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'minify.reject.files.css' ) ) ); ?></textarea><br />
-                    <span class="description"><?php _e( 'Always ignore the specified <acronym title="Cascading Style Sheet">CSS</acronym> files. Use relative paths. Supports regular expressions. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Always ignore the specified <acronym title="Cascading Style Sheet">CSS</acronym> files. Use relative paths. Omit: protocol, hostname, leading forward slash and query strings.', 'w3-total-cache' ); ?></span>
                 </td>
             </tr>
             <tr>
@@ -507,7 +507,7 @@ if ( $this->_config->get_string( 'minify.engine' ) == 'memcached' ) {
                     <textarea id="minify_reject_ua" name="minify__reject__ua"
                         <?php Util_Ui::sealing_disabled( 'minify.' ) ?>
                         cols="40" rows="5"><?php echo esc_textarea( implode( "\r\n", $this->_config->get_array( 'minify.reject.ua' ) ) ); ?></textarea><br />
-                    <span class="description"><?php _e( 'Specify user agents that will never receive minified content. Supports regular expressions.', 'w3-total-cache' ); ?></span>
+                    <span class="description"><?php _e( 'Specify user agents that will never receive minified content.', 'w3-total-cache' ); ?></span>
                 </td>
             </tr>
             <?php if ( $auto ): ?>
@@ -523,8 +523,8 @@ if ( $this->_config->get_string( 'minify.engine' ) == 'memcached' ) {
             <tr>
                 <th colspan="2">
                     <?php $this->checkbox( 'minify.cache.files_regexp', false, '', true, null ); ?>
-                    <?php _e( 'Use Regular Expression for matching', 'w3-total-cache' ) ?><br />
-                    <span class="description"><?php _e( '', 'w3-total-cache' ); ?></span>
+                    <?php _e( 'Use Regular Expressions for file name matching', 'w3-total-cache' ) ?><br />
+                    <span class="description"><?php _e( 'If external script file names vary, use regular expressions in the "Include external files/libraries" field to simplify matching.', 'w3-total-cache' ); ?></span>
                 </th>
             </tr>
             <?php endif; ?>

@@ -170,7 +170,7 @@ Util_Ui::config_item( array(
 			'googleccjs' => __( 'Google Closure Compiler (Web Service)', 'w3-total-cache' ),
 			'ccjs' => __( 'Google Closure Compiler (Local Java)', 'w3-total-cache' ),
 			'jsminplus' => __( 'Narcissus', 'w3-total-cache' ),
-			'yuijs' => __( 'YUI Compressor', 'w3-total-cache' )			
+			'yuijs' => __( 'YUI Compressor', 'w3-total-cache' )
 		)
 	) );
 Util_Ui::config_item( array(

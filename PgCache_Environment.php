@@ -323,6 +323,10 @@ class PgCache_Environment {
 					$this->wp_config_addon() );
 			}
 		}
+		// that file was in opcache for sure and it may take time to
+		// start execution of new modified now version
+		$o = Dispatcher::component( 'SystemOpCache_Core' );
+		$o->flush();
 	}
 
 	/**
@@ -737,8 +741,8 @@ class PgCache_Environment {
 		 */
         if ( !empty( $reject_cookies ) ) {
             $reject_cookies = str_replace( ' ', '+', $reject_cookies );
-            $use_cache_rules .= "    RewriteCond %{HTTP_COOKIE} !(" . implode( '|',
-                array_map( array( '\W3TC\Util_Environment', 'preg_quote' ), $reject_cookies ) ) . ") [NC]\n";
+		$use_cache_rules .= "    RewriteCond %{HTTP_COOKIE} !(" . implode( '|',
+			array_map( array( '\W3TC\Util_Environment', 'preg_quote' ), $reject_cookies ) ) . ") [NC]\n";
         }
 
 		/**
@@ -767,7 +771,7 @@ class PgCache_Environment {
 		$rules .= "    RewriteRule .* \"" . $uri_prefix . $ext .
 			$env_W3TC_ENC . "\" [L]\n";
 
-        if ($config->get_boolean( 'pgcache.cache.apache_handle_xml' ) ) {
+        if ($config->get_boolean('pgcache.cache.apache_handle_xml')) {
             $ext = '.xml';
             $rules .= "    RewriteCond \"" . $document_root . $uri_prefix . $ext .
                 $env_W3TC_ENC . "\"" . $switch . "\n";
@@ -952,10 +956,10 @@ class PgCache_Environment {
 		 */
         if ( !empty( $reject_cookies ) ) {
             $reject_cookies = str_replace( ' ', '+', $reject_cookies );
-            $rules .= "if (\$http_cookie ~* \"(" . implode( '|',
-                array_map( array( '\W3TC\Util_Environment', 'preg_quote' ), $reject_cookies ) ) . ")\") {\n";
-            $rules .= "    set \$w3tc_rewrite 0;\n";
-            $rules .= "}\n";
+		$rules .= "if (\$http_cookie ~* \"(" . implode( '|',
+			array_map( array( '\W3TC\Util_Environment', 'preg_quote' ), $reject_cookies ) ) . ")\") {\n";
+		$rules .= "    set \$w3tc_rewrite 0;\n";
+		$rules .= "}\n";
         }
 		/**
 		 * Check for rejected user agents
@@ -1188,12 +1192,12 @@ class PgCache_Environment {
 		if ( $compatibility ) {
 			$rules .= "Options -MultiViews\n";
 
-            // allow to read files by apache if they are blocked at some level above
-            $rules .= "<Files ~ \"\.(html|html_gzip|xml|xml_gzip)$\">\n";
+			// allow to read files by apache if they are blocked at some level above
+			$rules .= "<Files ~ \"\.(html|html_gzip|xml|xml_gzip)$\">\n";
             $rules .= "  <IfModule mod_version.c>\n";
             $rules .= "    <IfVersion < 2.4>\n";
             $rules .= "      Order Allow,Deny\n";
-            $rules .= "      Allow from All\n";
+			$rules .= "  Allow from all\n";
             $rules .= "    </IfVersion>\n";
             $rules .= "    <IfVersion >= 2.4>\n";
             $rules .= "      Require all granted\n";
@@ -1208,7 +1212,7 @@ class PgCache_Environment {
             $rules .= "      Require all granted\n";
             $rules .= "    </IfModule>\n";
             $rules .= "  </IfModule>\n";
-            $rules .= "</Files>\n";
+			$rules .= "</Files>\n";
 
 			if ( !$etag ) {
 				$rules .= "FileETag None\n";

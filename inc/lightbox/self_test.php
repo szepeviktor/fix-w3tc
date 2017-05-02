@@ -139,7 +139,7 @@ if ( !defined( 'W3TC' ) )
             <?php else: ?>
             <code><?php _e( 'Not installed', 'w3-total-cache' ); ?></code>
             <?php endif; ?>
-            <span class="w3tc-self-test-hint"><?php _e( '(required for HTML Tidy minifier suppport)', 'w3-total-cache' ); ?></span>
+            <span class="w3tc-self-test-hint"><?php _e( '(required for HTML Tidy minifier support)', 'w3-total-cache' ); ?></span>
         </li>
 
         <li>

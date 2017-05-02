@@ -405,6 +405,26 @@ class ConfigCompiler {
 		$this->_set_if_exists( $file_data, 'fragmentcache.lifetime',
 			'fragmentcache', 'lifetime' );
 
+
+		// new options, separated old one. implemented in 0.9.5.3
+		if ( isset( $file_data['browsercache.cssjs.replace'] ) &&
+			!isset( $file_data['browsercache.cssjs.querystring'] ) ) {
+			$file_data['browsercache.cssjs.querystring'] = $file_data['browsercache.cssjs.replace'];
+		}
+		if ( isset( $file_data['browsercache.other.replace'] ) &&
+			!isset( $file_data['browsercache.other.querystring'] ) ) {
+			$file_data['browsercache.other.querystring'] = $file_data['browsercache.other.replace'];
+		}
+
+		//
+		// changes in 0.9.5.3
+		//
+		if ( version_compare( $file_data['version'], '0.9.5.3', '<' ) ) {
+			if ( !isset( $file_data['extensions.active']['swarmify'] ) ) {
+				$file_data['extensions.active']['swarmify'] = 'w3-total-cache/Extension_Swarmify_Plugin.php';
+			}
+		}
+
 		$file_data['version'] = W3TC_VERSION;
 
 		return $file_data;

@@ -624,7 +624,11 @@ class Cdn_Core {
 		if ( is_file( $file ) )
 			return $file;
 
-		return  rtrim( Util_Environment::document_root(), "/" ) . '/' . ltrim( $file, "/" );
+		if ( DIRECTORY_SEPARATOR != '/' )
+			$file = str_replace( '/', DIRECTORY_SEPARATOR, $file );
+
+		return  rtrim( Util_Environment::document_root(), '/\\' ) .
+			DIRECTORY_SEPARATOR . ltrim( $file, '/\\' );
 	}
 
 	/**

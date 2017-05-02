@@ -253,7 +253,7 @@ class Cache_File extends Cache_Base {
 	}
 
 	/**
-	 * Key to delete, deletes .old and primary if exists.
+	 * Deletes _old and primary if exists.
 	 *
 	 * @param string  $key
 	 *

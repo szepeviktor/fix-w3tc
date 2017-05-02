@@ -20,6 +20,24 @@ class Generic_AdminActions_Flush {
 		$this->_redirect_after_flush( 'flush_all' );
 	}
 
+	function w3tc_flush_current_page() {
+		$url = $_SERVER['HTTP_REFERER'];
+		w3tc_flush_url( $url );
+
+		?>
+		<div style="text-align: center; margin-top: 30px">
+		<h3>Page has been flushed successfully</h3>
+		<a id="w3tc_return" href="<?php echo esc_attr( $url ) ?>">Return</a>
+		</div>
+		<script>
+		setTimeout(function() {
+			window.location = document.getElementById('w3tc_return').href;
+		}, 2000);
+		</script>
+		<?php
+		exit();
+	}
+
 	/**
 	 * Flush memcache cache action
 	 *

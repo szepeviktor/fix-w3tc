@@ -11,7 +11,7 @@ Util_Ui::config_overloading_button( array(
 ?>
 <p><?php _e( 'Host static files with your content delivery network provider to reduce page load time.', 'w3-total-cache' ); ?>
 <?php if ( !$cdn_enabled ): ?>
-<?php printf( __( 'If you do not have a <acronym title="Content Delivery Network">CDN</acronym> provider try MaxCDN. <a href="%s" target="_blank">Sign up and save 25&#37;</a>.', 'w3-total-cache' ), wp_nonce_url( Util_Ui::admin_url( 'admin.php?page=w3tc_dashboard&w3tc_cdn_maxcdn_signup' ), 'w3tc' ) ); ?>
+<?php printf( __( ' If you do not have a <acronym title="Content Delivery Network">CDN</acronym> provider try MaxCDN. <a href="%s" target="_blank">Sign up and save 25&#37;</a>.', 'w3-total-cache' ), wp_nonce_url( Util_Ui::admin_url( 'admin.php?page=w3tc_dashboard&w3tc_cdn_maxcdn_signup' ), 'w3tc' ) ); ?>
 <?php endif ?>
 </p>
 <table class="form-table">

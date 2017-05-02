@@ -43,6 +43,17 @@ class Licensing_Plugin_Admin {
 					'w3tc_message_action=licensing_upgrade' ), 'w3tc' )
 		);
 
+		if ( defined( 'W3TC_DEBUG' ) && W3TC_DEBUG ) {
+			$menu_items['90040.licensing'] = array(
+				'id' => 'w3tc_overlay_upgrade',
+				'parent' => 'w3tc_debug_overlays',
+				'title' => __( 'Upgrade', 'w3-total-cache' ),
+				'href' => wp_nonce_url( network_admin_url(
+						'admin.php?page=w3tc_dashboard&amp;' .
+						'w3tc_message_action=licensing_upgrade' ), 'w3tc' )
+			);
+		}
+
 		return $menu_items;
 	}
 

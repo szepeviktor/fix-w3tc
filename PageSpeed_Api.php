@@ -60,8 +60,8 @@ class PageSpeed_Api {
 			) );
 
 		$response = Util_Http::get( $request_url, array( 'timeout' => 120,
-													 'headers' => array( "Referer" => $this->key_restrict_referrer )
-													) );
+			'headers' => array( "Referer" => $this->key_restrict_referrer )
+		) );
 		if ( !is_wp_error( $response ) && $response['response']['code'] == 200 ) {
 			return $response['body'];
 		}

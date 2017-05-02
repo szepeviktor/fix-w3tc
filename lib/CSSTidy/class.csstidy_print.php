@@ -205,7 +205,7 @@ class csstidy_print {
 					// If it comes in due to @import ".." the "" will be missing and the output will become @import .. (which is an error)
 					$this->import[$i] = '"' . $this->import[$i] . '"';
 				}
-				
+
 				$output .= $template[0] . '@import ' . $template[5] . $this->import[$i] . $template[6] . $template[13];
 			}
 		}
