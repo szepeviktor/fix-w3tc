@@ -773,6 +773,7 @@ class Cdn_Plugin {
     function w3tc_attachment_url( $url ) {
         static $allowed_files = null;
 
+        	$empty = '';//Emty string initialization
 		if ( ( defined( 'WP_ADMIN' ) && $this->_config->get_boolean( 'cdn.admin.media_library' ) ) ||
 			 ( $this->can_cdn() && $this->can_cdn2( $empty ) ) ) {
 			$url = trim( $url );
