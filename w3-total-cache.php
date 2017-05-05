@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: W3 Total Cache
+Plugin Name: W3 Total Cache (Fixed)
 Description: The highest rated and most complete WordPress performance plugin. Dramatically improve the speed and user experience of your site. Add browser, page, object and database caching as well as minify and content delivery network (CDN) to WordPress.
-Version: 0.9.5.4
-Plugin URI: https://www.w3-edge.com/wordpress-plugins/w3-total-cache/
-Author: Frederick Townes
-Author URI: http://www.linkedin.com/in/fredericktownes
+Version: 0.9.5.4.1
+Plugin URI: https://github.com/szepeviktor/w3-total-cache-fixed/
+Author: W3TC (Fixed) Community
+Author URI: https://github.com/szepeviktor/w3-total-cache-fixed/
 Network: True
 */
 
