@@ -37,7 +37,7 @@ Make sure you select the correct generation that fits your environment.
 
 ### Fixes, Improvements, & Enhancement Highlights
 
-Since the last [official release](https://wordpress.org/plugins/w3-total-cache/) of W3 Total Cache (v0.9.5.2), the following new features, bug fixes, and updates have been applied to this repository's [v0.9.5.x](https://github.com/szepeviktor/w3-total-cache-fixed/tree/v0.9.5.x) branch, which has its base already synced to v0.9.5.2:
+Since the last [official release](https://wordpress.org/plugins/w3-total-cache/) of W3 Total Cache (v0.9.5.4), the following new features, bug fixes, and updates have been applied to this repository's [v0.9.5.x](https://github.com/szepeviktor/w3-total-cache-fixed/tree/v0.9.5.x) branch, which has its base already synced to v0.9.5.4:
 
 Type | More Information |
 :--- | --- |
