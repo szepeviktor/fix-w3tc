@@ -89,3 +89,4 @@ Type | More Information |
 :beetle: Bug Fix | [Fixed semicolon bug & added woff2](https://github.com/szepeviktor/w3-total-cache-fixed/pull/457) |
 :diamond_shape_with_a_dot_inside: Update | [Colored self test window](https://github.com/szepeviktor/w3-total-cache-fixed/pull/478) |
 :beetle: Bug Fix | [Fixed Redis DB selection in persistent connection mode](https://github.com/szepeviktor/w3-total-cache-fixed/pull/483) |
+:beetle: Bug Fix | [Fixed wrong == in ObjectCache_WpObjectCache_Regular.php](https://github.com/szepeviktor/w3-total-cache-fixed/pull/486) |
