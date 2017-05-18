@@ -540,7 +540,7 @@ class ObjectCache_WpObjectCache_Regular {
 			if ( ! isset( $value ) )
 				$value = get_site_option( $transient_option );
 		} else {
-			$value == false;
+			$value = false;
 		}
 
 		return $value;
