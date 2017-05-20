@@ -91,3 +91,4 @@ Type | More Information |
 :beetle: Bug Fix | [Fixed Redis DB selection in persistent connection mode](https://github.com/szepeviktor/w3-total-cache-fixed/pull/483) |
 :beetle: Bug Fix | [Fixed wrong == in ObjectCache_WpObjectCache_Regular.php](https://github.com/szepeviktor/w3-total-cache-fixed/pull/486) |
 :beetle: Bug Fix | [Missing commas in Generic_Page_Dashboard_View.css](https://github.com/szepeviktor/w3-total-cache-fixed/pull/487) |
+:beetle: Bug Fix | [Remove uninitialized variable](https://github.com/szepeviktor/w3-total-cache-fixed/pull/488) |
