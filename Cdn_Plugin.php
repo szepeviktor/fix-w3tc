@@ -774,7 +774,7 @@ class Cdn_Plugin {
         static $allowed_files = null;
 
 		if ( ( defined( 'WP_ADMIN' ) && $this->_config->get_boolean( 'cdn.admin.media_library' ) ) ||
-			 ( $this->can_cdn() && $this->can_cdn2( $empty ) ) ) {
+			 ( $this->can_cdn() && $this->can_cdn2( '' ) ) ) {
 			$url = trim( $url );
 
 			if ( !empty( $url ) ) {
