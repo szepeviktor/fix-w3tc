@@ -92,3 +92,4 @@ Type | More Information |
 :beetle: Bug Fix | [Fixed wrong == in ObjectCache_WpObjectCache_Regular.php](https://github.com/szepeviktor/w3-total-cache-fixed/pull/486) |
 :beetle: Bug Fix | [Missing commas in Generic_Page_Dashboard_View.css](https://github.com/szepeviktor/w3-total-cache-fixed/pull/487) |
 :beetle: Bug Fix | [Remove uninitialized variable](https://github.com/szepeviktor/w3-total-cache-fixed/pull/488) |
+:beetle: Bug Fix | [Fix page cache .htaccess for Windows](https://github.com/szepeviktor/w3-total-cache-fixed/pull/490) |
