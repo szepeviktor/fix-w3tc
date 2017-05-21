@@ -1754,10 +1754,14 @@ class PgCache_ContentGrabber {
     private function _check_query_string() {
         $accept_qs = $this->_config->get_array( 'pgcache.accept.qs' );
         Util_Rule::array_trim( $accept_qs );
+        
+        if( empty($accept_qs) ){
+        	return false;
+        }
 
         foreach ( $accept_qs as &$val ) {
             $val = Util_Environment::preg_quote( str_replace( "+", " ", $val ) );
-            $val .=  ( strpos( $val, '=' ) === false ? '.*?' : '' );
+            $val .= ( strpos( $val, '=' ) === false ? '=.*?' : '' );
         }
 
         $accept_qs = implode( '|', $accept_qs );
