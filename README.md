@@ -60,7 +60,7 @@ Type | More Information |
 :beetle: Bug Fix | [Configuration Bug &ndash; Redis/Memcached Server Entries](https://github.com/szepeviktor/w3-total-cache-fixed/pull/367) |
 :beetle: Bug Fix | [Undefined Variable: _is_amp_endpoint_](https://github.com/szepeviktor/w3-total-cache-fixed/pull/370) |
 :beetle: Bug Fix | [Error Message: _Trying to Get Property of Non-Object_](https://github.com/szepeviktor/w3-total-cache-fixed/pull/376) |
-:diamond_shape_with_a_dot_inside: Update | [Page Cache &ndash; _Accepted Query Strings_ Enhancement](https://github.com/szepeviktor/w3-total-cache-fixed/pull/380) |
+:diamond_shape_with_a_dot_inside: Update | [Page Cache &ndash; _Accepted Query Strings_ Enhancement](https://github.com/szepeviktor/w3-total-cache-fixed/pull/380)<br>:wrench: [+ **Extra: #PR489** &ndash; Fix all querystring keys starting with name specified will match](https://github.com/szepeviktor/w3-total-cache-fixed/pull/489) |
 :beetle: Bug Fix | [Incorrect Use of Removing Query String From URLs](https://github.com/szepeviktor/w3-total-cache-fixed/pull/382) |
 :diamond_shape_with_a_dot_inside: Update | [Enhance _remove_query()_ to Recognize Other Ampersand Forms](https://github.com/szepeviktor/w3-total-cache-fixed/pull/383) |
 :beetle: Bug Fix | [WP Query String Being Stripped Unexpectedly](https://github.com/szepeviktor/w3-total-cache-fixed/pull/384) |
