@@ -703,7 +703,8 @@ class PgCache_Environment {
 			$env_W3TC_SSL = '%{ENV:W3TC_SSL}';
 		}
 
-		$cache_path = str_replace( Util_Environment::document_root(), '', $cache_dir );
+		$document_root = str_replace('\\', '/', Util_Environment::document_root());
+		$cache_path = str_replace($document_root, '', $cache_dir);
 
 		/**
 		 * Set Accept-Encoding
