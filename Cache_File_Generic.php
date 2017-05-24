@@ -116,13 +116,19 @@ class Cache_File_Generic extends Cache_File {
 				
 				if( !empty($links) ){
 					$rules .= "<IfModule mod_headers.c>\n";
+					$rules .= "    Header unset Link\n";
 					$rules .= $links;
 					$rules .= "</IfModule>\n";
 				}
 			}
 			
 			if( !empty($rules) ){
-				file_put_contents( dirname( $path ) . '/.htaccess', $rules);
+				$uri_cache_path  = dirname($path);
+				$base_cache_path = W3TC_CACHE_PAGE_ENHANCED_DIR . '/' . Util_Environment::host();
+				
+				if( $uri_cache_path != $base_cache_path ){
+				    @file_put_contents($uri_cache_path . '/.htaccess', $rules);
+				}
 			}
 		}
 
