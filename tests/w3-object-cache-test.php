@@ -40,6 +40,13 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
 		// flush the cache
 		wp_cache_flush();
 	}
+
+    /**
+     * Check plugin activation
+     */
+    function test_plugin_activation() {
+        $this->assertTrue( is_plugin_active('w3-total-cache/w3-total-cache.php') );
+    }	
 	
     /**
      * Check wp_cache_add()
