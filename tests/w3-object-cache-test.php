@@ -56,7 +56,19 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
     function test_plugin_activation() {
         $this->assertTrue( is_plugin_active('w3-total-cache/w3-total-cache.php') );
 	$this->assertTrue( $this->moduleStatus->plugin_is_enabled() );
-    }	
+    }
+ 
+    /**
+     * Check plugin env
+     */
+    public function test_plugin_env()
+    {
+        if( is_multisite() ){
+	    $this->assertTrue( getenv('WP_MULTISITE') === 1 );
+        } else {
+	    $this->assertTrue( getenv('WP_MULTISITE') === 0 );
+	}
+    }
 	
     /**
      * Check wp_cache_add()
@@ -206,7 +218,7 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
     {
     	// skip test if not multisite
         if( !is_multisite() ){
-	    $this->assertTrue( getenv('WP_MULTISITE') === 0 );	
+	    $this->assertTrue( true );	
             return;    
         }
         
@@ -234,7 +246,8 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
     {
     	// skip test if not multisite
     	if( !is_multisite() ){
-    		return;
+	    $this->assertTrue( true );
+    	    return;
     	}
     	
     	// Re-init the cache. This deletes the local cache but keeps the persistent one
@@ -264,6 +277,7 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
         
         if ($wp_object_cache instanceof WP_Object_Cache) {
             // Test Skipped for In Memory Cache implementation
+	    $this->assertTrue( true );
             return;
         }
         
