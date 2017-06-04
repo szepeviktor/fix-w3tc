@@ -5,7 +5,6 @@
  * @package W3_Total_Cache
  */
 require_once dirname(dirname(__FILE__)) . '/w3-total-cache.php';
-require_once dirname(dirname(__FILE__)) . '/w3-total-cache-api.php';
 
 /**
  * W3_Object_Cache_Test Tests
@@ -38,7 +37,7 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
 	
 		$this->config = w3tc_config();
 		
-		$this->moduleStatus = Dispatcher::component( 'ModuleStatus' );
+		$this->moduleStatus = \W3TC\Dispatcher::component( 'ModuleStatus' );
 	}
 	
 	/**
