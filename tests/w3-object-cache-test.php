@@ -15,6 +15,11 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
 	protected $config;
 	
 	/**
+	 * @var ModuleStatus
+	 */
+	protected $moduleStatus;
+	
+	/**
 	 * @see parent::setUp()
 	 */
 	function setUp() {
@@ -30,6 +35,8 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
 		}
 	
 		$this->config = w3tc_config();
+		
+		$this->moduleStatus = Dispatcher::component( 'ModuleStatus' );
 	}
 	
 	/**
@@ -46,6 +53,7 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
      */
     function test_plugin_activation() {
         $this->assertTrue( is_plugin_active('w3-total-cache/w3-total-cache.php') );
+	$this->assertTrue( $this->moduleStatus->plugin_is_enabled() );
     }	
 	
     /**
