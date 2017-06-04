@@ -62,10 +62,14 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
      */
     public function test_plugin_env()
     {
+	$WP_MULTISITE = getenv('WP_MULTISITE');
+	    
+	$this->assertTrue( $WP_MULTISITE !== false );
+	    
         if( is_multisite() ){
-	    $this->assertTrue( getenv('WP_MULTISITE') === 1 );
+	    $this->assertTrue( $WP_MULTISITE == 1 );
         } else {
-	    $this->assertTrue( getenv('WP_MULTISITE') === 0 );
+	    $this->assertTrue( $WP_MULTISITE == 0 );
 	}
     }
 	
