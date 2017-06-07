@@ -56,6 +56,13 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
         $this->assertTrue( is_plugin_active('w3-total-cache/w3-total-cache.php') );
 	$this->assertTrue( $this->moduleStatus->plugin_is_enabled() );
     }
+	
+    /**
+     * Check WP_CACHE
+     */
+    function test_wp_cache() {
+	$this->assertTrue( defined('WP_CACHE') && WP_CACHE === true );
+    }
  
     /**
      * Check plugin env
