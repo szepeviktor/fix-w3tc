@@ -2,8 +2,8 @@
 Contributors: fredericktownes
 Tags: seo, cache, caching, compression, maxcdn, nginx, varnish, redis, new relic, aws, amazon web services, s3, cloudfront, rackspace, cloudflare, azure, apache
 Requires at least: 3.2
-Tested up to: 4.7.1
-Stable tag: 0.9.5.4.1
+Tested up to: 4.8
+Stable tag: 0.9.5.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -282,6 +282,14 @@ It's quite difficult to recall all of the innovators that have shared their thou
 Please reach out to all of these people and support their projects if you're so inclined.
 
 == Changelog ==
+
+= 0.9.5.4.2 =
+* Colored self test window
+* Fixed Redis DB selection in persistent connection mode
+* Fixed wrong == in ObjectCache_WpObjectCache_Regular.php
+* Missing commas in Generic_Page_Dashboard_View.css
+* Remove uninitialized variable
+* Fix page cache .htaccess for Windows
 
 = 0.9.5.4.1 =
 * Re-sync with the official version
