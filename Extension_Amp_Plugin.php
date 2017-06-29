@@ -3,7 +3,7 @@ namespace W3TC;
 
 class Extension_Amp_Plugin {
 	function __construct() {
-		$is_amp_endpoint = null;
+		
 	}
 
 	public function run() {
@@ -25,11 +25,12 @@ class Extension_Amp_Plugin {
 
 
 	private function is_amp_endpoint() {
-		if ( is_null( $this->is_amp_endpoint ) && function_exists('is_amp_endpoint') ) {
-			$this->is_amp_endpoint = is_amp_endpoint();
+		
+		if ( function_exists('is_amp_endpoint') ) {
+			return is_amp_endpoint();
 		}
 
-		return $this->is_amp_endpoint;
+		return false;
 	}
 
 
