@@ -76,6 +76,10 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
     function test_wp_cache() {
 	    $this->assertTrue( defined('WP_CACHE') && WP_CACHE === true );
 	    
+	    $this->assertTrue( defined('W3TC_ADDIN_FILE_ADVANCED_CACHE') );
+	    $this->assertTrue( defined('W3TC_ADDIN_FILE_DB') );
+	    $this->assertTrue( defined('W3TC_ADDIN_FILE_OBJECT_CACHE') );
+	    
 	    $this->assertTrue( file_exists(W3TC_ADDIN_FILE_ADVANCED_CACHE) );
 	    $this->assertTrue( file_exists(W3TC_ADDIN_FILE_DB) );
 	    $this->assertTrue( file_exists(W3TC_ADDIN_FILE_OBJECT_CACHE) );
