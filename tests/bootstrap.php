@@ -19,6 +19,10 @@ require_once $_tests_dir . '/includes/functions.php';
 function _manually_load_plugin() {
 	require dirname( dirname( __FILE__ ) ) . '/w3-total-cache.php';
 	update_option( 'active_plugins', 'w3-total-cache/w3-total-cache.php' );
+	
+	copy(W3TC_INSTALL_FILE_ADVANCED_CACHE, W3TC_ADDIN_FILE_ADVANCED_CACHE);
+	copy(W3TC_INSTALL_FILE_DB,             W3TC_ADDIN_FILE_DB);
+	copy(W3TC_INSTALL_FILE_OBJECT_CACHE,   W3TC_ADDIN_FILE_OBJECT_CACHE);
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
