@@ -38,19 +38,6 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
 		$this->config = w3tc_config();
 		
 		$this->moduleStatus = \W3TC\Dispatcher::component( 'ModuleStatus' );
-		
-		// copy addin into wp-content ...
-		if( file_exists(W3TC_INSTALL_FILE_ADVANCED_CACHE) && !file_exists(W3TC_ADDIN_FILE_ADVANCED_CACHE) ){
-			copy(W3TC_INSTALL_FILE_ADVANCED_CACHE, W3TC_ADDIN_FILE_ADVANCED_CACHE);
-		}
-		
-		if( file_exists(W3TC_INSTALL_FILE_DB) && !file_exists(W3TC_ADDIN_FILE_DB) ){
-			copy(W3TC_INSTALL_FILE_DB, W3TC_ADDIN_FILE_DB);
-		}
-		
-		if( file_exists(W3TC_INSTALL_FILE_OBJECT_CACHE) && !file_exists(W3TC_ADDIN_FILE_OBJECT_CACHE) ){
-			copy(W3TC_INSTALL_FILE_OBJECT_CACHE,  W3TC_ADDIN_FILE_OBJECT_CACHE);
-		}
 	}
 	
 	/**
