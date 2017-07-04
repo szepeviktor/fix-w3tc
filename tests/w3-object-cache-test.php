@@ -24,6 +24,10 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
 	 * @see parent::setUp()
 	 */
 	function setUp() {
+		
+		if( !defined('WP_CACHE') ){
+			define('WP_CACHE', true);
+		}
 	
 		if( !is_dir(WP_CONTENT_DIR . "/cache/") ){
 			mkdir(WP_CONTENT_DIR . "/cache/", 0777);
