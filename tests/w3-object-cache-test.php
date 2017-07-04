@@ -54,14 +54,18 @@ class W3_Object_Cache_Test extends WP_UnitTestCase {
      */
     function test_plugin_activation() {
         $this->assertTrue( is_plugin_active('w3-total-cache/w3-total-cache.php') );
-	$this->assertTrue( $this->moduleStatus->plugin_is_enabled() );
+	    $this->assertTrue( $this->moduleStatus->plugin_is_enabled() );
     }
 	
     /**
      * Check WP_CACHE
      */
     function test_wp_cache() {
-	$this->assertTrue( defined('WP_CACHE') && WP_CACHE === true );
+	    $this->assertTrue( defined('WP_CACHE') && WP_CACHE === true );
+	    
+	    $this->assertTrue( file_exists(W3TC_ADDIN_FILE_ADVANCED_CACHE) );
+	    $this->assertTrue( file_exists(W3TC_ADDIN_FILE_DB) );
+	    $this->assertTrue( file_exists(W3TC_ADDIN_FILE_OBJECT_CACHE) );
     }
  
     /**
