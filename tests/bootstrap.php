@@ -17,12 +17,11 @@ require_once $_tests_dir . '/includes/functions.php';
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
+	copy('/tmp/wordpress/wp-content/plugins/w3-total-cache/wp-content/advanced-cache.php', '/tmp/wordpress/wp-content/advanced-cache.php');
+	copy('/tmp/wordpress/wp-content/plugins/w3-total-cache/wp-content/db.php',             '/tmp/wordpress/wp-content/db.php');
+	copy('/tmp/wordpress/wp-content/plugins/w3-total-cache/wp-content/object-cache.php',   '/tmp/wordpress/wp-content/object-cache.php');
+	
 	require dirname( dirname( __FILE__ ) ) . '/w3-total-cache.php';
-	
-	copy(W3TC_INSTALL_FILE_ADVANCED_CACHE, W3TC_ADDIN_FILE_ADVANCED_CACHE);
-	copy(W3TC_INSTALL_FILE_DB,             W3TC_ADDIN_FILE_DB);
-	copy(W3TC_INSTALL_FILE_OBJECT_CACHE,   W3TC_ADDIN_FILE_OBJECT_CACHE);
-	
 	update_option( 'active_plugins', 'w3-total-cache/w3-total-cache.php' );
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
