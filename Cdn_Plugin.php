@@ -771,22 +771,22 @@ class Cdn_Plugin {
 	 * @return 	string
 	 */
     function w3tc_attachment_url( $url ) {
-        static $allowed_files = null;
-
-		if ( ( defined( 'WP_ADMIN' ) && $this->_config->get_boolean( 'cdn.admin.media_library' ) ) ||
-			 ( $this->can_cdn() && $this->can_cdn2( '' ) ) ) {
+		if ( defined( 'WP_ADMIN' ) && 
+			 $this->_config->get_boolean( 'cdn.admin.media_library' ) &&
+			 $this->_config->get_boolean( 'cdn.uploads.enable' ) && 
+			 $this->can_cdn2( '' )
+			) {
 			$url = trim( $url );
 
 			if ( !empty( $url ) ) {
-				if ( empty( $allowed_files ) ) {
-					$allowed_files = $this->get_files();
-				}
-
 				$parsed = parse_url( $url );
 				$rel_url = ( isset( $parsed['path'] ) ? $parsed['path'] : '/' ) .
 						   ( isset( $parsed['query'] ) ? '?' . $parsed['query'] : '' );
 
-				if ( in_array( ltrim( $rel_url, '/' ), $allowed_files ) ) {
+				//$uploadDir = wp_upload_dir()["basedir"];
+				$uploadDir = "/wp-content/uploads";
+				
+				if ( substr($parsed["path"], 0, strlen($uploadDir)) == $uploadDir ) {
 					$common = Dispatcher::component( 'Cdn_Core' );
 					$cdn = $common->get_cdn();
 					$remote_path = $common->uri_to_cdn_uri( $rel_url );
