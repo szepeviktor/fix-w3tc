@@ -700,6 +700,8 @@ class PgCache_Environment {
 			$rules .= "    RewriteRule .* - [E=W3TC_SSL:_ssl]\n";
 			$rules .= "    RewriteCond %{SERVER_PORT} =443\n";
 			$rules .= "    RewriteRule .* - [E=W3TC_SSL:_ssl]\n";
+			$rules .= "    RewriteCond %{HTTP:X-Forwarded-Proto} =https [NC]\n";
+			$rules .= "    RewriteRule .* - [E=W3TC_SSL:_ssl]\n";
 			$env_W3TC_SSL = '%{ENV:W3TC_SSL}';
 		}
 
