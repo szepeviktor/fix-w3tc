@@ -41,6 +41,7 @@ Since the last [official release](https://wordpress.org/plugins/w3-total-cache/)
 
 Type | More Information |
 :--- | --- |
+:diamond_shape_with_a_dot_inside: Update | [Add support for X-Forwarded-Proto to identify HTTPS protocol](https://github.com/szepeviktor/w3-total-cache-fixed/pull/520) |
 :cyclone: New Feature | [Dashboard Widget For Flushing Individual User-Inputted URLs](https://github.com/szepeviktor/w3-total-cache-fixed/commit/f098003e8e4b4a3dbc2504b8a47b62205d5f6b9b)<br>:wrench: [+ **Extra: #PR335** &ndash; Adds Missing Nonce check](https://github.com/szepeviktor/w3-total-cache-fixed/pull/335) |
 :beetle: Bug Fix | [Gzipped Cached Pages Are Not Decoded Correctly &ndash; PHP 5.3.x Specific](https://github.com/szepeviktor/w3-total-cache-fixed/pull/313) |
 :beetle: Bug Fix | [_{uploads_dir}_ Placeholder & Full URLS Issue In CDN Custom Files Field](https://github.com/szepeviktor/w3-total-cache-fixed/pull/316) |
