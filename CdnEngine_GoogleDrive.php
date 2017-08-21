@@ -117,38 +117,22 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 		if ( $result != 'success' )
 			return $result;
 
-		// remove dups
-		$files_by_title = array();
+		$files_by_path = array();
 
-		for ( $n = 0; $n < count( $listed_files ); $n++ ) {
-			$title_to_search = $listed_files[$n]->title;
-			$files_by_title[$title_to_search] = $listed_files[$n];
-
-			for ( $m = $n + 1; $m < count( $listed_files ); $m++ ) {
-				if ( $listed_files[$m]->title == $title_to_search ) {
-					try {
-						$this->_service->files->delete( $listed_files[$m]->id );
-					} catch ( \W3TCG_Google_Service_Exception $e ) {
-						$errors = $e->getErrors();
-						$details = '';
-						if ( count( $errors ) >= 1 ) {
-							if ( $errors[0]['reason'] == 'notFound' ) {
-								continue;
-							} else
-								$details = $errors[0]['reason'];
-						}
-
-						$results[] = $this->_get_result( '',
-							'', W3TC_CDN_RESULT_ERROR,
-							'Failed to delete dup file ' . $title_to_search . ' ' . $details );
-						$result = 'with_errors';
-					}
-				}
-			}
-		}
+                foreach ( $listed_files as $existing_file ) {
+                        if (is_array( $existing_file->properties )) {
+                                foreach ( $existing_file->properties as $p ) {
+                                        if ( $p->key == 'path' ) {
+                                                $path = $p->value;
+                                                $files_by_path[$path] = $existing_file;
+                                        }
+                                }
+                        }
+                }
 
 		// check update date and upload
 		foreach ( $files as $file_descriptor ) {
+                        $remote_path = $file_descriptor['remote_path'];
 			if ( !is_null( $timeout_time ) && time() > $timeout_time )
 				return 'timeout';
 
@@ -163,7 +147,7 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 				$local_path = $file_descriptor['local_path'];
 				if ( !file_exists( $local_path ) ) {
 					$results[] = $this->_get_result( $local_path,
-						$file_descriptor['remote_path'],
+						$remote_path,
 						W3TC_CDN_RESULT_ERROR, 'Source file not found.',
 						$file_descriptor );
 					continue;
@@ -176,8 +160,13 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 				$p->value = $mtime;
 				$properties[] = $p;
 
-				if ( !$force_rewrite && isset( $files_by_title[$title] ) ) {
-					$existing_file = $files_by_title[$title];
+				$p = new \W3TCG_Google_Service_Drive_Property();
+                                $p->key = 'path';
+                                $p->value = $remote_path;
+                                $properties[] = $p;
+
+				if ( !$force_rewrite && isset( $files_by_path[$remote_path] ) ) {
+					$existing_file = $files_by_path[$remote_path];
 					$existing_size = $existing_file->fileSize;
 					$existing_mtime = 0;
 					if ( is_array( $existing_file->properties ) ) {
@@ -190,7 +179,7 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 					$size = @filesize( $local_path );
 					if ( $mtime == $existing_mtime && $size == $existing_size ) {
 						$results[] = $this->_get_result( $file_descriptor['local_path'],
-							$file_descriptor['remote_path'], W3TC_CDN_RESULT_OK,
+							$remote_path, W3TC_CDN_RESULT_OK,
 							'File up-to-date.', $file_descriptor );
 						continue;
 					}
@@ -210,8 +199,8 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 			try {
 				try {
 					// update file if there's one already or insert
-					if ( isset( $files_by_title[$title] ) ) {
-						$existing_file = $files_by_title[$title];
+					if ( isset( $files_by_path[$remote_path] ) ) {
+						$existing_file = $files_by_path[$remote_path];
 
 						$created_file = $this->_service->files->update(
 							$existing_file->id, $file, array(
@@ -240,7 +229,7 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 				}
 
 				$results[] = $this->_get_result( $file_descriptor['local_path'],
-					$file_descriptor['remote_path'], W3TC_CDN_RESULT_OK,
+					$remote_path, W3TC_CDN_RESULT_OK,
 					'OK', $file_descriptor );
 			} catch ( \W3TCG_Google_Service_Exception $e ) {
 				$errors = $e->getErrors();
@@ -252,8 +241,8 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 				delete_transient( 'w3tc_cdn_google_drive_folder_ids' );
 
 				$results[] = $this->_get_result( $file_descriptor['local_path'],
-					$file_descriptor['remote_path'], W3TC_CDN_RESULT_ERROR,
-					'Failed to upload file ' . $file_descriptor['remote_path'] .
+					$remote_path, W3TC_CDN_RESULT_ERROR,
+					'Failed to upload file ' . $remote_path .
 					' ' . $details, $file_descriptor );
 				$result = 'with_errors';
 				continue;
@@ -261,8 +250,8 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
 				delete_transient( 'w3tc_cdn_google_drive_folder_ids' );
 
 				$results[] = $this->_get_result( $file_descriptor['local_path'],
-					$file_descriptor['remote_path'], W3TC_CDN_RESULT_ERROR,
-					'Failed to upload file ' . $file_descriptor['remote_path'],
+					$remote_path, W3TC_CDN_RESULT_ERROR,
+					'Failed to upload file ' . $remote_path,
 					$file_descriptor );
 				$result = 'with_errors';
 				continue;
