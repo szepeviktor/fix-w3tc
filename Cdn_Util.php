@@ -76,6 +76,7 @@ class Cdn_Util {
 				'highwinds',
 				'maxcdn',
 				'netdna',
+                                'google_drive',
 			) );
 	}
 
