@@ -282,7 +282,7 @@ class Cdn_AdminActions {
 			$upload[] = $d;
 		}
 
-		$common->upload( $upload, false, $results, time() + 5 );
+		$common->upload( $upload, false, $results, time() + 120 );
 		$output = array();
 
 		foreach ( $results as $item ) {
