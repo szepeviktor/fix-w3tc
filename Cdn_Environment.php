@@ -204,6 +204,17 @@ class Cdn_Environment {
 		if ( !$wpdb->result )
 			throw new Util_Environment_Exception( 'Can\'t create table ' .
 				$wpdb->base_prefix . W3TC_CDN_TABLE_QUEUE );
+
+                $sql = sprintf("CREATE TABLE IF NOT EXISTS `%s%s` (
+                                `remote_path` varchar(500) NOT NULL,
+                                `id` varchar(64),
+                                PRIMARY KEY (`remote_path`)
+                ) %s;", $wpdb->base_prefix, W3TC_CDN_TABLE_GOOGLE_DRIVE, $charset_collate);
+                $wpdb->query( $sql );
+
+		if ( !$wpdb->result )
+			throw new Util_Environment_Exception( 'Can\'t create table ' .
+				$wpdb->base_prefix . W3TC_CDN_TABLE_GOOGLE_DRIVE );
 	}
 
 	/**
