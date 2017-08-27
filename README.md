@@ -96,3 +96,7 @@ Type | More Information |
 :beetle: Bug Fix | [Fix Undefined property: W3TC\\Extension_Amp_Plugin::$is_amp_endpoint](https://github.com/szepeviktor/w3-total-cache-fixed/pull/510) |
 :beetle: Bug Fix | [Adjusting cdn link in MediaLibrary](https://github.com/szepeviktor/w3-total-cache-fixed/pull/516) |
 :diamond_shape_with_a_dot_inside: Update | [Add support for X-Forwarded-Proto to identify HTTPS protocol](https://github.com/szepeviktor/w3-total-cache-fixed/pull/520) |
+:beetle: Bug Fix | [Fix a timeout update that was missed in push CDN upload](https://github.com/szepeviktor/w3-total-cache-fixed/pull/525) |
+:beetle: Bug Fix | [Write correct data into minify cache file when cache dir is created](https://github.com/szepeviktor/w3-total-cache-fixed/pull/524) |
+:beetle: Bug Fix | [Make the Google Drive CDN work properly](https://github.com/szepeviktor/w3-total-cache-fixed/pull/523) |
+:beetle: Bug Fix | [Return correct data from minify file cache when locking is in use](https://github.com/szepeviktor/w3-total-cache-fixed/pull/522) |
