@@ -78,6 +78,7 @@ define( 'W3TC_CDN_COMMAND_UPLOAD', 1 );
 define( 'W3TC_CDN_COMMAND_DELETE', 2 );
 define( 'W3TC_CDN_COMMAND_PURGE', 3 );
 define( 'W3TC_CDN_TABLE_QUEUE', 'w3tc_cdn_queue' );
+define( 'W3TC_CDN_TABLE_GOOGLE_DRIVE', 'w3tc_cdn_google_drive' );
 
 define( 'W3TC_INSTALL_FILE_ADVANCED_CACHE', W3TC_INSTALL_DIR . '/advanced-cache.php' );
 define( 'W3TC_INSTALL_FILE_DB', W3TC_INSTALL_DIR . '/db.php' );

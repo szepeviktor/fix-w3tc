@@ -48,7 +48,7 @@ class Minify_Cache_File {
 			// retry with make dir
 			\W3TC\Util_File::mkdir_from_safe(dirname($path), W3TC_CACHE_DIR);
 
-			if (!@file_put_contents($path, $data, $flag))
+			if (!@file_put_contents($path, $data['content'], $flag))
 				return false;
 		}
 
