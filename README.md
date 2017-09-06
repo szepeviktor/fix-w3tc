@@ -100,3 +100,4 @@ Type | More Information |
 :beetle: Bug Fix | [Write correct data into minify cache file when cache dir is created](https://github.com/szepeviktor/w3-total-cache-fixed/pull/524) |
 :beetle: Bug Fix | [Make the Google Drive CDN work properly](https://github.com/szepeviktor/w3-total-cache-fixed/pull/523) |
 :beetle: Bug Fix | [Return correct data from minify file cache when locking is in use](https://github.com/szepeviktor/w3-total-cache-fixed/pull/522) |
+:beetle: Bug Fix | [Write cache files in binary to prevent corruption of UTF-8 characters](https://github.com/szepeviktor/w3-total-cache-fixed/pull/527) |
