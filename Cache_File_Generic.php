@@ -56,7 +56,7 @@ class Cache_File_Generic extends Cache_File {
 
 		$tmppath = $path . '.' . getmypid();
 
-		$fp = @fopen( $tmppath, 'w' );
+		$fp = @fopen( $tmppath, 'wb' );
 		if ( !$fp )
 			return false;
 
@@ -184,7 +184,7 @@ class Cache_File_Generic extends Cache_File {
 		if ( !is_readable( $path ) )
 			return null;
 
-		$fp = @fopen( $path, 'r' );
+		$fp = @fopen( $path, 'rb' );
 		if ( !$fp )
 			return null;
 
