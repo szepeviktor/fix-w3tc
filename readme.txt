@@ -283,6 +283,16 @@ Please reach out to all of these people and support their projects if you're so 
 
 == Changelog ==
 
+= 0.9.5.4.3 =
+* Fix Undefined property: W3TC\Extension_Amp_Plugin::$is_amp_endpoint
+* Adjusting cdn link in MediaLibrary
+* Add support for X-Forwarded-Proto to identify HTTPS protocol
+* Fix a timeout update that was missed in push CDN upload
+* Write correct data into minify cache file when cache dir is created
+* Make the Google Drive CDN work properly
+* Return correct data from minify file cache when locking is in use
+* Write cache files in binary to prevent corruption of UTF-8 characters
+
 = 0.9.5.4.2 =
 * Colored self test window
 * Fixed Redis DB selection in persistent connection mode
