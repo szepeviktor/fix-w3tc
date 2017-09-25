@@ -558,24 +558,31 @@ class CdnEngine_GoogleDrive extends CdnEngine_Base {
         }
 
         private function path_set_id( $path, $id ) {
-                global $wpdb;
-                $table = $wpdb->base_prefix . W3TC_CDN_TABLE_GOOGLE_DRIVE;
-                if ( !$id ) {
-                        $sql = "INSERT INTO $table (remote_path, id) VALUES (%s, NULL) ".
-                               "ON DUPLICATE KEY UPDATE id=NULL";
-                        $wpdb->query( $wpdb->prepare( $sql, $path ) );
-                } else {
-                        $sql = "INSERT INTO $table (remote_path, id) VALUES (%s, %s) ".
-                               "ON DUPLICATE KEY UPDATE id=%s";
-                        $wpdb->query( $wpdb->prepare( $sql, $path, $id, $id ) );
-                }
+            global $wpdb;
+            $table = $wpdb->base_prefix . W3TC_CDN_TABLE_GOOGLE_DRIVE;
+            $md5 = md5($path);
+            if (!$id) {
+                $sql = "
+                    INSERT INTO $table (remote_path, path_hash, id)
+                    VALUES (%s, %s, NULL)
+                    ON DUPLICATE KEY UPDATE id=NULL";
+                $wpdb->query($wpdb->prepare($sql, $path, $md5));
+            } else {
+                $sql = "
+                    INSERT INTO $table (remote_path, path_hash, id)
+                    VALUES (%s, %s, %s)
+                    ON DUPLICATE KEY UPDATE id=%s";
+                $wpdb->query($wpdb->prepare(
+                    $sql, $path, $md5, $id, $id));
+            }
         }
 
         private function path_get_id( $path, $allow_refresh_token = true ) {
                 global $wpdb;
                 $table = $wpdb->base_prefix . W3TC_CDN_TABLE_GOOGLE_DRIVE;
-                $sql = "SELECT id FROM $table WHERE remote_path=%s";
-                $query = $wpdb->prepare($sql, $path);
+                $md5 = md5($path);
+                $sql = "SELECT id FROM $table WHERE path_hash=%s";
+                $query = $wpdb->prepare($sql, $md5);
                 $results = $wpdb->get_results($query);
                 if ( count($results) > 0 )
                         return $results[0]->id;

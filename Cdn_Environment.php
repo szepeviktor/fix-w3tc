@@ -166,8 +166,76 @@ class Cdn_Environment {
 	 * table operations
 	 */
 
+    /**
+     * Create or update Google Drive table
+     *
+     * @param string $charset_collate
+     * @throws Util_Environment_Exception
+     */
+    private function google_drive_table_create($charset_collate) {
+        // NOTE: We have a problem if two different paths have the same MD5
+        // hash. The likelihood of this is so astronomically low that I think
+        // it is safe to ignore it.
+        global $wpdb;
+        $table_name = $wpdb->base_prefix . W3TC_CDN_TABLE_GOOGLE_DRIVE;
+        $q_table_exists = "SELECT id FROM `$table_name` LIMIT 1";
+        if (FALSE === $wpdb->query($q_table_exists)) {
+            $q_create_table = "
+                CREATE TABLE `$table_name` (
+                    -- Relative file path.
+                    -- For reference, not actually used for finding files.
+                    remote_path TEXT NOT NULL,
+                    -- MD5 hash of remote path, used for finding files.
+                    path_hash VARCHAR(32) CHARACTER SET ascii NOT NULL,
+                    -- Google Drive document identifier.
+                    id VARCHAR(64) CHARACTER SET ascii,
+                    PRIMARY KEY (path_hash)
+                ) $charset_collate";
+            if (FALSE === $wpdb->query($q_create_table)) {
+                throw new Util_Environment_Exception(
+                    "Can't create table $table_name");
+            }
+        } else {
+            $q_column_exists = (
+                "SELECT path_hash FROM `$table_name` LIMIT 1");
+            if (FALSE === $wpdb->query($q_column_exists)) {
+                // We can't calculate correct MD5 for these, so we'll have to
+                // remove them and let them get uploaded again.
+                $q_delete_long = "
+                    DELETE FROM `$table_name`
+                        WHERE LENGTH(remote_path) >= 500";
+                $q_add_column = "
+                    ALTER TABLE `$table_name`
+                        CHANGE COLUMN remote_path
+                            remote_path TEXT NOT NULL,
+                        CHANGE COLUMN id id VARCHAR(64) CHARACTER SET ascii,
+                        ADD COLUMN
+                            path_hash VARCHAR(32) CHARACTER SET ascii
+                            NOT NULL";
+                $q_hash_paths = "
+                    UPDATE `$table_name`
+                        SET path_hash=MD5(remote_path)";
+                // Separate from ALTER TABLE above because we can't do this
+                // until after the path_hash column is populated.
+                $q_primary_key = "
+                    ALTER TABLE `$table_name`
+                        DROP primary key,
+                        ADD primary key (path_hash)";
+                $success = (
+                    (FALSE !== $wpdb->query($q_delete_long)) &&
+                    (FALSE !== $wpdb->query($q_add_column)) &&
+                    (FALSE !== $wpdb->query($q_hash_paths)) &&
+                    (FALSE !== $wpdb->query($q_primary_key)));
+                if (! $success) {
+                    throw new Util_Environment_Exception(
+                        "Can't alter table $table_name");
+                }
+            }
+        }
+    }
+
 	/**
-	 * Create queue table
+	 * Create queue and Google Drive tables
 	 *
 	 * @param bool    $drop
 	 * @throws Util_Environment_Exception
@@ -205,16 +273,7 @@ class Cdn_Environment {
 			throw new Util_Environment_Exception( 'Can\'t create table ' .
 				$wpdb->base_prefix . W3TC_CDN_TABLE_QUEUE );
 
-                $sql = sprintf("CREATE TABLE IF NOT EXISTS `%s%s` (
-                                `remote_path` varchar(500) NOT NULL,
-                                `id` varchar(64),
-                                PRIMARY KEY (`remote_path`)
-                ) %s;", $wpdb->base_prefix, W3TC_CDN_TABLE_GOOGLE_DRIVE, $charset_collate);
-                $wpdb->query( $sql );
-
-		if ( !$wpdb->result )
-			throw new Util_Environment_Exception( 'Can\'t create table ' .
-				$wpdb->base_prefix . W3TC_CDN_TABLE_GOOGLE_DRIVE );
+        $this->google_drive_table_create($charset_collate);
 	}
 
 	/**
