@@ -824,7 +824,7 @@ class ObjectCache_WpObjectCache_Regular {
 			$this->_can_cache_dynamic = true;
 		} else {
 			if ( $this->_caching ) {
-				if ( defined( 'WP_ADMIN' ) ) {
+				if ( defined( 'WP_ADMIN' ) && ( !defined('DOING_AJAX') || !DOING_AJAX ) ) {
 					$this->_can_cache_dynamic = false;
 					$this->cache_reject_reason = 'WP_ADMIN defined';
 					return $this->_can_cache_dynamic;
