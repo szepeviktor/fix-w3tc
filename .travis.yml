@@ -1,3 +1,5 @@
+sudo: false
+
 language: php
 
 php:
@@ -33,7 +35,7 @@ matrix:
     - php: nightly
 
 before_script:
-  - if [[ $TRAVIS_PHP_VERSION =~ 5.[56] ]] ; then echo yes | pecl install apcu ; fi
+  - if [[ $TRAVIS_PHP_VERSION =~ 5.[56] ]] ; then echo yes | pecl install apcu-4.0.11 ; fi
   - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo 'apc.enable_cli = 1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
