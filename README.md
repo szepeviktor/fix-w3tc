@@ -1,32 +1,19 @@
-# W3 Total Cache (Fixed) [![Build Status](https://travis-ci.org/szepeviktor/w3-total-cache-fixed.svg?branch=v0.9.5.x)](https://travis-ci.org/szepeviktor/w3-total-cache-fixed)
+# W3 Total Cache (Fixed) [![Build Status](https://travis-ci.org/szepeviktor/w3-total-cache-fixed.svg?branch=v0.9.6.x_wip)](https://travis-ci.org/szepeviktor/w3-total-cache-fixed)
 
 This project is a community driven build of W3 Total Cache (W3TC) originally developed by [@ftownes](https://github.com/ftownes).  The aim is to continuously incorporate fixes, improvements, and enhancements over the official Wordpress release of [W3 Total Cache](https://wordpress.org/plugins/w3-total-cache/).
 
 [DONE]: http://i65.tinypic.com/2dbjpn6.png "Feature Integrated"
 [PENDING]: http://i68.tinypic.com/25000tw.png "Still Pending"
 
-**There are two actively maintained _W3TC (Fixed)_ generations in this repository: [Version 0.9.5.x](https://github.com/szepeviktor/w3-total-cache-fixed/tree/v0.9.5.x) and [Version 0.9.4.x](https://github.com/szepeviktor/w3-total-cache-fixed/tree/v0.9.4.x)**<br>
-
-Both generations fill voids for two sets of users.  Although on the surface both are separated by a trivial subversion increment in their names, their underlying coding structure is vastly different.  Because of that they potentially operate differently under the same server-side configurations.
-
-**_Version 0.9.5.x_** is a fork of the latest official release of W3TC (found on WordPress) but also integrates updates, security patches, and new features.
-
-**_Version 0.9.4.x_** is for those who, for one reason or another, are unable to upgrade to W3TC v0.9.5.x and so prefer to stick with this legacy version (because they've had success with it) but still yearn for updates, security patches, and new features.
-
-Make sure you select the correct generation that fits your environment.
-
 ---
 
 ### Latest Release
 
-| Generation    | Date |Version | Download Link
-| ------------- |:-------------:|:-----:|-----|
-| For 0.9.5.x Users      | 2017-04-03 | 0.9.5.2.4 | [w3-total-cache-fixed-(for-v0.9.5.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.5.2.4/w3-total-cache-fixed-for-v0.9.5.x-users.zip) 
-| For 0.9.4.x Users      | 2017-02-21 | 0.9.4.6.4 | [w3-total-cache-fixed-(for-v0.9.4.x-users).zip](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.4.6.4/w3-total-cache-fixed-for-v0.9.4.x-users.zip)
+[W3 Total Cache (Fixed) - 0.9.6.1 - 2017-04-03](https://github.com/szepeviktor/w3-total-cache-fixed/releases/download/0.9.6.1/w3-total-cache-fixed.zip) 
 
 ---
 
-### Installation (for v0.9.5.x Users)
+### Installation
 
 1. Deactivate and delete your existing W3 Total Cache plugin (if installed) from within WordPress' Plugin page.
 1. Use FTP or some other file manager to navigate to _`wp-content/plugins/`_.
@@ -37,7 +24,7 @@ Make sure you select the correct generation that fits your environment.
 
 ### Fixes, Improvements, & Enhancement Highlights
 
-Since the last [official release](https://wordpress.org/plugins/w3-total-cache/) of W3 Total Cache (v0.9.5.2), the following new features, bug fixes, and updates have been applied to this repository's [v0.9.5.x](https://github.com/szepeviktor/w3-total-cache-fixed/tree/v0.9.5.x) branch, which has its base already synced to v0.9.5.2:
+Since the last [official release](https://wordpress.org/plugins/w3-total-cache/) of W3 Total Cache, the following new features, bug fixes, and updates have been applied to this repository's branch:
 
 Type | More Information |
 :--- | --- |
@@ -88,3 +75,4 @@ Type | More Information |
 :beetle: Bug Fix | [Media Library Export skips files](https://github.com/szepeviktor/w3-total-cache-fixed/pull/452) |
 :beetle: Bug Fix | [Fixed semicolon bug & added woff2](https://github.com/szepeviktor/w3-total-cache-fixed/pull/457) |
 :diamond_shape_with_a_dot_inside: Update | [Colored self test window](https://github.com/szepeviktor/w3-total-cache-fixed/pull/478) |
+:beetle: Bug Fix | [Fix for "Fatal error: Uncaught exception 'Exception' with message 'unknown engine'"](https://github.com/szepeviktor/w3-total-cache-fixed/pull/551) |
