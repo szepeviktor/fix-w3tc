@@ -196,10 +196,10 @@ class Cdnfsd_CacheFlush {
 
 		if ( $o->flush_all_requested ) {
 			$core = Dispatcher::component( 'Cdnfsd_Core' );
-			$engine = $core->get_engine();
 
-		
 			try {
+				$engine = $core->get_engine();
+				
 				if ( !is_null( $engine ) ) {
 					$engine->flush_all();
 					$actions_made[] = array( 'module' => 'cdn' );
@@ -219,8 +219,10 @@ class Cdnfsd_CacheFlush {
 				$urls = array_keys( $o->queued_urls );
 
 				$core = Dispatcher::component( 'Cdnfsd_Core' );
-				$engine = $core->get_engine();
+				
 				try {
+					$engine = $core->get_engine();
+					
 					if ( !is_null( $engine ) ) {
 						$engine->flush_urls( $urls );
 						$actions_made[] = array( 'module' => 'cdn' );
