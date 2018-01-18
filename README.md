@@ -27,3 +27,4 @@ Since the last [official release](https://wordpress.org/plugins/w3-total-cache/)
 Type | More Information |
 :--- | --- |
 :beetle: Bug Fix | [Fix for "Fatal error: Uncaught exception 'Exception' with message 'unknown engine'"](https://github.com/szepeviktor/w3-total-cache-fixed/pull/553) |
+:beetle: Bug Fix | [PHP Notice:  Undefined index: minify in CacheFlush_Locally.php](https://github.com/szepeviktor/w3-total-cache-fixed/pull/554) |
