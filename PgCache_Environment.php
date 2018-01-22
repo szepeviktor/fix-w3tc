@@ -1489,7 +1489,7 @@ class PgCache_Environment {
 			$maybe_xml = '';
 			if ($config->get_boolean('pgcache.cache.nginx_handle_xml')) {
 				$maybe_xml = "\n" .
-					"        text/xml xml_gzip\n" .
+					"        text/xml xml_gzip;\n" .
 					"    ";
 			}
 
