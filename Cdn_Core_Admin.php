@@ -307,6 +307,8 @@ class Cdn_Core_Admin {
 				}
 			}
 
+            $sql = apply_filters('w3tc_cdn_import_library_sql', $sql);
+
 			$posts = $wpdb->get_results( $sql );
 
 			if ( $posts ) {
@@ -570,6 +572,8 @@ class Cdn_Core_Admin {
 				}
 			}
 
+            $sql = apply_filters('w3tc_cdn_rename_domain_posts_sql', $sql);
+
 			$posts = $wpdb->get_results( $sql );
 
 			if ( $posts ) {
@@ -645,6 +649,8 @@ WHERE p.post_type = "attachment" AND (pm.meta_value IS NOT NULL OR pm2.meta_valu
                 AND (post_content LIKE "%%src=%%"
                 	OR post_content LIKE "%%href=%%")
                 ', $wpdb->prefix );
+
+        $sql = apply_filters('w3tc_cdn_import_posts_count_sql', $sql);
 
 		return $wpdb->get_var( $sql );
 	}
