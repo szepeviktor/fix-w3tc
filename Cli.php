@@ -580,7 +580,7 @@ class W3TotalCache_Command extends \WP_CLI_Command {
             \WP_CLI::error( __( 'Error: ' . $e->getMessage(), 'w3-total-cache' ) );
         }
     }        
-}
+
 
 
 if ( method_exists( '\WP_CLI', 'add_command' ) ) {
