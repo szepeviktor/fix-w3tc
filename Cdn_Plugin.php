@@ -1219,7 +1219,7 @@ class _Cdn_Plugin_ContentFilter {
 
 	function get_replaced_urls() {
 		$strings = array();
-		if ( count( $this->_replaced_urls ) ) {
+		if ( $this->_replaced_urls && count($this->_replaced_urls) ) {
 			$strings[] = "Replaced URLs:";
 
 			foreach ( $this->_replaced_urls as $old_url => $new_url ) {
