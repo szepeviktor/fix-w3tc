@@ -13,16 +13,16 @@ $compilation_levels = array(
 $compilation_level = $this->_config->get_string( 'minify.ccjs.options.compilation_level' );
 ?>
 <tr>
-    <th><label for="minify_ccjs_path_java"><?php Util_Ui::e_config_label( 'minify.ccjs.path.java' ) ?></label></th>
+    <th><label for="minify__ccjs__path__java"><?php Util_Ui::e_config_label( 'minify.ccjs.path.java' ) ?></label></th>
     <td>
-        <input id="minify_ccjs_path_java" class="js_enabled" type="text"
+        <input id="minify__ccjs__path__java" class="js_enabled" type="text"
            <?php Util_Ui::sealing_disabled( 'minify.' ) ?> name="minify__ccjs__path__java" value="<?php echo esc_attr( $this->_config->get_string( 'minify.ccjs.path.java' ) ); ?>" size="60" />
     </td>
 </tr>
 <tr>
-    <th><label for="minify_ccjs_path_jar"><?php Util_Ui::e_config_label( 'minify.ccjs.path.jar' ) ?></label></th>
+    <th><label for="minify__ccjs__path__jar"><?php Util_Ui::e_config_label( 'minify.ccjs.path.jar' ) ?></label></th>
     <td>
-        <input id="minify_ccjs_path_jar" class="js_enabled" type="text"
+        <input id="minify__ccjs__path__jar" class="js_enabled" type="text"
             <?php Util_Ui::sealing_disabled( 'minify.' ) ?> name="minify__ccjs__path__jar" value="<?php echo esc_attr( $this->_config->get_string( 'minify.ccjs.path.jar' ) ); ?>" size="60" />
     </td>
 </tr>
